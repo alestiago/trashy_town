@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
+import 'package:trashy_road/src/game/components/player/behaviors/behaviors.dart';
 
-class Player extends PositionComponent {
+class Player extends PositionComponent with KeyboardHandler {
   Player()
       : super(
           children: [
@@ -12,6 +13,7 @@ class Player extends PositionComponent {
               radius: 10,
               paint: Paint()..color = const Color(0xFFFF0000),
             ),
+            PlayerMovingBehavior(),
           ],
         );
 

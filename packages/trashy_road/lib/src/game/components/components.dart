@@ -1,1 +1,1 @@
-export 'player.dart';
+export 'player/player.dart';

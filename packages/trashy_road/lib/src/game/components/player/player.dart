@@ -1,12 +1,13 @@
-import 'dart:async';
-
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:trashy_road/src/game/components/player/behaviors/behaviors.dart';
 
-class Player extends PositionComponent with KeyboardHandler {
+class Player extends PositionComponent with KeyboardHandler, HasGameRef {
+  Vector2 targetPosition = Vector2.zero();
+
   Player()
       : super(
+          anchor: Anchor.center,
           children: [
             CircleComponent(
               anchor: Anchor.center,
@@ -18,12 +19,9 @@ class Player extends PositionComponent with KeyboardHandler {
         );
 
   @override
-  FutureOr<void> onLoad() async {
-    await super.onLoad();
-  }
-
-  @override
   void update(double dt) {
     super.update(dt);
+
+    position.lerp(targetPosition, 0.1);
   }
 }

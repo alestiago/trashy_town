@@ -35,6 +35,16 @@ class GameState extends Equatable {
   /// {@macro Inventory}
   final Inventory inventory;
 
+  GameState copyWith({
+    GameStatus? status,
+    Inventory? inventory,
+  }) {
+    return GameState(
+      status: status ?? this.status,
+      inventory: inventory ?? this.inventory,
+    );
+  }
+
   @override
   List<Object?> get props => [status];
 }
@@ -55,6 +65,10 @@ class Inventory extends Equatable {
 
   /// The amount of trash that the player has collected.
   final int trash;
+
+  Inventory copyWith({int? trash}) {
+    return Inventory(trash: trash ?? this.trash);
+  }
 
   @override
   List<Object?> get props => [trash];

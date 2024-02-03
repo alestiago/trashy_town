@@ -1,19 +1,27 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/src/game/game.dart';
 
-class GamePage extends StatefulWidget {
+class GamePage extends StatelessWidget {
   const GamePage({super.key});
 
   @override
-  State<GamePage> createState() => _GamePageState();
-}
-
-class _GamePageState extends State<GamePage> {
-  final _game = TrashyRoadGame();
-
-  @override
   Widget build(BuildContext context) {
-    return GameWidget(game: _game);
+    // TODO(alestiago): Consider refactoring, if the [GameBloc] doesn't end up
+    // being consumed by other widgets in the tree.
+
+    return BlocProvider(
+      create: (context) => GameBloc(),
+      child: Builder(
+        builder: (context) {
+          final gameBloc = context.read<GameBloc>();
+
+          return GameWidget.controlled(
+            gameFactory: () => TrashyRoadGame(gameBloc: gameBloc),
+          );
+        },
+      ),
+    );
   }
 }

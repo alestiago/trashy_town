@@ -17,6 +17,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  bloc:
+    dependency: "direct main"
+    description:
+      name: bloc
+      sha256: "3820f15f502372d979121de1f6b97bfcf1630ebff8fe1d52fb2b0bfa49be5b49"
+      url: "https://pub.dev"
+    source: hosted
+    version: "8.1.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -73,6 +81,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
+  equatable:
+    dependency: "direct main"
+    description:
+      name: equatable
+      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5"
   fake_async:
     dependency: transitive
     description:
@@ -97,6 +113,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  flame_bloc:
+    dependency: "direct main"
+    description:
+      name: flame_bloc
+      sha256: "47a083bc4446e42f0b5bbbb9100564c1ee86b90c67102093f3749989e9ef721e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.10.9"
   flame_tiled:
     dependency: "direct main"
     description:
@@ -110,6 +134,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_bloc:
+    dependency: "direct main"
+    description:
+      name: flutter_bloc
+      sha256: e74efb89ee6945bcbce74a5b3a5a3376b088e5f21f55c263fc38cbdc6237faae
+      url: "https://pub.dev"
+    source: hosted
+    version: "8.1.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -140,13 +172,21 @@ packages:
     source: hosted
     version: "0.5.0"
   meta:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: meta
       sha256: a6e590c838b18133bb482a2745ad77c5bb7715fb0451209e1a7567d416678b8e
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   ordered_set:
     dependency: transitive
     description:
@@ -179,6 +219,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.7.4"
+  provider:
+    dependency: transitive
+    description:
+      name: provider
+      sha256: "9a96a0a19b594dbc5bf0f1f27d2bc67d5f95957359b461cd9feb44ed6ae75096"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.1.1"
   sky_engine:
     dependency: transitive
     description: flutter

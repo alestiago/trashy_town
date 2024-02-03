@@ -20,7 +20,7 @@ class TrashyRoadGame extends FlameGame with HasKeyboardHandlerComponents {
   FutureOr<void> onLoad() async {
     await super.onLoad();
 
-    world.add(await TiledComponent.load('test_level.tmx', Vector2.all(128)));
+    world.add(await TiledComponent.load('map.tmx', Vector2.all(128)));
 
     var player = Player();
     world.add(player);

@@ -20,7 +20,8 @@ class Player extends PositionComponent with KeyboardHandler, HasGameRef {
 
   @override
   void update(double dt) {
-    position.lerp(targetPosition, 0.1);
     super.update(dt);
+
+    position.lerp(targetPosition, 0.1);
   }
 }

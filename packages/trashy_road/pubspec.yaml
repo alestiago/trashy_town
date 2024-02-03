@@ -11,6 +11,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flame: ^1.14.0
   flame_behaviors: ^1.1.0
+  flame_tiled: ^1.18.3
   flutter:
     sdk: flutter
 
@@ -21,3 +22,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/tiles/
+    - assets/images/

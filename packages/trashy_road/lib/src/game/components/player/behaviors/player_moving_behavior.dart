@@ -6,7 +6,7 @@ class PlayerMovingBehavior extends Component
     with ParentIsA<Player>, KeyboardHandler {
   Map<LogicalKeyboardKey, bool> alreadyDownMap = {};
 
-  static const _moveDistance = 100;
+  static const _moveDistance = 128;
 
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {

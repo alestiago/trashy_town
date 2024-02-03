@@ -15,22 +15,24 @@ class InventoryHud extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(width: 2),
         color: const Color(0xFFFFFFFF),
-        borderRadius: BorderRadius.circular(8),
       ),
-      child: BlocSelector<GameBloc, GameState, int>(
-        selector: (state) {
-          return state.inventory.trash;
-        },
-        builder: (context, trash) {
-          return Text(
-            trash.toString(),
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF000000),
-            ),
-          );
-        },
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: BlocSelector<GameBloc, GameState, int>(
+          selector: (state) {
+            return state.inventory.trash;
+          },
+          builder: (context, trash) {
+            return DefaultTextStyle(
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF000000),
+              ),
+              child: Text('Trash: $trash'),
+            );
+          },
+        ),
       ),
     );
   }

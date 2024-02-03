@@ -25,15 +25,15 @@ class _GameView extends StatelessWidget {
 
     return Stack(
       children: [
+        GameWidget.controlled(
+          gameFactory: () => TrashyRoadGame(gameBloc: gameBloc),
+        ),
         const Align(
-          alignment: Alignment.topRight,
+          alignment: Alignment.topLeft,
           child: Padding(
             padding: EdgeInsets.all(8),
             child: InventoryHud(),
           ),
-        ),
-        GameWidget.controlled(
-          gameFactory: () => TrashyRoadGame(gameBloc: gameBloc),
         ),
       ],
     );

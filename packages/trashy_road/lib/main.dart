@@ -6,7 +6,7 @@ void main() {
 }
 
 class _MyApp extends StatelessWidget {
-  const _MyApp({super.key});
+  const _MyApp();
 
   // This widget is the root of your application.
   @override
@@ -17,7 +17,7 @@ class _MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: GamePage(),
+      home: const GamePage(),
     );
   }
 }

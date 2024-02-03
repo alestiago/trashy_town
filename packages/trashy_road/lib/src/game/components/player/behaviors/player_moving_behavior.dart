@@ -11,8 +11,9 @@ class PlayerMovingBehavior extends Component
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
     if (event is RawKeyDownEvent) {
-      if (alreadyDownMap.containsKey(event
-              .logicalKey) && // key is already down this is a repeat event exit early
+      if (alreadyDownMap.containsKey(
+            event.logicalKey,
+          ) && // key is already down this is a repeat event exit early
           alreadyDownMap[event.logicalKey]!) {
         return super.onKeyEvent(event, keysPressed);
       }

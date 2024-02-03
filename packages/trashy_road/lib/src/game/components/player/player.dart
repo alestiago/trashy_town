@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +7,7 @@ import 'package:trashy_road/config.dart';
 import 'package:trashy_road/src/game/components/player/behaviors/behaviors.dart';
 
 class Player extends PositionComponent with KeyboardHandler, HasGameRef {
-  Player()
+  Player({required Vector2 position})
       : super(
           anchor: Anchor.center,
           children: [
@@ -23,8 +25,17 @@ class Player extends PositionComponent with KeyboardHandler, HasGameRef {
               anchor: Anchor.center,
             ),
           ],
-        );
-  Vector2 targetPosition = GameSettings.gridDimensions / 2;
+        ) {
+    targetPosition = position;
+  }
+
+  late Vector2 targetPosition;
+
+  @override
+  FutureOr<void> onLoad() {
+    position = targetPosition;
+    return super.onLoad();
+  }
 
   @override
   void update(double dt) {

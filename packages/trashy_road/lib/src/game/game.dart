@@ -37,15 +37,39 @@ class TrashyRoadGame extends FlameGame
     final trash = trashGroup!.objects
         .map((object) => Trash()..position = Vector2(object.x, object.y));
 
-    final player = Player();
+    final coreItems = <String, TiledObject>{};
+
+    for (final object in mapComponent.tileMap
+        .getLayer<ObjectGroup>('CoreItemsLayer')!
+        .objects) {
+      coreItems[object.name] = object;
+    }
+
+    final player = Player(
+      position: TileBoundSpriteComponent.snapToGrid(
+        Vector2(coreItems['spawn']!.x, coreItems['spawn']!.y),
+        center: true,
+      ),
+    );
+
     final blocProvider = FlameBlocProvider<GameBloc, GameState>(
       create: () => _gameBloc,
-      children: [player, ...trash],
+      children: [
+        player,
+        ...trash,
+        TrashCan(
+          position: Vector2(
+            coreItems['finish']!.x,
+            coreItems['finish']!.y,
+          ),
+        ),
+      ],
     );
 
     world
       ..add(mapComponent)
       ..add(blocProvider);
+
     camera.follow(player);
   }
 

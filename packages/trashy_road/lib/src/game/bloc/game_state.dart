@@ -12,7 +12,7 @@ enum GameStatus {
 /// Represents the state of a game.
 ///
 /// A game is a single level, where the user is trying to collect and recycle
-/// trash whilsts avoiding obstacles.
+/// trash whilst avoiding obstacles.
 /// {@endtemplate}
 @immutable
 class GameState extends Equatable {

@@ -13,7 +13,8 @@ export 'bloc/game_bloc.dart';
 export 'components/components.dart';
 export 'view/view.dart';
 
-class TrashyRoadGame extends FlameGame with HasKeyboardHandlerComponents {
+class TrashyRoadGame extends FlameGame
+    with HasKeyboardHandlerComponents, HasCollisionDetection {
   TrashyRoadGame({
     required GameBloc gameBloc,
   })  : _gameBloc = gameBloc,
@@ -28,15 +29,21 @@ class TrashyRoadGame extends FlameGame with HasKeyboardHandlerComponents {
   FutureOr<void> onLoad() async {
     await super.onLoad();
 
-    world.add(await TiledComponent.load('map.tmx', Vector2.all(128)));
+    mapComponent = await TiledComponent.load('map.tmx', Vector2.all(128));
+    final trashGroup = mapComponent.tileMap.getLayer<ObjectGroup>('TrashLayer');
+
+    final trash = trashGroup!.objects
+        .map((object) => Trash()..position = Vector2(object.x, object.y));
 
     final player = Player();
     final blocProvider = FlameBlocProvider<GameBloc, GameState>(
       create: () => _gameBloc,
-      children: [player],
+      children: [player, ...trash],
     );
 
-    world.add(blocProvider);
+    world
+      ..add(mapComponent)
+      ..add(blocProvider);
     camera.follow(player);
   }
 

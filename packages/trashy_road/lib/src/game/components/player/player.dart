@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:trashy_road/src/game/components/player/behaviors/behaviors.dart';
 
 class Player extends PositionComponent with KeyboardHandler, HasGameRef {
+  Vector2 targetPosition = Vector2(moveDistance / 2, moveDistance / 2);
+
+  static const moveDistance = 128;
+
   Player()
       : super(
           anchor: Anchor.center,
@@ -15,7 +19,6 @@ class Player extends PositionComponent with KeyboardHandler, HasGameRef {
             PlayerMovingBehavior(),
           ],
         );
-  Vector2 targetPosition = Vector2.zero();
 
   @override
   void update(double dt) {

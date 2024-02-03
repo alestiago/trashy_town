@@ -1,5 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
+import 'package:trashy_road/config.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 class PlayerMovingBehavior extends Component
@@ -19,17 +20,13 @@ class PlayerMovingBehavior extends Component
 
       switch (event.logicalKey) {
         case LogicalKeyboardKey.arrowLeft:
-          parent.targetPosition.x -= Player.moveDistance;
-          break;
+          parent.targetPosition.x -= GameSettings.gridDimensions.x;
         case LogicalKeyboardKey.arrowRight:
-          parent.targetPosition.x += Player.moveDistance;
-          break;
+          parent.targetPosition.x += GameSettings.gridDimensions.x;
         case LogicalKeyboardKey.arrowDown:
-          parent.targetPosition.y += Player.moveDistance;
-          break;
+          parent.targetPosition.y += GameSettings.gridDimensions.y;
         case LogicalKeyboardKey.arrowUp:
-          parent.targetPosition.y -= Player.moveDistance;
-          break;
+          parent.targetPosition.y -= GameSettings.gridDimensions.y;
         default:
           break;
       }

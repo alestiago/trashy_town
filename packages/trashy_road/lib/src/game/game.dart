@@ -6,6 +6,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:trashy_road/config.dart';
 import 'package:trashy_road/src/game/bloc/game_bloc.dart';
 import 'package:trashy_road/src/game/components/components.dart';
 
@@ -29,7 +30,8 @@ class TrashyRoadGame extends FlameGame
   FutureOr<void> onLoad() async {
     await super.onLoad();
 
-    mapComponent = await TiledComponent.load('map.tmx', Vector2.all(128));
+    mapComponent =
+        await TiledComponent.load('map.tmx', GameSettings.gridDimensions);
     final trashGroup = mapComponent.tileMap.getLayer<ObjectGroup>('TrashLayer');
 
     final trash = trashGroup!.objects

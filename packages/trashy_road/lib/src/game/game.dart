@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -19,7 +20,15 @@ class TrashyRoadGame extends FlameGame
   TrashyRoadGame({
     required GameBloc gameBloc,
   })  : _gameBloc = gameBloc,
-        super(camera: CameraComponent()..viewfinder.anchor = Anchor.center);
+        super(
+          camera: CameraComponent.withFixedResolution(
+            width: 720,
+            height: 1280,
+            viewfinder: Viewfinder()
+              ..anchor = const Anchor(.5, .8)
+              ..zoom = 1.2,
+          ),
+        );
 
   late TiledComponent mapComponent;
 

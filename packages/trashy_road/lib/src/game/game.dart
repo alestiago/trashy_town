@@ -6,10 +6,9 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-import 'package:flame_tiled/flame_tiled.dart';
-import 'package:trashy_road/config.dart';
 import 'package:trashy_road/src/game/bloc/game_bloc.dart';
 import 'package:trashy_road/src/game/components/components.dart';
+import 'package:trashy_road/src/game/components/trashy_road_world/trashy_road_world.dart';
 
 export 'bloc/game_bloc.dart';
 export 'components/components.dart';
@@ -30,8 +29,6 @@ class TrashyRoadGame extends FlameGame
           ),
         );
 
-  late TiledComponent mapComponent;
-
   /// {@macro GameBloc}
   final GameBloc _gameBloc;
 
@@ -39,46 +36,21 @@ class TrashyRoadGame extends FlameGame
   FutureOr<void> onLoad() async {
     await super.onLoad();
 
-    mapComponent =
-        await TiledComponent.load('map.tmx', GameSettings.gridDimensions);
-    final trashGroup = mapComponent.tileMap.getLayer<ObjectGroup>('TrashLayer');
-
-    final trash = trashGroup!.objects
-        .map((object) => Trash()..position = Vector2(object.x, object.y));
-
-    final coreItems = <String, TiledObject>{};
-
-    for (final object in mapComponent.tileMap
-        .getLayer<ObjectGroup>('CoreItemsLayer')!
-        .objects) {
-      coreItems[object.type] = object;
-    }
+    final mapComponent = await TrashyRoadWorld.create('map.tmx');
 
     final player = Player(
       position: TileBoundSpriteComponent.snapToGrid(
-        Vector2(coreItems['spawn']!.x, coreItems['spawn']!.y),
+        mapComponent.spawnPosition,
         center: true,
       ),
     );
 
     final blocProvider = FlameBlocProvider<GameBloc, GameState>(
       create: () => _gameBloc,
-      children: [
-        player,
-        ...trash,
-        TrashCan(
-          position: Vector2(
-            coreItems['finish']!.x,
-            coreItems['finish']!.y,
-          ),
-        ),
-      ],
+      children: [mapComponent, player],
     );
 
-    world
-      ..add(mapComponent)
-      ..add(blocProvider);
-
+    world.add(blocProvider);
     camera.follow(player);
   }
 

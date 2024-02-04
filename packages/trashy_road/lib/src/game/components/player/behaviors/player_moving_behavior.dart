@@ -6,8 +6,6 @@ class PlayerMovingBehavior extends Component
     with ParentIsA<Player>, KeyboardHandler {
   Map<LogicalKeyboardKey, bool> alreadyDownMap = {};
 
-  static const _moveDistance = 128;
-
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
     if (event is RawKeyDownEvent) {
@@ -19,10 +17,21 @@ class PlayerMovingBehavior extends Component
       }
       alreadyDownMap[event.logicalKey] = true;
 
-      if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
-        parent.targetPosition.x -= _moveDistance;
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
-        parent.targetPosition.x += _moveDistance;
+      switch (event.logicalKey) {
+        case LogicalKeyboardKey.arrowLeft:
+          parent.targetPosition.x -= Player.moveDistance;
+          break;
+        case LogicalKeyboardKey.arrowRight:
+          parent.targetPosition.x += Player.moveDistance;
+          break;
+        case LogicalKeyboardKey.arrowDown:
+          parent.targetPosition.y += Player.moveDistance;
+          break;
+        case LogicalKeyboardKey.arrowUp:
+          parent.targetPosition.y -= Player.moveDistance;
+          break;
+        default:
+          break;
       }
     }
 

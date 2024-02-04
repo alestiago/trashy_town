@@ -46,7 +46,7 @@ class GameState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [status];
+  List<Object?> get props => [status, inventory];
 }
 
 /// {@template Inventory}

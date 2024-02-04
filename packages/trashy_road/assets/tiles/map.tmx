@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="128" tileheight="128" infinite="0" nextlayerid="2" nextobjectid="1">
- <tileset firstgid="1" source="Tilemap-Sheet.tsx"/>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="128" tileheight="128" infinite="0" nextlayerid="5" nextobjectid="5">
+ <tileset firstgid="1" source="Tiles.tsx"/>
  <layer id="1" name="Tile Layer 1" width="10" height="10">
   <data encoding="csv">
+1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,
 2,2,2,2,2,2,2,2,2,2,
 2,2,2,2,2,2,2,2,2,2,
-3,3,3,3,3,3,3,3,3,3,
-3,3,3,3,3,3,3,3,3,3,
+1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,
 2,2,2,2,2,2,2,2,2,2,
 2,2,2,2,2,2,2,2,2,2,
-3,3,3,3,3,3,3,3,3,3,
-3,3,3,3,3,3,3,3,3,3,
-2,2,2,2,2,2,2,2,2,2,
-2,2,2,2,2,2,2,2,2,2
+1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1
 </data>
  </layer>
+ <objectgroup id="4" name="TrashLayer">
+  <object id="1" x="1217" y="63">
+   <point/>
+  </object>
+  <object id="2" x="61" y="700">
+   <point/>
+  </object>
+  <object id="3" x="1217" y="1216">
+   <point/>
+  </object>
+ </objectgroup>
 </map>

@@ -43,6 +43,7 @@ class TrashyRoadGame extends FlameGame
         mapComponent.spawnPosition,
         center: true,
       ),
+      mapBounds: mapComponent.bounds,
     );
 
     final blocProvider = FlameBlocProvider<GameBloc, GameState>(

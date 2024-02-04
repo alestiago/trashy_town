@@ -5,9 +5,10 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:trashy_road/config.dart';
 import 'package:trashy_road/src/game/components/player/behaviors/behaviors.dart';
+import 'package:trashy_road/src/game/model/map_bounds.dart';
 
 class Player extends PositionComponent with KeyboardHandler, HasGameRef {
-  Player({required Vector2 position})
+  Player({required Vector2 position, required MapBounds mapBounds})
       : super(
           anchor: Anchor.center,
           children: [
@@ -16,7 +17,7 @@ class Player extends PositionComponent with KeyboardHandler, HasGameRef {
               radius: 10,
               paint: Paint()..color = const Color(0xFFFF0000),
             ),
-            PlayerMovingBehavior(),
+            PlayerMovingBehavior(mapBounds: mapBounds),
             RectangleHitbox(
               size: Vector2(
                 GameSettings.gridDimensions.x / 2,

@@ -51,7 +51,7 @@ class TrashyRoadGame extends FlameGame
     for (final object in mapComponent.tileMap
         .getLayer<ObjectGroup>('CoreItemsLayer')!
         .objects) {
-      coreItems[object.name] = object;
+      coreItems[object.type] = object;
     }
 
     final player = Player(

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-import 'package:trashy_road/src/game/components/tile_bound_sprite_component/tile_bound_sprite_component.dart';
+import 'package:trashy_road/config.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 class Trash extends TileBoundSpriteComponent
@@ -11,7 +11,12 @@ class Trash extends TileBoundSpriteComponent
   @override
   Future<void> onLoad() async {
     sprite = await Sprite.load('trash.png');
-    add(RectangleHitbox());
+    add(
+      RectangleHitbox(
+        size: GameSettings.gridDimensions,
+        position: Vector2(0, GameSettings.gridDimensions.y),
+      ),
+    );
     return super.onLoad();
   }
 

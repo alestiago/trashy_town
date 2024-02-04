@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
- <object type="spawn">
+ <object name="spawn" class="spawn">
   <point/>
  </object>
 </template>

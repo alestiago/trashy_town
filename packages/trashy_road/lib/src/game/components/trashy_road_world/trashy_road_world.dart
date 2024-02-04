@@ -33,9 +33,12 @@ class TrashyRoadWorld extends Component {
         default:
       }
     }
-    mapComponent.add(
-      TrashCan(position: finishPosition),
-    );
+    mapComponent
+      ..add(
+        TrashCan(position: finishPosition),
+      )
+      // THIS IS TEMP FOR DEMO PURPOSE
+      ..add(Barrel()..position = Vector2(0, 600));
 
     final bottomRightPosition = mapComponent.topLeftPosition +
         Vector2(mapComponent.width, mapComponent.height);

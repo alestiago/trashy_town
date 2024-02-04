@@ -7,7 +7,7 @@ import 'package:trashy_road/config.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 class Trash extends TileBoundSpriteComponent
-    with CollisionCallbacks, FlameBlocReader<GameBloc, GameState> {
+    with FlameBlocReader<GameBloc, GameState> {
   @override
   Future<void> onLoad() async {
     sprite = await Sprite.load('trash.png');

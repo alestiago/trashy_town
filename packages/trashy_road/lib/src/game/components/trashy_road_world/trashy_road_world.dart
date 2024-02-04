@@ -33,12 +33,19 @@ class TrashyRoadWorld extends Component {
         default:
       }
     }
-    mapComponent
-      ..add(
-        TrashCan(position: finishPosition),
-      )
-      // THIS IS TEMP FOR DEMO PURPOSE
-      ..add(Barrel()..position = Vector2(0, 600));
+    for (final object
+        in mapComponent.tileMap.getLayer<ObjectGroup>('Obstacles')!.objects) {
+      mapComponent.add(
+        TileBoundSpriteComponent.generate(object.class_)
+          ..position = Vector2(object.x, object.y)
+          ..priority = object.y.toInt(),
+        // ordering priority by y
+      );
+    }
+
+    mapComponent.add(
+      TrashCan(position: finishPosition),
+    );
 
     final bottomRightPosition = mapComponent.topLeftPosition +
         Vector2(mapComponent.width, mapComponent.height);

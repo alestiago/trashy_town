@@ -12,7 +12,8 @@ class PlayerMovingBehavior extends Component
   MapBounds mapBounds;
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    var newPosition = Vector2(parent.targetPosition.x, parent.targetPosition.y);
+    final newPosition =
+        Vector2(parent.targetPosition.x, parent.targetPosition.y);
     if (event is RawKeyDownEvent) {
       if (alreadyDownMap.containsKey(
             event.logicalKey,

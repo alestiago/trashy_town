@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/foundation.dart';
 import 'package:trashy_road/config.dart';
 import 'package:trashy_road/src/game/game.dart';
 
@@ -12,6 +13,15 @@ abstract class TileBoundSpriteComponent extends SpriteComponent
     super.sprite,
     this.collidesWithPlayer = false,
   }) : super(anchor: Anchor.bottomLeft);
+
+  factory TileBoundSpriteComponent.generate(String class_) {
+    switch (class_) {
+      case 'barrel':
+        return Barrel();
+      default:
+        throw Exception('$class_ respective class could not be found');
+    }
+  }
 
   bool collidesWithPlayer;
 

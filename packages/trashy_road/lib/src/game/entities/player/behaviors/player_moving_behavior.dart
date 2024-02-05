@@ -6,6 +6,13 @@ import 'package:flutter/services.dart';
 import 'package:trashy_road/config.dart';
 import 'package:trashy_road/src/game/game.dart';
 
+/// Allows controlling the [Player] using the keyboard.
+///
+/// The player can move horizontally and vertically using the appropriate keys.
+///
+/// Maintaining the keys pressed will not make the player move continuously.
+/// Instead, it will only move once. Continuos movement can be achieved by
+/// pressing the keys multiple times.
 class PlayerKeyboardMovingBehavior extends Behavior<Player>
     with KeyboardHandler {
   PlayerKeyboardMovingBehavior._({

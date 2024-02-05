@@ -1,4 +1,6 @@
 name: tiled_map_parser
+# TODO(OlliePugh): Update the description to what this is
+# meant to do.
 description: A Very Good Project created by Very Good CLI.
 version: 0.1.0+1
 publish_to: none

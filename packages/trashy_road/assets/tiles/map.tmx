@@ -17,10 +17,8 @@
         <property name="speed" type="int" value="5"/>
         <property name="traffic" type="int" value="5"/>
       </properties>
-      <point/>
     </object>
     <object id="33" template="road_lane.tx" x="64" y="240" name="road_lane" class="road_lane">
-      <point/>
       <properties>
         <property name="leftToRight" type="bool" value="false"/>
         <property name="speed" type="int" value="0"/>
@@ -41,9 +39,7 @@
     <object id="31" template="trash.tx" class="trash" gid="3" x="1024" y="1728" width="128" height="128"/>
   </objectgroup>
   <objectgroup id="4" name="CoreItemsLayer">
-    <object id="12" template="spawn.tx" name="spawn" class="spawn" x="832" y="1952">
-      <point/>
-    </object>
+    <object id="12" template="spawn.tx" name="spawn" class="spawn" x="832" y="1952"></object>
     <object id="13" template="finish.tx" name="finish" class="finish" gid="4" x="768" y="1216" width="128" height="128"/>
   </objectgroup>
 </map>

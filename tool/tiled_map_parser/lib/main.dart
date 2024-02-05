@@ -40,56 +40,30 @@ class _TiledObject {
     final templateFile = _templateFile(basePath);
 
     final templateObject = templateFile._object;
-    final newAttributes = templateObject.attributes.where(
+
+    final objectAttributes = templateObject.attributes.where(
       (attribute) => _element.getAttribute(attribute.name.toString()) == null,
     );
-
-    for (final attribute in newAttributes) {
+    for (final attribute in objectAttributes) {
       _element.setAttribute(attribute.name.toString(), attribute.value);
     }
 
-    // if there is a properties chlid
-    final templateProperties =
-        templateObject.findAllElements('properties').firstOrNull;
-
-    if (templateProperties != null) {
-      // get all the properties that are not in the target object
-      final newProperties = templateProperties.children
-          .where(
-            // check with every property in the target object
-            (property) => _element.findAllElements('property').every(
-                  (element) =>
-                      // if the property does not exist in the target object
-                      element.getAttribute('name') !=
-                      property.getAttribute('name'),
-                ),
-          )
-          // copy each node as you cant add the same node to multiple parents
-          .map((element) => element.copy());
-
-      // add the property nodes to the object inside of the properties node or
-      // create one if it doesnt exist
-
-      final propertiesNode = _element.findElements('properties').firstOrNull;
-      if (propertiesNode == null) {
-        _element.children.add(
-          XmlElement(
-            XmlName('properties'),
-            [],
-            newProperties.toList(),
-          ),
-        );
-      } else {
-        propertiesNode.children.addAll(newProperties);
-      }
+    final properties = templateFile._properties;
+    if (properties != null && _element.getElement('properties') == null) {
+      _element.children.add(properties.copy());
     }
   }
 }
 
 class _TiledTemplateFile {
-  const _TiledTemplateFile(this._object);
+  const _TiledTemplateFile({
+    required XmlElement object,
+    XmlElement? properties,
+  })  : _object = object,
+        _properties = properties;
 
-  static _TiledTemplateFile fromFile(File file) {
+  /// Creates a [_TiledTemplateFile] from a file.
+  factory _TiledTemplateFile.fromFile(File file) {
     if (!file.existsSync()) {
       throw Exception('File does not exist: ${file.path}');
     }
@@ -102,10 +76,15 @@ class _TiledTemplateFile {
       throw Exception('No object found in file: ${file.path}');
     }
 
-    return _TiledTemplateFile(object);
+    return _TiledTemplateFile(
+      object: object,
+      properties: document.findAllElements('properties').firstOrNull,
+    );
   }
 
   final XmlElement _object;
+
+  final XmlElement? _properties;
 }
 
 // TODO(OlliePugh): The documentation here should follow
@@ -136,7 +115,7 @@ void main() async {
       .listSync()
       .whereType<File>()
       .where((file) => path.extension(file.path) == _tiledMapExtension)
-      .toSet();
+      .toList();
 
   logger.info('Found ${tmxFiles.length} .tmx files');
 

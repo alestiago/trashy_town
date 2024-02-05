@@ -2,6 +2,7 @@
 // and add the issue URL here.
 
 /// {@template tile_map_parser}
+/// Prepares a Tiled map file (`.tmx`) for use with Flame.
 ///
 /// This script should be run from `tool/tiled_map_parser`, otherwise it will
 /// throw an error.

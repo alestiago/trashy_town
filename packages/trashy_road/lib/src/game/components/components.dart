@@ -1,3 +1,4 @@
+export 'barrel/barrel.dart';
 export 'player/player.dart';
 export 'tile_bound_sprite_component/tile_bound_sprite_component.dart';
 export 'trash/trash.dart';

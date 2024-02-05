@@ -1,10 +1,29 @@
 import 'dart:async';
 
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/foundation.dart';
 import 'package:trashy_road/config.dart';
+import 'package:trashy_road/src/game/game.dart';
 
-abstract class TileBoundSpriteComponent extends SpriteComponent {
-  TileBoundSpriteComponent({super.position}) : super(anchor: Anchor.bottomLeft);
+abstract class TileBoundSpriteComponent extends SpriteComponent
+    with CollisionCallbacks {
+  TileBoundSpriteComponent({
+    super.position,
+    super.sprite,
+    this.collidesWithPlayer = false,
+  }) : super(anchor: Anchor.bottomLeft);
+
+  factory TileBoundSpriteComponent.generate(String class_) {
+    switch (class_) {
+      case 'barrel':
+        return Barrel();
+      default:
+        throw Exception('$class_ respective class could not be found');
+    }
+  }
+
+  bool collidesWithPlayer;
 
   static Vector2 snapToGrid(Vector2 vector, {bool center = false}) {
     var snapped = vector - (vector % GameSettings.gridDimensions);
@@ -23,5 +42,17 @@ abstract class TileBoundSpriteComponent extends SpriteComponent {
   FutureOr<void> onLoad() {
     anchor = Anchor.bottomLeft;
     return super.onLoad();
+  }
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    if (!collidesWithPlayer) return;
+
+    if (other is Player) {
+      other.targetPosition =
+          TileBoundSpriteComponent.snapToGrid(other.position, center: true);
+    }
+
+    super.onCollision(intersectionPoints, other);
   }
 }

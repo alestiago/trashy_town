@@ -39,17 +39,49 @@ class _TiledObject {
   void addTemplateData(String basePath) {
     final templateFile = _templateFile(basePath);
 
-    final object = templateFile._object;
-    final newAttributes = object.attributes.where(
-      (attribute) {
-        print('name: ${attribute.name} value: ${attribute.value}');
-        print('element: ${_element.getAttribute(attribute.name.toString())}');
-        return _element.getAttribute(attribute.name.toString()) == null;
-      },
+    final templateObject = templateFile._object;
+    final newAttributes = templateObject.attributes.where(
+      (attribute) => _element.getAttribute(attribute.name.toString()) == null,
     );
 
     for (final attribute in newAttributes) {
       _element.setAttribute(attribute.name.toString(), attribute.value);
+    }
+
+    // if there is a properties chlid
+    final templateProperties =
+        templateObject.findAllElements('properties').firstOrNull;
+
+    if (templateProperties != null) {
+      // get all the properties that are not in the target object
+      final newProperties = templateProperties.children
+          .where(
+            // check with every property in the target object
+            (property) => _element.findAllElements('property').every(
+                  (element) =>
+                      // if the property does not exist in the target object
+                      element.getAttribute('name') !=
+                      property.getAttribute('name'),
+                ),
+          )
+          // copy each node as you cant add the same node to multiple parents
+          .map((element) => element.copy());
+
+      // add the property nodes to the object inside of the properties node or
+      // create one if it doesnt exist
+
+      final propertiesNode = _element.findElements('properties').firstOrNull;
+      if (propertiesNode == null) {
+        _element.children.add(
+          XmlElement(
+            XmlName('properties'),
+            [],
+            newProperties.toList(),
+          ),
+        );
+      } else {
+        propertiesNode.children.addAll(newProperties);
+      }
     }
   }
 }

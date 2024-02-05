@@ -1,5 +1,4 @@
-// TODO(OlliePugh): Add an issue on FlameTiled, with reproductive steps to Flame
-// and add the issue URL here.
+// TODO(OlliePugh): https://github.com/alestiago/trashy_road/issues/31
 
 /// {@template tile_map_parser}
 /// Prepares a Tiled map file (`.tmx`) for use with Flame.

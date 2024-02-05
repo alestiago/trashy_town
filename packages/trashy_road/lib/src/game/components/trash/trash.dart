@@ -20,6 +20,8 @@ class Trash extends TileBoundSpriteComponent
     return super.onLoad();
   }
 
+  // TODO(alestiago): This should be its own behavior:
+  // https://github.com/alestiago/trashy_road/issues/18
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Player) {

@@ -1,6 +1,10 @@
 import 'dart:io';
 import 'package:xml/xml.dart';
 
+// TODO(OlliePugh): The documentation here should follow
+// EffectiveDart convention:
+// https://dart.dev/guides/language/effective-dart/documentation
+
 /// tiled doesnt parse template information properly
 /// this function will copy all template data into
 /// any objects

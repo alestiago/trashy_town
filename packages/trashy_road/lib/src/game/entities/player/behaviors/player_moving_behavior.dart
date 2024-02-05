@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:trashy_road/config.dart';
 import 'package:trashy_road/src/game/game.dart';
 
-class PlayerKeyboardMovingBehavior extends Behavior<PlayerEntity>
+class PlayerKeyboardMovingBehavior extends Behavior<Player>
     with KeyboardHandler {
   PlayerKeyboardMovingBehavior._({
     required LogicalKeyboardKey upKey,

@@ -38,7 +38,7 @@ class TrashyRoadGame extends FlameGame
 
     final mapComponent = await TrashyRoadWorld.create('map.tmx');
 
-    final player = PlayerEntity(
+    final player = Player(
       position: TileBoundSpriteComponent.snapToGrid(
         mapComponent.spawnPosition,
         center: true,

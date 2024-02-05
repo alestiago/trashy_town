@@ -7,8 +7,8 @@ import 'package:trashy_road/src/game/game.dart';
 
 export 'behaviors/behaviors.dart';
 
-class PlayerEntity extends PositionedEntity {
-  PlayerEntity({super.position})
+class Player extends PositionedEntity {
+  Player({super.position})
       : super(
           behaviors: [
             PropagatingCollisionBehavior(

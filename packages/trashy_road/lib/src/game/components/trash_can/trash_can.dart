@@ -21,7 +21,7 @@ class TrashCan extends TileBoundSpriteComponent
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is PlayerEntity) {
+    if (other is Player) {
       debugPrint('player hit end game');
     }
 

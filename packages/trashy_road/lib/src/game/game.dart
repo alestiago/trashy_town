@@ -36,21 +36,16 @@ class TrashyRoadGame extends FlameGame
   FutureOr<void> onLoad() async {
     await super.onLoad();
 
-    final mapComponent = await TrashyRoadWorld.create('map.tmx');
-
-    final player = Player(
-      position: TileBoundSpriteComponent.snapToGrid(
-        mapComponent.spawnPosition,
-        center: true,
-      ),
-    );
+    final trashyRoadWorld = await TrashyRoadWorld.create('map.tmx');
 
     final blocProvider = FlameBlocProvider<GameBloc, GameState>(
       create: () => _gameBloc,
-      children: [mapComponent, player],
+      children: [trashyRoadWorld],
     );
 
     world.add(blocProvider);
+
+    final player = trashyRoadWorld.tiled.children.whereType<Player>().first;
     camera.follow(player);
   }
 

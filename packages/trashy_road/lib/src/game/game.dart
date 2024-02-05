@@ -6,12 +6,12 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-import 'package:trashy_road/src/game/bloc/game_bloc.dart';
-import 'package:trashy_road/src/game/components/components.dart';
 import 'package:trashy_road/src/game/components/trashy_road_world/trashy_road_world.dart';
+import 'package:trashy_road/src/game/game.dart';
 
 export 'bloc/game_bloc.dart';
 export 'components/components.dart';
+export 'entities/entities.dart';
 export 'view/view.dart';
 
 class TrashyRoadGame extends FlameGame
@@ -38,12 +38,11 @@ class TrashyRoadGame extends FlameGame
 
     final mapComponent = await TrashyRoadWorld.create('map.tmx');
 
-    final player = Player(
+    final player = PlayerEntity(
       position: TileBoundSpriteComponent.snapToGrid(
         mapComponent.spawnPosition,
         center: true,
       ),
-      mapBounds: mapComponent.bounds,
     );
 
     final blocProvider = FlameBlocProvider<GameBloc, GameState>(

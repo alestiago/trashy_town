@@ -47,11 +47,6 @@ abstract class TileBoundSpriteComponent extends SpriteComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (!collidesWithPlayer) return;
 
-    if (other is Player) {
-      other.targetPosition =
-          TileBoundSpriteComponent.snapToGrid(other.position, center: true);
-    }
-
     super.onCollision(intersectionPoints, other);
   }
 }

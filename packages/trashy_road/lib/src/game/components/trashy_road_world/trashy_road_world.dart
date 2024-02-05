@@ -11,15 +11,8 @@ class TrashyRoadWorld extends Component {
     required this.mapComponent,
   }) {
     final trashGroup = mapComponent.tileMap.getLayer<ObjectGroup>('TrashLayer');
-
-    for (final trash in trashGroup!.objects) {
-      mapComponent.add(
-        Trash()
-          ..position = Vector2(
-            trash.x,
-            trash.y,
-          ),
-      );
+    for (final tiledObject in trashGroup!.objects) {
+      mapComponent.add(Trash.fromTiledObject(tiledObject));
     }
 
     for (final object in mapComponent.tileMap

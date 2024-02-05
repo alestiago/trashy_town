@@ -4,6 +4,8 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as path;
+import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 class TrashCan extends TileBoundSpriteComponent
@@ -12,7 +14,7 @@ class TrashCan extends TileBoundSpriteComponent
 
   @override
   Future<void> onLoad() async {
-    sprite = await Sprite.load('trash_can.png');
+    sprite = await Sprite.load(path.basename(Assets.images.trashCan.path));
     add(RectangleHitbox());
     return super.onLoad();
   }

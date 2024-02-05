@@ -33,6 +33,7 @@ class TrashyRoadWorld extends Component {
         default:
       }
     }
+
     for (final object
         in mapComponent.tileMap.getLayer<ObjectGroup>('Obstacles')!.objects) {
       mapComponent.add(
@@ -64,8 +65,10 @@ class TrashyRoadWorld extends Component {
   }
 
   static Future<TrashyRoadWorld> create(String path) async {
-    final mapComponent =
-        await TiledComponent.load(path, GameSettings.gridDimensions);
+    final mapComponent = await TiledComponent.load(
+      path,
+      GameSettings.gridDimensions,
+    );
     return TrashyRoadWorld._create(mapComponent: mapComponent);
   }
 }

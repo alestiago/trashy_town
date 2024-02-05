@@ -62,6 +62,10 @@ class Assets {
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsTilesGen tiles = $AssetsTilesGen();
+  static const String trashyRoad = 'assets/trashy_road.tiled-project';
+
+  /// List of all assets
+  static List<String> get values => [trashyRoad];
 }
 
 class AssetGenImage {

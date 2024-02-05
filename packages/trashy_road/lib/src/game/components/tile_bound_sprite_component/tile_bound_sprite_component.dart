@@ -15,14 +15,14 @@ abstract class TileBoundSpriteComponent extends SpriteComponent
 
   factory TileBoundSpriteComponent.generate(String class_) {
     switch (class_) {
-      case 'barrel':
+      case 'barrel': // TODO: these are in template tiles, how do we want to enum them
         return Barrel();
       default:
         throw Exception('$class_ respective class could not be found');
     }
   }
 
-  bool collidesWithPlayer;
+  final bool collidesWithPlayer;
 
   static Vector2 snapToGrid(Vector2 vector, {bool center = false}) {
     var snapped = vector - (vector % GameSettings.gridDimensions);

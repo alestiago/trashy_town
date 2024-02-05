@@ -4,12 +4,14 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:trashy_road/config.dart';
 import 'package:trashy_road/src/game/game.dart';
+import 'package:path/path.dart' as path;
+import 'package:trashy_road/gen/gen.dart';
 
 class Barrel extends TileBoundSpriteComponent {
   Barrel() : super(collidesWithPlayer: true);
   @override
   Future<void> onLoad() async {
-    sprite = await Sprite.load('barrel.png');
+    sprite = await Sprite.load(path.basename(Assets.images.barrel.path));
     add(
       RectangleHitbox(
         size: GameSettings.gridDimensions,

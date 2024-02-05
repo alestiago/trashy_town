@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flutter/foundation.dart';
 import 'package:trashy_road/config.dart';
 import 'package:trashy_road/src/game/game.dart';
 

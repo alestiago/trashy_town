@@ -27,18 +27,15 @@ void main() async {
           final templateFile = File('assets/tiles/$template');
           final templateDoc =
               XmlDocument.parse(templateFile.readAsStringSync());
-          final xmlClass = templateDoc
-              .findAllElements('object')
-              .toList()[0]
-              .attributes
-              .forEach((attribute) {
+          for (final attribute
+              in templateDoc.findAllElements('object').toList()[0].attributes) {
             final parsedAttribute = attribute.toString().split('=');
 
             element.setAttribute(
               parsedAttribute[0],
               parsedAttribute[1].replaceAll('"', ''),
             );
-          });
+          }
         }
       }
     });

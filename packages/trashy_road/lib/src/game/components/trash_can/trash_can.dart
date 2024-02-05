@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_bloc/flame_bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 class TrashCan extends TileBoundSpriteComponent
@@ -19,7 +20,7 @@ class TrashCan extends TileBoundSpriteComponent
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Player) {
-      print('player hit end game');
+      debugPrint('player hit end game');
     }
 
     super.onCollision(intersectionPoints, other);

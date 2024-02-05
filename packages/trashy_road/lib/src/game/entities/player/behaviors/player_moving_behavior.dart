@@ -13,6 +13,13 @@ import 'package:trashy_road/src/game/game.dart';
 /// Maintaining the keys pressed will not make the player move continuously.
 /// Instead, it will only move once. Continuos movement can be achieved by
 /// pressing the keys multiple times.
+///
+/// See also:
+///
+/// * [PlayerKeyboardMovingBehavior.arrows], a behavior that uses the arrow keys
+/// to move the player around.
+/// * [PlayerKeyboardMovingBehavior.wasd], a behavior that uses the WASD keys
+/// to move the player around.
 class PlayerKeyboardMovingBehavior extends Behavior<Player>
     with KeyboardHandler {
   PlayerKeyboardMovingBehavior._({

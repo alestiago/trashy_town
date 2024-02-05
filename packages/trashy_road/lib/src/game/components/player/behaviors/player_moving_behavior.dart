@@ -6,43 +6,53 @@ import 'package:trashy_road/src/game/model/map_bounds.dart';
 
 class PlayerMovingBehavior extends Component
     with ParentIsA<Player>, KeyboardHandler {
-  PlayerMovingBehavior({required this.mapBounds});
+  PlayerMovingBehavior({
+    required MapBounds mapBounds,
+  }) : _mapBounds = mapBounds;
 
-  Map<LogicalKeyboardKey, bool> alreadyDownMap = {};
-  MapBounds mapBounds;
+  final MapBounds _mapBounds;
+
+  /// A set containg the keys that were previously down.
+  final _previouslyDownKeys = <LogicalKeyboardKey>{};
+
+  /// The new position the player is trying to move to.
+  ///
+  /// It may not be the final position the player will move to, since it has
+  /// to be checked against the map bounds.
+  final Vector2 _newPosition = Vector2.zero();
+
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    final newPosition =
-        Vector2(parent.targetPosition.x, parent.targetPosition.y);
+    _newPosition.setFrom(parent.targetPosition);
+
     if (event is RawKeyDownEvent) {
-      if (alreadyDownMap.containsKey(
-            event.logicalKey,
-          ) && // key is already down this is a repeat event exit early
-          alreadyDownMap[event.logicalKey]!) {
+      if (_previouslyDownKeys.contains(event.logicalKey)) {
+        // The user has to release the key before it can be pressed again.
         return super.onKeyEvent(event, keysPressed);
       }
-      alreadyDownMap[event.logicalKey] = true;
+
+      _previouslyDownKeys.add(event.logicalKey);
 
       switch (event.logicalKey) {
         case LogicalKeyboardKey.arrowLeft:
-          newPosition.x -= GameSettings.gridDimensions.x;
+          _newPosition.x -= GameSettings.gridDimensions.x;
         case LogicalKeyboardKey.arrowRight:
-          newPosition.x += GameSettings.gridDimensions.x;
+          _newPosition.x += GameSettings.gridDimensions.x;
         case LogicalKeyboardKey.arrowDown:
-          newPosition.y += GameSettings.gridDimensions.y;
+          _newPosition.y += GameSettings.gridDimensions.y;
         case LogicalKeyboardKey.arrowUp:
-          newPosition.y -= GameSettings.gridDimensions.y;
+          _newPosition.y -= GameSettings.gridDimensions.y;
         default:
           break;
       }
 
-      if (mapBounds.isPointInside(newPosition)) {
-        parent.targetPosition = newPosition;
+      if (_mapBounds.isPointInside(_newPosition)) {
+        parent.targetPosition.setFrom(_newPosition);
       }
     }
 
     if (event is RawKeyUpEvent) {
-      alreadyDownMap[event.logicalKey] = false;
+      _previouslyDownKeys.remove(event.logicalKey);
     }
 
     return super.onKeyEvent(event, keysPressed);

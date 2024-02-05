@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <object name="road_lane" class="road_lane">
+  <properties>
+   <property name="leftToRight" type="bool" value="false"/>
+   <property name="speed" type="int" value="0"/>
+   <property name="traffic" type="int" value="0"/>
+  </properties>
+  <point/>
+ </object>
+</template>

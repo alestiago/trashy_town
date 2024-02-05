@@ -76,8 +76,6 @@ class PlayerKeyboardMovingBehavior extends Behavior<Player>
 
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    _targetPosition.setFrom(parent.position);
-
     if (event is RawKeyDownEvent) {
       if (_previouslyDownKeys.contains(event.logicalKey)) {
         // The user has to release the key before it can be pressed again.

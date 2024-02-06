@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:flame/game.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flutter/services.dart';
 import 'package:trashy_road/config.dart';
@@ -73,6 +74,9 @@ class PlayerKeyboardMovingBehavior extends Behavior<Player>
   /// it will be lerped until [_targetPosition] is reached by the [Player].
   final Vector2 _targetPosition = Vector2.zero();
 
+  /// A int that contains the time when the next move can be made.
+  DateTime _nextMoveTime = DateTime.fromMicrosecondsSinceEpoch(0);
+
   @override
   FutureOr<void> onLoad() async {
     await super.onLoad();
@@ -91,8 +95,11 @@ class PlayerKeyboardMovingBehavior extends Behavior<Player>
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
     if (event is RawKeyDownEvent) {
-      if (_previouslyDownKeys.contains(event.logicalKey)) {
+      final now = DateTime.now();
+      if (_previouslyDownKeys.contains(event.logicalKey) ||
+          now.isBefore(_nextMoveTime)) {
         // The user has to release the key before it can be pressed again.
+        // or the next move time has not been reached yet.
         return super.onKeyEvent(event, keysPressed);
       }
 
@@ -107,6 +114,8 @@ class PlayerKeyboardMovingBehavior extends Behavior<Player>
       } else if (event.logicalKey == _upKey) {
         _targetPosition.y -= GameSettings.gridDimensions.y;
       }
+
+      _nextMoveTime = now.add(GameSettings.moveDelay);
     }
 
     if (event is RawKeyUpEvent) {

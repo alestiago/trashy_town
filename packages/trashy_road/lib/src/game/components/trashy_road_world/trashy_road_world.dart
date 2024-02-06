@@ -38,6 +38,7 @@ class TrashyRoadWorld extends Component {
         // TODO(OlliePugh): rename 'finish' to 'trash_can' in the Tiled map, and
         // consider having a different layer for it.
         case 'finish':
+          tiled.add(TrashCan.fromTiledObject(object));
           finishPosition = Vector2(object.x, object.y);
         default:
       }
@@ -53,10 +54,6 @@ class TrashyRoadWorld extends Component {
         // ordering priority by y
       );
     }
-
-    tiled.add(
-      TrashCan(position: finishPosition),
-    );
 
     final bottomRightPosition =
         tiled.topLeftPosition + Vector2(tiled.width, tiled.height);

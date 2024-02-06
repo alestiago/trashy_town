@@ -23,6 +23,7 @@ class Player extends PositionedEntity {
             ),
             PlayerKeyboardMovingBehavior.arrows(),
             PlayerCollectingTrashBehavior(),
+            PlayerDepositingTrashBehavior(),
           ],
           children: [
             CircleComponent(

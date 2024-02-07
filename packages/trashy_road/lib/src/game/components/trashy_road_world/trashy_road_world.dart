@@ -10,7 +10,8 @@ import 'package:trashy_road/src/game/model/map_bounds.dart';
 enum _TiledLayer {
   trashLayer._('TrashLayer'),
   coreItemsLayer._('CoreItemsLayer'),
-  obstacles._('Obstacles');
+  obstacles._('Obstacles'),
+  roadLayer._('RoadLayer');
 
   const _TiledLayer._(this.name);
 
@@ -19,7 +20,7 @@ enum _TiledLayer {
 }
 
 class TrashyRoadWorld extends Component {
-  TrashyRoadWorld._create({required this.tiled}) {
+  TrashyRoadWorld.create({required this.tiled}) {
     final trashGroup = tiled.tileMap.getLayer<ObjectGroup>(
       _TiledLayer.trashLayer.name,
     );
@@ -55,15 +56,24 @@ class TrashyRoadWorld extends Component {
       );
     }
 
+    final roadLaneLayer =
+        tiled.tileMap.getLayer<ObjectGroup>(_TiledLayer.roadLayer.name);
+    if (roadLaneLayer == null) {
+      throw ArgumentError.value(
+        _TiledLayer.roadLayer.name,
+        'layer',
+        '''The Tiled map must have a layer named "${_TiledLayer.roadLayer.name}".''',
+      );
+    }
+    final roadLaneObjects = roadLaneLayer.objects;
+    for (final object in roadLaneObjects) {
+      final roadLane = RoadLane.fromTiledObject(object);
+      tiled.add(roadLane);
+    }
+
     final bottomRightPosition =
         tiled.topLeftPosition + Vector2(tiled.width, tiled.height);
     bounds = MapBounds(tiled.topLeftPosition, bottomRightPosition);
-  }
-
-  static Future<TrashyRoadWorld> create(String path) async {
-    final mapComponent =
-        await TiledComponent.load(path, GameSettings.gridDimensions);
-    return TrashyRoadWorld._create(tiled: mapComponent);
   }
 
   final TiledComponent tiled;

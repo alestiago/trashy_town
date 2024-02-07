@@ -12,8 +12,6 @@ class PlayerDepositingTrashBehavior extends CollisionBehavior<TrashCan, Player>
   @override
   void onCollision(Set<Vector2> intersectionPoints, TrashCan other) {
     super.onCollision(intersectionPoints, other);
-
     print('player hit the end game');
-    // bloc.add(const GameCollectedTrashEvent());
   }
 }

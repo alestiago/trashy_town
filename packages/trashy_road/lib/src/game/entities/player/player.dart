@@ -1,23 +1,35 @@
+import 'dart:async';
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_tiled/flame_tiled.dart';
-import 'package:flutter/painting.dart';
+import 'package:path/path.dart' as path;
 import 'package:trashy_road/game_settings.dart';
+import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 export 'behaviors/behaviors.dart';
 
+class PlayerSprite extends SpriteComponent {
+  @override
+  Future<void> onLoad() async {
+    anchor = const Anchor(0.5, 0.8);
+    sprite = await Sprite.load(path.basename(Assets.images.player.path));
+    return super.onLoad();
+  }
+}
+
 class Player extends PositionedEntity {
   Player({super.position})
       : super(
+          size: Vector2(1, 2)..multiply(GameSettings.gridDimensions),
           behaviors: [
             PropagatingCollisionBehavior(
               RectangleHitbox(
-                size: Vector2(
-                  GameSettings.gridDimensions.x / 2,
-                  GameSettings.gridDimensions.y / 2,
-                ),
+                size: Vector2.all(1)
+                  ..multiply(GameSettings.gridDimensions)
+                  ..multiply(Vector2.all(0.8)), // make slightly smaller
                 anchor: Anchor.center,
               ),
             ),
@@ -26,11 +38,7 @@ class Player extends PositionedEntity {
             PlayerDepositingTrashBehavior(),
           ],
           children: [
-            CircleComponent(
-              anchor: Anchor.center,
-              radius: 10,
-              paint: Paint()..color = const Color(0xFFFF0000),
-            ),
+            PlayerSprite(),
           ],
         );
 

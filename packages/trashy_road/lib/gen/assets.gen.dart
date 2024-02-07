@@ -35,7 +35,8 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/trash_can.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [barrel, bus, grass, road, trash, trashCan];
+  List<AssetGenImage> get values =>
+      [barrel, bus, grass, player, road, trash, trashCan];
 }
 
 class $AssetsTilesGen {

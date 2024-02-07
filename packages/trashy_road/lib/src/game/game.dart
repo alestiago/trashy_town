@@ -7,7 +7,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_tiled/flame_tiled.dart';
-import 'package:trashy_road/config.dart';
+import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 export 'bloc/game_bloc.dart';

@@ -15,7 +15,9 @@ abstract class TileBoundSpriteComponent extends SpriteComponent
 
   factory TileBoundSpriteComponent.generate(String class_) {
     switch (class_) {
-      case 'barrel': // TODO: these are in template tiles, how do we want to enum them
+      // TODO(OlliePugh): these are in template tiles, how do we want to enum
+      // them.
+      case 'barrel':
         return Barrel();
       default:
         throw Exception('$class_ respective class could not be found');

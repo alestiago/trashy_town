@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
-import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/game/model/map_bounds.dart';
 

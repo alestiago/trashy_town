@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
-import 'package:trashy_road/src/game/entities/vehicle/behaviors/vehicle_running_over_behavior.dart';
 import 'package:trashy_road/src/game/game.dart';
+
+export 'behaviors/behaviors.dart';
 
 /// A vehicle that moves along a [RoadLane].
 ///
@@ -24,6 +25,7 @@ abstract class Vehicle extends PositionedEntity {
           behaviors: [
             PropagatingCollisionBehavior(hitbox),
             VehicleRunningOverBehavior(),
+            VehicleDrivingBehavior(),
           ],
         );
 

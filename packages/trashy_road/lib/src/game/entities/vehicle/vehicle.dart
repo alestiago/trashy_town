@@ -16,10 +16,9 @@ export 'behaviors/behaviors.dart';
 abstract class Vehicle extends PositionedEntity {
   Vehicle({
     required ShapeHitbox hitbox,
-    required RoadLane roadLane,
+    required this.roadLane,
     required super.children,
-  })  : _roadLane = roadLane,
-        super(
+  }) : super(
           anchor: Anchor.topLeft,
           position: roadLane.position.clone(),
           behaviors: [
@@ -33,10 +32,10 @@ abstract class Vehicle extends PositionedEntity {
   FutureOr<void> onLoad() async {
     await super.onLoad();
 
-    if (_roadLane.direction == RoadLaneDirection.leftToRight) {
+    if (roadLane.direction == RoadLaneDirection.leftToRight) {
       flipHorizontally();
     }
   }
 
-  final RoadLane _roadLane;
+  final RoadLane roadLane;
 }

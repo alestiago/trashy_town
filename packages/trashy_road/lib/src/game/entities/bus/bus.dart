@@ -6,7 +6,7 @@ import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
-class BusSprite extends SpriteComponent with ParentIsA<VehicleEntity> {
+class BusSprite extends SpriteComponent with ParentIsA<Vehicle> {
   @override
   Future<void> onLoad() async {
     sprite = await Sprite.load(path.basename(Assets.images.bus.path));
@@ -14,7 +14,7 @@ class BusSprite extends SpriteComponent with ParentIsA<VehicleEntity> {
   }
 }
 
-class Bus extends VehicleEntity {
+class Bus extends Vehicle {
   Bus({required super.roadLane})
       : super(
           children: [

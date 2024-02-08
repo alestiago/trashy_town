@@ -12,7 +12,7 @@ import 'package:trashy_road/src/game/game.dart';
 ///
 /// * [VehicleSpawningBehavior], which is used to spawn vehicles on a
 /// [RoadLane].
-class Vehicle extends PositionedEntity {
+abstract class Vehicle extends PositionedEntity {
   Vehicle({
     required ShapeHitbox hitbox,
     required RoadLane roadLane,

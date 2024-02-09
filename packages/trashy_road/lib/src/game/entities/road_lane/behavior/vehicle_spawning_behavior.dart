@@ -18,4 +18,18 @@ class VehicleSpawningBehavior extends Behavior<RoadLane> {
     final vehicle = Bus(roadLane: parent);
     parent.add(vehicle);
   }
+
+  @override
+  void update(double dt) {
+    final world = ancestors().whereType<TrashyRoadWorld>().first;
+    final bounds = world.bounds;
+
+    final vehicles = parent.children.whereType<Vehicle>();
+    for (final vehicle in vehicles) {
+      final isWithinBound = bounds.isPointInside(vehicle.position);
+      if (!isWithinBound) {
+        vehicle.position = vehicle.roadLane.position.clone();
+      }
+    }
+  }
 }

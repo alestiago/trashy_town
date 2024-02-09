@@ -87,8 +87,8 @@ class TrashyRoadWorld extends Component {
   late MapBounds bounds;
 
   @override
-  FutureOr<void> onLoad() {
+  FutureOr<void> onLoad() async {
+    await super.onLoad();
     add(tiled);
-    return super.onLoad();
   }
 }

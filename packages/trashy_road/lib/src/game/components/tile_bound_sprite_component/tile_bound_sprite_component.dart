@@ -29,7 +29,6 @@ abstract class TileBoundSpriteComponent extends SpriteComponent
   static Vector2 snapToGrid(Vector2 vector, {bool center = false}) {
     var snapped = vector - (vector % GameSettings.gridDimensions);
     if (center) snapped += GameSettings.gridDimensions / 2;
-
     return snapped;
   }
 

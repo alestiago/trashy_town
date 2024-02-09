@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:trashy_road/src/game/game.dart';
 
@@ -26,9 +27,10 @@ class VehicleSpawningBehavior extends Behavior<RoadLane> {
 
     final vehicles = parent.children.whereType<Vehicle>();
     for (final vehicle in vehicles) {
-      final isWithinBound = bounds.isPointInside(vehicle.position);
+      final isWithinBound =
+          bounds.isPointInside(parent.position + vehicle.position);
       if (!isWithinBound) {
-        vehicle.position = vehicle.roadLane.position.clone();
+        vehicle.position = Vector2.zero();
       }
     }
   }

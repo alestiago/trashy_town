@@ -14,7 +14,6 @@ export 'behaviors/behaviors.dart';
 class Player extends PositionedEntity {
   Player({super.position})
       : super(
-          size: Vector2(1, 2)..multiply(GameSettings.gridDimensions),
           behaviors: [
             PropagatingCollisionBehavior(
               RectangleHitbox(

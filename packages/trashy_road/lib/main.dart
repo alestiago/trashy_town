@@ -1,7 +1,6 @@
 import 'package:flame/cache.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/loading/cubit/cubit.dart';
 import 'package:trashy_road/src/loading/view/loading_page.dart';
 

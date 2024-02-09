@@ -12,7 +12,9 @@ class DebugTrashyRoadGame extends TrashyRoadGame {
   DebugTrashyRoadGame({
     required super.gameBloc,
     super.images,
-  });
+  }) {
+    debugMode = true;
+  }
 
   @override
   FutureOr<void> onLoad() async {

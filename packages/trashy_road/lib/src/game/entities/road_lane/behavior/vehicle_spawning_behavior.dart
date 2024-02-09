@@ -30,7 +30,7 @@ class VehicleSpawningBehavior extends Behavior<RoadLane> {
       final isWithinBound =
           bounds.isPointInside(parent.position + vehicle.position);
       if (!isWithinBound) {
-        vehicle.position = Vector2.zero();
+        vehicle.position.setAll(0)
       }
     }
   }

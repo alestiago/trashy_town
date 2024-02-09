@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/services.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/src/game/game.dart';
@@ -21,7 +22,7 @@ import 'package:trashy_road/src/game/game.dart';
 /// * [PlayerKeyboardMovingBehavior.wasd], a behavior that uses the WASD keys
 /// to move the player around.
 class PlayerKeyboardMovingBehavior extends Behavior<Player>
-    with KeyboardHandler {
+    with KeyboardHandler, FlameBlocReader<GameBloc, GameState> {
   PlayerKeyboardMovingBehavior._({
     required LogicalKeyboardKey upKey,
     required LogicalKeyboardKey downKey,
@@ -77,7 +78,7 @@ class PlayerKeyboardMovingBehavior extends Behavior<Player>
   DateTime _nextMoveTime = DateTime.fromMicrosecondsSinceEpoch(0);
 
   @override
-  FutureOr<void> onLoad() async {
+  Future<void> onLoad() async {
     await super.onLoad();
     _targetPosition.setFrom(parent.position);
   }
@@ -93,6 +94,19 @@ class PlayerKeyboardMovingBehavior extends Behavior<Player>
 
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    final isMovementKey = event.logicalKey == _leftKey ||
+        event.logicalKey == _rightKey ||
+        event.logicalKey == _downKey ||
+        event.logicalKey == _upKey;
+    if (!isMovementKey) {
+      return super.onKeyEvent(event, keysPressed);
+    }
+
+    final isFirstInteraction = bloc.state.status == GameStatus.ready;
+    if (isFirstInteraction) {
+      bloc.add(const GameInteractedEvent());
+    }
+
     if (event is RawKeyDownEvent) {
       final now = DateTime.now();
       if (_previouslyDownKeys.contains(event.logicalKey) ||

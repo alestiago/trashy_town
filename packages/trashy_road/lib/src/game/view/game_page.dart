@@ -16,26 +16,45 @@ class GamePage extends StatelessWidget {
   }
 }
 
-class _GameView extends StatelessWidget {
+class _GameView extends StatefulWidget {
   const _GameView();
+
+  @override
+  State<_GameView> createState() => _GameViewState();
+}
+
+class _GameViewState extends State<_GameView> {
+  TrashyRoadGame? _game;
 
   @override
   Widget build(BuildContext context) {
     final gameBloc = context.read<GameBloc>();
+    _game ??= TrashyRoadGame(gameBloc: gameBloc);
 
-    return Stack(
-      children: [
-        GameWidget.controlled(
-          gameFactory: () => TrashyRoadGame(gameBloc: gameBloc),
-        ),
-        const Align(
-          alignment: Alignment.topLeft,
-          child: Padding(
-            padding: EdgeInsets.all(8),
-            child: InventoryHud(),
-          ),
-        ),
-      ],
+    return BlocBuilder<GameBloc, GameState>(
+      buildWhen: (previous, current) {
+        return previous.status == GameStatus.playing &&
+            current.status == GameStatus.resetting;
+      },
+      builder: (context, state) {
+        if (state.status == GameStatus.resetting) {
+          _game = TrashyRoadGame(gameBloc: gameBloc);
+          gameBloc.add(const GameReadyEvent());
+        }
+
+        return Stack(
+          children: [
+            GameWidget(game: _game!),
+            const Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: EdgeInsets.all(8),
+                child: InventoryHud(),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

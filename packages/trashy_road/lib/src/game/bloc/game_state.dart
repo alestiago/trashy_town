@@ -4,8 +4,17 @@ part of 'game_bloc.dart';
 /// The status of the game.
 /// {@endtemplate}
 enum GameStatus {
+  /// The game is ready to be played.
+  ///
+  /// As soon, as the user has interacted with the game, the game will
+  /// transition to [playing].
+  ready,
+
   /// The user is currently playing the game.
   playing,
+
+  /// The game is resetting.
+  resetting,
 }
 
 /// {@template GameState}
@@ -25,7 +34,7 @@ class GameState extends Equatable {
   /// The initial state of the game.
   const GameState.initial()
       : this(
-          status: GameStatus.playing,
+          status: GameStatus.ready,
           inventory: const Inventory.empty(),
         );
 

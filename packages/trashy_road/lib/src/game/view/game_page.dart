@@ -1,11 +1,18 @@
-import 'package:flame/game.dart';
+import 'package:flame/game.dart' hide Route;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/game/widgets/widgets.dart';
+import 'package:trashy_road/src/loading/cubit/cubit.dart';
 
 class GamePage extends StatelessWidget {
   const GamePage({super.key});
+
+  static Route<void> route() {
+    return MaterialPageRoute<void>(
+      builder: (_) => const GamePage(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +35,17 @@ class _GameViewState extends State<_GameView> {
 
   @override
   Widget build(BuildContext context) {
+    final loadingBloc = context.read<PreloadCubit>();
     final gameBloc = context.read<GameBloc>();
-    _game ??= TrashyRoadGame(gameBloc: gameBloc);
+
+    TrashyRoadGame gameBuilder() {
+      return TrashyRoadGame(
+        gameBloc: gameBloc,
+        images: loadingBloc.images,
+      );
+    }
+
+    _game ??= gameBuilder();
 
     return BlocBuilder<GameBloc, GameState>(
       buildWhen: (previous, current) {
@@ -38,7 +54,7 @@ class _GameViewState extends State<_GameView> {
       },
       builder: (context, state) {
         if (state.status == GameStatus.resetting) {
-          _game = TrashyRoadGame(gameBloc: gameBloc);
+          _game = gameBuilder();
           gameBloc.add(const GameReadyEvent());
         }
 

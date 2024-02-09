@@ -33,3 +33,13 @@ void main() {
   Assets.images.trashCan;
 }
 ```
+
+## Testing
+
+### Running tests
+
+1. Run the game tests:
+
+```sh
+flutter test
+```

@@ -15,6 +15,7 @@ class TrashCan extends PositionedEntity {
     required Vector2 position,
   }) : super(
           position: _snapToGrid(position),
+          priority: position.y.floor(),
           behaviors: [
             PropagatingCollisionBehavior(
               RectangleHitbox(

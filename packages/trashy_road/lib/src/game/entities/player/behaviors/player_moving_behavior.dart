@@ -91,6 +91,7 @@ class PlayerKeyboardMovingBehavior extends Behavior<Player>
 
     if (parent.position.distanceTo(_targetPosition) != 0) {
       parent.position.lerp(_targetPosition, 0.1);
+      parent.priority = parent.position.y.floor();
     }
   }
 

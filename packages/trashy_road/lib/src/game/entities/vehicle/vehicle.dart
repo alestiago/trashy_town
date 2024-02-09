@@ -26,7 +26,9 @@ abstract class Vehicle extends PositionedEntity {
             VehicleRunningOverBehavior(),
             VehicleDrivingBehavior(),
           ],
-        );
+        ) {
+    priority = position.y.floor();
+  }
 
   @override
   FutureOr<void> onLoad() async {

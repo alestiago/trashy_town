@@ -11,18 +11,6 @@ import 'package:trashy_road/src/game/game.dart';
 
 export 'behaviors/behaviors.dart';
 
-class PlayerSprite extends SpriteComponent with HasGameReference {
-  @override
-  Future<void> onLoad() async {
-    anchor = const Anchor(0.5, 0.8);
-    sprite = await Sprite.load(
-      Assets.images.player.path,
-      images: game.images,
-    );
-    return super.onLoad();
-  }
-}
-
 class Player extends PositionedEntity {
   Player({super.position})
       : super(
@@ -41,7 +29,7 @@ class Player extends PositionedEntity {
             PlayerDepositingTrashBehavior(),
           ],
           children: [
-            PlayerSprite(),
+            _PlayerSpriteComponent(),
           ],
         );
 
@@ -67,6 +55,18 @@ class Player extends PositionedEntity {
     return Player(
       position: snappedPosition,
     );
+  }
+}
+
+class _PlayerSpriteComponent extends SpriteComponent with HasGameReference {
+  @override
+  Future<void> onLoad() async {
+    anchor = const Anchor(0.5, 0.8);
+    sprite = await Sprite.load(
+      Assets.images.player.path,
+      images: game.images,
+    );
+    return super.onLoad();
   }
 }
 

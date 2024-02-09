@@ -20,7 +20,6 @@ abstract class Vehicle extends PositionedEntity {
     required super.children,
   }) : super(
           anchor: Anchor.topLeft,
-          position: roadLane.position.clone(),
           behaviors: [
             PropagatingCollisionBehavior(hitbox),
             VehicleRunningOverBehavior(),

@@ -1,6 +1,8 @@
 import 'package:flame/game.dart' hide Route;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trashy_road/src/game/debug_game.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/game/widgets/widgets.dart';
 import 'package:trashy_road/src/loading/cubit/cubit.dart';
@@ -39,10 +41,15 @@ class _GameViewState extends State<_GameView> {
     final gameBloc = context.read<GameBloc>();
 
     TrashyRoadGame gameBuilder() {
-      return TrashyRoadGame(
-        gameBloc: gameBloc,
-        images: loadingBloc.images,
-      );
+      return kDebugMode
+          ? DebugTrashyRoadGame(
+              gameBloc: gameBloc,
+              images: loadingBloc.images,
+            )
+          : TrashyRoadGame(
+              gameBloc: gameBloc,
+              images: loadingBloc.images,
+            );
     }
 
     _game ??= gameBuilder();

@@ -4,6 +4,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
@@ -41,6 +42,9 @@ class Player extends PositionedEntity {
             PlayerSprite(),
           ],
         );
+
+  @visibleForTesting
+  Player.test({super.behaviors});
 
   /// Derives a [Player] from a [TiledObject].
   ///

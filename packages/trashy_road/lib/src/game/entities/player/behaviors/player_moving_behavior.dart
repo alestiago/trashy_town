@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/services.dart';
+import 'package:meta/meta.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/src/game/game.dart';
 
@@ -23,7 +24,8 @@ import 'package:trashy_road/src/game/game.dart';
 /// to move the player around.
 class PlayerKeyboardMovingBehavior extends Behavior<Player>
     with KeyboardHandler, FlameBlocReader<GameBloc, GameState> {
-  PlayerKeyboardMovingBehavior._({
+  @visibleForTesting
+  PlayerKeyboardMovingBehavior({
     required LogicalKeyboardKey upKey,
     required LogicalKeyboardKey downKey,
     required LogicalKeyboardKey leftKey,
@@ -36,7 +38,7 @@ class PlayerKeyboardMovingBehavior extends Behavior<Player>
   /// A [PlayerKeyboardMovingBehavior] that uses the arrow keys
   /// to move the player around.
   PlayerKeyboardMovingBehavior.arrows()
-      : this._(
+      : this(
           upKey: LogicalKeyboardKey.arrowUp,
           downKey: LogicalKeyboardKey.arrowDown,
           leftKey: LogicalKeyboardKey.arrowLeft,
@@ -46,7 +48,7 @@ class PlayerKeyboardMovingBehavior extends Behavior<Player>
   /// A [PlayerKeyboardMovingBehavior] that uses the WASD keys
   /// to move the player around.
   PlayerKeyboardMovingBehavior.wasd()
-      : this._(
+      : this(
           upKey: LogicalKeyboardKey.keyW,
           downKey: LogicalKeyboardKey.keyS,
           leftKey: LogicalKeyboardKey.keyA,

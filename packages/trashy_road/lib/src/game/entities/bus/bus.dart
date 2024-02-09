@@ -18,7 +18,7 @@ class Bus extends Vehicle {
   Bus({required super.roadLane})
       : super(
           children: [
-            _BusSprite(),
+            _BusSpriteComponent(),
           ],
           hitbox: RectangleHitbox(
             isSolid: true,
@@ -27,8 +27,8 @@ class Bus extends Vehicle {
         );
 }
 
-class _BusSprite extends SpriteComponent with HasGameReference {
-  _BusSprite() : super();
+class _BusSpriteComponent extends SpriteComponent with HasGameReference {
+  _BusSpriteComponent() : super();
 
   @override
   Future<void> onLoad() async {

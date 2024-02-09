@@ -62,13 +62,16 @@ class Player extends PositionedEntity {
     }
 
     final objectPosition = Vector2(tiledObject.x, tiledObject.y);
-    final snappedPosition = TileBoundSpriteComponent.snapToGrid(
-      objectPosition,
-      center: true,
-    );
+    final snappedPosition = _snapToGrid(objectPosition);
 
     return Player(
       position: snappedPosition,
     );
   }
+}
+
+Vector2 _snapToGrid(Vector2 vector) {
+  return vector -
+      (vector % GameSettings.gridDimensions) +
+      (GameSettings.gridDimensions / 2);
 }

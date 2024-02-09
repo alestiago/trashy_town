@@ -49,5 +49,6 @@ class _TrashCanSpriteComponent extends SpriteComponent with HasGameReference {
 }
 
 Vector2 _snapToGrid(Vector2 vector) {
-  return vector - (vector % GameSettings.gridDimensions);
+  return (vector - (vector % GameSettings.gridDimensions))
+    ..y -= GameSettings.gridDimensions.y * 2;
 }

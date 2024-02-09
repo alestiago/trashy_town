@@ -7,15 +7,16 @@ import 'package:flame_tiled/flame_tiled.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
 
-/// A piece of trash.
+/// A barrel.
 ///
-/// Trash is usually scattered around the road and the player has to pick it up
-/// to keep the map clean.
-class Trash extends PositionedEntity {
-  Trash._({
+/// Barrels, are obstacles that are placed around the map, they are used to
+/// block the player's path.
+class Barrel extends PositionedEntity {
+  Barrel._({
     required Vector2 position,
   }) : super(
           position: _snapToGrid(position),
+          priority: position.y.floor(),
           behaviors: [
             PropagatingCollisionBehavior(
               RectangleHitbox(
@@ -25,26 +26,26 @@ class Trash extends PositionedEntity {
             ),
           ],
           children: [
-            _TrashSpriteComponent(),
+            _BarrelSpriteComponent(),
           ],
         );
 
-  /// Derives a [Trash] from a [TiledObject].
-  factory Trash.fromTiledObject(TiledObject tiledObject) {
-    return Trash._(
+  /// Derives a [Barrel] from a [TiledObject].
+  factory Barrel.fromTiledObject(TiledObject tiledObject) {
+    return Barrel._(
       position: Vector2(tiledObject.x, tiledObject.y),
     );
   }
 }
 
-class _TrashSpriteComponent extends SpriteComponent with HasGameReference {
-  _TrashSpriteComponent() : super();
+class _BarrelSpriteComponent extends SpriteComponent with HasGameReference {
+  _BarrelSpriteComponent() : super();
 
   @override
   FutureOr<void> onLoad() async {
     await super.onLoad();
 
-    sprite = await Sprite.load(Assets.images.trash.path, images: game.images);
+    sprite = await Sprite.load(Assets.images.barrel.path, images: game.images);
   }
 }
 

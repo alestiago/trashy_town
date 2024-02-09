@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:trashy_road/src/game/entities/barrel/barrel.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/game/model/map_bounds.dart';
 
@@ -44,17 +45,6 @@ class TrashyRoadWorld extends Component {
       }
     }
 
-    for (final object in tiled.tileMap
-        .getLayer<ObjectGroup>(_TiledLayer.obstacles.name)!
-        .objects) {
-      tiled.add(
-        TileBoundSpriteComponent.generate(object.class_)
-          ..position = Vector2(object.x, object.y)
-          ..priority = object.y.toInt(),
-        // ordering priority by y
-      );
-    }
-
     final roadLaneLayer =
         tiled.tileMap.getLayer<ObjectGroup>(_TiledLayer.roadLayer.name);
     if (roadLaneLayer == null) {
@@ -68,6 +58,21 @@ class TrashyRoadWorld extends Component {
     for (final object in roadLaneObjects) {
       final roadLane = RoadLane.fromTiledObject(object);
       tiled.add(roadLane);
+    }
+
+    final obstaclesLayer =
+        tiled.tileMap.getLayer<ObjectGroup>(_TiledLayer.obstacles.name);
+    if (obstaclesLayer == null) {
+      throw ArgumentError.value(
+        _TiledLayer.obstacles.name,
+        'layer',
+        '''The Tiled map must have a layer named "${_TiledLayer.obstacles.name}".''',
+      );
+    }
+    final obstacles = obstaclesLayer.objects;
+    for (final object in obstacles) {
+      final obstacle = Barrel.fromTiledObject(object);
+      tiled.add(obstacle);
     }
 
     final bottomRightPosition =

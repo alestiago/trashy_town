@@ -8,7 +8,7 @@ import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
-class Trash extends TileBoundSpriteComponent {
+class Trash extends TileBoundSpriteComponent with HasGameReference {
   Trash._({super.position});
 
   /// Derives a [Trash] from a [TiledObject].
@@ -20,7 +20,11 @@ class Trash extends TileBoundSpriteComponent {
 
   @override
   Future<void> onLoad() async {
-    sprite = await Sprite.load(path.basename(Assets.images.trash.path));
+    sprite = await Sprite.load(
+      Assets.images.trash.path,
+      images: game.images,
+    );
+
     add(
       RectangleHitbox(
         size: GameSettings.gridDimensions,

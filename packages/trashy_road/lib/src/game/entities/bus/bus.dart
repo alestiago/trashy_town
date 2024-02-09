@@ -28,12 +28,15 @@ class Bus extends Vehicle {
         );
 }
 
-class _BusSprite extends SpriteComponent {
+class _BusSprite extends SpriteComponent with HasGameReference {
   _BusSprite() : super();
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    sprite = await Sprite.load(path.basename(Assets.images.bus.path));
+    sprite = await Sprite.load(
+      Assets.images.bus.path,
+      images: game.images,
+    );
   }
 }

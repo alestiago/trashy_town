@@ -5,18 +5,20 @@ import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:meta/meta.dart';
-import 'package:path/path.dart' as path;
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 export 'behaviors/behaviors.dart';
 
-class PlayerSprite extends SpriteComponent {
+class PlayerSprite extends SpriteComponent with HasGameReference {
   @override
   Future<void> onLoad() async {
     anchor = const Anchor(0.5, 0.8);
-    sprite = await Sprite.load(path.basename(Assets.images.player.path));
+    sprite = await Sprite.load(
+      Assets.images.player.path,
+      images: game.images,
+    );
     return super.onLoad();
   }
 }

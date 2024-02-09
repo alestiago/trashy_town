@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:flame/cache.dart';
 import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
@@ -19,6 +20,7 @@ class TrashyRoadGame extends FlameGame
     with HasKeyboardHandlerComponents, HasCollisionDetection {
   TrashyRoadGame({
     required GameBloc gameBloc,
+    Images? images,
   })  : _gameBloc = gameBloc,
         super(
           camera: CameraComponent.withFixedResolution(
@@ -28,7 +30,9 @@ class TrashyRoadGame extends FlameGame
               ..anchor = const Anchor(.5, .8)
               ..zoom = 1.2,
           ),
-        );
+        ) {
+    if (images != null) this.images = images;
+  }
 
   /// {@macro GameBloc}
   final GameBloc _gameBloc;

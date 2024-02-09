@@ -9,7 +9,7 @@ import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 class TrashCan extends TileBoundSpriteComponent
-    with FlameBlocReader<GameBloc, GameState> {
+    with FlameBlocReader<GameBloc, GameState>, HasGameRef<TrashyRoadGame> {
   TrashCan._({super.position});
 
   /// Derives a [TrashCan] from a [TiledObject].
@@ -21,7 +21,11 @@ class TrashCan extends TileBoundSpriteComponent
 
   @override
   Future<void> onLoad() async {
-    sprite = await Sprite.load(path.basename(Assets.images.trashCan.path));
+    sprite = await Sprite.load(
+      Assets.images.trashCan.path,
+      images: game.images,
+    );
+
     add(RectangleHitbox());
     return super.onLoad();
   }

@@ -7,11 +7,15 @@ import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
-class Barrel extends TileBoundSpriteComponent {
+class Barrel extends TileBoundSpriteComponent
+    with HasGameReference<TrashyRoadGame> {
   Barrel() : super(collidesWithPlayer: true);
   @override
   Future<void> onLoad() async {
-    sprite = await Sprite.load(path.basename(Assets.images.barrel.path));
+    sprite = await Sprite.load(
+      Assets.images.barrel.path,
+      images: game.images,
+    );
     add(
       RectangleHitbox(
         size: GameSettings.gridDimensions,

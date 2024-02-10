@@ -6,12 +6,13 @@ import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
+import 'package:trashy_road/src/game/game.dart';
 
 /// A barrel.
 ///
 /// Barrels, are obstacles that are placed around the map, they are used to
 /// block the player's path.
-class Barrel extends PositionedEntity {
+class Barrel extends Obstacle {
   Barrel._({
     required Vector2 position,
   }) : super(

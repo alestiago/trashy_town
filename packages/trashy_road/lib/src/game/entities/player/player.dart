@@ -7,6 +7,7 @@ import 'package:flame_tiled/flame_tiled.dart';
 import 'package:meta/meta.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
+import 'package:trashy_road/src/game/entities/player/behaviors/player_obstacle_behavior.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 export 'behaviors/behaviors.dart';
@@ -26,6 +27,7 @@ class Player extends PositionedEntity {
             PlayerKeyboardMovingBehavior.arrows(),
             PlayerCollectingTrashBehavior(),
             PlayerDepositingTrashBehavior(),
+            PlayerObstacleBehavior(),
             PausingBehavior<Player>(
               selector: (player) =>
                   player.findBehaviors<PlayerKeyboardMovingBehavior>(),
@@ -53,11 +55,17 @@ class Player extends PositionedEntity {
     }
 
     final objectPosition = Vector2(tiledObject.x, tiledObject.y);
-    final snappedPosition = _snapToGrid(objectPosition);
+    final snappedPosition = snapToGrid(objectPosition);
 
     return Player(
       position: snappedPosition,
     );
+  }
+
+  static Vector2 snapToGrid(Vector2 vector) {
+    return vector -
+        (vector % GameSettings.gridDimensions) +
+        (GameSettings.gridDimensions / 2);
   }
 }
 
@@ -71,10 +79,4 @@ class _PlayerSpriteComponent extends SpriteComponent with HasGameReference {
     );
     return super.onLoad();
   }
-}
-
-Vector2 _snapToGrid(Vector2 vector) {
-  return vector -
-      (vector % GameSettings.gridDimensions) +
-      (GameSettings.gridDimensions / 2);
 }

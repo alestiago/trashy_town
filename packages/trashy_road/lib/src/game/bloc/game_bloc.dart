@@ -12,6 +12,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     on<GameInteractedEvent>(_onGameInteraction);
     on<GameCollectedTrashEvent>(_onCollectedTrash);
     on<GameResetEvent>(_onGameReset);
+    on<GamePausedEvent>(_onGamePaused);
+    on<GameResumedEvent>(_onGameResumed);
   }
 
   void _onGameReady(
@@ -48,5 +50,19 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         inventory: const Inventory.empty(),
       ),
     );
+  }
+
+  void _onGamePaused(
+    GamePausedEvent event,
+    Emitter<GameState> emit,
+  ) {
+    emit(state.copyWith(status: GameStatus.paused));
+  }
+
+  void _onGameResumed(
+    GameResumedEvent event,
+    Emitter<GameState> emit,
+  ) {
+    emit(state.copyWith(status: GameStatus.playing));
   }
 }

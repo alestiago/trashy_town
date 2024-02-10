@@ -1,7 +1,5 @@
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/services.dart';
-import 'package:tiled/tiled.dart';
-import 'package:xml/xml.dart';
 
 abstract class TiledCacheException implements Exception {
   TiledCacheException({required this.message});

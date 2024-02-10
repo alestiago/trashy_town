@@ -14,9 +14,10 @@ class Barrel extends Obstacle {
   Barrel._({
     required Vector2 position,
   }) : super(
-          position: position.snap(
-            size: Barrel._size,
-          ),
+          position: position
+            ..snap(
+              size: Barrel._size,
+            ),
           priority: position.y.floor(),
           size: Barrel._size,
           children: [
@@ -30,7 +31,7 @@ class Barrel extends Obstacle {
       position: Vector2(tiledObject.x, tiledObject.y),
     );
   }
-  static final Vector2 _size = Vector2(1, 2).convertToGameSize();
+  static final Vector2 _size = Vector2(1, 2)..convertToGameSize();
 }
 
 class _BarrelSpriteComponent extends SpriteComponent with HasGameReference {

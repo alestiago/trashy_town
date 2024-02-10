@@ -15,9 +15,10 @@ class Trash extends PositionedEntity {
   Trash._({
     required Vector2 position,
   }) : super(
-          position: position.snap(
-            size: Vector2(1, 2).convertToGameSize(),
-          ),
+          position: position
+            ..snap(
+              size: Vector2(1, 2)..convertToGameSize(),
+            ),
           priority: position.y.floor(),
           behaviors: [
             PropagatingCollisionBehavior(
@@ -35,7 +36,8 @@ class Trash extends PositionedEntity {
   /// Derives a [Trash] from a [TiledObject].
   factory Trash.fromTiledObject(TiledObject tiledObject) {
     return Trash._(
-      position: Vector2(tiledObject.x, tiledObject.y).snap(size: Vector2(1, 2)),
+      position: Vector2(tiledObject.x, tiledObject.y)
+        ..snap(size: Vector2(1, 2)),
     );
   }
 }

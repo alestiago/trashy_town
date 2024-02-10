@@ -15,9 +15,10 @@ class TrashCan extends Obstacle {
   TrashCan._({
     required Vector2 position,
   }) : super(
-          position: position.snap(
-            size: _size,
-          ),
+          position: position
+            ..snap(
+              size: _size,
+            ),
           priority: position.y.floor(),
           size: _size,
           behaviors: [
@@ -35,7 +36,7 @@ class TrashCan extends Obstacle {
     );
   }
 
-  static final Vector2 _size = Vector2(1, 2).convertToGameSize();
+  static final Vector2 _size = Vector2(1, 2)..convertToGameSize();
 
   /// Whether the trash can is focused.
   bool focused = false;

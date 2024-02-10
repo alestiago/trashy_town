@@ -66,13 +66,6 @@ void main() {
 
     group('$GamePausedEvent', () {
       blocTest<GameBloc, GameState>(
-        '''does not pause the game when the user was not previously playing the game''',
-        build: () => GameBloc(map: map),
-        act: (bloc) => bloc.add(const GamePausedEvent()),
-        expect: () => <GameState>[],
-      );
-
-      blocTest<GameBloc, GameState>(
         'pauses the game when the user was previously playing the game',
         build: () => GameBloc(map: map),
         act: (bloc) => bloc

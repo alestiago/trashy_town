@@ -26,6 +26,10 @@ class Player extends PositionedEntity {
             PlayerKeyboardMovingBehavior.arrows(),
             PlayerCollectingTrashBehavior(),
             PlayerDepositingTrashBehavior(),
+            PausingBehavior<Player>(
+              selector: (player) =>
+                  player.findBehaviors<PlayerKeyboardMovingBehavior>(),
+            ),
           ],
           children: [
             _PlayerSpriteComponent(),

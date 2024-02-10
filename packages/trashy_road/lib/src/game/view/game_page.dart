@@ -7,6 +7,7 @@ import 'package:trashy_road/src/game/debug_game.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/game/widgets/widgets.dart';
 import 'package:trashy_road/src/loading/cubit/cubit.dart';
+import 'package:trashy_road/src/pause/pause.dart';
 
 class GamePage extends StatelessWidget {
   const GamePage({super.key});
@@ -77,6 +78,22 @@ class _GameViewState extends State<_GameView> {
               child: Padding(
                 padding: EdgeInsets.all(8),
                 child: InventoryHud(),
+              ),
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: PauseButton(
+                  onPause: () {
+                    gameBloc.add(const GamePausedEvent());
+                    return true;
+                  },
+                  onResume: () {
+                    gameBloc.add(const GameResumedEvent());
+                    return true;
+                  },
+                ),
               ),
             ),
           ],

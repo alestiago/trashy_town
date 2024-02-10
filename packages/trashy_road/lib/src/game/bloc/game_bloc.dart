@@ -60,10 +60,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     GamePausedEvent event,
     Emitter<GameState> emit,
   ) {
-    if (state.status != GameStatus.playing) {
-      return;
-    }
-
     emit(state.copyWith(status: GameStatus.paused));
   }
 
@@ -76,5 +72,10 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     }
 
     emit(state.copyWith(status: GameStatus.playing));
+  }
+
+  @override
+  void onTransition(Transition<GameEvent, GameState> transition) {
+    super.onTransition(transition);
   }
 }

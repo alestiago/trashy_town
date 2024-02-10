@@ -24,6 +24,10 @@ abstract class Vehicle extends PositionedEntity {
             PropagatingCollisionBehavior(hitbox),
             VehicleRunningOverBehavior(),
             VehicleDrivingBehavior(),
+            PausingBehavior<Vehicle>(
+              selector: (vehicle) =>
+                  vehicle.findBehaviors<VehicleDrivingBehavior>(),
+            ),
           ],
         ) {
     priority = position.y.floor();

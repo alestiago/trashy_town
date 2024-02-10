@@ -1,12 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:tiled/tiled.dart';
 
 part 'game_event.dart';
 part 'game_state.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
-  GameBloc() : super(const GameState.initial()) {
+  GameBloc({required TiledMap map}) : super(GameState.initial(map: map)) {
     on<GameReadyEvent>(_onGameReady);
     on<GameInteractedEvent>(_onGameInteraction);
     on<GameCollectedTrashEvent>(_onCollectedTrash);
@@ -42,7 +43,10 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     Emitter<GameState> emit,
   ) {
     emit(
-      const GameState.initial().copyWith(status: GameStatus.resetting),
+      state.copyWith(
+        status: GameStatus.resetting,
+        inventory: const Inventory.empty(),
+      ),
     );
   }
 }

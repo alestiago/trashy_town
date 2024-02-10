@@ -16,7 +16,8 @@ class _MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => PreloadCubit(
-        Images(prefix: ''),
+        images: Images(prefix: ''),
+        tiled: TiledCache(),
       )..loadSequentially(),
       child: MaterialApp(
         title: 'Flutter Demo',

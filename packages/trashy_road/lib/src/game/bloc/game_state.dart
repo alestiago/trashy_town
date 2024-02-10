@@ -28,18 +28,23 @@ class GameState extends Equatable {
   /// {@macro GameState}
   const GameState({
     required this.status,
+    required this.map,
     required this.inventory,
   });
 
   /// The initial state of the game.
-  const GameState.initial()
+  const GameState.initial({required TiledMap map})
       : this(
           status: GameStatus.ready,
+          map: map,
           inventory: const Inventory.empty(),
         );
 
   /// {@macro GameStatus}
   final GameStatus status;
+
+  /// The map that the game is being played on.
+  final TiledMap map;
 
   /// {@macro Inventory}
   final Inventory inventory;
@@ -50,12 +55,13 @@ class GameState extends Equatable {
   }) {
     return GameState(
       status: status ?? this.status,
+      map: map,
       inventory: inventory ?? this.inventory,
     );
   }
 
   @override
-  List<Object?> get props => [status, inventory];
+  List<Object?> get props => [status, inventory, map];
 }
 
 /// {@template Inventory}

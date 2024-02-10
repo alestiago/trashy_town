@@ -3,13 +3,21 @@ import 'package:equatable/equatable.dart';
 import 'package:flame/cache.dart';
 import 'package:flutter/widgets.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
+import 'package:trashy_road/src/loading/loading.dart';
+
+export 'tiled_cache.dart';
 
 part 'preload_state.dart';
 
 class PreloadCubit extends Cubit<PreloadState> {
-  PreloadCubit(this.images) : super(const PreloadState.initial());
+  PreloadCubit({
+    required this.images,
+    required this.tiled,
+  }) : super(const PreloadState.initial());
 
   final Images images;
+
+  final TiledCache tiled;
 
   /// Load items sequentially allows display of what is being loaded
   Future<void> loadSequentially() async {
@@ -25,6 +33,14 @@ class PreloadCubit extends Cubit<PreloadState> {
             Assets.images.road.path,
             Assets.images.trashCan.path,
             Assets.images.trash.path,
+          ],
+        ),
+      ),
+      PreloadPhase(
+        'maps',
+        () => tiled.loadAll(
+          [
+            Assets.tiles.map,
           ],
         ),
       ),

@@ -29,7 +29,8 @@ class TrashCanFocusingBehavior extends Behavior<TrashCan>
 
   bool _shouldFocus() {
     // TODO(alestiago): ensure the player and the trash can are anchored to its
-    // center to better calculate the distance between them.
+    // center to better calculate the distance between them:
+    // https://github.com/alestiago/trashy_road/issues/71
     final playerPosition = _player.position;
     final trashCanPosition = parent.position;
 

@@ -14,6 +14,7 @@ abstract class GameSettings {
 
 extension TrashyRoadVector on Vector2 {
   /// Snaps the vector to the grid.
+  ///
   /// Modifications are made to the object.
   void snap({required Vector2 size}) {
     sub(this % GameSettings.gridDimensions);

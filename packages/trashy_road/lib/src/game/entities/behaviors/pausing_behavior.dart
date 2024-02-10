@@ -41,7 +41,7 @@ class PausingBehavior<T extends EntityMixin> extends Behavior<T> {
 
   void _addBehaviors() {
     for (final behavior in _removedBehaviors) {
-      behavior.add(parent);
+      parent.add(behavior);
     }
     _removedBehaviors.clear();
   }

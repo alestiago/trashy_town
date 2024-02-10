@@ -26,9 +26,9 @@ class Player extends PositionedEntity {
             PlayerKeyboardMovingBehavior.arrows(),
             PlayerCollectingTrashBehavior(),
             PlayerDepositingTrashBehavior(),
-            PausingBehavior<Vehicle>(
-              selector: (vehicle) =>
-                  vehicle.findBehaviors<PlayerKeyboardMovingBehavior>(),
+            PausingBehavior<Player>(
+              selector: (player) =>
+                  player.findBehaviors<PlayerKeyboardMovingBehavior>(),
             ),
           ],
           children: [

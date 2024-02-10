@@ -1,8 +1,6 @@
 import 'dart:async';
 
-import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
@@ -18,14 +16,7 @@ class Barrel extends Obstacle {
   }) : super(
           position: _snapToGrid(position),
           priority: position.y.floor(),
-          behaviors: [
-            PropagatingCollisionBehavior(
-              RectangleHitbox(
-                size: GameSettings.gridDimensions,
-                position: Vector2(0, GameSettings.gridDimensions.y),
-              ),
-            ),
-          ],
+          size: Vector2(1, 2)..multiply(GameSettings.gridDimensions),
           children: [
             _BarrelSpriteComponent(),
           ],

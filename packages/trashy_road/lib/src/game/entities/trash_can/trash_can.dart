@@ -13,20 +13,15 @@ export 'behaviors/behaviors.dart';
 /// A trash can.
 ///
 /// Trash cans are placed around the map, they are used to dispose of trash.
-class TrashCan extends PositionedEntity {
+class TrashCan extends Obstacle {
   TrashCan._({
     required Vector2 position,
   }) : super(
           position: _snapToGrid(position),
           priority: position.y.floor(),
+          size: Vector2(1, 2)..multiply(GameSettings.gridDimensions),
           behaviors: [
             TrashCanFocusingBehavior(),
-            PropagatingCollisionBehavior(
-              RectangleHitbox(
-                size: GameSettings.gridDimensions,
-                position: Vector2(0, GameSettings.gridDimensions.y),
-              ),
-            ),
           ],
           children: [
             _TrashCanSpriteComponent(),

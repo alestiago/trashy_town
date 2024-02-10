@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flame/components.dart';
+import 'package:flame/extensions.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
+import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 /// {@template VehicleSpawningBehavior}
@@ -15,10 +18,21 @@ class VehicleSpawningBehavior extends Behavior<RoadLane> {
   FutureOr<void> onLoad() async {
     await super.onLoad();
 
-    // TODO(alestiago): Intead of adding once, add vehicles at intervals.
-    final vehicle = Bus(roadLane: parent);
-    parent.add(vehicle);
+    final world = ancestors().whereType<TrashyRoadWorld>().first;
+
+    for (var i = 0; i < parent.traffic; i++) {
+      final randomDistance = GameSettings.minTrafficVariation +
+          (random.nextDouble() * 1 - GameSettings.minTrafficVariation);
+      parent.add(
+        Bus(roadLane: parent)
+          ..position.x =
+              (i / parent.traffic) * world.tiled.size.x * randomDistance,
+      );
+    }
   }
+
+  // This needs to be injected into the map so each replay is the same
+  Random random = Random();
 
   @override
   void update(double dt) {

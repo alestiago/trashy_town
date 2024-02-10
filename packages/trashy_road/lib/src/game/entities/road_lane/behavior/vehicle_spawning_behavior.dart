@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
@@ -21,18 +20,20 @@ class VehicleSpawningBehavior extends Behavior<RoadLane> {
     final world = ancestors().whereType<TrashyRoadWorld>().first;
 
     for (var i = 0; i < parent.traffic; i++) {
-      final randomDistance = GameSettings.minTrafficVariation +
-          (random.nextDouble() * 1 - GameSettings.minTrafficVariation);
+      var startPosition = (i / parent.traffic) * world.tiled.size.x;
+
+      startPosition *= GameSettings.minTrafficVariation +
+          (world.random.nextDouble() * (1 - GameSettings.minTrafficVariation));
+
+      if (parent.direction == RoadLaneDirection.rightToLeft) {
+        startPosition *= -1;
+      }
+
       parent.add(
-        Bus(roadLane: parent)
-          ..position.x =
-              (i / parent.traffic) * world.tiled.size.x * randomDistance,
+        Bus(roadLane: parent)..position.x = startPosition,
       );
     }
   }
-
-  // This needs to be injected into the map so each replay is the same
-  Random random = Random();
 
   @override
   void update(double dt) {

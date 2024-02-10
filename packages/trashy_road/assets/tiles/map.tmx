@@ -124,8 +124,8 @@
   <object id="41" template="road_lane.tx" name="road_lane" class="road_lane" x="1984" y="1312">
    <properties>
     <property name="leftToRight" type="bool" value="false"/>
-    <property name="speed" type="int" value="0"/>
-    <property name="traffic" type="int" value="8"/>
+    <property name="speed" type="int" value="2"/>
+    <property name="traffic" type="int" value="2"/>
    </properties>
   </object>
   <object id="43" template="road_lane.tx" name="road_lane" class="road_lane" x="1984" y="1760">

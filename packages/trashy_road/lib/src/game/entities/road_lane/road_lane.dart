@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_tiled/flame_tiled.dart';
@@ -101,7 +99,7 @@ class RoadLane extends PositionedEntity {
   /// {@macro RoadLaneDirection}
   final RoadLaneDirection direction;
 
-  /// The amount of traffic in the lane.
+  /// The amount of vehicles in the lane.
   final int traffic;
 }
 

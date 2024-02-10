@@ -10,7 +10,7 @@ import 'package:trashy_road/src/game/game.dart';
 /// Used by [PausingBehavior] to select which behaviors to remove when the game
 /// is paused.
 /// {@endtemplate}
-typedef BehaviorSelector = Iterable<Behavior> Function(EntityMixin entity);
+typedef BehaviorSelector<T> = Iterable<Behavior> Function(T entity);
 
 /// {@template PausingBehavior}
 /// A behavior that pauses and resumes.
@@ -18,14 +18,14 @@ typedef BehaviorSelector = Iterable<Behavior> Function(EntityMixin entity);
 /// It operates by removing some behaviors from the entity when the game is
 /// paused and adding them back when the game is resumed.
 /// {@endtemplate}
-class PausingBehavior extends Behavior {
+class PausingBehavior<T extends EntityMixin> extends Behavior<T> {
   /// {@macro PausingBehavior}
   PausingBehavior({
-    required BehaviorSelector selector,
+    required BehaviorSelector<T> selector,
   }) : _selector = selector;
 
   /// {@macro BehaviorSelector}
-  final BehaviorSelector _selector;
+  final BehaviorSelector<T> _selector;
 
   /// A collection of behaviors that were removed from the entity and are yet
   /// to be added back.

@@ -6,6 +6,9 @@ import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
+import 'package:trashy_road/src/game/game.dart';
+
+export 'behaviors/behaviors.dart';
 
 /// A trash can.
 ///
@@ -17,6 +20,7 @@ class TrashCan extends PositionedEntity {
           position: _snapToGrid(position),
           priority: position.y.floor(),
           behaviors: [
+            TrashCanFocusingBehavior(),
             PropagatingCollisionBehavior(
               RectangleHitbox(
                 size: GameSettings.gridDimensions,
@@ -35,6 +39,9 @@ class TrashCan extends PositionedEntity {
       position: Vector2(tiledObject.x, tiledObject.y),
     );
   }
+
+  /// Whether the trash can is focused.
+  bool focused = false;
 }
 
 class _TrashCanSpriteComponent extends SpriteComponent with HasGameReference {

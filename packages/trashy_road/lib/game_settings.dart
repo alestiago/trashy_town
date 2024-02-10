@@ -23,6 +23,7 @@ extension TrashyRoadVector on Vector2 {
   }
 
   /// Scales the vector from tile size to game size.
+  ///
   /// Modifications are made to the object.
   ///
   /// For example

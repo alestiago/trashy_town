@@ -140,4 +140,8 @@ class PlayerKeyboardMovingBehavior extends Behavior<Player>
 
     return super.onKeyEvent(event, keysPressed);
   }
+
+  void bounceBack() {
+    _targetPosition.setFrom(Player.snapToGrid(parent.position));
+  }
 }

@@ -17,15 +17,14 @@ class Player extends PositionedEntity {
           behaviors: [
             PropagatingCollisionBehavior(
               RectangleHitbox(
-                size: Vector2.all(1)
-                  ..multiply(GameSettings.gridDimensions)
-                  ..multiply(Vector2.all(0.8)), // make slightly smaller
+                size: Vector2(0.5, 0.8)..multiply(GameSettings.gridDimensions),
                 anchor: Anchor.center,
               ),
             ),
             PlayerKeyboardMovingBehavior.arrows(),
             PlayerCollectingTrashBehavior(),
             PlayerDepositingTrashBehavior(),
+            PlayerObstacleBehavior(),
             PausingBehavior<Player>(
               selector: (player) =>
                   player.findBehaviors<PlayerKeyboardMovingBehavior>(),
@@ -53,11 +52,17 @@ class Player extends PositionedEntity {
     }
 
     final objectPosition = Vector2(tiledObject.x, tiledObject.y);
-    final snappedPosition = _snapToGrid(objectPosition);
+    final snappedPosition = snapToGrid(objectPosition);
 
     return Player(
       position: snappedPosition,
     );
+  }
+
+  static Vector2 snapToGrid(Vector2 vector) {
+    return vector -
+        (vector % GameSettings.gridDimensions) +
+        (GameSettings.gridDimensions / 2);
   }
 }
 
@@ -71,10 +76,4 @@ class _PlayerSpriteComponent extends SpriteComponent with HasGameReference {
     );
     return super.onLoad();
   }
-}
-
-Vector2 _snapToGrid(Vector2 vector) {
-  return vector -
-      (vector % GameSettings.gridDimensions) +
-      (GameSettings.gridDimensions / 2);
 }

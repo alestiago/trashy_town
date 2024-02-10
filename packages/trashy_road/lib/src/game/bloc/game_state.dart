@@ -15,6 +15,12 @@ enum GameStatus {
 
   /// The game is resetting.
   resetting,
+
+  /// The game is paused.
+  ///
+  /// Pausing the game means that all user input is disabled and moving objects
+  /// are paused.
+  paused,
 }
 
 /// {@template GameState}

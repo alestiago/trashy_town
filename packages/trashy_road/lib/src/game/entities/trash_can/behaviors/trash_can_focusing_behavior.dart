@@ -56,7 +56,8 @@ class _TrashCanFocus extends Component {
       : super(
           children: [
             // TODO(alestiago): Replace with a more complex focus effect, when
-            // the design is ready.
+            // the design is ready:
+            // https://github.com/alestiago/trashy_road/issues/58
             CircleComponent(
               anchor: Anchor.center,
               position: GameSettings.gridDimensions / 2,

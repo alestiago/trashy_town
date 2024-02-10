@@ -34,6 +34,10 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     GameCollectedTrashEvent event,
     Emitter<GameState> emit,
   ) {
+    if (state.status != GameStatus.playing) {
+      return;
+    }
+
     final inventory = state.inventory.copyWith(
       trash: state.inventory.trash + 1,
     );
@@ -56,6 +60,10 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     GamePausedEvent event,
     Emitter<GameState> emit,
   ) {
+    if (state.status != GameStatus.playing) {
+      return;
+    }
+
     emit(state.copyWith(status: GameStatus.paused));
   }
 
@@ -63,6 +71,10 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     GameResumedEvent event,
     Emitter<GameState> emit,
   ) {
+    if (state.status != GameStatus.paused) {
+      return;
+    }
+
     emit(state.copyWith(status: GameStatus.playing));
   }
 }

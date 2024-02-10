@@ -41,8 +41,11 @@ class TrashyRoadGame extends FlameGame
   FutureOr<void> onLoad() async {
     await super.onLoad();
 
-    final tiled =
-        await TiledComponent.load('map.tmx', GameSettings.gridDimensions);
+    final renderableTiledMap = await RenderableTiledMap.fromTiledMap(
+      _gameBloc.state.map,
+      GameSettings.gridDimensions,
+    );
+    final tiled = TiledComponent(renderableTiledMap);
     final trashyRoadWorld = TrashyRoadWorld.create(tiled: tiled);
 
     final blocProvider = FlameBlocProvider<GameBloc, GameState>(

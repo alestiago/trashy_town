@@ -2,6 +2,7 @@ import 'package:flame/game.dart' hide Route;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/debug_game.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/game/widgets/widgets.dart';
@@ -18,8 +19,11 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loadingBloc = context.read<PreloadCubit>();
+    final map = loadingBloc.tiled.fromCache(Assets.tiles.map);
+
     return BlocProvider(
-      create: (context) => GameBloc(),
+      create: (context) => GameBloc(map: map),
       child: const _GameView(),
     );
   }

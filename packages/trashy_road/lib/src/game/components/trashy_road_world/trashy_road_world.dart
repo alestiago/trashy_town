@@ -8,6 +8,7 @@ import 'package:trashy_road/src/game/model/map_bounds.dart';
 
 /// The different layers in the Tiled map.
 enum _TiledLayer {
+  background._('Background'),
   trashLayer._('TrashLayer'),
   coreItemsLayer._('CoreItemsLayer'),
   obstacles._('Obstacles'),

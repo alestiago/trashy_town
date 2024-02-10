@@ -1,10 +1,13 @@
 import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_test/flame_test.dart';
+import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:trashy_road/src/game/game.dart';
+
+class _MockTiledMap extends Mock implements TiledMap {}
 
 class _MockRawKeyEventData extends Mock implements RawKeyEventData {
   @override
@@ -43,8 +46,10 @@ void main() {
     late GameBloc gameBloc;
 
     setUp(() {
-      gameBloc = GameBloc();
-      game = _TestGame(gameBloc: GameBloc());
+      gameBloc = GameBloc(
+        map: _MockTiledMap(),
+      );
+      game = _TestGame(gameBloc: gameBloc);
     });
 
     tearDown(() {

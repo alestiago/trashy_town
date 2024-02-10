@@ -47,6 +47,7 @@ class TrashyRoadGame extends FlameGame
     );
     final tiled = TiledComponent(renderableTiledMap);
     final trashyRoadWorld = TrashyRoadWorld.create(tiled: tiled);
+    children.register<TrashyRoadWorld>();
 
     final blocProvider = FlameBlocProvider<GameBloc, GameState>(
       create: () => _gameBloc,
@@ -56,6 +57,7 @@ class TrashyRoadGame extends FlameGame
     world.add(blocProvider);
 
     final player = trashyRoadWorld.tiled.children.whereType<Player>().first;
+
     camera.follow(player);
   }
 

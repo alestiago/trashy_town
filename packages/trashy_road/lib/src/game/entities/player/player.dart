@@ -7,7 +7,6 @@ import 'package:flame_tiled/flame_tiled.dart';
 import 'package:meta/meta.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
-import 'package:trashy_road/src/game/entities/player/behaviors/player_obstacle_behavior.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 export 'behaviors/behaviors.dart';

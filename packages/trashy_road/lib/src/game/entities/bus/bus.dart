@@ -22,7 +22,7 @@ class Bus extends Vehicle {
           ],
           hitbox: RectangleHitbox(
             isSolid: true,
-            size: Vector2(2, 1)..multiply(GameSettings.gridDimensions),
+            size: Vector2(2, 1).convertToGameSize(),
           ),
         );
 }

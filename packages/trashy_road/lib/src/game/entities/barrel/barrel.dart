@@ -14,9 +14,11 @@ class Barrel extends Obstacle {
   Barrel._({
     required Vector2 position,
   }) : super(
-          position: _snapToGrid(position),
+          position: position.snap(
+            size: Barrel._size,
+          ),
           priority: position.y.floor(),
-          size: Vector2(1, 2)..multiply(GameSettings.gridDimensions),
+          size: Barrel._size,
           children: [
             _BarrelSpriteComponent(),
           ],
@@ -28,6 +30,7 @@ class Barrel extends Obstacle {
       position: Vector2(tiledObject.x, tiledObject.y),
     );
   }
+  static final Vector2 _size = Vector2(1, 2).convertToGameSize();
 }
 
 class _BarrelSpriteComponent extends SpriteComponent with HasGameReference {
@@ -39,9 +42,4 @@ class _BarrelSpriteComponent extends SpriteComponent with HasGameReference {
 
     sprite = await Sprite.load(Assets.images.barrel.path, images: game.images);
   }
-}
-
-Vector2 _snapToGrid(Vector2 vector) {
-  return (vector - (vector % GameSettings.gridDimensions))
-    ..y -= GameSettings.gridDimensions.y * 2;
 }

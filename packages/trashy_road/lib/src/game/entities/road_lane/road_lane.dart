@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_tiled/flame_tiled.dart';
@@ -85,7 +83,7 @@ class RoadLane extends PositionedEntity {
       );
     }
     final traffic = rawTraffic.value;
-    final position = _snapToGrid(Vector2(object.x, object.y));
+    final position = Vector2(object.x, object.y).snap(size: Vector2.all(1));
 
     return RoadLane(
       speed: speed,
@@ -103,8 +101,4 @@ class RoadLane extends PositionedEntity {
 
   /// The amount of traffic in the lane.
   final int traffic;
-}
-
-Vector2 _snapToGrid(Vector2 vector) {
-  return vector - (vector % GameSettings.gridDimensions);
 }

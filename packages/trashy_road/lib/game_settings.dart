@@ -11,3 +11,28 @@ abstract class GameSettings {
   /// The delay between player moves.
   static const moveDelay = Duration(milliseconds: 150);
 }
+
+extension SnappableVector on Vector2 {
+  /// Snaps the vector to the grid.
+  /// Modifications are made to the object.
+  Vector2 snap({required Vector2 size}) {
+    sub(this % GameSettings.gridDimensions);
+    y -= GameSettings.gridDimensions.y *
+        (size.y / GameSettings.gridDimensions.y);
+
+    return this;
+  }
+
+  /// Scales the vector from tile size to game size.
+  /// Modifications are made to the object.
+  ///
+  /// For example
+  /// ```dart
+  /// final Vector2 tileSize = Vector2(1, 2);
+  /// final Vector2 gameSize = Vector2(1, 2).convertToGameSize();
+  /// ```
+  Vector2 convertToGameSize() {
+    multiply(GameSettings.gridDimensions);
+    return this;
+  }
+}

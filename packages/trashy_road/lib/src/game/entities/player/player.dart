@@ -18,9 +18,7 @@ class Player extends PositionedEntity {
           behaviors: [
             PropagatingCollisionBehavior(
               RectangleHitbox(
-                size: Vector2.all(1)
-                  ..multiply(GameSettings.gridDimensions)
-                  ..multiply(Vector2.all(0.8)), // make slightly smaller
+                size: Vector2(0.5, 0.8)..multiply(GameSettings.gridDimensions),
                 anchor: Anchor.center,
               ),
             ),

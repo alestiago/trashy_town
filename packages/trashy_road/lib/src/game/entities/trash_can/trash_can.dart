@@ -4,10 +4,11 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_tiled/flame_tiled.dart';
-import 'package:flutter/painting.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
-import 'package:trashy_road/src/game/entities/trash_can/behaviors/trash_can_focusing_behavior.dart';
+import 'package:trashy_road/src/game/game.dart';
+
+export 'behaviors/behaviors.dart';
 
 /// A trash can.
 ///

@@ -19,9 +19,7 @@ class Obstacle extends PositionedEntity {
                 anchor: Anchor.topCenter,
                 size: Vector2.all(0.8)..multiply(GameSettings.gridDimensions),
                 position: Vector2(
-                  // move to the x center
                   size.x / 2,
-                  // set to the bottom tile of the obstacle
                   size.y - GameSettings.gridDimensions.y,
                 ),
               ),

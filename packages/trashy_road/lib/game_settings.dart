@@ -13,7 +13,7 @@ abstract class GameSettings {
 }
 
 extension TrashyRoadVector on Vector2 {
-  /// Snaps the vector to the grid.
+  /// Snaps this to the grid.
   ///
   /// Modifications are made to the object.
   void snap({required Vector2 size}) {
@@ -22,7 +22,7 @@ extension TrashyRoadVector on Vector2 {
         (size.y / GameSettings.gridDimensions.y);
   }
 
-  /// Scales the vector from tile size to game size.
+  /// Scales this from tile size to game size.
   ///
   /// Modifications are made to the object.
   void convertToGameSize() => multiply(GameSettings.gridDimensions);

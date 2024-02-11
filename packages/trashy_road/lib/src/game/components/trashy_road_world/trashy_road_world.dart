@@ -63,15 +63,15 @@ class TrashyRoadWorld extends Component {
       visible: false,
     );
     final tiles = backgroundLayer.tileData!;
+
     for (var row = 0; row < tiles.length; row++) {
       for (var column = 0; column < tiles[row].length; column++) {
         final tile = tiles[row][column];
         final tiledTile = _TiledTiles.fromTiledValue(tile.tile);
 
-        // TODO(alestiago): Tweak this positioning.
         final position = Vector2(
-          column.toDouble() * renderableTiledMap.map.tileHeight,
-          row.toDouble() * renderableTiledMap.map.tileWidth,
+          column.toDouble() * renderableTiledMap.map.tileWidth,
+          row.toDouble() * renderableTiledMap.map.tileHeight,
         );
         final component = tiledTile.build()..position = position;
         tiled.add(component);

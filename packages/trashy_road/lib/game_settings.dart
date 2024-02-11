@@ -21,6 +21,10 @@ abstract class GameSettings {
 extension TrashyRoadVector on Vector2 {
   /// Snaps this to the grid.
   ///
+  /// If this is being used to determine the position of a [Component],
+  /// the size of the [Component] should be declared and it
+  /// should have a bottom left anchor.
+  ///
   /// Modifications are made to the object.
   void snap() => sub(this % GameSettings.gridDimensions);
 

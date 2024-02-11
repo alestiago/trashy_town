@@ -17,3 +17,24 @@ abstract class GameSettings {
   /// The lerp time for player movement.
   static const playerMoveAnimationSpeed = 0.2;
 }
+
+extension TrashyRoadVector on Vector2 {
+  /// Snaps this to the grid.
+  ///
+  /// [size] is used to to move the position from the bottom left to the
+  /// top left as tiled uses bottom left for positioning, but flame uses top
+  /// left.
+  void snap({required Vector2 size}) {
+    sub(this % GameSettings.gridDimensions);
+    y -= GameSettings.gridDimensions.y *
+        (size.y / GameSettings.gridDimensions.y);
+  }
+
+  /// Scales this from tile size to game size.
+  ///
+  /// For example, if an object is 1x1 in the tilemap, you may use
+  /// `Vector2(1, 1)..toGameSize()` to scale it into the game size.
+  ///
+  /// Modifications are made to the object.
+  void toGameSize() => multiply(GameSettings.gridDimensions);
+}

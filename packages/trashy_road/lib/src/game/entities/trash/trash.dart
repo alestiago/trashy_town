@@ -15,7 +15,7 @@ class Trash extends PositionedEntity {
   Trash._({
     required Vector2 position,
   }) : super(
-          position: _snapToGrid(position),
+          position: position..snap(size: Vector2(1, 2)..toGameSize()),
           priority: position.y.floor(),
           behaviors: [
             PropagatingCollisionBehavior(
@@ -33,7 +33,8 @@ class Trash extends PositionedEntity {
   /// Derives a [Trash] from a [TiledObject].
   factory Trash.fromTiledObject(TiledObject tiledObject) {
     return Trash._(
-      position: Vector2(tiledObject.x, tiledObject.y),
+      position: Vector2(tiledObject.x, tiledObject.y)
+        ..snap(size: Vector2(1, 2)),
     );
   }
 }
@@ -47,9 +48,4 @@ class _TrashSpriteComponent extends SpriteComponent with HasGameReference {
 
     sprite = await Sprite.load(Assets.images.trash.path, images: game.images);
   }
-}
-
-Vector2 _snapToGrid(Vector2 vector) {
-  return (vector - (vector % GameSettings.gridDimensions))
-    ..y -= GameSettings.gridDimensions.y * 2;
 }

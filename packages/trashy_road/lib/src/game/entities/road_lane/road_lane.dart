@@ -83,7 +83,7 @@ class RoadLane extends PositionedEntity {
       );
     }
     final traffic = rawTraffic.value;
-    final position = _snapToGrid(Vector2(object.x, object.y));
+    final position = Vector2(object.x, object.y)..snap(size: Vector2.all(1));
 
     return RoadLane(
       speed: speed,
@@ -101,8 +101,4 @@ class RoadLane extends PositionedEntity {
 
   /// The amount of vehicles in the lane.
   final int traffic;
-}
-
-Vector2 _snapToGrid(Vector2 vector) {
-  return vector - (vector % GameSettings.gridDimensions);
 }

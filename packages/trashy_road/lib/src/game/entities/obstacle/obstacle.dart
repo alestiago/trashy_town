@@ -17,7 +17,7 @@ class Obstacle extends PositionedEntity {
             PropagatingCollisionBehavior(
               RectangleHitbox(
                 anchor: Anchor.topCenter,
-                size: Vector2.all(0.8)..multiply(GameSettings.gridDimensions),
+                size: Vector2.all(0.8)..toGameSize(),
                 position: Vector2(
                   size.x / 2,
                   size.y - GameSettings.gridDimensions.y,

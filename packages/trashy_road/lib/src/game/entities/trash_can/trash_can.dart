@@ -15,16 +15,17 @@ class TrashCan extends Obstacle {
   TrashCan._({
     required Vector2 position,
   }) : super(
-          position: _snapToGrid(position),
-          priority: position.y.floor(),
-          size: Vector2(1, 2)..multiply(GameSettings.gridDimensions),
+          size: Vector2(1, 2)..toGameSize(),
           behaviors: [
             TrashCanFocusingBehavior(),
           ],
           children: [
             _TrashCanSpriteComponent(),
           ],
-        );
+        ) {
+    this.position = position..snap(size: size);
+    priority = position.y.floor();
+  }
 
   /// Derives a [TrashCan] from a [TiledObject].
   factory TrashCan.fromTiledObject(TiledObject tiledObject) {
@@ -47,9 +48,4 @@ class _TrashCanSpriteComponent extends SpriteComponent with HasGameReference {
     sprite =
         await Sprite.load(Assets.images.trashCan.path, images: game.images);
   }
-}
-
-Vector2 _snapToGrid(Vector2 vector) {
-  return (vector - (vector % GameSettings.gridDimensions))
-    ..y -= GameSettings.gridDimensions.y * 2;
 }

@@ -16,16 +16,15 @@ class TrashCan extends Obstacle {
     required Vector2 position,
   }) : super(
           size: Vector2(1, 2)..toGameSize(),
+          position: position..snap(),
+          priority: position.y.floor(),
           behaviors: [
             TrashCanFocusingBehavior(),
           ],
           children: [
             _TrashCanSpriteComponent(),
           ],
-        ) {
-    this.position = position..snap(size: size);
-    priority = position.y.floor();
-  }
+        );
 
   /// Derives a [TrashCan] from a [TiledObject].
   factory TrashCan.fromTiledObject(TiledObject tiledObject) {

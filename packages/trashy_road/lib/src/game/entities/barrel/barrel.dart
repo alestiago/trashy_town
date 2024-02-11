@@ -19,7 +19,7 @@ class Barrel extends Obstacle {
             _BarrelSpriteComponent(),
           ],
         ) {
-    this.position = position..snap(size: Vector2(1, 2)..toGameSize());
+    this.position = position..snap();
     priority = position.y.floor();
   }
 

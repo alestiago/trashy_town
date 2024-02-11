@@ -21,14 +21,8 @@ abstract class GameSettings {
 extension TrashyRoadVector on Vector2 {
   /// Snaps this to the grid.
   ///
-  /// [size] is used to to move the position from the bottom left to the
-  /// top left as tiled uses bottom left for positioning, but flame uses top
-  /// left.
-  void snap({required Vector2 size}) {
-    sub(this % GameSettings.gridDimensions);
-    y -= GameSettings.gridDimensions.y *
-        (size.y / GameSettings.gridDimensions.y);
-  }
+  /// Modifications are made to the object.
+  void snap() => sub(this % GameSettings.gridDimensions);
 
   /// Scales this from tile size to game size.
   ///

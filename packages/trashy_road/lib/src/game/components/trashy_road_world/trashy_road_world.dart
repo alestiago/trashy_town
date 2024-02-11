@@ -8,6 +8,7 @@ import 'package:trashy_road/src/game/model/map_bounds.dart';
 
 /// The different layers in the Tiled map.
 enum _TiledLayer {
+  background._('Background'),
   trashLayer._('TrashLayer'),
   coreItemsLayer._('CoreItemsLayer'),
   obstacles._('Obstacles'),
@@ -19,16 +20,72 @@ enum _TiledLayer {
   final String name;
 }
 
+enum _TiledTiles {
+  grass,
+  road;
+
+  factory _TiledTiles.fromTiledValue(int tiledValue) {
+    switch (tiledValue) {
+      case 1:
+        return _TiledTiles.grass;
+      case 2:
+        return _TiledTiles.road;
+      default:
+        throw ArgumentError.value(
+          tiledValue,
+          'tiledValue',
+          'The value must be 1 or 2.',
+        );
+    }
+  }
+
+  PositionComponent build() {
+    switch (this) {
+      case _TiledTiles.grass:
+        return Grass();
+      case _TiledTiles.road:
+        return Road();
+    }
+  }
+}
+
 class TrashyRoadWorld extends Component {
   TrashyRoadWorld.create({required this.tiled}) {
-    final trashGroup = tiled.tileMap.getLayer<ObjectGroup>(
+    tiled.children.map((child) => child.removeFromParent());
+    final renderableTiledMap = tiled.tileMap;
+
+    final backgroundLayer =
+        renderableTiledMap.getLayer<TileLayer>(_TiledLayer.background.name)!;
+    renderableTiledMap.setLayerVisibility(
+      // TODO(alestiago): Investigate why the background layer is not being
+      // identified as 1, but as 0 by `setLayerVisibility`.
+      backgroundLayer.id! - 1,
+      visible: false,
+    );
+    final tiles = backgroundLayer.tileData!;
+    for (var row = 0; row < tiles.length; row++) {
+      for (var column = 0; column < tiles[row].length; column++) {
+        final tile = tiles[row][column];
+        final tiledTile = _TiledTiles.fromTiledValue(tile.tile);
+
+        // TODO(alestiago): Tweak this positioning.
+        final position = Vector2(
+          column.toDouble() * renderableTiledMap.map.tileHeight,
+          row.toDouble() * renderableTiledMap.map.tileWidth,
+        );
+        final component = tiledTile.build()..position = position;
+        tiled.add(component);
+      }
+    }
+
+    final trashGroup = renderableTiledMap.getLayer<ObjectGroup>(
       _TiledLayer.trashLayer.name,
     );
     for (final tiledObject in trashGroup!.objects) {
       tiled.add(Trash.fromTiledObject(tiledObject));
     }
 
-    for (final object in tiled.tileMap
+    for (final object in renderableTiledMap
         .getLayer<ObjectGroup>(_TiledLayer.coreItemsLayer.name)!
         .objects) {
       switch (object.type) {
@@ -46,7 +103,7 @@ class TrashyRoadWorld extends Component {
     }
 
     final roadLaneLayer =
-        tiled.tileMap.getLayer<ObjectGroup>(_TiledLayer.roadLayer.name);
+        renderableTiledMap.getLayer<ObjectGroup>(_TiledLayer.roadLayer.name);
     if (roadLaneLayer == null) {
       throw ArgumentError.value(
         _TiledLayer.roadLayer.name,
@@ -61,7 +118,7 @@ class TrashyRoadWorld extends Component {
     }
 
     final obstaclesLayer =
-        tiled.tileMap.getLayer<ObjectGroup>(_TiledLayer.obstacles.name);
+        renderableTiledMap.getLayer<ObjectGroup>(_TiledLayer.obstacles.name);
     if (obstaclesLayer == null) {
       throw ArgumentError.value(
         _TiledLayer.obstacles.name,

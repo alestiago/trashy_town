@@ -14,12 +14,12 @@ class Barrel extends Obstacle {
   Barrel._({
     required Vector2 position,
   }) : super(
-          size: Vector2(1, 2)..convertToGameSize(),
+          size: Vector2(1, 2)..toGameSize(),
           children: [
             _BarrelSpriteComponent(),
           ],
         ) {
-    this.position = position..snap(size: Vector2(1, 2)..convertToGameSize());
+    this.position = position..snap(size: Vector2(1, 2)..toGameSize());
     priority = position.y.floor();
   }
 

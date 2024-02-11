@@ -15,7 +15,7 @@ class Trash extends PositionedEntity {
   Trash._({
     required Vector2 position,
   }) : super(
-          position: position..snap(size: Vector2(1, 2)..convertToGameSize()),
+          position: position..snap(size: Vector2(1, 2)..toGameSize()),
           priority: position.y.floor(),
           behaviors: [
             PropagatingCollisionBehavior(

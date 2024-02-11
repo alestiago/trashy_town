@@ -15,7 +15,7 @@ class TrashCan extends Obstacle {
   TrashCan._({
     required Vector2 position,
   }) : super(
-          size: Vector2(1, 2)..convertToGameSize(),
+          size: Vector2(1, 2)..toGameSize(),
           behaviors: [
             TrashCanFocusingBehavior(),
           ],

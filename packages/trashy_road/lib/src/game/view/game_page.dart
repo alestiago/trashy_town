@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/game.dart' hide Route;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,8 @@ import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/game/widgets/widgets.dart';
 import 'package:trashy_road/src/loading/cubit/cubit.dart';
 import 'package:trashy_road/src/pause/pause.dart';
+
+final _random = Random(0);
 
 class GamePage extends StatelessWidget {
   const GamePage({super.key});
@@ -50,10 +54,12 @@ class _GameViewState extends State<_GameView> {
           ? DebugTrashyRoadGame(
               gameBloc: gameBloc,
               images: loadingBloc.images,
+              random: _random,
             )
           : TrashyRoadGame(
               gameBloc: gameBloc,
               images: loadingBloc.images,
+              random: _random,
             );
     }
 

@@ -14,14 +14,13 @@ class Barrel extends Obstacle {
   Barrel._({
     required Vector2 position,
   }) : super(
+          position: position..snap(),
           size: Vector2(1, 2)..toGameSize(),
+          priority: position.y.floor(),
           children: [
             _BarrelSpriteComponent(),
           ],
-        ) {
-    this.position = position..snap(size: Vector2(1, 2)..toGameSize());
-    priority = position.y.floor();
-  }
+        );
 
   /// Derives a [Barrel] from a [TiledObject].
   factory Barrel.fromTiledObject(TiledObject tiledObject) {

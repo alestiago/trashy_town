@@ -8,10 +8,10 @@ class Obstacle extends PositionedEntity {
     required Vector2 super.size,
     super.children,
     super.position,
-    super.anchor,
     super.priority,
     Iterable<Behavior>? behaviors,
   }) : super(
+          anchor: Anchor.bottomLeft,
           behaviors: [
             if (behaviors != null) ...behaviors,
             PropagatingCollisionBehavior(

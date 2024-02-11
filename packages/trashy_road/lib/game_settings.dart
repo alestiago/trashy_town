@@ -16,12 +16,4 @@ abstract class GameSettings {
 
   /// The lerp time for player movement.
   static const playerMoveAnimationSpeed = 0.2;
-
-  /// The minimum traffic variation.
-  ///
-  /// A random amount between [minTrafficVariation] and 1 will be used to
-  /// determine the distance between cars in the same lane.
-  /// The lower this value, the more variation there will be between the
-  /// distance between cars.
-  static const minTrafficVariation = 0.8;
 }

@@ -13,6 +13,15 @@ class VehicleSpawningBehavior extends Behavior<RoadLane> {
   /// {@macro VehicleSpawningBehavior}
   VehicleSpawningBehavior();
 
+  /// The minimum traffic variation.
+  ///
+  /// A random amount between [_minTrafficVariation] and 1 will be used to
+  /// determine the distance between cars in the same lane.
+  ///
+  /// The lower this value, the more variation there will be between the
+  /// distance between cars.
+  static const _minTrafficVariation = 0.8;
+
   @override
   FutureOr<void> onLoad() async {
     await super.onLoad();
@@ -22,8 +31,8 @@ class VehicleSpawningBehavior extends Behavior<RoadLane> {
     for (var i = 0; i < parent.traffic; i++) {
       var startPosition = (i / parent.traffic) * world.tiled.size.x;
 
-      startPosition *= GameSettings.minTrafficVariation +
-          (world.random.nextDouble() * (1 - GameSettings.minTrafficVariation));
+      startPosition *= _minTrafficVariation +
+          (world.random.nextDouble() * (1 - _minTrafficVariation));
 
       if (parent.direction == RoadLaneDirection.rightToLeft) {
         startPosition *= -1;

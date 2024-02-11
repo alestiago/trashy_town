@@ -38,7 +38,7 @@ class VehicleSpawningBehavior extends Behavior<RoadLane>
       }
 
       parent.add(
-        Bus(roadLane: parent)..position.x = startPosition,
+        Car(roadLane: parent)..position.x = startPosition,
       );
     }
   }

@@ -18,6 +18,21 @@ class $AssetsImagesGen {
   /// File path: assets/images/bus.png
   AssetGenImage get bus => const AssetGenImage('assets/images/bus.png');
 
+  /// File path: assets/images/car.png
+  AssetGenImage get car => const AssetGenImage('assets/images/car.png');
+
+  /// File path: assets/images/grass--road-east.png
+  AssetGenImage get grassRoadEast =>
+      const AssetGenImage('assets/images/grass--road-east.png');
+
+  /// File path: assets/images/grass--road-southwest.png
+  AssetGenImage get grassRoadSouthwest =>
+      const AssetGenImage('assets/images/grass--road-southwest.png');
+
+  /// File path: assets/images/grass-flowers.png
+  AssetGenImage get grassFlowers =>
+      const AssetGenImage('assets/images/grass-flowers.png');
+
   /// File path: assets/images/grass.png
   AssetGenImage get grass => const AssetGenImage('assets/images/grass.png');
 
@@ -35,8 +50,19 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/trash_can.png');
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [barrel, bus, grass, player, road, trash, trashCan];
+  List<AssetGenImage> get values => [
+        barrel,
+        bus,
+        car,
+        grassRoadEast,
+        grassRoadSouthwest,
+        grassFlowers,
+        grass,
+        player,
+        road,
+        trash,
+        trashCan
+      ];
 }
 
 class $AssetsTilesGen {

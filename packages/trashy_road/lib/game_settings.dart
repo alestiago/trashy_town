@@ -25,11 +25,5 @@ extension TrashyRoadVector on Vector2 {
   /// Scales the vector from tile size to game size.
   ///
   /// Modifications are made to the object.
-  ///
-  /// For example
-  /// ```dart
-  /// final Vector2 tileSize = Vector2(1, 2);
-  /// final Vector2 gameSize = Vector2(1, 2).convertToGameSize();
-  /// ```
   void convertToGameSize() => multiply(GameSettings.gridDimensions);
 }

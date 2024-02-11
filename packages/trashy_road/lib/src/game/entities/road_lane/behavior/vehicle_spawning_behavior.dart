@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
-import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 /// {@template VehicleSpawningBehavior}

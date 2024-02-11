@@ -99,6 +99,6 @@ class RoadLane extends PositionedEntity {
   /// {@macro RoadLaneDirection}
   final RoadLaneDirection direction;
 
-  /// The amount of traffic in the lane.
+  /// The amount of vehicles in the lane.
   final int traffic;
 }

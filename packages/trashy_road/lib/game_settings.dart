@@ -10,6 +10,12 @@ abstract class GameSettings {
 
   /// The delay between player moves.
   static const moveDelay = Duration(milliseconds: 150);
+
+  /// The speed multiplier for cars.
+  static const carSpeedMultiplier = 1.5;
+
+  /// The lerp time for player movement.
+  static const playerMoveAnimationSpeed = 0.2;
 }
 
 extension TrashyRoadVector on Vector2 {

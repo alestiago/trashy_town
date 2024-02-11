@@ -25,7 +25,7 @@ extension TrashyRoadVector on Vector2 {
   /// Scales this from tile size to game size.
   ///
   /// For example, if an object is 1x1 in the tilemap, you may use
-  /// `Vector2(1, 1)..toGameSize()` to scale it into
+  /// `Vector2(1, 1)..toGameSize()` to scale it into the game size.
   ///
   /// Modifications are made to the object.
   void toGameSize() => multiply(GameSettings.gridDimensions);

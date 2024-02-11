@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
@@ -79,7 +78,6 @@ class TrashyRoadWorld extends Component {
     final bottomRightPosition =
         tiled.topLeftPosition + Vector2(tiled.width, tiled.height);
     bounds = MapBounds(tiled.topLeftPosition, bottomRightPosition);
-    random = Random(0);
   }
 
   final TiledComponent tiled;
@@ -87,8 +85,6 @@ class TrashyRoadWorld extends Component {
   late Vector2 finishPosition;
 
   late MapBounds bounds;
-
-  late Random random;
 
   @override
   FutureOr<void> onLoad() async {

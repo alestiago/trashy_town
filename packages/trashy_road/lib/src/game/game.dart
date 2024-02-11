@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flame/cache.dart';
@@ -20,6 +21,7 @@ class TrashyRoadGame extends FlameGame
     with HasKeyboardHandlerComponents, HasCollisionDetection {
   TrashyRoadGame({
     required GameBloc gameBloc,
+    required this.random,
     Images? images,
   })  : _gameBloc = gameBloc,
         super(
@@ -36,6 +38,8 @@ class TrashyRoadGame extends FlameGame
 
   /// {@macro GameBloc}
   final GameBloc _gameBloc;
+
+  final Random random;
 
   @override
   FutureOr<void> onLoad() async {

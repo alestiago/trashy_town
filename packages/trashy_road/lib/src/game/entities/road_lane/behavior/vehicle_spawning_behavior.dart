@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flame/extensions.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 /// {@template VehicleSpawningBehavior}
 /// Spawns vehicles in the road lane.
 /// {@endtemplate}
-class VehicleSpawningBehavior extends Behavior<RoadLane> {
+class VehicleSpawningBehavior extends Behavior<RoadLane>
+    with HasGameReference<TrashyRoadGame> {
   /// {@macro VehicleSpawningBehavior}
   VehicleSpawningBehavior();
 
@@ -31,7 +31,7 @@ class VehicleSpawningBehavior extends Behavior<RoadLane> {
       var startPosition = (i / parent.traffic) * world.tiled.size.x;
 
       startPosition *= _minTrafficVariation +
-          (world.random.nextDouble() * (1 - _minTrafficVariation));
+          (game.random.nextDouble() * (1 - _minTrafficVariation));
 
       if (parent.direction == RoadLaneDirection.rightToLeft) {
         startPosition *= -1;

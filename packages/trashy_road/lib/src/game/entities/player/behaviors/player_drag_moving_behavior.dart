@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
@@ -5,12 +7,13 @@ import 'package:trashy_road/src/game/game.dart';
 
 /// A behavior that allows the [Player] to move using mobile gestures.
 ///
-/// Forward movement can be achieved through tapping the screen
+/// Forward movement can be achieved through tapping the screen.
 ///
 /// Directional movement can be achieved through swiping in the desired
-/// direction
+/// direction.
 ///
-/// This behavior is meant to be used in conjunction with [PlayerMovingBehavior]
+/// This behavior is meant to be used in conjunction with
+/// [PlayerMovingBehavior].
 class PlayerDragMovingBehavior extends Behavior<Player> {
   bool _hasMoved = false;
 
@@ -18,19 +21,21 @@ class PlayerDragMovingBehavior extends Behavior<Player> {
 
   static const _swipeThreshold = 100;
 
+  late final PlayerMovingBehavior _playerMovingBehavior;
+
+  @override
+  FutureOr<void> onLoad() async {
+    await super.onLoad();
+    _playerMovingBehavior = parent.findBehavior<PlayerMovingBehavior>();
+  }
+
   void onTapUp(TapUpEvent event) {
-    parent.findBehavior<PlayerMovingBehavior>().move(Direction.up);
+    _playerMovingBehavior.move(Direction.up);
   }
 
   void onDragStart(DragStartEvent event) {
     _hasMoved = false;
     _swipeDeltaPosition.setAll(0);
-  }
-
-  void _move(Direction direction) {
-    final playerMovingBehavior = parent.findBehavior<PlayerMovingBehavior>();
-    _hasMoved = true;
-    playerMovingBehavior.move(direction);
   }
 
   void onDragUpdate(DragUpdateEvent event) {
@@ -49,5 +54,10 @@ class PlayerDragMovingBehavior extends Behavior<Player> {
     } else if (_swipeDeltaPosition.y < -_swipeThreshold) {
       _move(Direction.up);
     }
+  }
+
+  void _move(Direction direction) {
+    _hasMoved = true;
+    _playerMovingBehavior.move(direction);
   }
 }

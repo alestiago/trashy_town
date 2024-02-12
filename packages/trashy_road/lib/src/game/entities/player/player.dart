@@ -21,9 +21,6 @@ class Player extends PositionedEntity {
                 anchor: Anchor.center,
               ),
             ),
-            PlayerMovingBehavior(),
-            PlayerKeyboardMovingBehavior.arrows(),
-            PlayerDragMovingBehavior(),
             PlayerCollectingTrashBehavior(),
             PlayerDepositingTrashBehavior(),
             PlayerObstacleBehavior(),
@@ -65,6 +62,19 @@ class Player extends PositionedEntity {
     return vector -
         (vector % GameSettings.gridDimensions) +
         (GameSettings.gridDimensions / 2);
+  }
+
+  @override
+  FutureOr<void> onLoad() async {
+    await super.onLoad();
+
+    await addAll(
+      [
+        PlayerMovingBehavior(),
+        PlayerKeyboardMovingBehavior.arrows(),
+        PlayerDragMovingBehavior(),
+      ],
+    );
   }
 }
 

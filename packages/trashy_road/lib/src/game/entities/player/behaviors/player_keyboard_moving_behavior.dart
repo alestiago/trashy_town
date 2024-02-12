@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flutter/services.dart';
@@ -68,6 +70,14 @@ class PlayerKeyboardMovingBehavior extends Behavior<Player>
   /// A set containg the keys that were previously down.
   final _previouslyDownKeys = <LogicalKeyboardKey>{};
 
+  late final PlayerMovingBehavior _playerMovingBehavior;
+
+  @override
+  FutureOr<void> onLoad() async {
+    await super.onLoad();
+    _playerMovingBehavior = parent.findBehavior<PlayerMovingBehavior>();
+  }
+
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
     final isMovementKey = event.logicalKey == _leftKey ||
@@ -87,16 +97,14 @@ class PlayerKeyboardMovingBehavior extends Behavior<Player>
 
       _previouslyDownKeys.add(event.logicalKey);
 
-      final playerMovingBehavior = parent.findBehavior<PlayerMovingBehavior>();
-
       if (event.logicalKey == _leftKey) {
-        playerMovingBehavior.move(Direction.left);
+        _playerMovingBehavior.move(Direction.left);
       } else if (event.logicalKey == _rightKey) {
-        playerMovingBehavior.move(Direction.right);
+        _playerMovingBehavior.move(Direction.right);
       } else if (event.logicalKey == _downKey) {
-        playerMovingBehavior.move(Direction.down);
+        _playerMovingBehavior.move(Direction.down);
       } else if (event.logicalKey == _upKey) {
-        playerMovingBehavior.move(Direction.up);
+        _playerMovingBehavior.move(Direction.up);
       }
     }
 

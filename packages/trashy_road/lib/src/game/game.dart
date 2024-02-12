@@ -45,6 +45,13 @@ class TrashyRoadGame extends FlameGame
 
   final Random random;
 
+  late final Player _player;
+
+  @override
+  Color backgroundColor() {
+    return const Color(0xFFFFFFFF);
+  }
+
   @override
   FutureOr<void> onLoad() async {
     await super.onLoad();
@@ -64,40 +71,36 @@ class TrashyRoadGame extends FlameGame
 
     world.add(blocProvider);
 
-    final player = trashyRoadWorld.tiled.children.whereType<Player>().first;
+    _player = trashyRoadWorld.tiled.children.whereType<Player>().first;
+    _player.children.register<PlayerDragMovingBehavior>();
 
-    camera.follow(player);
+    camera.follow(_player);
   }
 
   @override
   void onTapUp(TapUpEvent event) {
-    final player = descendants().whereType<Player>().first;
-    player.findBehavior<PlayerDragMovingBehavior>().onTapUp(event);
     super.onTapUp(event);
+    _player.children.query<PlayerDragMovingBehavior>().first.onTapUp(event);
   }
 
   @override
   void onDragUpdate(DragUpdateEvent event) {
-    final player = descendants().whereType<Player>().first;
-    player.findBehavior<PlayerDragMovingBehavior>().onDragUpdate(event);
     super.onDragUpdate(event);
+    _player.children
+        .query<PlayerDragMovingBehavior>()
+        .first
+        .onDragUpdate(event);
   }
 
   @override
   void onDragStart(DragStartEvent event) {
-    final player = descendants().whereType<Player>().first;
-    player.findBehavior<PlayerDragMovingBehavior>().onDragStart(event);
     super.onDragStart(event);
+    _player.children.query<PlayerDragMovingBehavior>().first.onDragStart(event);
   }
 
   @override
   void update(double dt) {
     super.update(dt);
     camera.update(dt);
-  }
-
-  @override
-  Color backgroundColor() {
-    return const Color(0xFFFFFFFF);
   }
 }

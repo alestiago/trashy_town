@@ -15,12 +15,6 @@ class _MockRawKeyEventData extends Mock implements RawKeyEventData {
       super.toString();
 }
 
-class _MockPlayerMovingBehavior extends Mock implements PlayerMovingBehavior {
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) =>
-      super.toString();
-}
-
 class _TestGame extends FlameGame {
   _TestGame({
     required GameBloc gameBloc,
@@ -31,16 +25,18 @@ class _TestGame extends FlameGame {
   Future<void> pump(
     PlayerKeyboardMovingBehavior behavior,
   ) async {
+    final player = Player.test(
+      behaviors: [PlayerMovingBehavior()],
+    );
+
     await ensureAdd(
       FlameBlocProvider<GameBloc, GameState>(
         create: () => _gameBloc,
-        children: [
-          Player.test(
-            behaviors: [behavior, _MockPlayerMovingBehavior()],
-          ),
-        ],
+        children: [player],
       ),
     );
+
+    await player.ensureAdd(behavior);
   }
 }
 

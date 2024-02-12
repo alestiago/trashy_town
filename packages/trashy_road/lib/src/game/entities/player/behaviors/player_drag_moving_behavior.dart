@@ -13,7 +13,7 @@ class PlayerDragMovingBehavior extends Behavior<Player>
 
   static const _swipeThreshold = 100;
 
-  void onTapDown(TapDownEvent event) {
+  void onTapUp(TapUpEvent event) {
     parent.findBehavior<PlayerMovementBehavior>().move(Direction.up);
   }
 

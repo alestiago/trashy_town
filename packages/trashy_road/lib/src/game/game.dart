@@ -70,10 +70,10 @@ class TrashyRoadGame extends FlameGame
   }
 
   @override
-  void onTapDown(TapDownEvent event) {
+  void onTapUp(TapUpEvent event) {
     final player = descendants().whereType<Player>().first;
-    player.findBehavior<PlayerDragMovingBehavior>().onTapDown(event);
-    super.onTapDown(event);
+    player.findBehavior<PlayerDragMovingBehavior>().onTapUp(event);
+    super.onTapUp(event);
   }
 
   @override

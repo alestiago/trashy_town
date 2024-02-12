@@ -18,7 +18,11 @@ export 'entities/entities.dart';
 export 'view/view.dart';
 
 class TrashyRoadGame extends FlameGame
-    with HasKeyboardHandlerComponents, HasCollisionDetection {
+    with
+        HasKeyboardHandlerComponents,
+        HasCollisionDetection,
+        TapCallbacks,
+        DragCallbacks {
   TrashyRoadGame({
     required GameBloc gameBloc,
     required this.random,
@@ -63,6 +67,27 @@ class TrashyRoadGame extends FlameGame
     final player = trashyRoadWorld.tiled.children.whereType<Player>().first;
 
     camera.follow(player);
+  }
+
+  @override
+  void onTapDown(TapDownEvent event) {
+    final player = descendants().whereType<Player>().first;
+    player.findBehavior<PlayerDragMovingBehavior>().onTapDown(event);
+    super.onTapDown(event);
+  }
+
+  @override
+  void onDragUpdate(DragUpdateEvent event) {
+    final player = descendants().whereType<Player>().first;
+    player.findBehavior<PlayerDragMovingBehavior>().onDragUpdate(event);
+    super.onDragUpdate(event);
+  }
+
+  @override
+  void onDragStart(DragStartEvent event) {
+    final player = descendants().whereType<Player>().first;
+    player.findBehavior<PlayerDragMovingBehavior>().onDragStart(event);
+    super.onDragStart(event);
   }
 
   @override

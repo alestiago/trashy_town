@@ -9,6 +9,6 @@ class PlayerObstacleBehavior extends CollisionBehavior<Obstacle, Player> {
   void onCollision(Set<Vector2> intersectionPoints, Obstacle other) {
     super.onCollision(intersectionPoints, other);
 
-    parent.findBehavior<PlayerKeyboardMovingBehavior>().bounceBack();
+    parent.findBehavior<PlayerMovementBehavior>().bounceBack();
   }
 }

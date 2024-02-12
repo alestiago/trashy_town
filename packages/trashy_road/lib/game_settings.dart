@@ -37,11 +37,7 @@ extension TrashyRoadVector on Vector2 {
 
 class _ImmutableVector2 extends Vector2 {
   _ImmutableVector2(double x, double y)
-      : super.fromFloat64List(Float64List.fromList([x, y]));
-
-  @override
-  set x(double value) => throw UnsupportedError('This object is immutable');
-
-  @override
-  set y(double value) => throw UnsupportedError('This object is immutable');
+      : super.fromFloat64List(
+          UnmodifiableFloat64ListView(Float64List.fromList([x, y])),
+        );
 }

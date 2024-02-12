@@ -18,7 +18,11 @@ export 'entities/entities.dart';
 export 'view/view.dart';
 
 class TrashyRoadGame extends FlameGame
-    with HasKeyboardHandlerComponents, HasCollisionDetection {
+    with
+        HasKeyboardHandlerComponents,
+        HasCollisionDetection,
+        TapCallbacks,
+        DragCallbacks {
   TrashyRoadGame({
     required GameBloc gameBloc,
     required this.random,
@@ -41,6 +45,13 @@ class TrashyRoadGame extends FlameGame
 
   final Random random;
 
+  late final Player _player;
+
+  @override
+  Color backgroundColor() {
+    return const Color(0xFFFFFFFF);
+  }
+
   @override
   FutureOr<void> onLoad() async {
     await super.onLoad();
@@ -60,19 +71,36 @@ class TrashyRoadGame extends FlameGame
 
     world.add(blocProvider);
 
-    final player = trashyRoadWorld.tiled.children.whereType<Player>().first;
+    _player = trashyRoadWorld.tiled.children.whereType<Player>().first;
+    _player.children.register<PlayerDragMovingBehavior>();
 
-    camera.follow(player);
+    camera.follow(_player);
+  }
+
+  @override
+  void onTapUp(TapUpEvent event) {
+    super.onTapUp(event);
+    _player.children.query<PlayerDragMovingBehavior>().first.onTapUp(event);
+  }
+
+  @override
+  void onDragUpdate(DragUpdateEvent event) {
+    super.onDragUpdate(event);
+    _player.children
+        .query<PlayerDragMovingBehavior>()
+        .first
+        .onDragUpdate(event);
+  }
+
+  @override
+  void onDragStart(DragStartEvent event) {
+    super.onDragStart(event);
+    _player.children.query<PlayerDragMovingBehavior>().first.onDragStart(event);
   }
 
   @override
   void update(double dt) {
     super.update(dt);
     camera.update(dt);
-  }
-
-  @override
-  Color backgroundColor() {
-    return const Color(0xFFFFFFFF);
   }
 }

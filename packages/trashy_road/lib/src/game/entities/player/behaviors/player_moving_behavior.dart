@@ -28,7 +28,7 @@ class PlayerMovingBehavior extends Behavior<Player>
   void update(double dt) {
     super.update(dt);
 
-    if (parent.position.distanceTo(_targetPosition) != 0) {
+    if (parent.position.distanceTo(_targetPosition) > 0.01) {
       parent.position
           .lerp(_targetPosition, GameSettings.playerMoveAnimationSpeed);
       parent.priority = parent.position.y.floor();

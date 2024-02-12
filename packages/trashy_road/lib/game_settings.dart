@@ -1,12 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:flame/components.dart';
 
 abstract class GameSettings {
   /// The dimensions of the grid.
-  static const _gridDimensionsTuple = (x: 128, y: 64);
-  static Vector2 get gridDimensions => Vector2(
-        _gridDimensionsTuple.x.toDouble(),
-        _gridDimensionsTuple.y.toDouble(),
-      );
+  static final Vector2 gridDimensions = _ImmutableVector2(128, 64);
 
   /// The delay between player moves.
   static const moveDelay = Duration(milliseconds: 150);
@@ -35,4 +33,15 @@ extension TrashyRoadVector on Vector2 {
   ///
   /// Modifications are made to the object.
   void toGameSize() => multiply(GameSettings.gridDimensions);
+}
+
+class _ImmutableVector2 extends Vector2 {
+  _ImmutableVector2(double x, double y)
+      : super.fromFloat64List(Float64List.fromList([x, y]));
+
+  @override
+  set x(double value) => throw UnsupportedError('This object is immutable');
+
+  @override
+  set y(double value) => throw UnsupportedError('This object is immutable');
 }

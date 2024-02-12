@@ -16,7 +16,7 @@ class _TestGame extends FlameGame {
   final GameBloc _gameBloc;
 
   Future<void> pump(
-    PlayerMovementBehavior behavior,
+    PlayerMovingBehavior behavior,
   ) async {
     await ensureAdd(
       FlameBlocProvider<GameBloc, GameState>(
@@ -34,7 +34,7 @@ class _TestGame extends FlameGame {
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('$PlayerMovementBehavior', () {
+  group('$PlayerMovingBehavior', () {
     late _TestGame game;
     late GameBloc gameBloc;
 
@@ -55,7 +55,7 @@ void main() {
         () => game,
         (game) async {
           const direction = Direction.up;
-          final behavior = PlayerMovementBehavior();
+          final behavior = PlayerMovingBehavior();
           await game.pump(behavior);
 
           final previousVerticalPosition = behavior.parent.position.y;
@@ -77,7 +77,7 @@ void main() {
         () => game,
         (game) async {
           const direction = Direction.down;
-          final behavior = PlayerMovementBehavior();
+          final behavior = PlayerMovingBehavior();
           await game.pump(behavior);
 
           final previousVerticalPosition = behavior.parent.position.y;
@@ -99,7 +99,7 @@ void main() {
         () => game,
         (game) async {
           const direction = Direction.right;
-          final behavior = PlayerMovementBehavior();
+          final behavior = PlayerMovingBehavior();
           await game.pump(behavior);
 
           final previousVerticalPosition = behavior.parent.position.x;
@@ -121,7 +121,7 @@ void main() {
         () => game,
         (game) async {
           const direction = Direction.left;
-          final behavior = PlayerMovementBehavior();
+          final behavior = PlayerMovingBehavior();
           await game.pump(behavior);
 
           final previousVerticalPosition = behavior.parent.position.x;

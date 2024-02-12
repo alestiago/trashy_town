@@ -15,7 +15,7 @@ class _MockRawKeyEventData extends Mock implements RawKeyEventData {
       super.toString();
 }
 
-class _MockPlayerMovingBehavior extends Mock implements PlayerMovementBehavior {
+class _MockPlayerMovingBehavior extends Mock implements PlayerMovingBehavior {
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) =>
       super.toString();

@@ -18,6 +18,8 @@ import 'package:trashy_road/src/game/game.dart';
 /// to move the player around.
 /// * [PlayerKeyboardMovingBehavior.wasd], a behavior that uses the WASD keys
 /// to move the player around.
+///
+/// This behavior is meant to be used in conjunction with [PlayerMovingBehavior]
 class PlayerKeyboardMovingBehavior extends Behavior<Player>
     with KeyboardHandler {
   @visibleForTesting
@@ -85,17 +87,16 @@ class PlayerKeyboardMovingBehavior extends Behavior<Player>
 
       _previouslyDownKeys.add(event.logicalKey);
 
-      final playerMovementBehavior =
-          parent.findBehavior<PlayerMovementBehavior>();
+      final playerMovingBehavior = parent.findBehavior<PlayerMovingBehavior>();
 
       if (event.logicalKey == _leftKey) {
-        playerMovementBehavior.move(Direction.left);
+        playerMovingBehavior.move(Direction.left);
       } else if (event.logicalKey == _rightKey) {
-        playerMovementBehavior.move(Direction.right);
+        playerMovingBehavior.move(Direction.right);
       } else if (event.logicalKey == _downKey) {
-        playerMovementBehavior.move(Direction.down);
+        playerMovingBehavior.move(Direction.down);
       } else if (event.logicalKey == _upKey) {
-        playerMovementBehavior.move(Direction.up);
+        playerMovingBehavior.move(Direction.up);
       }
     }
 

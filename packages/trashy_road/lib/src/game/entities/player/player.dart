@@ -21,7 +21,7 @@ class Player extends PositionedEntity {
                 anchor: Anchor.center,
               ),
             ),
-            PlayerMovementBehavior(),
+            PlayerMovingBehavior(),
             PlayerKeyboardMovingBehavior.arrows(),
             PlayerDragMovingBehavior(),
             PlayerCollectingTrashBehavior(),

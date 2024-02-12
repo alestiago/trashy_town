@@ -2,18 +2,11 @@ import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_test/flame_test.dart';
 import 'package:flame_tiled/flame_tiled.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 class _MockTiledMap extends Mock implements TiledMap {}
-
-class _MockRawKeyEventData extends Mock implements RawKeyEventData {
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) =>
-      super.toString();
-}
 
 class _TestGame extends FlameGame {
   _TestGame({
@@ -23,7 +16,7 @@ class _TestGame extends FlameGame {
   final GameBloc _gameBloc;
 
   Future<void> pump(
-    PlayerKeyboardMovingBehavior behavior,
+    PlayerMovementBehavior behavior,
   ) async {
     await ensureAdd(
       FlameBlocProvider<GameBloc, GameState>(
@@ -41,7 +34,7 @@ class _TestGame extends FlameGame {
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('$PlayerKeyboardMovingBehavior.arrows', () {
+  group('$PlayerMovementBehavior', () {
     late _TestGame game;
     late GameBloc gameBloc;
 
@@ -57,27 +50,16 @@ void main() {
     });
 
     group('moves', () {
-      late RawKeyEventData rawKeyEventData;
-
-      setUp(() {
-        rawKeyEventData = _MockRawKeyEventData();
-      });
-
       testWithGame<_TestGame>(
-        'upward with the up key',
+        'upward with $Direction.up',
         () => game,
         (game) async {
-          const upKey = LogicalKeyboardKey.arrowUp;
-          final behavior = PlayerKeyboardMovingBehavior.arrows();
+          const direction = Direction.up;
+          final behavior = PlayerMovementBehavior();
           await game.pump(behavior);
 
-          when(() => rawKeyEventData.logicalKey).thenReturn(upKey);
-          final event = RawKeyDownEvent(data: rawKeyEventData);
-
           final previousVerticalPosition = behavior.parent.position.y;
-
-          behavior.onKeyEvent(event, {upKey});
-
+          behavior.move(direction);
           game.update(0);
 
           final player = behavior.parent;
@@ -90,22 +72,16 @@ void main() {
           );
         },
       );
-
       testWithGame<_TestGame>(
-        'downward with the down key',
+        'downwards with $Direction.down',
         () => game,
         (game) async {
-          const downKey = LogicalKeyboardKey.arrowDown;
-          final behavior = PlayerKeyboardMovingBehavior.arrows();
+          const direction = Direction.down;
+          final behavior = PlayerMovementBehavior();
           await game.pump(behavior);
 
-          when(() => rawKeyEventData.logicalKey).thenReturn(downKey);
-          final event = RawKeyDownEvent(data: rawKeyEventData);
-
           final previousVerticalPosition = behavior.parent.position.y;
-
-          behavior.onKeyEvent(event, {downKey});
-
+          behavior.move(direction);
           game.update(0);
 
           final player = behavior.parent;
@@ -118,59 +94,47 @@ void main() {
           );
         },
       );
-
       testWithGame<_TestGame>(
-        'leftward with the left key',
+        'rightward with $Direction.right',
         () => game,
         (game) async {
-          const leftKey = LogicalKeyboardKey.arrowLeft;
-          final behavior = PlayerKeyboardMovingBehavior.arrows();
+          const direction = Direction.right;
+          final behavior = PlayerMovementBehavior();
           await game.pump(behavior);
 
-          when(() => rawKeyEventData.logicalKey).thenReturn(leftKey);
-          final event = RawKeyDownEvent(data: rawKeyEventData);
-
-          final previousHorizontalPosition = behavior.parent.position.x;
-
-          behavior.onKeyEvent(event, {leftKey});
-
+          final previousVerticalPosition = behavior.parent.position.x;
+          behavior.move(direction);
           game.update(0);
 
           final player = behavior.parent;
-          final currentHorizontalPosition = player.position.x;
+          final currentVerticalPosition = player.position.x;
           expect(
-            previousHorizontalPosition,
-            greaterThan(currentHorizontalPosition),
+            previousVerticalPosition,
+            lessThan(currentVerticalPosition),
             reason:
-                '''The player position should have moved leftwards (negative x direction)''',
+                '''The player position should have moved rightward (positive x direction)''',
           );
         },
       );
-
       testWithGame<_TestGame>(
-        'rightward with the right key',
+        'leftward with $Direction.left',
         () => game,
         (game) async {
-          const rightKey = LogicalKeyboardKey.arrowRight;
-          final behavior = PlayerKeyboardMovingBehavior.arrows();
+          const direction = Direction.left;
+          final behavior = PlayerMovementBehavior();
           await game.pump(behavior);
 
-          when(() => rawKeyEventData.logicalKey).thenReturn(rightKey);
-          final event = RawKeyDownEvent(data: rawKeyEventData);
-
-          final previousHorizontalPosition = behavior.parent.position.x;
-
-          behavior.onKeyEvent(event, {rightKey});
-
+          final previousVerticalPosition = behavior.parent.position.x;
+          behavior.move(direction);
           game.update(0);
 
           final player = behavior.parent;
-          final currentHorizontalPosition = player.position.x;
+          final currentVerticalPosition = player.position.x;
           expect(
-            previousHorizontalPosition,
-            lessThan(currentHorizontalPosition),
+            previousVerticalPosition,
+            greaterThan(currentVerticalPosition),
             reason:
-                '''The player position should have moved rightwards (positive x direction)''',
+                '''The player position should have moved leftward (negative x direction)''',
           );
         },
       );

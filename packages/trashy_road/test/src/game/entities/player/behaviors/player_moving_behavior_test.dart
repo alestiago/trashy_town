@@ -49,9 +49,9 @@ void main() {
       gameBloc.close();
     });
 
-    group('moves', () {
+    group('move', () {
       testWithGame<_TestGame>(
-        'upward with $Direction.up',
+        'moves upward with $Direction.up',
         () => game,
         (game) async {
           const direction = Direction.up;
@@ -73,7 +73,7 @@ void main() {
         },
       );
       testWithGame<_TestGame>(
-        'downwards with $Direction.down',
+        'moves downwards with $Direction.down',
         () => game,
         (game) async {
           const direction = Direction.down;
@@ -95,7 +95,7 @@ void main() {
         },
       );
       testWithGame<_TestGame>(
-        'rightward with $Direction.right',
+        'moves rightward with $Direction.right',
         () => game,
         (game) async {
           const direction = Direction.right;
@@ -117,7 +117,7 @@ void main() {
         },
       );
       testWithGame<_TestGame>(
-        'leftward with $Direction.left',
+        'moves leftward with $Direction.left',
         () => game,
         (game) async {
           const direction = Direction.left;

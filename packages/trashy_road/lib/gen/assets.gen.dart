@@ -80,6 +80,9 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/map.tmx
   String get map => 'assets/tiles/map.tmx';
 
+  /// File path: assets/tiles/map2.tmx
+  String get map2 => 'assets/tiles/map2.tmx';
+
   /// File path: assets/tiles/road_lane.tx
   String get roadLane => 'assets/tiles/road_lane.tx';
 
@@ -91,7 +94,7 @@ class $AssetsTilesGen {
 
   /// List of all assets
   List<String> get values =>
-      [tiles, barrel, finish, map, roadLane, spawn, trash];
+      [tiles, barrel, finish, map, map2, roadLane, spawn, trash];
 }
 
 class Assets {

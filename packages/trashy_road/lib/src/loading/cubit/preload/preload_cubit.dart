@@ -41,6 +41,7 @@ class PreloadCubit extends Cubit<PreloadState> {
         () => tiled.loadAll(
           [
             Assets.tiles.map,
+            Assets.tiles.map2,
           ],
         ),
       ),

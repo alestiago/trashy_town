@@ -25,7 +25,7 @@ class GamePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loadingBloc = context.read<PreloadCubit>();
-    final map = loadingBloc.tiled.fromCache(Assets.tiles.map);
+    final map = loadingBloc.tiled.fromCache(Assets.tiles.map2);
 
     return BlocProvider(
       create: (context) => GameBloc(map: map),

@@ -21,6 +21,9 @@ enum GameStatus {
   /// Pausing the game means that all user input is disabled and moving objects
   /// are paused.
   paused,
+
+  /// The player has completed the level
+  completed
 }
 
 /// {@template GameState}
@@ -36,6 +39,7 @@ class GameState extends Equatable {
     required this.status,
     required this.map,
     required this.inventory,
+    required this.trashRemaining,
   });
 
   /// The initial state of the game.
@@ -44,6 +48,7 @@ class GameState extends Equatable {
           status: GameStatus.ready,
           map: map,
           inventory: const Inventory.empty(),
+          trashRemaining: -1,
         );
 
   /// {@macro GameStatus}
@@ -55,19 +60,23 @@ class GameState extends Equatable {
   /// {@macro Inventory}
   final Inventory inventory;
 
+  final int trashRemaining;
+
   GameState copyWith({
     GameStatus? status,
     Inventory? inventory,
+    int? trashRemaining,
   }) {
     return GameState(
       status: status ?? this.status,
       map: map,
       inventory: inventory ?? this.inventory,
+      trashRemaining: trashRemaining ?? this.trashRemaining,
     );
   }
 
   @override
-  List<Object?> get props => [status, inventory, map];
+  List<Object?> get props => [status, inventory, map, trashRemaining];
 }
 
 /// {@template Inventory}

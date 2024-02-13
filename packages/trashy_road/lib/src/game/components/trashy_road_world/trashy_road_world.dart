@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:trashy_road/src/game/entities/barrel/barrel.dart';
 import 'package:trashy_road/src/game/game.dart';
@@ -19,7 +20,8 @@ enum _TiledLayer {
   final String name;
 }
 
-class TrashyRoadWorld extends Component {
+class TrashyRoadWorld extends Component
+    with FlameBlocReader<GameBloc, GameState> {
   TrashyRoadWorld.create({required this.tiled}) {
     final trashGroup = tiled.tileMap.getLayer<ObjectGroup>(
       _TiledLayer.trashLayer.name,
@@ -87,8 +89,13 @@ class TrashyRoadWorld extends Component {
   late MapBounds bounds;
 
   @override
-  FutureOr<void> onLoad() async {
+  Future<void> onLoad() async {
     await super.onLoad();
     add(tiled);
+    bloc.add(
+      GameTrashAddedEvent(
+        amountOfTrash: tiled.children.whereType<Trash>().length,
+      ),
+    );
   }
 }

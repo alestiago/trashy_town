@@ -68,10 +68,12 @@ class _GameViewState extends State<_GameView> {
     return BlocBuilder<GameBloc, GameState>(
       buildWhen: (previous, current) {
         return previous.status == GameStatus.playing &&
-            current.status == GameStatus.resetting;
+            (current.status == GameStatus.resetting ||
+                current.status == GameStatus.completed);
       },
       builder: (context, state) {
-        if (state.status == GameStatus.resetting) {
+        if (state.status == GameStatus.resetting ||
+            state.status == GameStatus.completed) {
           _game = gameBuilder();
           gameBloc.add(const GameReadyEvent());
         }

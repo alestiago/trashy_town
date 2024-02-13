@@ -9,8 +9,10 @@ part 'game_state.dart';
 class GameBloc extends Bloc<GameEvent, GameState> {
   GameBloc({required TiledMap map}) : super(GameState.initial(map: map)) {
     on<GameReadyEvent>(_onGameReady);
+    on<GameTrashAddedEvent>(_onGameTrashAdded);
     on<GameInteractedEvent>(_onGameInteraction);
     on<GameCollectedTrashEvent>(_onCollectedTrash);
+    on<GameDepositedTrashEvent>(_onDepositedTrash);
     on<GameResetEvent>(_onGameReset);
     on<GamePausedEvent>(_onGamePaused);
     on<GameResumedEvent>(_onGameResumed);
@@ -21,6 +23,13 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     Emitter<GameState> emit,
   ) {
     emit(state.copyWith(status: GameStatus.ready));
+  }
+
+  void _onGameTrashAdded(
+    GameTrashAddedEvent event,
+    Emitter<GameState> emit,
+  ) {
+    emit(state.copyWith(trashRemaining: event.amountOfTrash));
   }
 
   void _onGameInteraction(
@@ -42,6 +51,28 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       trash: state.inventory.trash + 1,
     );
     emit(state.copyWith(inventory: inventory));
+  }
+
+  void _onDepositedTrash(
+    GameDepositedTrashEvent event,
+    Emitter<GameState> emit,
+  ) {
+    if (state.inventory.trash > 0) {
+      final inventory = state.inventory.copyWith(
+        trash: state.inventory.trash - 1,
+      );
+      final trashRemaining = state.trashRemaining - 1;
+      if (trashRemaining == 0) {
+        emit(state.copyWith(status: GameStatus.completed));
+      } else {
+        emit(
+          state.copyWith(
+            inventory: inventory,
+            trashRemaining: trashRemaining,
+          ),
+        );
+      }
+    }
   }
 
   void _onGameReset(

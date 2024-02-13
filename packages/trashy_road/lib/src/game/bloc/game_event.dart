@@ -19,6 +19,22 @@ class GameReadyEvent extends GameEvent {
   List<Object?> get props => [];
 }
 
+/// {@template GameTrashAddedEvent}
+/// The trash has been added to the world
+///
+/// Fired when the map has been parsed and the total amount of trash in the
+/// world is known
+/// {@endtemplate}
+class GameTrashAddedEvent extends GameEvent {
+  /// {@macro GameTrashAddedEvent}
+  const GameTrashAddedEvent({required this.amountOfTrash}) : super();
+
+  final int amountOfTrash;
+
+  @override
+  List<Object?> get props => [amountOfTrash];
+}
+
 /// {@template GameInteractedEvent}
 /// The user has interacted with the game.
 ///
@@ -41,6 +57,19 @@ class GameInteractedEvent extends GameEvent {
 class GameCollectedTrashEvent extends GameEvent {
   /// {@macro GameCollectedTrashEvent}
   const GameCollectedTrashEvent() : super();
+
+  @override
+  List<Object?> get props => [];
+}
+
+/// {@template GameDepositedTrashEvent}
+/// The user has deposited trash.
+///
+/// Fired when the user has deposited a piece of trash into a Trash Can.
+/// {@endtemplate}
+class GameDepositedTrashEvent extends GameEvent {
+  /// {@macro GameDepositedTrashEvent}
+  const GameDepositedTrashEvent() : super();
 
   @override
   List<Object?> get props => [];

@@ -15,6 +15,12 @@ class PlayerMovingBehavior extends Behavior<Player>
   /// it will be lerped until [_targetPosition] is reached by the [Player].
   final Vector2 _targetPosition = Vector2.zero();
 
+  /// The delay between player moves.
+  static const moveDelay = Duration(milliseconds: 100);
+
+  /// The lerp time for player movement.
+  static const playerMoveAnimationSpeed = 15;
+
   /// A int that contains the time when the next move can be made.
   DateTime _nextMoveTime = DateTime.fromMicrosecondsSinceEpoch(0);
 
@@ -29,8 +35,7 @@ class PlayerMovingBehavior extends Behavior<Player>
     super.update(dt);
 
     if (parent.position.distanceTo(_targetPosition) > 0.01) {
-      parent.position
-          .lerp(_targetPosition, GameSettings.playerMoveAnimationSpeed);
+      parent.position.lerp(_targetPosition, playerMoveAnimationSpeed * dt);
       parent.priority = parent.position.y.floor();
     }
   }
@@ -56,7 +61,7 @@ class PlayerMovingBehavior extends Behavior<Player>
     } else if (direction == Direction.up) {
       _targetPosition.y -= GameSettings.gridDimensions.y;
     }
-    _nextMoveTime = now.add(GameSettings.moveDelay);
+    _nextMoveTime = now.add(moveDelay);
   }
 
   void bounceBack() {

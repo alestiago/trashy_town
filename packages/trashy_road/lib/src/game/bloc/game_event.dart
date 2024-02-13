@@ -46,6 +46,19 @@ class GameCollectedTrashEvent extends GameEvent {
   List<Object?> get props => [];
 }
 
+/// {@template GameDepositedTrashEvent}
+/// The user has deposited trash.
+///
+/// Fired when the user has deposited a piece of trash into a trash can.
+/// {@endtemplate}
+class GameDepositedTrashEvent extends GameEvent {
+  /// {@macro GameDepositedTrashEvent}
+  const GameDepositedTrashEvent() : super();
+
+  @override
+  List<Object?> get props => [];
+}
+
 /// The game has been reset.
 class GameResetEvent extends GameEvent {
   const GameResetEvent() : super();

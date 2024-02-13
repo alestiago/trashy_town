@@ -21,6 +21,12 @@ enum GameStatus {
   /// Pausing the game means that all user input is disabled and moving objects
   /// are paused.
   paused,
+
+  /// The game has been completed.
+  ///
+  /// The game is completed when the user has collected all the trash on the
+  /// map.
+  completed,
 }
 
 /// {@template GameState}
@@ -32,18 +38,23 @@ enum GameStatus {
 @immutable
 class GameState extends Equatable {
   /// {@macro GameState}
-  const GameState({
+  GameState({
     required this.status,
     required this.map,
     required this.inventory,
-  });
+    this.collectedTrash = 0,
+  }) :
+        // TODO(alestiago): Remove magic string.
+        _initialTrash =
+            (map.layerByName('TrashLayer') as ObjectGroup).objects.length;
 
   /// The initial state of the game.
-  const GameState.initial({required TiledMap map})
+  GameState.initial({required TiledMap map})
       : this(
           status: GameStatus.ready,
           map: map,
           inventory: const Inventory.empty(),
+          collectedTrash: 0,
         );
 
   /// {@macro GameStatus}
@@ -52,22 +63,37 @@ class GameState extends Equatable {
   /// The map that the game is being played on.
   final TiledMap map;
 
+  /// The initial amount of trash on the map.
+  final int _initialTrash;
+
+  /// The amount of trash that the player has collected.
+  ///
+  /// Can't be greater than [_initialTrash].
+  final int collectedTrash;
+
   /// {@macro Inventory}
   final Inventory inventory;
 
   GameState copyWith({
     GameStatus? status,
     Inventory? inventory,
+    int? collectedTrash,
   }) {
     return GameState(
       status: status ?? this.status,
       map: map,
       inventory: inventory ?? this.inventory,
+      collectedTrash: collectedTrash ?? this.collectedTrash,
     );
   }
 
   @override
-  List<Object?> get props => [status, inventory, map];
+  List<Object?> get props => [
+        status,
+        inventory,
+        map,
+        collectedTrash,
+      ];
 }
 
 /// {@template Inventory}

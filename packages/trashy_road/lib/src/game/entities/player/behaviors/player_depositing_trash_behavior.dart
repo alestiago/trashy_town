@@ -11,6 +11,8 @@ class PlayerDepositingTrashBehavior extends CollisionBehavior<TrashCan, Player>
   @override
   void onCollisionEnd(TrashCan other) {
     super.onCollisionEnd(other);
-    bloc.add(const GameDepositedTrashEvent());
+    if (other.depositTrash()) {
+      bloc.add(const GameDepositedTrashEvent());
+    }
   }
 }

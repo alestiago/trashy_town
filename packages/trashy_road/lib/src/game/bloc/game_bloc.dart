@@ -11,6 +11,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     on<GameReadyEvent>(_onGameReady);
     on<GameInteractedEvent>(_onGameInteraction);
     on<GameCollectedTrashEvent>(_onCollectedTrash);
+    on<GameDepositedTrashEvent>(_onDepositedTrash);
     on<GameResetEvent>(_onGameReset);
     on<GamePausedEvent>(_onGamePaused);
     on<GameResumedEvent>(_onGameResumed);
@@ -42,6 +43,33 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       trash: state.inventory.trash + 1,
     );
     emit(state.copyWith(inventory: inventory));
+  }
+
+  void _onDepositedTrash(
+    GameDepositedTrashEvent event,
+    Emitter<GameState> emit,
+  ) {
+    if (state.status != GameStatus.playing) {
+      return;
+    }
+
+    if (state.inventory.trash == 0) {
+      return;
+    }
+
+    final inventory =
+        state.inventory.copyWith(trash: state.inventory.trash - 1);
+    final collectedTrash = state.collectedTrash + 1;
+
+    final hasWon = collectedTrash == state._initialTrash;
+
+    emit(
+      state.copyWith(
+        inventory: inventory,
+        collectedTrash: collectedTrash,
+        status: hasWon ? GameStatus.completed : GameStatus.playing,
+      ),
+    );
   }
 
   void _onGameReset(

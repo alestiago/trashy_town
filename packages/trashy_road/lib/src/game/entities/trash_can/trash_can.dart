@@ -17,11 +17,11 @@ class TrashCan extends Obstacle {
   }) : super(
           size: Vector2(1, 2)..toGameSize(),
           position: position..snap(),
-          priority: position.y.floor(),
           behaviors: [
             TrashCanFocusingBehavior(),
           ],
           children: [
+            _TrashCanShadowSpriteComponent(),
             _TrashCanSpriteComponent(),
           ],
         );
@@ -37,7 +37,8 @@ class TrashCan extends Obstacle {
   bool focused = false;
 }
 
-class _TrashCanSpriteComponent extends SpriteComponent with HasGameReference {
+class _TrashCanSpriteComponent extends SpriteComponent
+    with HasGameReference, ParentIsA<TrashCan> {
   _TrashCanSpriteComponent() : super();
 
   @override
@@ -46,5 +47,21 @@ class _TrashCanSpriteComponent extends SpriteComponent with HasGameReference {
 
     sprite =
         await Sprite.load(Assets.images.trashCan.path, images: game.images);
+  }
+}
+
+class _TrashCanShadowSpriteComponent extends SpriteComponent
+    with ParentIsA<TrashCan>, HasGameReference {
+  _TrashCanShadowSpriteComponent()
+      : super(position: Vector2(0.27, 0.5)..toGameSize());
+
+  @override
+  FutureOr<void> onLoad() async {
+    await super.onLoad();
+    priority = 0;
+    sprite = await Sprite.load(
+      Assets.images.trashCanShadow.path,
+      images: game.images,
+    );
   }
 }

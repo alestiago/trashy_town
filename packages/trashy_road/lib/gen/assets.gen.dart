@@ -45,6 +45,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/trash.png
   AssetGenImage get trash => const AssetGenImage('assets/images/trash.png');
 
+  /// File path: assets/images/trash_can-shadow.png
+  AssetGenImage get trashCanShadow =>
+      const AssetGenImage('assets/images/trash_can-shadow.png');
+
   /// File path: assets/images/trash_can.png
   AssetGenImage get trashCan =>
       const AssetGenImage('assets/images/trash_can.png');
@@ -61,6 +65,7 @@ class $AssetsImagesGen {
         player,
         road,
         trash,
+        trashCanShadow,
         trashCan
       ];
 }

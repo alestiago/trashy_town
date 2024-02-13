@@ -6,12 +6,12 @@ import 'package:trashy_road/game_settings.dart';
 class Obstacle extends PositionedEntity {
   Obstacle({
     required Vector2 super.size,
+    required Vector2 super.position,
     super.children,
-    super.position,
-    super.priority,
     Iterable<Behavior>? behaviors,
   }) : super(
           anchor: Anchor.bottomLeft,
+          priority: position.y.floor(),
           behaviors: [
             if (behaviors != null) ...behaviors,
             PropagatingCollisionBehavior(

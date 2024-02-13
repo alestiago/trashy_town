@@ -41,7 +41,9 @@ class RoadLane extends PositionedEntity {
     super.position,
   }) : super(
           behaviors: [VehicleSpawningBehavior()],
-        );
+        ) {
+    priority = super.position.y.floor();
+  }
 
   /// Derives a [Player] from a [TiledObject].
   ///

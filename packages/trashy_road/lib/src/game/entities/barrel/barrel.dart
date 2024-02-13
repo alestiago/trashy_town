@@ -16,7 +16,6 @@ class Barrel extends Obstacle {
   }) : super(
           position: position..snap(),
           size: Vector2(1, 2)..toGameSize(),
-          priority: position.y.floor(),
           children: [
             _BarrelSpriteComponent(),
           ],

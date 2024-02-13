@@ -10,8 +10,8 @@ import 'package:trashy_road/src/game/game.dart';
 class PlayerCollectingTrashBehavior extends CollisionBehavior<Trash, Player>
     with FlameBlocReader<GameBloc, GameState> {
   @override
-  void onCollision(Set<Vector2> intersectionPoints, Trash other) {
-    super.onCollision(intersectionPoints, other);
+  void onCollisionStart(Set<Vector2> intersectionPoints, Trash other) {
+    super.onCollisionStart(intersectionPoints, other);
 
     bloc.add(const GameCollectedTrashEvent());
     other.removeFromParent();

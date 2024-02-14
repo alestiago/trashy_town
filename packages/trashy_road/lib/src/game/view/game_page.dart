@@ -1,34 +1,39 @@
 import 'dart:math';
 
 import 'package:flame/game.dart' hide Route;
+import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trashy_road/gen/assets.gen.dart';
-import 'package:trashy_road/src/game/debug_game.dart';
 import 'package:trashy_road/src/game/game.dart';
-import 'package:trashy_road/src/game/widgets/widgets.dart';
-import 'package:trashy_road/src/loading/cubit/cubit.dart';
+import 'package:trashy_road/src/loading/loading.dart';
 import 'package:trashy_road/src/pause/pause.dart';
 
 final _random = Random(0);
 
 class GamePage extends StatelessWidget {
-  const GamePage({super.key});
+  const GamePage({
+    required TiledMap map,
+    super.key,
+  }) : _map = map;
 
-  static Route<void> route() {
+  static Route<void> route({
+    required TiledMap tiledMap,
+  }) {
     return MaterialPageRoute<void>(
-      builder: (_) => const GamePage(),
+      builder: (_) => GamePage(map: tiledMap),
     );
   }
 
+  /// The map to play.
+  ///
+  /// Usually loaded from the [TiledCache] provided by the [PreloadCubit].
+  final TiledMap _map;
+
   @override
   Widget build(BuildContext context) {
-    final loadingBloc = context.read<PreloadCubit>();
-    final map = loadingBloc.tiled.fromCache(Assets.tiles.map2);
-
     return BlocProvider(
-      create: (context) => GameBloc(map: map),
+      create: (context) => GameBloc(map: _map),
       child: const _GameView(),
     );
   }

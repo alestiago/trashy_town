@@ -1,20 +1,35 @@
 part of 'game_maps_bloc.dart';
 
+/// Represents a collection of [GameMap]s.
+///
+/// Where the key is the identifier of the map and the value is the
+/// [GameMap] itself.
+typedef GameMapsCollection = UnmodifiableMapView<String, GameMap>;
+
 class GameMapsState extends Equatable {
   GameMapsState({
     required Map<String, GameMap> maps,
-  }) : maps = UnmodifiableMapView<String, GameMap>(maps);
+  }) : maps = GameMapsCollection(maps);
 
   GameMapsState.initial()
       : maps = UnmodifiableMapView(
           {
-            'map1':
-                const GameMap._(identifier: 'map1', score: 0, locked: false),
-            'map2': const GameMap._(identifier: 'map2', score: 0, locked: true),
+            'map1': GameMap._(
+              identifier: 'map1',
+              path: Assets.tiles.map1,
+              score: 0,
+              locked: false,
+            ),
+            'map2': GameMap._(
+              identifier: 'map2',
+              path: Assets.tiles.map2,
+              score: 0,
+              locked: true,
+            ),
           },
         );
 
-  final UnmodifiableMapView<String, GameMap> maps;
+  final GameMapsCollection maps;
 
   GameMapsState copyWith({
     Map<String, GameMap>? maps,
@@ -26,14 +41,20 @@ class GameMapsState extends Equatable {
   List<Object> get props => [maps];
 }
 
+/// {@template GameMapMetadata}
+/// Stores the metadata of a map game.
+///
+/// Not to be confused with `TiledMap` which is the actual map file. To retrieve
+/// the actual map file, use the [path] and load it from the `TiledCache`
+/// provided by the `PreloadCubit`.
+/// {@endtemplate}
 class GameMap extends Equatable {
   const GameMap._({
     required this.identifier,
     required this.score,
     required this.locked,
-  }) : path =
-            // TODO(alestiago): Consider using the path package.
-            'assets/maps/$identifier.tmx';
+    required this.path,
+  });
 
   /// The identifier of the map.
   final String identifier;
@@ -55,11 +76,13 @@ class GameMap extends Equatable {
     String? identifier,
     int? score,
     bool? locked,
+    String? path,
   }) {
     return GameMap._(
       identifier: identifier ?? this.identifier,
       score: score ?? this.score,
       locked: locked ?? this.locked,
+      path: path ?? this.path,
     );
   }
 

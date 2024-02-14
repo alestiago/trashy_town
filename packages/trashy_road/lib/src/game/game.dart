@@ -14,8 +14,10 @@ import 'package:trashy_road/src/game/game.dart';
 
 export 'bloc/game_bloc.dart';
 export 'components/components.dart';
+export 'debug_game.dart';
 export 'entities/entities.dart';
 export 'view/view.dart';
+export 'widgets/widgets.dart';
 
 class TrashyRoadGame extends FlameGame
     with

@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:trashy_road/gen/assets.gen.dart';
 
 part 'game_maps_event.dart';
 part 'game_maps_state.dart';

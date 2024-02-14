@@ -99,7 +99,7 @@ class GameState extends Equatable {
 /// {@template Inventory}
 /// The player's inventory.
 ///
-/// The inventory is used to keep track of the amount of [trash] that the player
+/// The inventory is used to keep track of the amount of [Trash] that the player
 /// has collected.
 /// {@endtemplate}
 @immutable
@@ -113,6 +113,30 @@ class Inventory extends Equatable {
   /// The amount of trash that the player has collected.
   final int plasticTrash;
   final int glassTrash;
+
+  /// Returns the amount of trash of a given [type].
+  int getTrash(TrashType type) {
+    switch (type) {
+      case TrashType.plastic:
+        return plasticTrash;
+      case TrashType.glass:
+        return glassTrash;
+    }
+  }
+
+  /// Returns the total amount of trash in the inventory.
+  int getTotalTrash() => plasticTrash + glassTrash;
+
+  /// Returns a new [Inventory] with the trash of a given [type] increased by
+  /// [amount].
+  Inventory copyWithModifiedTrash(TrashType type, int amount) {
+    switch (type) {
+      case TrashType.plastic:
+        return copyWith(plasticTrash: plasticTrash + amount);
+      case TrashType.glass:
+        return copyWith(glassTrash: glassTrash + amount);
+    }
+  }
 
   Inventory copyWith({int? plasticTrash, int? glassTrash}) {
     return Inventory(

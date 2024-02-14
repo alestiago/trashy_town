@@ -40,16 +40,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       return;
     }
 
-    late final Inventory inventory;
-
-    switch (event.type) {
-      case TrashType.plastic:
-        inventory = state.inventory
-            .copyWith(plasticTrash: state.inventory.plasticTrash + 1);
-      case TrashType.glass:
-        inventory = state.inventory
-            .copyWith(plasticTrash: state.inventory.plasticTrash + 1);
-    }
+    final inventory = state.inventory.copyWithModifiedTrash(event.type, 1);
 
     emit(state.copyWith(inventory: inventory));
   }
@@ -61,23 +52,11 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     if (state.status != GameStatus.playing) {
       return;
     }
-
-    late final Inventory inventory;
-    switch (event.type) {
-      case TrashType.plastic:
-        if (state.inventory.plasticTrash == 0) {
-          return;
-        }
-        inventory = state.inventory
-            .copyWith(plasticTrash: state.inventory.plasticTrash - 1);
-      case TrashType.glass:
-        if (state.inventory.plasticTrash == 0) {
-          return;
-        }
-        inventory = state.inventory
-            .copyWith(plasticTrash: state.inventory.plasticTrash - 1);
+    if (state.inventory.getTrash(event.type) == 0) {
+      return;
     }
 
+    final inventory = state.inventory.copyWithModifiedTrash(event.type, -1);
     final collectedTrash = state.collectedTrash + 1;
 
     final hasWon = collectedTrash == state._initialTrash;

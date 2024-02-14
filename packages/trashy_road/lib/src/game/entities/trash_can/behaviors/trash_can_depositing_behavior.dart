@@ -28,8 +28,8 @@ class TrashCanDepositingBehavior extends Behavior<TrashCan>
   }
 
   @override
-  Future<void> onLoad() {
+  Future<void> onLoad() async {
+    await super.onLoad();
     _updateCapacityText();
-    return super.onLoad();
   }
 }

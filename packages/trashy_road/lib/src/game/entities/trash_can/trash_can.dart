@@ -23,6 +23,9 @@ class TrashCan extends Obstacle {
           ],
           children: [
             _TrashCanSpriteComponent(),
+            TextComponent(
+              anchor: Anchor.center,
+            ),
           ],
         );
 
@@ -35,6 +38,16 @@ class TrashCan extends Obstacle {
 
   /// Whether the trash can is focused.
   bool focused = false;
+
+  @override
+  FutureOr<void> onLoad() {
+    add(TrashCanDepositingBehavior());
+    children.register<TextComponent>();
+    children.query<TextComponent>().first
+      ..position = (size / 2)
+      ..y = 0;
+    return super.onLoad();
+  }
 }
 
 class _TrashCanSpriteComponent extends SpriteComponent with HasGameReference {

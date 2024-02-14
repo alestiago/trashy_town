@@ -32,13 +32,9 @@ class TrashyRoadWorld extends Component {
         .getLayer<ObjectGroup>(_TiledLayer.coreItemsLayer.name)!
         .objects) {
       switch (object.type) {
-        // TODO(OlliePugh): rename 'spawn' to 'player' in the Tiled map, and
-        // consider having a different layer for it.
-        case 'spawn':
+        case 'player':
           tiled.add(Player.fromTiledObject(object));
-        // TODO(OlliePugh): rename 'finish' to 'trash_can' in the Tiled map, and
-        // consider having a different layer for it.
-        case 'finish':
+        case 'trash_can':
           tiled.add(TrashCan.fromTiledObject(object));
           finishPosition = Vector2(object.x, object.y);
         default:

@@ -39,14 +39,14 @@ class Player extends PositionedEntity {
 
   /// Derives a [Player] from a [TiledObject].
   ///
-  /// The [TiledObject] must have a `type` of `spawn`, otherwise an
+  /// The [TiledObject] must have a `type` of `player`, otherwise an
   /// [ArgumentError] is thrown.
   factory Player.fromTiledObject(TiledObject tiledObject) {
-    if (tiledObject.type != 'spawn') {
+    if (tiledObject.type != 'player') {
       throw ArgumentError.value(
         tiledObject,
         'tiledObject',
-        'The type of the TiledObject must be "spawn".',
+        'The type of the TiledObject must be "player".',
       );
     }
 

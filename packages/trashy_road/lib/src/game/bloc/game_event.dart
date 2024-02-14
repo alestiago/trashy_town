@@ -40,10 +40,12 @@ class GameInteractedEvent extends GameEvent {
 /// {@endtemplate}
 class GameCollectedTrashEvent extends GameEvent {
   /// {@macro GameCollectedTrashEvent}
-  const GameCollectedTrashEvent() : super();
+  const GameCollectedTrashEvent({required this.type}) : super();
+
+  final TrashType type;
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [type];
 }
 
 /// {@template GameDepositedTrashEvent}
@@ -53,7 +55,9 @@ class GameCollectedTrashEvent extends GameEvent {
 /// {@endtemplate}
 class GameDepositedTrashEvent extends GameEvent {
   /// {@macro GameDepositedTrashEvent}
-  const GameDepositedTrashEvent() : super();
+  const GameDepositedTrashEvent({required this.type}) : super();
+
+  final TrashType type;
 
   @override
   List<Object?> get props => [];

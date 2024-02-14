@@ -105,18 +105,22 @@ class GameState extends Equatable {
 @immutable
 class Inventory extends Equatable {
   /// {@macro Inventory}
-  const Inventory({required this.trash});
+  const Inventory({required this.plasticTrash, required this.glassTrash});
 
   /// A completely empty inventory.
-  const Inventory.empty() : this(trash: 0);
+  const Inventory.empty() : this(plasticTrash: 0, glassTrash: 0);
 
   /// The amount of trash that the player has collected.
-  final int trash;
+  final int plasticTrash;
+  final int glassTrash;
 
-  Inventory copyWith({int? trash}) {
-    return Inventory(trash: trash ?? this.trash);
+  Inventory copyWith({int? plasticTrash, int? glassTrash}) {
+    return Inventory(
+      plasticTrash: plasticTrash ?? this.plasticTrash,
+      glassTrash: glassTrash ?? this.glassTrash,
+    );
   }
 
   @override
-  List<Object?> get props => [trash];
+  List<Object?> get props => [plasticTrash, glassTrash];
 }

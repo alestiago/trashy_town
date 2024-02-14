@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <tileset firstgid="1" source="Tiles.tsx"/>
+ <object name="plastic" class="trash" gid="3" width="128" height="128">
+  <properties>
+   <property name="type" value="plastic"/>
+  </properties>
+ </object>
+</template>

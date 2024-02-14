@@ -94,12 +94,24 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/spawn.tx
   String get spawn => 'assets/tiles/spawn.tx';
 
-  /// File path: assets/tiles/trash.tx
-  String get trash => 'assets/tiles/trash.tx';
+  /// File path: assets/tiles/trash_glass.tx
+  String get trashGlass => 'assets/tiles/trash_glass.tx';
+
+  /// File path: assets/tiles/trash_plastic.tx
+  String get trashPlastic => 'assets/tiles/trash_plastic.tx';
 
   /// List of all assets
-  List<String> get values =>
-      [tiles, barrel, finish, map1, map2, roadLane, spawn, trash];
+  List<String> get values => [
+        tiles,
+        barrel,
+        finish,
+        map1,
+        map2,
+        roadLane,
+        spawn,
+        trashGlass,
+        trashPlastic
+      ];
 }
 
 class Assets {

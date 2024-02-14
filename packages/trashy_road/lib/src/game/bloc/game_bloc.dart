@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:tiled/tiled.dart';
+import 'package:trashy_road/src/game/game.dart';
 
 part 'game_event.dart';
 part 'game_state.dart';
@@ -39,9 +40,17 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       return;
     }
 
-    final inventory = state.inventory.copyWith(
-      trash: state.inventory.trash + 1,
-    );
+    late final Inventory inventory;
+
+    switch (event.type) {
+      case TrashType.plastic:
+        inventory = state.inventory
+            .copyWith(plasticTrash: state.inventory.plasticTrash + 1);
+      case TrashType.glass:
+        inventory = state.inventory
+            .copyWith(plasticTrash: state.inventory.plasticTrash + 1);
+    }
+
     emit(state.copyWith(inventory: inventory));
   }
 
@@ -53,12 +62,22 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       return;
     }
 
-    if (state.inventory.trash == 0) {
-      return;
+    late final Inventory inventory;
+    switch (event.type) {
+      case TrashType.plastic:
+        if (state.inventory.plasticTrash == 0) {
+          return;
+        }
+        inventory = state.inventory
+            .copyWith(plasticTrash: state.inventory.plasticTrash - 1);
+      case TrashType.glass:
+        if (state.inventory.plasticTrash == 0) {
+          return;
+        }
+        inventory = state.inventory
+            .copyWith(plasticTrash: state.inventory.plasticTrash - 1);
     }
 
-    final inventory =
-        state.inventory.copyWith(trash: state.inventory.trash - 1);
     final collectedTrash = state.collectedTrash + 1;
 
     final hasWon = collectedTrash == state._initialTrash;

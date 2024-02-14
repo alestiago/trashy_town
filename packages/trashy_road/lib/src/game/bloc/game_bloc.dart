@@ -40,7 +40,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       return;
     }
 
-    final inventory = state.inventory.copyWithModifiedTrash(event.type, 1);
+    final inventory =
+        state.inventory.copyWithModifiedTrash(type: event.type, amount: 1);
 
     emit(state.copyWith(inventory: inventory));
   }
@@ -56,7 +57,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       return;
     }
 
-    final inventory = state.inventory.copyWithModifiedTrash(event.type, -1);
+    final inventory =
+        state.inventory.copyWithModifiedTrash(type: event.type, amount: -1);
     final collectedTrash = state.collectedTrash + 1;
 
     final hasWon = collectedTrash == state._initialTrash;

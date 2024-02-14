@@ -129,7 +129,10 @@ class Inventory extends Equatable {
 
   /// Returns a new [Inventory] with the trash of a given [type] increased by
   /// [amount].
-  Inventory copyWithModifiedTrash(TrashType type, int amount) {
+  Inventory copyWithModifiedTrash({
+    required TrashType type,
+    required int amount,
+  }) {
     switch (type) {
       case TrashType.plastic:
         return copyWith(plasticTrash: plasticTrash + amount);

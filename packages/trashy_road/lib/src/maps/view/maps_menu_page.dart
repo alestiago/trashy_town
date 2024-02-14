@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/src/maps/maps.dart';
 
+/// {@template MapsMenuPage}
+/// Shows the available maps to play.
+///
+/// Some maps are locked and can only be played after the player has unlocked
+/// them by playing other maps.
+/// {@endtemplate}
 class MapsMenuPage extends StatelessWidget {
+  /// {@macro MapsMenuPage}
   const MapsMenuPage({super.key});
 
   static Route<void> route() {

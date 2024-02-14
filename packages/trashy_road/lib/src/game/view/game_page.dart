@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/loading/loading.dart';
 import 'package:trashy_road/src/pause/pause.dart';
+import 'package:trashy_road/src/score/view/view.dart';
 
 final _random = Random(0);
 
@@ -70,46 +71,52 @@ class _GameViewState extends State<_GameView> {
 
     _game ??= gameBuilder();
 
-    return BlocBuilder<GameBloc, GameState>(
-      buildWhen: (previous, current) {
-        return previous.status == GameStatus.playing &&
-            current.status == GameStatus.resetting;
+    return BlocListener<GameBloc, GameState>(
+      listenWhen: (previous, current) => current.status == GameStatus.completed,
+      listener: (context, state) {
+        Navigator.pushReplacement(context, ScorePage.route());
       },
-      builder: (context, state) {
-        if (state.status == GameStatus.resetting) {
-          _game = gameBuilder();
-          gameBloc.add(const GameReadyEvent());
-        }
+      child: BlocBuilder<GameBloc, GameState>(
+        buildWhen: (previous, current) {
+          return previous.status == GameStatus.playing &&
+              current.status == GameStatus.resetting;
+        },
+        builder: (context, state) {
+          if (state.status == GameStatus.resetting) {
+            _game = gameBuilder();
+            gameBloc.add(const GameReadyEvent());
+          }
 
-        return Stack(
-          children: [
-            GameWidget(game: _game!),
-            const Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: EdgeInsets.all(8),
-                child: InventoryHud(),
-              ),
-            ),
-            Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: PauseButton(
-                  onPause: () {
-                    gameBloc.add(const GamePausedEvent());
-                    return true;
-                  },
-                  onResume: () {
-                    gameBloc.add(const GameResumedEvent());
-                    return true;
-                  },
+          return Stack(
+            children: [
+              GameWidget(game: _game!),
+              const Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: EdgeInsets.all(8),
+                  child: InventoryHud(),
                 ),
               ),
-            ),
-          ],
-        );
-      },
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: PauseButton(
+                    onPause: () {
+                      gameBloc.add(const GamePausedEvent());
+                      return true;
+                    },
+                    onResume: () {
+                      gameBloc.add(const GameResumedEvent());
+                      return true;
+                    },
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

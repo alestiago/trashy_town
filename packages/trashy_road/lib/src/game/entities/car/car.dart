@@ -35,6 +35,7 @@ class _CarSpriteComponent extends SpriteComponent with HasGameReference {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
+
     sprite = await Sprite.load(
       Assets.images.car.path,
       images: game.images,

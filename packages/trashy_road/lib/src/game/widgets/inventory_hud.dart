@@ -20,7 +20,7 @@ class InventoryHud extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: BlocSelector<GameBloc, GameState, int>(
           selector: (state) {
-            return state.inventory.plasticTrash;
+            return state.inventory.items.length;
           },
           builder: (context, trash) {
             return DefaultTextStyle(

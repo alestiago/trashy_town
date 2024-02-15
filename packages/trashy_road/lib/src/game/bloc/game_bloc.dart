@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
@@ -40,8 +42,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       return;
     }
 
-    final inventory =
-        state.inventory.copyWithModifiedTrash(type: event.type, amount: 1);
+    final items = List<TrashType>.from(state.inventory.items)..add(event.item);
+    final inventory = state.inventory.copyWith(items: items);
 
     emit(state.copyWith(inventory: inventory));
   }
@@ -53,14 +55,17 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     if (state.status != GameStatus.playing) {
       return;
     }
-    if (state.inventory.getTrash(event.type) == 0) {
+
+    final hasItem = state.inventory.items.contains(event.item);
+    if (!hasItem) {
       return;
     }
 
-    final inventory =
-        state.inventory.copyWithModifiedTrash(type: event.type, amount: -1);
-    final collectedTrash = state.collectedTrash + 1;
+    final items = List<TrashType>.from(state.inventory.items)
+      ..remove(event.item);
+    final inventory = state.inventory.copyWith(items: items);
 
+    final collectedTrash = state.collectedTrash + 1;
     final hasWon = collectedTrash == state._initialTrash;
 
     emit(
@@ -79,7 +84,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     emit(
       state.copyWith(
         status: GameStatus.resetting,
-        inventory: const Inventory.empty(),
+        inventory: Inventory.empty(),
       ),
     );
   }

@@ -53,7 +53,7 @@ class GameState extends Equatable {
       : this(
           status: GameStatus.ready,
           map: map,
-          inventory: const Inventory.empty(),
+          inventory: Inventory.empty(),
           collectedTrash: 0,
         );
 
@@ -105,49 +105,26 @@ class GameState extends Equatable {
 @immutable
 class Inventory extends Equatable {
   /// {@macro Inventory}
-  const Inventory({required this.plasticTrash, required this.glassTrash});
+  Inventory({
+    required List<TrashType> items,
+  }) : this._(items: UnmodifiableListView(items));
+
+  /// {@macro Inventory}
+  const Inventory._({required this.items});
 
   /// A completely empty inventory.
-  const Inventory.empty() : this(plasticTrash: 0, glassTrash: 0);
+  Inventory.empty() : this(items: const []);
 
-  /// The amount of trash that the player has collected.
-  final int plasticTrash;
-  final int glassTrash;
+  final UnmodifiableListView<TrashType> items;
 
-  /// Returns the amount of trash of a given [type].
-  int getTrash(TrashType type) {
-    switch (type) {
-      case TrashType.plastic:
-        return plasticTrash;
-      case TrashType.glass:
-        return glassTrash;
-    }
-  }
-
-  /// Returns the total amount of trash in the inventory.
-  int getTotalTrash() => plasticTrash + glassTrash;
-
-  /// Returns a new [Inventory] with the trash of a given [type] increased by
-  /// [amount].
-  Inventory copyWithModifiedTrash({
-    required TrashType type,
-    required int amount,
+  Inventory copyWith({
+    List<TrashType>? items,
   }) {
-    switch (type) {
-      case TrashType.plastic:
-        return copyWith(plasticTrash: plasticTrash + amount);
-      case TrashType.glass:
-        return copyWith(glassTrash: glassTrash + amount);
-    }
-  }
-
-  Inventory copyWith({int? plasticTrash, int? glassTrash}) {
     return Inventory(
-      plasticTrash: plasticTrash ?? this.plasticTrash,
-      glassTrash: glassTrash ?? this.glassTrash,
+      items: items ?? this.items,
     );
   }
 
   @override
-  List<Object?> get props => [plasticTrash, glassTrash];
+  List<Object?> get props => [items];
 }

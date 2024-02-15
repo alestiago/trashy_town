@@ -13,7 +13,7 @@ class PlayerCollectingTrashBehavior extends CollisionBehavior<Trash, Player>
   void onCollisionStart(Set<Vector2> intersectionPoints, Trash other) {
     super.onCollisionStart(intersectionPoints, other);
 
-    bloc.add(GameCollectedTrashEvent(type: other.trashType));
+    bloc.add(GameCollectedTrashEvent(item: other.trashType));
     other.removeFromParent();
   }
 }

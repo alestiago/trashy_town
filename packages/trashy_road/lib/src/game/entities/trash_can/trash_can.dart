@@ -21,6 +21,7 @@ abstract class TrashCan extends Obstacle {
           position: position..snap(),
           behaviors: [
             TrashCanFocusingBehavior(),
+            TrashCanDepositingBehavior(),
           ],
           children: [
             _TrashCanShadowSpriteComponent(),
@@ -48,13 +49,6 @@ abstract class TrashCan extends Obstacle {
 
   /// The type of trash that the trash can accepts.
   final TrashType trashType;
-
-  @override
-  FutureOr<void> onLoad() {
-    add(TrashCanDepositingBehavior());
-
-    return super.onLoad();
-  }
 }
 
 class _TrashCanShadowSpriteComponent extends SpriteComponent

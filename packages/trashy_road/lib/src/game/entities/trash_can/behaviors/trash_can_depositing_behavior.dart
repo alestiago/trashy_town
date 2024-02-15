@@ -63,10 +63,7 @@ class TrashCanDepositingBehavior extends Behavior<TrashCan>
   }
 }
 
-/// Shows the current capacity of the [TrashCan].
-///
-/// If the [TrashCanDepositingBehavior] is removed, this component will remove
-/// itself from its parent.
+/// Displays the current capacity of the [TrashCan].
 class _TrashCapacityTextComponent extends TextComponent
     with ParentIsA<TrashCan> {
   _TrashCapacityTextComponent();

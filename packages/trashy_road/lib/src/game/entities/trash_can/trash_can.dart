@@ -14,8 +14,8 @@ export 'behaviors/behaviors.dart';
 abstract class TrashCan extends Obstacle {
   TrashCan({
     required Vector2 position,
-    required SpriteComponent sprite,
     required this.trashType,
+    Iterable<Component>? children,
   }) : super(
           size: Vector2(1, 2)..toGameSize(),
           position: position..snap(),
@@ -25,7 +25,7 @@ abstract class TrashCan extends Obstacle {
           ],
           children: [
             _TrashCanShadowSpriteComponent(),
-            sprite,
+            ...?children,
           ],
         );
 
@@ -54,12 +54,13 @@ abstract class TrashCan extends Obstacle {
 class _TrashCanShadowSpriteComponent extends SpriteComponent
     with ParentIsA<TrashCan>, HasGameReference {
   _TrashCanShadowSpriteComponent()
-      : super(position: Vector2(0.27, 0.5)..toGameSize());
+      : super(position: Vector2(0.27, 0.5)..toGameSize()) {
+    priority = 0;
+  }
 
   @override
   FutureOr<void> onLoad() async {
     await super.onLoad();
-    priority = 0;
     sprite = await Sprite.load(
       Assets.images.trashCanShadow.path,
       images: game.images,

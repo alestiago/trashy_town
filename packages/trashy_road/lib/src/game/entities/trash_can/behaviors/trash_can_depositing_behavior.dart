@@ -18,7 +18,7 @@ class TrashCanDepositingBehavior extends Behavior<TrashCan>
     await super.onLoad();
 
     assert(
-      parent.findBehavior<TrashCanDepositingBehavior>() == this,
+      !parent.hasBehavior<TrashCanDepositingBehavior>(),
       'The parent can only have a single $TrashCanDepositingBehavior.',
     );
 

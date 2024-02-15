@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-import 'package:trashy_road/src/game/bloc/game_bloc.dart';
-import 'package:trashy_road/src/game/entities/entities.dart';
+import 'package:trashy_road/src/game/game.dart';
 
 class TrashCanDepositingBehavior extends Behavior<TrashCan>
     with FlameBlocReader<GameBloc, GameState> {
@@ -40,9 +39,9 @@ class TrashCanDepositingBehavior extends Behavior<TrashCan>
     return hasTrash && hasCapacity;
   }
 
-  /// Deposits [Trash] into the [TrashCan].
+  /// Deposits trash into the [TrashCan].
   ///
-  /// Does nothing if the [TrashCan] cannot deposit the [Trash].
+  /// Does nothing if the [TrashCan] cannot deposit some trash.
   void deposit() {
     if (!_canDeposit()) return;
 

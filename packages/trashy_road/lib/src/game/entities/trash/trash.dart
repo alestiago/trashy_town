@@ -6,7 +6,7 @@ import 'package:tiled/tiled.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/src/game/game.dart';
 
-/// The different types of [Trash]
+/// The different types of [Trash].
 enum TrashType {
   plastic._('plastic'),
   glass._('glass');
@@ -62,7 +62,11 @@ abstract class Trash extends PositionedEntity {
       case TrashType.glass:
         return TrashGlass.fromTiledObject(tiledObject);
       case null:
-        throw Exception('Invalid trash type: ${tiledObject.properties}');
+        throw ArgumentError.value(
+          type,
+          'tiledObject.properties["type"]',
+          'Invalid trash type',
+        );
     }
   }
 

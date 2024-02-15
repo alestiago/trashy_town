@@ -40,12 +40,12 @@ class GameInteractedEvent extends GameEvent {
 /// {@endtemplate}
 class GameCollectedTrashEvent extends GameEvent {
   /// {@macro GameCollectedTrashEvent}
-  const GameCollectedTrashEvent({required this.type}) : super();
+  const GameCollectedTrashEvent({required this.item}) : super();
 
-  final TrashType type;
+  final TrashType item;
 
   @override
-  List<Object?> get props => [type];
+  List<Object?> get props => [item];
 }
 
 /// {@template GameDepositedTrashEvent}
@@ -55,12 +55,12 @@ class GameCollectedTrashEvent extends GameEvent {
 /// {@endtemplate}
 class GameDepositedTrashEvent extends GameEvent {
   /// {@macro GameDepositedTrashEvent}
-  const GameDepositedTrashEvent({required this.type}) : super();
+  const GameDepositedTrashEvent({required this.item}) : super();
 
-  final TrashType type;
+  final TrashType item;
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [item];
 }
 
 /// The game has been reset.

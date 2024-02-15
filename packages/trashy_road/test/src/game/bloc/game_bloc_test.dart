@@ -35,7 +35,7 @@ void main() {
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory.empty(),
+            inventory: Inventory.empty(),
           ),
         ],
       );
@@ -47,7 +47,7 @@ void main() {
         'and the game is not playing',
         build: () => GameBloc(map: map),
         act: (bloc) =>
-            bloc.add(const GameCollectedTrashEvent(type: TrashType.plastic)),
+            bloc.add(const GameCollectedTrashEvent(item: TrashType.plastic)),
         expect: () => <GameState>[],
       );
 
@@ -57,17 +57,17 @@ void main() {
         build: () => GameBloc(map: map),
         act: (bloc) => bloc
           ..add(const GameInteractedEvent())
-          ..add(const GameCollectedTrashEvent(type: TrashType.plastic)),
+          ..add(const GameCollectedTrashEvent(item: TrashType.plastic)),
         expect: () => [
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory.empty(),
+            inventory: Inventory.empty(),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory(glassTrash: 0, plasticTrash: 1),
+            inventory: Inventory(items: const [TrashType.plastic]),
           ),
         ],
       );
@@ -78,23 +78,24 @@ void main() {
         build: () => GameBloc(map: map),
         act: (bloc) => bloc
           ..add(const GameInteractedEvent())
-          ..add(const GameCollectedTrashEvent(type: TrashType.plastic))
-          ..add(const GameCollectedTrashEvent(type: TrashType.glass)),
+          ..add(const GameCollectedTrashEvent(item: TrashType.plastic))
+          ..add(const GameCollectedTrashEvent(item: TrashType.glass)),
         expect: () => [
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory.empty(),
+            inventory: Inventory.empty(),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory(glassTrash: 0, plasticTrash: 1),
+            inventory: Inventory(items: const [TrashType.plastic]),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory(glassTrash: 1, plasticTrash: 1),
+            inventory:
+                Inventory(items: const [TrashType.plastic, TrashType.glass]),
           ),
         ],
       );
@@ -105,7 +106,7 @@ void main() {
         'does nothing when the game is not playing',
         build: () => GameBloc(map: map),
         act: (bloc) =>
-            bloc.add(const GameDepositedTrashEvent(type: TrashType.plastic)),
+            bloc.add(const GameDepositedTrashEvent(item: TrashType.plastic)),
         expect: () => <GameState>[],
       );
 
@@ -117,23 +118,23 @@ void main() {
             .thenReturn([_MockTiledObject(), _MockTiledObject()]),
         act: (bloc) => bloc
           ..add(const GameInteractedEvent())
-          ..add(const GameCollectedTrashEvent(type: TrashType.plastic))
-          ..add(const GameDepositedTrashEvent(type: TrashType.plastic)),
+          ..add(const GameCollectedTrashEvent(item: TrashType.plastic))
+          ..add(const GameDepositedTrashEvent(item: TrashType.plastic)),
         expect: () => [
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory.empty(),
+            inventory: Inventory.empty(),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory(glassTrash: 0, plasticTrash: 1),
+            inventory: Inventory(items: const [TrashType.plastic]),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory.empty(),
+            inventory: Inventory.empty(),
             collectedTrash: 1,
           ),
         ],
@@ -147,29 +148,30 @@ void main() {
             .thenReturn([_MockTiledObject(), _MockTiledObject()]),
         act: (bloc) => bloc
           ..add(const GameInteractedEvent())
-          ..add(const GameCollectedTrashEvent(type: TrashType.plastic))
-          ..add(const GameCollectedTrashEvent(type: TrashType.glass))
-          ..add(const GameDepositedTrashEvent(type: TrashType.plastic)),
+          ..add(const GameCollectedTrashEvent(item: TrashType.plastic))
+          ..add(const GameCollectedTrashEvent(item: TrashType.glass))
+          ..add(const GameDepositedTrashEvent(item: TrashType.plastic)),
         expect: () => [
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory.empty(),
+            inventory: Inventory.empty(),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory(glassTrash: 0, plasticTrash: 1),
+            inventory: Inventory(items: const [TrashType.plastic]),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory(glassTrash: 1, plasticTrash: 1),
+            inventory:
+                Inventory(items: const [TrashType.plastic, TrashType.glass]),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory(glassTrash: 1, plasticTrash: 0),
+            inventory: Inventory(items: const [TrashType.glass]),
             collectedTrash: 1,
           ),
         ],
@@ -182,36 +184,37 @@ void main() {
             .thenReturn([_MockTiledObject(), _MockTiledObject()]),
         act: (bloc) => bloc
           ..add(const GameInteractedEvent())
-          ..add(const GameCollectedTrashEvent(type: TrashType.plastic))
-          ..add(const GameCollectedTrashEvent(type: TrashType.plastic))
-          ..add(const GameDepositedTrashEvent(type: TrashType.plastic))
-          ..add(const GameDepositedTrashEvent(type: TrashType.plastic)),
+          ..add(const GameCollectedTrashEvent(item: TrashType.plastic))
+          ..add(const GameCollectedTrashEvent(item: TrashType.plastic))
+          ..add(const GameDepositedTrashEvent(item: TrashType.plastic))
+          ..add(const GameDepositedTrashEvent(item: TrashType.plastic)),
         expect: () => [
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory.empty(),
+            inventory: Inventory.empty(),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory(plasticTrash: 1, glassTrash: 0),
+            inventory: Inventory(items: const [TrashType.plastic]),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory(plasticTrash: 2, glassTrash: 0),
+            inventory:
+                Inventory(items: const [TrashType.plastic, TrashType.plastic]),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory(plasticTrash: 1, glassTrash: 0),
+            inventory: Inventory(items: const [TrashType.plastic]),
             collectedTrash: 1,
           ),
           GameState(
             map: map,
             status: GameStatus.completed,
-            inventory: const Inventory.empty(),
+            inventory: Inventory.empty(),
             collectedTrash: 2,
           ),
         ],
@@ -229,12 +232,12 @@ void main() {
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory.empty(),
+            inventory: Inventory.empty(),
           ),
           GameState(
             map: map,
             status: GameStatus.paused,
-            inventory: const Inventory.empty(),
+            inventory: Inventory.empty(),
           ),
         ],
       );
@@ -259,17 +262,17 @@ void main() {
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory.empty(),
+            inventory: Inventory.empty(),
           ),
           GameState(
             map: map,
             status: GameStatus.paused,
-            inventory: const Inventory.empty(),
+            inventory: Inventory.empty(),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory.empty(),
+            inventory: Inventory.empty(),
           ),
         ],
       );
@@ -281,23 +284,23 @@ void main() {
         build: () => GameBloc(map: map),
         act: (bloc) => bloc
           ..add(const GameInteractedEvent())
-          ..add(const GameCollectedTrashEvent(type: TrashType.plastic))
+          ..add(const GameCollectedTrashEvent(item: TrashType.plastic))
           ..add(const GameResetEvent()),
         expect: () => [
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory.empty(),
+            inventory: Inventory.empty(),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory(plasticTrash: 1, glassTrash: 0),
+            inventory: Inventory(items: const [TrashType.plastic]),
           ),
           GameState(
             map: map,
             status: GameStatus.resetting,
-            inventory: const Inventory.empty(),
+            inventory: Inventory.empty(),
           ),
         ],
       );

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_bloc/flame_bloc.dart';
@@ -6,34 +8,71 @@ import 'package:trashy_road/src/game/entities/entities.dart';
 
 class TrashCanDepositingBehavior extends Behavior<TrashCan>
     with FlameBlocReader<GameBloc, GameState> {
-  static const int _capacity = 3;
-  int _currentTrash = 0;
+  /// The maximum amount of trash that the [TrashCan] can hold.
+  static const int _maximumCapacity = 3;
 
-  /// Updates the capacity text.
-  void _updateCapacityText() =>
-      parent.children.query().whereType<TextComponent>().first.text =
-          '$_currentTrash/$_capacity';
-
-  /// Deposits [Trash] into the [TrashCan].
-  ///
-  /// Returns `true` if the [Trash] was deposited, `false` otherwise.
-  bool deposit() {
-    // temporary implementation while the trash can does not have a type
-    if (bloc.state.inventory.items
-            .where((item) => item == parent.trashType)
-            .isNotEmpty &&
-        _currentTrash < _capacity) {
-      _currentTrash++;
-      _updateCapacityText();
-      return true;
-    }
-
-    return false;
-  }
+  /// The current amount of trash that the [TrashCan] holds.
+  int _capacity = 0;
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    _updateCapacityText();
+
+    assert(
+      parent.findBehavior<TrashCanDepositingBehavior>() == this,
+      'The parent can only have a single $TrashCanDepositingBehavior.',
+    );
+
+    parent
+      ..add(_TrashCapacityTextComponent().._updateText(_capacity))
+      ..children.register<_TrashCapacityTextComponent>();
+  }
+
+  /// Whether the [TrashCan] can deposit some of the [Player]'s trash.
+  ///
+  /// Returns `true` if the [TrashCan] has enough capacity and the [Player] has
+  /// some trash to deposit, `false` otherwise.
+  bool _canDeposit() {
+    final hasTrash = bloc.state.inventory.items
+        .where((item) => item == parent.trashType)
+        .isNotEmpty;
+    final hasCapacity = _capacity < _maximumCapacity;
+    return hasTrash && hasCapacity;
+  }
+
+  /// Deposits [Trash] into the [TrashCan].
+  ///
+  /// Does nothing if the [TrashCan] cannot deposit the [Trash].
+  void deposit() {
+    if (!_canDeposit()) return;
+
+    _capacity++;
+    parent.children
+        .query<_TrashCapacityTextComponent>()
+        .first
+        ._updateText(_capacity);
+    bloc.add(GameDepositedTrashEvent(item: parent.trashType));
+  }
+
+  @override
+  void onRemove() {
+    parent.children
+        .query<_TrashCapacityTextComponent>()
+        .first
+        .removeFromParent();
+    super.onRemove();
+  }
+}
+
+/// Shows the current capacity of the [TrashCan].
+///
+/// If the [TrashCanDepositingBehavior] is removed, this component will remove
+/// itself from its parent.
+class _TrashCapacityTextComponent extends TextComponent
+    with ParentIsA<TrashCan> {
+  _TrashCapacityTextComponent();
+
+  void _updateText(int capacity) {
+    text = '$capacity/${TrashCanDepositingBehavior._maximumCapacity}';
   }
 }

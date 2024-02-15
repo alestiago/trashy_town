@@ -25,9 +25,6 @@ abstract class TrashCan extends Obstacle {
           children: [
             _TrashCanShadowSpriteComponent(),
             sprite,
-            TextComponent(
-              anchor: Anchor.center,
-            ),
           ],
         );
 
@@ -55,10 +52,7 @@ abstract class TrashCan extends Obstacle {
   @override
   FutureOr<void> onLoad() {
     add(TrashCanDepositingBehavior());
-    children.register<TextComponent>();
-    children.query<TextComponent>().first
-      ..position = (size / 2)
-      ..y = 0;
+
     return super.onLoad();
   }
 }

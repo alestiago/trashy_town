@@ -11,10 +11,9 @@ class PlayerDepositingTrashBehavior extends CollisionBehavior<TrashCan, Player>
   @override
   void onCollisionEnd(TrashCan other) {
     super.onCollisionEnd(other);
-    if (other.findBehavior<TrashCanDepositingBehavior>().deposit()) {
-      // temporary implementation while the trash can does not have a type
-      // (issue #98)
-      bloc.add(GameDepositedTrashEvent(item: other.trashType));
+
+    if (other.hasBehavior<TrashCanDepositingBehavior>()) {
+      other.findBehavior<TrashCanDepositingBehavior>().deposit();
     }
   }
 }

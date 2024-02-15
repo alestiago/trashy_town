@@ -11,9 +11,11 @@ export 'behaviors/behaviors.dart';
 /// A trash can.
 ///
 /// Trash cans are placed around the map, they are used to dispose of trash.
-class TrashCan extends Obstacle {
-  TrashCan._({
+abstract class TrashCan extends Obstacle {
+  TrashCan({
     required Vector2 position,
+    required SpriteComponent sprite,
+    required this.trashType,
   }) : super(
           size: Vector2(1, 2)..toGameSize(),
           position: position..snap(),
@@ -22,7 +24,7 @@ class TrashCan extends Obstacle {
           ],
           children: [
             _TrashCanShadowSpriteComponent(),
-            _TrashCanSpriteComponent(),
+            sprite,
             TextComponent(
               anchor: Anchor.center,
             ),
@@ -31,13 +33,24 @@ class TrashCan extends Obstacle {
 
   /// Derives a [TrashCan] from a [TiledObject].
   factory TrashCan.fromTiledObject(TiledObject tiledObject) {
-    return TrashCan._(
-      position: Vector2(tiledObject.x, tiledObject.y),
+    final type = TrashType.tryParse(
+      tiledObject.properties.getValue<String>('type') ?? '',
     );
+    switch (type) {
+      case TrashType.plastic:
+        return TrashCanGlass.fromTiledObject(tiledObject);
+      case TrashType.glass:
+        return TrashCanPlastic.fromTiledObject(tiledObject);
+      case null:
+        throw Exception('Invalid trash type: ${tiledObject.properties}');
+    }
   }
 
   /// Whether the trash can is focused.
   bool focused = false;
+
+  /// The type of trash that the trash can accepts.
+  final TrashType trashType;
 
   @override
   FutureOr<void> onLoad() {
@@ -47,19 +60,6 @@ class TrashCan extends Obstacle {
       ..position = (size / 2)
       ..y = 0;
     return super.onLoad();
-  }
-}
-
-class _TrashCanSpriteComponent extends SpriteComponent
-    with HasGameReference, ParentIsA<TrashCan> {
-  _TrashCanSpriteComponent() : super();
-
-  @override
-  FutureOr<void> onLoad() async {
-    await super.onLoad();
-
-    sprite =
-        await Sprite.load(Assets.images.trashCan.path, images: game.images);
   }
 }
 

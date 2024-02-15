@@ -19,7 +19,8 @@ class TrashCanDepositingBehavior extends Behavior<TrashCan>
   /// Returns `true` if the [Trash] was deposited, `false` otherwise.
   bool deposit() {
     // temporary implementation while the trash can does not have a type
-    if (bloc.state.inventory.plasticTrash > 0 && _currentTrash < _capacity) {
+    if (bloc.state.inventory.getTrash(parent.trashType) > 0 &&
+        _currentTrash < _capacity) {
       _currentTrash++;
       _updateCapacityText();
       return true;

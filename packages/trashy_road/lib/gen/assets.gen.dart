@@ -82,6 +82,9 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/finish.tx
   String get finish => 'assets/tiles/finish.tx';
 
+  /// File path: assets/tiles/map.tmx
+  String get map => 'assets/tiles/map.tmx';
+
   /// File path: assets/tiles/map1.tmx
   String get map1 => 'assets/tiles/map1.tmx';
 
@@ -105,6 +108,7 @@ class $AssetsTilesGen {
         tiles,
         barrel,
         finish,
+        map,
         map1,
         map2,
         roadLane,

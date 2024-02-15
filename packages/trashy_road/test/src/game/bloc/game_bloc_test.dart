@@ -71,6 +71,33 @@ void main() {
           ),
         ],
       );
+
+      blocTest<GameBloc, GameState>(
+        'increments the correct type of trash when the user collects trash '
+        'and the game is playing',
+        build: () => GameBloc(map: map),
+        act: (bloc) => bloc
+          ..add(const GameInteractedEvent())
+          ..add(const GameCollectedTrashEvent(type: TrashType.plastic))
+          ..add(const GameCollectedTrashEvent(type: TrashType.glass)),
+        expect: () => [
+          GameState(
+            map: map,
+            status: GameStatus.playing,
+            inventory: const Inventory.empty(),
+          ),
+          GameState(
+            map: map,
+            status: GameStatus.playing,
+            inventory: const Inventory(glassTrash: 0, plasticTrash: 1),
+          ),
+          GameState(
+            map: map,
+            status: GameStatus.playing,
+            inventory: const Inventory(glassTrash: 1, plasticTrash: 1),
+          ),
+        ],
+      );
     });
 
     group('$GameDepositedTrashEvent', () {
@@ -107,6 +134,42 @@ void main() {
             map: map,
             status: GameStatus.playing,
             inventory: const Inventory.empty(),
+            collectedTrash: 1,
+          ),
+        ],
+      );
+
+      blocTest<GameBloc, GameState>(
+        'empties the correct type of trash when the user deposits trash '
+        'and the game is playing',
+        build: () => GameBloc(map: map),
+        setUp: () => when(() => trashLayer.objects)
+            .thenReturn([_MockTiledObject(), _MockTiledObject()]),
+        act: (bloc) => bloc
+          ..add(const GameInteractedEvent())
+          ..add(const GameCollectedTrashEvent(type: TrashType.plastic))
+          ..add(const GameCollectedTrashEvent(type: TrashType.glass))
+          ..add(const GameDepositedTrashEvent(type: TrashType.plastic)),
+        expect: () => [
+          GameState(
+            map: map,
+            status: GameStatus.playing,
+            inventory: const Inventory.empty(),
+          ),
+          GameState(
+            map: map,
+            status: GameStatus.playing,
+            inventory: const Inventory(glassTrash: 0, plasticTrash: 1),
+          ),
+          GameState(
+            map: map,
+            status: GameStatus.playing,
+            inventory: const Inventory(glassTrash: 1, plasticTrash: 1),
+          ),
+          GameState(
+            map: map,
+            status: GameStatus.playing,
+            inventory: const Inventory(glassTrash: 1, plasticTrash: 0),
             collectedTrash: 1,
           ),
         ],

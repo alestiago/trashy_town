@@ -99,24 +99,55 @@ class GameState extends Equatable {
 /// {@template Inventory}
 /// The player's inventory.
 ///
-/// The inventory is used to keep track of the amount of [trash] that the player
+/// The inventory is used to keep track of the amount of [Trash] that the player
 /// has collected.
 /// {@endtemplate}
 @immutable
 class Inventory extends Equatable {
   /// {@macro Inventory}
-  const Inventory({required this.trash});
+  const Inventory({required this.plasticTrash, required this.glassTrash});
 
   /// A completely empty inventory.
-  const Inventory.empty() : this(trash: 0);
+  const Inventory.empty() : this(plasticTrash: 0, glassTrash: 0);
 
   /// The amount of trash that the player has collected.
-  final int trash;
+  final int plasticTrash;
+  final int glassTrash;
 
-  Inventory copyWith({int? trash}) {
-    return Inventory(trash: trash ?? this.trash);
+  /// Returns the amount of trash of a given [type].
+  int getTrash(TrashType type) {
+    switch (type) {
+      case TrashType.plastic:
+        return plasticTrash;
+      case TrashType.glass:
+        return glassTrash;
+    }
+  }
+
+  /// Returns the total amount of trash in the inventory.
+  int getTotalTrash() => plasticTrash + glassTrash;
+
+  /// Returns a new [Inventory] with the trash of a given [type] increased by
+  /// [amount].
+  Inventory copyWithModifiedTrash({
+    required TrashType type,
+    required int amount,
+  }) {
+    switch (type) {
+      case TrashType.plastic:
+        return copyWith(plasticTrash: plasticTrash + amount);
+      case TrashType.glass:
+        return copyWith(glassTrash: glassTrash + amount);
+    }
+  }
+
+  Inventory copyWith({int? plasticTrash, int? glassTrash}) {
+    return Inventory(
+      plasticTrash: plasticTrash ?? this.plasticTrash,
+      glassTrash: glassTrash ?? this.glassTrash,
+    );
   }
 
   @override
-  List<Object?> get props => [trash];
+  List<Object?> get props => [plasticTrash, glassTrash];
 }

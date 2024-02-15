@@ -46,7 +46,8 @@ void main() {
         'does not fill the inventory with trash when the user collects trash '
         'and the game is not playing',
         build: () => GameBloc(map: map),
-        act: (bloc) => bloc.add(const GameCollectedTrashEvent()),
+        act: (bloc) =>
+            bloc.add(const GameCollectedTrashEvent(type: TrashType.plastic)),
         expect: () => <GameState>[],
       );
 
@@ -56,7 +57,7 @@ void main() {
         build: () => GameBloc(map: map),
         act: (bloc) => bloc
           ..add(const GameInteractedEvent())
-          ..add(const GameCollectedTrashEvent()),
+          ..add(const GameCollectedTrashEvent(type: TrashType.plastic)),
         expect: () => [
           GameState(
             map: map,
@@ -66,7 +67,7 @@ void main() {
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory(trash: 1),
+            inventory: const Inventory(glassTrash: 0, plasticTrash: 1),
           ),
         ],
       );
@@ -76,7 +77,8 @@ void main() {
       blocTest<GameBloc, GameState>(
         'does nothing when the game is not playing',
         build: () => GameBloc(map: map),
-        act: (bloc) => bloc.add(const GameDepositedTrashEvent()),
+        act: (bloc) =>
+            bloc.add(const GameDepositedTrashEvent(type: TrashType.plastic)),
         expect: () => <GameState>[],
       );
 
@@ -88,8 +90,8 @@ void main() {
             .thenReturn([_MockTiledObject(), _MockTiledObject()]),
         act: (bloc) => bloc
           ..add(const GameInteractedEvent())
-          ..add(const GameCollectedTrashEvent())
-          ..add(const GameDepositedTrashEvent()),
+          ..add(const GameCollectedTrashEvent(type: TrashType.plastic))
+          ..add(const GameDepositedTrashEvent(type: TrashType.plastic)),
         expect: () => [
           GameState(
             map: map,
@@ -99,7 +101,7 @@ void main() {
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory(trash: 1),
+            inventory: const Inventory(glassTrash: 0, plasticTrash: 1),
           ),
           GameState(
             map: map,
@@ -117,10 +119,10 @@ void main() {
             .thenReturn([_MockTiledObject(), _MockTiledObject()]),
         act: (bloc) => bloc
           ..add(const GameInteractedEvent())
-          ..add(const GameCollectedTrashEvent())
-          ..add(const GameCollectedTrashEvent())
-          ..add(const GameDepositedTrashEvent())
-          ..add(const GameDepositedTrashEvent()),
+          ..add(const GameCollectedTrashEvent(type: TrashType.plastic))
+          ..add(const GameCollectedTrashEvent(type: TrashType.plastic))
+          ..add(const GameDepositedTrashEvent(type: TrashType.plastic))
+          ..add(const GameDepositedTrashEvent(type: TrashType.plastic)),
         expect: () => [
           GameState(
             map: map,
@@ -130,17 +132,17 @@ void main() {
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory(trash: 1),
+            inventory: const Inventory(plasticTrash: 1, glassTrash: 0),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory(trash: 2),
+            inventory: const Inventory(plasticTrash: 2, glassTrash: 0),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory(trash: 1),
+            inventory: const Inventory(plasticTrash: 1, glassTrash: 0),
             collectedTrash: 1,
           ),
           GameState(
@@ -216,7 +218,7 @@ void main() {
         build: () => GameBloc(map: map),
         act: (bloc) => bloc
           ..add(const GameInteractedEvent())
-          ..add(const GameCollectedTrashEvent())
+          ..add(const GameCollectedTrashEvent(type: TrashType.plastic))
           ..add(const GameResetEvent()),
         expect: () => [
           GameState(
@@ -227,7 +229,7 @@ void main() {
           GameState(
             map: map,
             status: GameStatus.playing,
-            inventory: const Inventory(trash: 1),
+            inventory: const Inventory(plasticTrash: 1, glassTrash: 0),
           ),
           GameState(
             map: map,

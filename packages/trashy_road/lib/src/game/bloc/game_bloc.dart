@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:tiled/tiled.dart';
+import 'package:trashy_road/src/game/game.dart';
 
 part 'game_event.dart';
 part 'game_state.dart';
@@ -39,9 +40,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       return;
     }
 
-    final inventory = state.inventory.copyWith(
-      trash: state.inventory.trash + 1,
-    );
+    final inventory =
+        state.inventory.copyWithModifiedTrash(type: event.type, amount: 1);
+
     emit(state.copyWith(inventory: inventory));
   }
 
@@ -52,13 +53,12 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     if (state.status != GameStatus.playing) {
       return;
     }
-
-    if (state.inventory.trash == 0) {
+    if (state.inventory.getTrash(event.type) == 0) {
       return;
     }
 
     final inventory =
-        state.inventory.copyWith(trash: state.inventory.trash - 1);
+        state.inventory.copyWithModifiedTrash(type: event.type, amount: -1);
     final collectedTrash = state.collectedTrash + 1;
 
     final hasWon = collectedTrash == state._initialTrash;

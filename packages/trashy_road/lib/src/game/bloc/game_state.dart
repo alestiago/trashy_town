@@ -43,7 +43,9 @@ class GameState extends Equatable {
     required this.map,
     required this.inventory,
     this.collectedTrash = 0,
+    this.pausedDuration = Duration.zero,
     this.startedAt,
+    this.pausedAt,
   }) :
         // TODO(alestiago): Remove magic string.
         _initialTrash =
@@ -55,6 +57,7 @@ class GameState extends Equatable {
           status: GameStatus.ready,
           map: map,
           inventory: Inventory.empty(),
+          pausedDuration: Duration.zero,
           collectedTrash: 0,
         );
 
@@ -76,13 +79,26 @@ class GameState extends Equatable {
   final Inventory inventory;
 
   /// The time at which the game was started.
+  ///
+  /// Is `null` if the game has not been started yet. A game is considered to
+  /// have started as soon as the user interacts with the game.
   final DateTime? startedAt;
+
+  /// The time at which the game was paused.
+  ///
+  /// Is `null` if the game is not paused.
+  final DateTime? pausedAt;
+
+  /// The total amount of time that the game has been paused for.
+  final Duration pausedDuration;
 
   GameState copyWith({
     GameStatus? status,
     Inventory? inventory,
     int? collectedTrash,
     DateTime? Function()? startedAt,
+    DateTime? Function()? pausedAt,
+    Duration? pausedDuration,
   }) {
     return GameState(
       status: status ?? this.status,
@@ -90,6 +106,8 @@ class GameState extends Equatable {
       inventory: inventory ?? this.inventory,
       collectedTrash: collectedTrash ?? this.collectedTrash,
       startedAt: startedAt != null ? startedAt() : this.startedAt,
+      pausedDuration: pausedDuration ?? this.pausedDuration,
+      pausedAt: pausedAt != null ? pausedAt() : this.pausedAt,
     );
   }
 
@@ -100,6 +118,8 @@ class GameState extends Equatable {
         map,
         collectedTrash,
         startedAt,
+        pausedDuration,
+        pausedAt,
       ];
 }
 

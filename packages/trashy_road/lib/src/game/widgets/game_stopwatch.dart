@@ -71,8 +71,8 @@ class _GameStopwatchState extends State<GameStopwatch>
         ),
         BlocListener<GameBloc, GameState>(
           listenWhen: (previous, current) {
-            final hasReset = previous.status != GameStatus.playing &&
-                current.status == GameStatus.ready;
+            final hasReset = previous.status == GameStatus.playing &&
+                current.status == GameStatus.resetting;
             return hasReset;
           },
           listener: (_, __) => _reset(),

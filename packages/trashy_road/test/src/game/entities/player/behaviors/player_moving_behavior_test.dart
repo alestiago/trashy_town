@@ -99,7 +99,7 @@ void main() {
 
           final previousVerticalPosition = behavior.parent.position.y;
           behavior.move(direction);
-          game.update(10);
+          game.update(1);
 
           final player = behavior.parent;
           final currentVerticalPosition = player.position.y;
@@ -121,7 +121,7 @@ void main() {
 
           final previousVerticalPosition = behavior.parent.position.x;
           behavior.move(direction);
-          game.update(10);
+          game.update(1);
 
           final player = behavior.parent;
           final currentVerticalPosition = player.position.x;
@@ -143,7 +143,7 @@ void main() {
 
           final previousVerticalPosition = behavior.parent.position.x;
           behavior.move(direction);
-          game.update(10);
+          game.update(1);
 
           final player = behavior.parent;
           final currentVerticalPosition = player.position.x;

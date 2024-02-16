@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:bloc/bloc.dart';
+import 'package:clock/clock.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:tiled/tiled.dart';
@@ -31,7 +32,12 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     GameInteractedEvent event,
     Emitter<GameState> emit,
   ) {
-    emit(state.copyWith(status: GameStatus.playing));
+    emit(
+      state.copyWith(
+        status: GameStatus.playing,
+        startedAt: () => state.startedAt ?? clock.now(),
+      ),
+    );
   }
 
   void _onCollectedTrash(
@@ -82,9 +88,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     Emitter<GameState> emit,
   ) {
     emit(
-      state.copyWith(
+      GameState.initial(map: state.map).copyWith(
         status: GameStatus.resetting,
-        inventory: Inventory.empty(),
       ),
     );
   }

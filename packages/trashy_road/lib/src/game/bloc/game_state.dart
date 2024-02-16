@@ -43,6 +43,7 @@ class GameState extends Equatable {
     required this.map,
     required this.inventory,
     this.collectedTrash = 0,
+    this.startedAt,
   }) :
         // TODO(alestiago): Remove magic string.
         _initialTrash =
@@ -74,16 +75,21 @@ class GameState extends Equatable {
   /// {@macro Inventory}
   final Inventory inventory;
 
+  /// The time at which the game was started.
+  final DateTime? startedAt;
+
   GameState copyWith({
     GameStatus? status,
     Inventory? inventory,
     int? collectedTrash,
+    DateTime? Function()? startedAt,
   }) {
     return GameState(
       status: status ?? this.status,
       map: map,
       inventory: inventory ?? this.inventory,
       collectedTrash: collectedTrash ?? this.collectedTrash,
+      startedAt: startedAt != null ? startedAt() : this.startedAt,
     );
   }
 
@@ -93,6 +99,7 @@ class GameState extends Equatable {
         inventory,
         map,
         collectedTrash,
+        startedAt,
       ];
 }
 

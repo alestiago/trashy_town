@@ -1,3 +1,9 @@
+// FIXME(alestiago): Avoid ignoring deprecated_member_use as soon as:
+// https://github.com/flame-engine/flame/pull/3002 is released.
+// ignore_for_file: deprecated_member_use
+
+import 'dart:async';
+
 import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_test/flame_test.dart';
@@ -9,10 +15,21 @@ import 'package:trashy_road/src/game/game.dart';
 
 class _MockTiledMap extends Mock implements TiledMap {}
 
+class _MockObjectGroup extends Mock implements ObjectGroup {}
+
+class _MockTiledObject extends Mock implements TiledObject {}
+
 class _MockRawKeyEventData extends Mock implements RawKeyEventData {
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) =>
       super.toString();
+}
+
+class _TestPlayer extends Player {
+  _TestPlayer() : super.empty();
+
+  @override
+  FutureOr<void> onLoad() {}
 }
 
 class _TestGame extends FlameGame {
@@ -25,9 +42,7 @@ class _TestGame extends FlameGame {
   Future<void> pump(
     PlayerKeyboardMovingBehavior behavior,
   ) async {
-    final player = Player.test(
-      behaviors: [PlayerMovingBehavior()],
-    );
+    final player = _TestPlayer();
 
     await ensureAdd(
       FlameBlocProvider<GameBloc, GameState>(
@@ -36,6 +51,7 @@ class _TestGame extends FlameGame {
       ),
     );
 
+    await player.ensureAdd(PlayerMovingBehavior());
     await player.ensureAdd(behavior);
   }
 }
@@ -48,9 +64,13 @@ void main() {
     late GameBloc gameBloc;
 
     setUp(() {
-      gameBloc = GameBloc(
-        map: _MockTiledMap(),
-      );
+      final objectGroup = _MockObjectGroup();
+      when(() => objectGroup.objects).thenReturn([_MockTiledObject()]);
+
+      final map = _MockTiledMap();
+      when(() => map.layerByName('TrashLayer')).thenReturn(objectGroup);
+
+      gameBloc = GameBloc(map: map);
       game = _TestGame(gameBloc: gameBloc);
     });
 
@@ -80,7 +100,7 @@ void main() {
 
           behavior.onKeyEvent(event, {upKey});
 
-          game.update(0);
+          game.update(1);
 
           final player = behavior.parent;
           final currentVerticalPosition = player.position.y;
@@ -108,7 +128,7 @@ void main() {
 
           behavior.onKeyEvent(event, {downKey});
 
-          game.update(0);
+          game.update(1);
 
           final player = behavior.parent;
           final currentVerticalPosition = player.position.y;
@@ -136,7 +156,7 @@ void main() {
 
           behavior.onKeyEvent(event, {leftKey});
 
-          game.update(0);
+          game.update(1);
 
           final player = behavior.parent;
           final currentHorizontalPosition = player.position.x;
@@ -164,7 +184,7 @@ void main() {
 
           behavior.onKeyEvent(event, {rightKey});
 
-          game.update(0);
+          game.update(1);
 
           final player = behavior.parent;
           final currentHorizontalPosition = player.position.x;

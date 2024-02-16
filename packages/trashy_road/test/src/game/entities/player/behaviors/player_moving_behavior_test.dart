@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_test/flame_test.dart';
@@ -7,6 +9,17 @@ import 'package:mocktail/mocktail.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 class _MockTiledMap extends Mock implements TiledMap {}
+
+class _MockObjectGroup extends Mock implements ObjectGroup {}
+
+class _MockTiledObject extends Mock implements TiledObject {}
+
+class _TestPlayer extends Player {
+  _TestPlayer() : super.empty();
+
+  @override
+  FutureOr<void> onLoad() {}
+}
 
 class _TestGame extends FlameGame {
   _TestGame({
@@ -22,9 +35,7 @@ class _TestGame extends FlameGame {
       FlameBlocProvider<GameBloc, GameState>(
         create: () => _gameBloc,
         children: [
-          Player.test(
-            behaviors: [behavior],
-          ),
+          _TestPlayer()..add(behavior),
         ],
       ),
     );
@@ -39,9 +50,13 @@ void main() {
     late GameBloc gameBloc;
 
     setUp(() {
-      gameBloc = GameBloc(
-        map: _MockTiledMap(),
-      );
+      final objectGroup = _MockObjectGroup();
+      when(() => objectGroup.objects).thenReturn([_MockTiledObject()]);
+
+      final map = _MockTiledMap();
+      when(() => map.layerByName('TrashLayer')).thenReturn(objectGroup);
+
+      gameBloc = GameBloc(map: map);
       game = _TestGame(gameBloc: gameBloc);
     });
 
@@ -58,11 +73,12 @@ void main() {
           final behavior = PlayerMovingBehavior();
           await game.pump(behavior);
 
-          final previousVerticalPosition = behavior.parent.position.y;
-          behavior.move(direction);
-          game.update(0);
-
           final player = behavior.parent;
+          final previousVerticalPosition = player.position.y;
+
+          behavior.move(direction);
+          game.update(1);
+
           final currentVerticalPosition = player.position.y;
           expect(
             previousVerticalPosition,
@@ -72,6 +88,7 @@ void main() {
           );
         },
       );
+
       testWithGame<_TestGame>(
         'moves downwards with $Direction.down',
         () => game,
@@ -82,7 +99,7 @@ void main() {
 
           final previousVerticalPosition = behavior.parent.position.y;
           behavior.move(direction);
-          game.update(0);
+          game.update(1);
 
           final player = behavior.parent;
           final currentVerticalPosition = player.position.y;
@@ -104,7 +121,7 @@ void main() {
 
           final previousVerticalPosition = behavior.parent.position.x;
           behavior.move(direction);
-          game.update(0);
+          game.update(1);
 
           final player = behavior.parent;
           final currentVerticalPosition = player.position.x;
@@ -126,7 +143,7 @@ void main() {
 
           final previousVerticalPosition = behavior.parent.position.x;
           behavior.move(direction);
-          game.update(0);
+          game.update(1);
 
           final player = behavior.parent;
           final currentVerticalPosition = player.position.x;

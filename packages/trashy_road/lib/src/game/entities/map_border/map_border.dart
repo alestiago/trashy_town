@@ -12,9 +12,9 @@ class MapBorder extends Obstacle {
           blockOnlyBottomTile: false,
           anchor: Anchor.topLeft,
           children: [
-            RectangleComponent()
+            RectangleComponent(size: Vector2.copy(size)..toGameSize())
               ..setColor(
-                const Color.fromARGB(125, 0, 0, 0),
+                const Color.fromARGB(64, 0, 0, 0),
               ),
           ],
         );

@@ -44,7 +44,7 @@ class _MapsMenuView extends StatelessWidget {
 
               return Padding(
                 padding: const EdgeInsets.all(8),
-                child: GameMapTile.fromGameMap(map),
+                child: GameMapTile(map: map),
               );
             },
           );

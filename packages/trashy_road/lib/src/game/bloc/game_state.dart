@@ -39,6 +39,7 @@ enum GameStatus {
 class GameState extends Equatable {
   /// {@macro GameState}
   GameState({
+    required this.identifier,
     required this.status,
     required this.map,
     required this.inventory,
@@ -52,8 +53,11 @@ class GameState extends Equatable {
             (map.layerByName('TrashLayer') as ObjectGroup).objects.length;
 
   /// The initial state of the game.
-  GameState.initial({required TiledMap map})
-      : this(
+  GameState.initial({
+    required String identifier,
+    required TiledMap map,
+  }) : this(
+          identifier: identifier,
           status: GameStatus.ready,
           map: map,
           inventory: Inventory.empty(),
@@ -63,6 +67,9 @@ class GameState extends Equatable {
 
   /// {@macro GameStatus}
   final GameStatus status;
+
+  /// The identifier of the level being played.
+  final String identifier;
 
   /// The map that the game is being played on.
   final TiledMap map;
@@ -101,6 +108,7 @@ class GameState extends Equatable {
     Duration? pausedDuration,
   }) {
     return GameState(
+      identifier: identifier,
       status: status ?? this.status,
       map: map,
       inventory: inventory ?? this.inventory,

@@ -46,6 +46,7 @@ class GameState extends Equatable {
     this.pausedDuration = Duration.zero,
     this.startedAt,
     this.pausedAt,
+    this.score = -1,
   }) :
         // TODO(alestiago): Remove magic string.
         _initialTrash =
@@ -59,6 +60,7 @@ class GameState extends Equatable {
           inventory: Inventory.empty(),
           pausedDuration: Duration.zero,
           collectedTrash: 0,
+          score: -1,
         );
 
   /// {@macro GameStatus}
@@ -92,6 +94,14 @@ class GameState extends Equatable {
   /// The total amount of time that the game has been paused for.
   final Duration pausedDuration;
 
+  /// The final score of the game.
+  ///
+  /// If the game has not been completed, the score is `-1`.
+  ///
+  /// The larger the score, the worse the player did. The score is calculated
+  /// based on the amount of time that the player took to complete the game.
+  final int score;
+
   GameState copyWith({
     GameStatus? status,
     Inventory? inventory,
@@ -99,6 +109,7 @@ class GameState extends Equatable {
     DateTime? Function()? startedAt,
     DateTime? Function()? pausedAt,
     Duration? pausedDuration,
+    int? score,
   }) {
     return GameState(
       status: status ?? this.status,
@@ -108,6 +119,7 @@ class GameState extends Equatable {
       startedAt: startedAt != null ? startedAt() : this.startedAt,
       pausedDuration: pausedDuration ?? this.pausedDuration,
       pausedAt: pausedAt != null ? pausedAt() : this.pausedAt,
+      score: score ?? this.score,
     );
   }
 
@@ -120,6 +132,7 @@ class GameState extends Equatable {
         startedAt,
         pausedDuration,
         pausedAt,
+        score,
       ];
 }
 

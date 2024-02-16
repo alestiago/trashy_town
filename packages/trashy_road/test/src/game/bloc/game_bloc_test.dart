@@ -241,7 +241,10 @@ void main() {
         'completes the game when all the trash is deposited ',
         build: () {
           return withClock<GameBloc>(
-            Clock.fixed(DateTime(0)),
+            _IncremetalClock(
+              initialTime: DateTime(0),
+              increment: const Duration(seconds: 1),
+            ),
             () => GameBloc(map: map),
           );
         },
@@ -286,6 +289,7 @@ void main() {
             inventory: Inventory.empty(),
             collectedTrash: 2,
             startedAt: DateTime(0),
+            score: 1,
           ),
         ],
       );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/src/loading/loading.dart';
-import 'package:trashy_road/src/maps/view/maps_menu_page.dart';
+import 'package:trashy_road/src/maps/maps.dart';
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({super.key});

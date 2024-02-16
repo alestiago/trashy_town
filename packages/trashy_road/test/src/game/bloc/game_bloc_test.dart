@@ -11,6 +11,27 @@ class _MockObjectGroup extends Mock implements ObjectGroup {}
 
 class _MockTiledObject extends Mock implements TiledObject {}
 
+/// {@template _IncremetalClock}
+/// A [Clock] that increments the current time by a fixed [Duration] each time
+/// [now] is called.
+/// {@endtemplate}
+class _IncremetalClock extends Clock {
+  /// {@macro _IncremetalClock}
+  _IncremetalClock({
+    required DateTime initialTime,
+    required Duration increment,
+  })  : _initialTime = initialTime,
+        _increment = increment;
+
+  final Duration _increment;
+  final DateTime _initialTime;
+
+  int _calls = 0;
+
+  @override
+  DateTime now() => _initialTime.add(_increment * _calls++);
+}
+
 void main() {
   group('$GameBloc', () {
     late TiledMap map;
@@ -275,7 +296,10 @@ void main() {
         'pauses the game when the user was previously playing the game',
         build: () {
           return withClock<GameBloc>(
-            Clock.fixed(DateTime(0)),
+            _IncremetalClock(
+              initialTime: DateTime(0),
+              increment: const Duration(seconds: 1),
+            ),
             () => GameBloc(map: map),
           );
         },
@@ -294,6 +318,7 @@ void main() {
             status: GameStatus.paused,
             inventory: Inventory.empty(),
             startedAt: DateTime(0),
+            pausedAt: DateTime(0).add(const Duration(seconds: 1)),
           ),
         ],
       );
@@ -311,12 +336,17 @@ void main() {
         'resumes the game when the user was previously paused',
         build: () {
           return withClock<GameBloc>(
-            Clock.fixed(DateTime(0)),
+            _IncremetalClock(
+              initialTime: DateTime(0),
+              increment: const Duration(seconds: 1),
+            ),
             () => GameBloc(map: map),
           );
         },
         act: (bloc) => bloc
           ..add(const GameInteractedEvent())
+          ..add(const GamePausedEvent())
+          ..add(const GameResumedEvent())
           ..add(const GamePausedEvent())
           ..add(const GameResumedEvent()),
         expect: () => [
@@ -331,12 +361,29 @@ void main() {
             status: GameStatus.paused,
             inventory: Inventory.empty(),
             startedAt: DateTime(0),
+            pausedAt: DateTime(0).add(const Duration(seconds: 1)),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
             inventory: Inventory.empty(),
             startedAt: DateTime(0),
+            pausedDuration: const Duration(seconds: 1),
+          ),
+          GameState(
+            map: map,
+            status: GameStatus.paused,
+            inventory: Inventory.empty(),
+            startedAt: DateTime(0),
+            pausedAt: DateTime(0).add(const Duration(seconds: 3)),
+            pausedDuration: const Duration(seconds: 1),
+          ),
+          GameState(
+            map: map,
+            status: GameStatus.playing,
+            inventory: Inventory.empty(),
+            startedAt: DateTime(0),
+            pausedDuration: const Duration(seconds: 2),
           ),
         ],
       );

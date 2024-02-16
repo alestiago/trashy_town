@@ -98,7 +98,12 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     GamePausedEvent event,
     Emitter<GameState> emit,
   ) {
-    emit(state.copyWith(status: GameStatus.paused));
+    emit(
+      state.copyWith(
+        status: GameStatus.paused,
+        pausedAt: () => clock.now(),
+      ),
+    );
   }
 
   void _onGameResumed(
@@ -109,7 +114,16 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       return;
     }
 
-    emit(state.copyWith(status: GameStatus.playing));
+    final pausedDuration =
+        state.pausedDuration + clock.now().difference(state.pausedAt!);
+
+    emit(
+      state.copyWith(
+        status: GameStatus.playing,
+        pausedDuration: pausedDuration,
+        pausedAt: () => null,
+      ),
+    );
   }
 
   @override

@@ -35,7 +35,7 @@ class Player extends PositionedEntity {
         );
 
   @visibleForTesting
-  Player.test({super.behaviors});
+  Player.empty();
 
   /// Derives a [Player] from a [TiledObject].
   ///

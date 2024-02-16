@@ -1,0 +1,26 @@
+name: trashy_road
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    paths:
+      - .github/workflows/trashy_road.yaml
+      - "packages/trashy_road/**"
+    branches:
+      - main
+  pull_request:
+    paths:
+      - .github/workflows/trashy_road.yaml
+      - "packages/trashy_road/**"
+    branches:
+      - main
+
+jobs:
+  build:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    with:
+      coverage_excludes: "*.gen.dart"
+      working_directory: "packages/trashy_road"

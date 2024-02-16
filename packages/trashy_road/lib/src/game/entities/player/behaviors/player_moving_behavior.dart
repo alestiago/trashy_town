@@ -7,7 +7,7 @@ import 'package:trashy_road/src/game/game.dart';
 enum Direction { up, down, left, right }
 
 /// A behavior that allows the player to move around the game.
-class PlayerMovingBehavior extends Behavior<Player>
+final class PlayerMovingBehavior extends Behavior<Player>
     with FlameBlocReader<GameBloc, GameState> {
   /// The position the player is trying to move to.
   ///

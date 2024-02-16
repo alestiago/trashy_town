@@ -1,4 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:clock/clock.dart';
+import 'package:flame/game.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:tiled/tiled.dart';
@@ -29,13 +31,19 @@ void main() {
     group('$GameInteractedEvent', () {
       blocTest<GameBloc, GameState>(
         'playing status after the user interacts with the game',
-        build: () => GameBloc(map: map),
+        build: () {
+          return withClock<GameBloc>(
+            Clock.fixed(DateTime(0)),
+            () => GameBloc(map: map),
+          );
+        },
         act: (bloc) => bloc.add(const GameInteractedEvent()),
         expect: () => [
           GameState(
             map: map,
             status: GameStatus.playing,
             inventory: Inventory.empty(),
+            startedAt: DateTime(0),
           ),
         ],
       );
@@ -54,7 +62,12 @@ void main() {
       blocTest<GameBloc, GameState>(
         'fills the inventory with trash when the user collects trash '
         'and the game is playing',
-        build: () => GameBloc(map: map),
+        build: () {
+          return withClock<GameBloc>(
+            Clock.fixed(DateTime(0)),
+            () => GameBloc(map: map),
+          );
+        },
         act: (bloc) => bloc
           ..add(const GameInteractedEvent())
           ..add(const GameCollectedTrashEvent(item: TrashType.plastic)),
@@ -63,11 +76,13 @@ void main() {
             map: map,
             status: GameStatus.playing,
             inventory: Inventory.empty(),
+            startedAt: DateTime(0),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
             inventory: Inventory(items: const [TrashType.plastic]),
+            startedAt: DateTime(0),
           ),
         ],
       );
@@ -75,7 +90,12 @@ void main() {
       blocTest<GameBloc, GameState>(
         'increments the correct type of trash when the user collects trash '
         'and the game is playing',
-        build: () => GameBloc(map: map),
+        build: () {
+          return withClock<GameBloc>(
+            Clock.fixed(DateTime(0)),
+            () => GameBloc(map: map),
+          );
+        },
         act: (bloc) => bloc
           ..add(const GameInteractedEvent())
           ..add(const GameCollectedTrashEvent(item: TrashType.plastic))
@@ -85,17 +105,20 @@ void main() {
             map: map,
             status: GameStatus.playing,
             inventory: Inventory.empty(),
+            startedAt: DateTime(0),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
             inventory: Inventory(items: const [TrashType.plastic]),
+            startedAt: DateTime(0),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
             inventory:
                 Inventory(items: const [TrashType.plastic, TrashType.glass]),
+            startedAt: DateTime(0),
           ),
         ],
       );
@@ -113,7 +136,12 @@ void main() {
       blocTest<GameBloc, GameState>(
         'empties the inventory with trash when the user deposits trash '
         'and the game is playing',
-        build: () => GameBloc(map: map),
+        build: () {
+          return withClock<GameBloc>(
+            Clock.fixed(DateTime(0)),
+            () => GameBloc(map: map),
+          );
+        },
         setUp: () => when(() => trashLayer.objects)
             .thenReturn([_MockTiledObject(), _MockTiledObject()]),
         act: (bloc) => bloc
@@ -125,17 +153,20 @@ void main() {
             map: map,
             status: GameStatus.playing,
             inventory: Inventory.empty(),
+            startedAt: DateTime(0),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
             inventory: Inventory(items: const [TrashType.plastic]),
+            startedAt: DateTime(0),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
             inventory: Inventory.empty(),
             collectedTrash: 1,
+            startedAt: DateTime(0),
           ),
         ],
       );
@@ -143,7 +174,12 @@ void main() {
       blocTest<GameBloc, GameState>(
         'empties the correct type of trash when the user deposits trash '
         'and the game is playing',
-        build: () => GameBloc(map: map),
+        build: () {
+          return withClock<GameBloc>(
+            Clock.fixed(DateTime(0)),
+            () => GameBloc(map: map),
+          );
+        },
         setUp: () => when(() => trashLayer.objects)
             .thenReturn([_MockTiledObject(), _MockTiledObject()]),
         act: (bloc) => bloc
@@ -156,30 +192,39 @@ void main() {
             map: map,
             status: GameStatus.playing,
             inventory: Inventory.empty(),
+            startedAt: DateTime(0),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
             inventory: Inventory(items: const [TrashType.plastic]),
+            startedAt: DateTime(0),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
             inventory:
                 Inventory(items: const [TrashType.plastic, TrashType.glass]),
+            startedAt: DateTime(0),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
             inventory: Inventory(items: const [TrashType.glass]),
             collectedTrash: 1,
+            startedAt: DateTime(0),
           ),
         ],
       );
 
       blocTest<GameBloc, GameState>(
         'completes the game when all the trash is deposited ',
-        build: () => GameBloc(map: map),
+        build: () {
+          return withClock<GameBloc>(
+            Clock.fixed(DateTime(0)),
+            () => GameBloc(map: map),
+          );
+        },
         setUp: () => when(() => trashLayer.objects)
             .thenReturn([_MockTiledObject(), _MockTiledObject()]),
         act: (bloc) => bloc
@@ -193,29 +238,34 @@ void main() {
             map: map,
             status: GameStatus.playing,
             inventory: Inventory.empty(),
+            startedAt: DateTime(0),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
             inventory: Inventory(items: const [TrashType.plastic]),
+            startedAt: DateTime(0),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
             inventory:
                 Inventory(items: const [TrashType.plastic, TrashType.plastic]),
+            startedAt: DateTime(0),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
             inventory: Inventory(items: const [TrashType.plastic]),
             collectedTrash: 1,
+            startedAt: DateTime(0),
           ),
           GameState(
             map: map,
             status: GameStatus.completed,
             inventory: Inventory.empty(),
             collectedTrash: 2,
+            startedAt: DateTime(0),
           ),
         ],
       );
@@ -224,7 +274,12 @@ void main() {
     group('$GamePausedEvent', () {
       blocTest<GameBloc, GameState>(
         'pauses the game when the user was previously playing the game',
-        build: () => GameBloc(map: map),
+        build: () {
+          return withClock<GameBloc>(
+            Clock.fixed(DateTime(0)),
+            () => GameBloc(map: map),
+          );
+        },
         act: (bloc) => bloc
           ..add(const GameInteractedEvent())
           ..add(const GamePausedEvent()),
@@ -233,11 +288,13 @@ void main() {
             map: map,
             status: GameStatus.playing,
             inventory: Inventory.empty(),
+            startedAt: DateTime(0),
           ),
           GameState(
             map: map,
             status: GameStatus.paused,
             inventory: Inventory.empty(),
+            startedAt: DateTime(0),
           ),
         ],
       );
@@ -253,7 +310,12 @@ void main() {
 
       blocTest<GameBloc, GameState>(
         'resumes the game when the user was previously paused',
-        build: () => GameBloc(map: map),
+        build: () {
+          return withClock<GameBloc>(
+            Clock.fixed(DateTime(0)),
+            () => GameBloc(map: map),
+          );
+        },
         act: (bloc) => bloc
           ..add(const GameInteractedEvent())
           ..add(const GamePausedEvent())
@@ -263,16 +325,19 @@ void main() {
             map: map,
             status: GameStatus.playing,
             inventory: Inventory.empty(),
+            startedAt: DateTime(0),
           ),
           GameState(
             map: map,
             status: GameStatus.paused,
             inventory: Inventory.empty(),
+            startedAt: DateTime(0),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
             inventory: Inventory.empty(),
+            startedAt: DateTime(0),
           ),
         ],
       );
@@ -281,7 +346,12 @@ void main() {
     group('$GameResetEvent', () {
       blocTest<GameBloc, GameState>(
         'resets the game',
-        build: () => GameBloc(map: map),
+        build: () {
+          return withClock<GameBloc>(
+            Clock.fixed(DateTime(0)),
+            () => GameBloc(map: map),
+          );
+        },
         act: (bloc) => bloc
           ..add(const GameInteractedEvent())
           ..add(const GameCollectedTrashEvent(item: TrashType.plastic))
@@ -291,11 +361,13 @@ void main() {
             map: map,
             status: GameStatus.playing,
             inventory: Inventory.empty(),
+            startedAt: DateTime(0),
           ),
           GameState(
             map: map,
             status: GameStatus.playing,
             inventory: Inventory(items: const [TrashType.plastic]),
+            startedAt: DateTime(0),
           ),
           GameState(
             map: map,

@@ -83,10 +83,7 @@ class TrashyRoadWorld extends Component {
       );
     }
     final borders = border.objects;
-    for (final object in borders) {
-      final border = MapBorder.fromTiledObject(object);
-      tiled.add(border);
-    }
+    tiled.addAll(borders.map(MapBorder.fromTiledObject));
 
     final bottomRightPosition =
         tiled.topLeftPosition + Vector2(tiled.width, tiled.height);

@@ -11,7 +11,8 @@ enum _TiledLayer {
   trashLayer._('TrashLayer'),
   coreItemsLayer._('CoreItemsLayer'),
   obstacles._('Obstacles'),
-  roadLayer._('RoadLayer');
+  roadLayer._('RoadLayer'),
+  borderLayer._('Border');
 
   const _TiledLayer._(this.name);
 
@@ -69,6 +70,22 @@ class TrashyRoadWorld extends Component {
     for (final object in obstacles) {
       final obstacle = Barrel.fromTiledObject(object);
       tiled.add(obstacle);
+    }
+
+    final border =
+        tiled.tileMap.getLayer<ObjectGroup>(_TiledLayer.borderLayer.name);
+
+    if (border == null) {
+      throw ArgumentError.value(
+        _TiledLayer.borderLayer.name,
+        'layer',
+        '''The Tiled map must have a layer named "${_TiledLayer.borderLayer.name}".''',
+      );
+    }
+    final borders = border.objects;
+    for (final object in borders) {
+      final border = MapBorder.fromTiledObject(object);
+      tiled.add(border);
     }
 
     final bottomRightPosition =

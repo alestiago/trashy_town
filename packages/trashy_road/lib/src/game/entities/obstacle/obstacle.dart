@@ -7,20 +7,25 @@ class Obstacle extends PositionedEntity {
   Obstacle({
     required Vector2 super.size,
     required Vector2 super.position,
+    Anchor anchor = Anchor.bottomLeft,
     super.children,
     Iterable<Behavior>? behaviors,
+    bool blockOnlyBottomTile = true,
   }) : super(
-          anchor: Anchor.bottomLeft,
+          anchor: anchor,
           priority: position.y.floor(),
           behaviors: [
             if (behaviors != null) ...behaviors,
             PropagatingCollisionBehavior(
               RectangleHitbox(
                 anchor: Anchor.topCenter,
-                size: Vector2.all(0.8)..toGameSize(),
+                size: (blockOnlyBottomTile ? Vector2.all(0.8) : size)
+                  ..toGameSize(),
                 position: Vector2(
                   size.x / 2,
-                  size.y - GameSettings.gridDimensions.y,
+                  blockOnlyBottomTile
+                      ? size.y - GameSettings.gridDimensions.y
+                      : 0,
                 ),
               ),
             ),

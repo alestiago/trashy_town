@@ -1,3 +1,7 @@
+// FIXME(alestiago): Avoid ignoring deprecated_member_use as soon as:
+// https://github.com/flame-engine/flame/pull/3002 is released.
+// ignore_for_file: deprecated_member_use
+
 import 'dart:async';
 
 import 'package:flame/components.dart';

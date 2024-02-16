@@ -24,3 +24,4 @@ jobs:
     with:
       coverage_excludes: "*.gen.dart"
       working_directory: "packages/trashy_road"
+      min_coverage: 14

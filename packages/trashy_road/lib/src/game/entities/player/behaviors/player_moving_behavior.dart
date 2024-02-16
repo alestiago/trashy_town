@@ -39,14 +39,16 @@ final class PlayerMovingBehavior extends Behavior<Player>
   void update(double dt) {
     super.update(dt);
 
-    if (parent.position.distanceTo(_targetPosition) > 0.01) {
+    final hasArrived = parent.position.distanceTo(_targetPosition) < 0.01;
+    if (!hasArrived) {
       parent.position.lerp(_targetPosition, _playerMoveAnimationSpeed * dt);
       parent.priority = parent.position.y.floor();
     }
 
-    if (parent.position.distanceTo(_targetPosition) <
-            GameSettings.gridDimensions.y / 2 &&
-        _previousPosition != _targetPosition) {
+    final isMidThrough = parent.position.distanceTo(_targetPosition) <
+        GameSettings.gridDimensions.y / 2;
+    final movingElsewhere = _targetPosition != _previousPosition;
+    if (isMidThrough && movingElsewhere) {
       _previousPosition.setFrom(_targetPosition);
     }
   }

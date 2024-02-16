@@ -10,17 +10,20 @@ enum Direction { up, down, left, right }
 /// A behavior that allows the player to move around the game.
 final class PlayerMovingBehavior extends Behavior<Player>
     with FlameBlocReader<GameBloc, GameState> {
+  /// The delay between player moves.
+  static const _moveDelay = Duration(milliseconds: 100);
+
+  /// The lerp time for player movement.
+  static const _playerMoveAnimationSpeed = 15;
+
   /// The position the player is trying to move to.
   ///
   /// When its values are different than the current [Player.position]
   /// it will be lerped until [_targetPosition] is reached by the [Player].
   final Vector2 _targetPosition = Vector2.zero();
 
-  /// The delay between player moves.
-  static const moveDelay = Duration(milliseconds: 100);
-
-  /// The lerp time for player movement.
-  static const playerMoveAnimationSpeed = 15;
+  /// The position the player was at before the current [_targetPosition].
+  final Vector2 _previousPosition = Vector2.zero();
 
   /// A int that contains the time when the next move can be made.
   DateTime _nextMoveTime = DateTime.fromMicrosecondsSinceEpoch(0);
@@ -29,15 +32,24 @@ final class PlayerMovingBehavior extends Behavior<Player>
   Future<void> onLoad() async {
     await super.onLoad();
     _targetPosition.setFrom(parent.position);
+    _previousPosition.setFrom(parent.position);
   }
 
   @override
   void update(double dt) {
     super.update(dt);
 
-    if (parent.position.distanceTo(_targetPosition) > 0.01) {
-      parent.position.lerp(_targetPosition, playerMoveAnimationSpeed * dt);
+    final hasArrived = parent.position.distanceTo(_targetPosition) < 0.01;
+    if (!hasArrived) {
+      parent.position.lerp(_targetPosition, _playerMoveAnimationSpeed * dt);
       parent.priority = parent.position.y.floor();
+    }
+
+    final isMidThrough = parent.position.distanceTo(_targetPosition) <
+        GameSettings.gridDimensions.y / 2;
+    final movingElsewhere = _targetPosition != _previousPosition;
+    if (isMidThrough && movingElsewhere) {
+      _previousPosition.setFrom(_targetPosition);
     }
   }
 
@@ -62,10 +74,10 @@ final class PlayerMovingBehavior extends Behavior<Player>
     } else if (direction == Direction.up) {
       _targetPosition.y -= GameSettings.gridDimensions.y;
     }
-    _nextMoveTime = now.add(moveDelay);
+    _nextMoveTime = now.add(_moveDelay);
   }
 
   void bounceBack() {
-    _targetPosition.setFrom(Player.snapToGrid(parent.position));
+    _targetPosition.setFrom(_previousPosition);
   }
 }

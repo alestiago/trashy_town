@@ -82,6 +82,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         inventory: inventory,
         collectedTrash: collectedTrash,
         status: hasWon ? GameStatus.completed : GameStatus.playing,
+        score:
+            hasWon ? clock.now().difference(state.startedAt!).inSeconds : null,
       ),
     );
   }
@@ -130,10 +132,5 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         pausedAt: () => null,
       ),
     );
-  }
-
-  @override
-  void onTransition(Transition<GameEvent, GameState> transition) {
-    super.onTransition(transition);
   }
 }

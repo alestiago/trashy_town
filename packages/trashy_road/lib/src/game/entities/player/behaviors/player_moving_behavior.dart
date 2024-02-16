@@ -1,3 +1,4 @@
+import 'package:clock/clock.dart';
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_bloc/flame_bloc.dart';
@@ -46,7 +47,7 @@ final class PlayerMovingBehavior extends Behavior<Player>
       bloc.add(const GameInteractedEvent());
     }
 
-    final now = DateTime.now();
+    final now = clock.now();
 
     if (now.isBefore(_nextMoveTime)) {
       return;

@@ -68,7 +68,11 @@ class TrashyRoadGame extends FlameGame
 
     final blocProvider = FlameBlocProvider<GameBloc, GameState>(
       create: () => _gameBloc,
-      children: [trashyRoadWorld],
+      children: [
+        ZCanvasComponent(
+          children: [trashyRoadWorld],
+        ),
+      ],
     );
 
     world.add(blocProvider);

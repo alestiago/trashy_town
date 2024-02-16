@@ -78,11 +78,11 @@ class _GameStopwatchState extends State<GameStopwatch>
           listener: (_, __) => _reset(),
         ),
       ],
-      child: AnimatedBuilder(
-        animation: _animation,
-        builder: (_, __) => DefaultTextStyle(
-          style: style,
-          child: Text(_stopwatch.elapsed.format()),
+      child: DefaultTextStyle(
+        style: style,
+        child: AnimatedBuilder(
+          animation: _animation,
+          builder: (_, __) => Text(_stopwatch.elapsed.format()),
         ),
       ),
     );

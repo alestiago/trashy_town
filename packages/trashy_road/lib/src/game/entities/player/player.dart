@@ -11,7 +11,7 @@ import 'package:trashy_road/src/game/game.dart';
 
 export 'behaviors/behaviors.dart';
 
-class Player extends PositionedEntity {
+class Player extends PositionedEntity with ZIndex {
   Player({super.position})
       : super(
           behaviors: [
@@ -32,7 +32,11 @@ class Player extends PositionedEntity {
           children: [
             _PlayerSpriteComponent(),
           ],
-        );
+        ) {
+    // TODO(alestiago): We should actually update the `zIndex` of the player
+    // based on its position in the world.
+    zIndex = 1;
+  }
 
   @visibleForTesting
   Player.empty();

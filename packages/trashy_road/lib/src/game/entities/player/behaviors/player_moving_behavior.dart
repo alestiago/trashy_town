@@ -10,6 +10,12 @@ enum Direction { up, down, left, right }
 /// A behavior that allows the player to move around the game.
 final class PlayerMovingBehavior extends Behavior<Player>
     with FlameBlocReader<GameBloc, GameState> {
+  /// The delay between player moves.
+  static const _moveDelay = Duration(milliseconds: 100);
+
+  /// The lerp time for player movement.
+  static const _playerMoveAnimationSpeed = 15;
+
   /// The position the player is trying to move to.
   ///
   /// When its values are different than the current [Player.position]
@@ -18,12 +24,6 @@ final class PlayerMovingBehavior extends Behavior<Player>
 
   /// The position the player was at before the current [_targetPosition].
   final Vector2 _previousPosition = Vector2.zero();
-
-  /// The delay between player moves.
-  static const _moveDelay = Duration(milliseconds: 100);
-
-  /// The lerp time for player movement.
-  static const _playerMoveAnimationSpeed = 15;
 
   /// A int that contains the time when the next move can be made.
   DateTime _nextMoveTime = DateTime.fromMicrosecondsSinceEpoch(0);

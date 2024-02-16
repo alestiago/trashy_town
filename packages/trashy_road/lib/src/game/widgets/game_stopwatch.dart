@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 /// {@template GameStopwatch}
-/// A stopwatch that shows the total tile that has passed since the game
-/// started.
+/// A stopwatch that shows the total time the game has been played for.
 ///
 /// Requires a [GameBloc] to be provided within its widget tree.
 /// {@endtemplate}

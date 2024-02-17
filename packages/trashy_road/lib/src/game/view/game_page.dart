@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/loading/loading.dart';
+import 'package:trashy_road/src/maps/maps.dart';
 import 'package:trashy_road/src/pause/pause.dart';
 import 'package:trashy_road/src/score/view/view.dart';
 
@@ -56,6 +57,12 @@ class _GameView extends StatelessWidget {
     return BlocListener<GameBloc, GameState>(
       listenWhen: (previous, current) => current.status == GameStatus.completed,
       listener: (context, state) {
+        context.read<GameMapsBloc>().add(
+              GameMapCompletedEvent(
+                identifier: state.identifier,
+                score: state.score,
+              ),
+            );
         Navigator.pushReplacement(context, ScorePage.route());
       },
       child: Stack(

@@ -1,10 +1,9 @@
-import 'dart:typed_data';
-
 import 'package:flame/components.dart';
+import 'package:trashy_road/src/game/game.dart';
 
 abstract class GameSettings {
   /// The dimensions of the grid.
-  static final Vector2 gridDimensions = _ImmutableVector2(128, 64);
+  static final Vector2 gridDimensions = UnmodifiableVector2View(128, 64);
 }
 
 extension TrashyRoadVector on Vector2 {
@@ -24,11 +23,4 @@ extension TrashyRoadVector on Vector2 {
   ///
   /// Modifications are made to the object.
   void toGameSize() => multiply(GameSettings.gridDimensions);
-}
-
-class _ImmutableVector2 extends Vector2 {
-  _ImmutableVector2(double x, double y)
-      : super.fromFloat64List(
-          UnmodifiableFloat64ListView(Float64List.fromList([x, y])),
-        );
 }

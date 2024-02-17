@@ -4,7 +4,6 @@ import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:trashy_road/src/game/entities/barrel/barrel.dart';
 import 'package:trashy_road/src/game/game.dart';
-import 'package:trashy_road/src/game/model/map_bounds.dart';
 
 /// The different layers in the Tiled map.
 enum _TiledLayer {
@@ -47,7 +46,12 @@ class TrashyRoadWorld extends Component {
         tiled.tileMap.getObjectGroup(_TiledLayer.borderLayer.name);
     tiled.addAll(borderLayer.objects.map(MapEdge.fromTiledObject));
 
-    bounds = MapBounds(tiled.topLeftPosition, tiled.bottomLeftPosition);
+    bounds = MapBounds.fromLTWH(
+      tiled.topLeftPosition.x,
+      tiled.topLeftPosition.y,
+      tiled.width,
+      tiled.height,
+    );
   }
 
   final TiledComponent tiled;
@@ -73,8 +77,4 @@ extension on RenderableTiledMap {
     }
     return objectGroup;
   }
-}
-
-extension on TiledComponent {
-  Vector2 get bottomLeftPosition => topLeftPosition + Vector2(width, height);
 }

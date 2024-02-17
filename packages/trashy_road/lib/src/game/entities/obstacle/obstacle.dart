@@ -14,7 +14,7 @@ class Obstacle extends PositionedEntity with Untraversable {
           anchor: Anchor.bottomLeft,
           priority: position.y.floor(),
           behaviors: [
-            if (behaviors != null) ...behaviors,
+            ...?behaviors,
             PropagatingCollisionBehavior(
               RectangleHitbox(
                 anchor: Anchor.topCenter,

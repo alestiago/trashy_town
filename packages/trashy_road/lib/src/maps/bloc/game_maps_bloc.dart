@@ -27,14 +27,10 @@ class GameMapsBloc extends Bloc<GameMapsEvent, GameMapsState> {
 
     final firstTimeCompleted = currentMap.score == 0;
     if (firstTimeCompleted) {
-      final mapsList = state.maps.keys.toList();
-      final currentIndex = mapsList.indexOf(event.identifier);
-      final nextIndex = currentIndex + 1;
+      final nextMap = state.next(currentMap.identifier);
 
-      final isLastMap = nextIndex == mapsList.length;
+      final isLastMap = nextMap == null;
       if (!isLastMap) {
-        final nextMap = state.maps[mapsList[nextIndex]]!;
-
         newMaps ??= Map.from(state.maps);
         final updatedNextMap = nextMap.copyWith(locked: false);
         newMaps[nextMap.identifier] = updatedNextMap;

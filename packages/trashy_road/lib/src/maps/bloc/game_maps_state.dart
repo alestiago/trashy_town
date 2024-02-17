@@ -10,12 +10,14 @@ typedef GameMapsCollection = UnmodifiableMapView<String, GameMap>;
 /// The steps that dictate the rating of the map score.
 ///
 /// It expects three integers, where the first index is the minimum score
-/// (inclusive) required to achieve a bronze rating, the second index is the
-/// minimum score (inclusive) required to achieve a silver rating, and the third
-/// index is the minimum score (inclusive) required to achieve a gold rating.
+/// (inclusive) required to achieve a [ScoreRating.gold], the second index is
+/// the minimum score (inclusive) required to achieve a [ScoreRating.silver]
+/// rating, and the third index is the minimum score (inclusive) required to
+/// achieve a [ScoreRating.bronze]. Any score below the third index will achieve
+/// a rating of none.
 ///
 /// For example, if the player completes the map in 75 steps, and the score
-/// steps are [100, 50, 25], then the player will achieve a bronze score.
+/// steps are [25, 50, 100], then the player will achieve a bronze score.
 /// Whereas if the player completes the map in 25 steps, then the player will
 /// achieve a gold score.
 /// {@endtemplate}
@@ -33,14 +35,14 @@ class GameMapsState extends Equatable {
               identifier: 'map1',
               path: Assets.tiles.map1,
               score: 0,
-              ratingSteps: (100, 50, 25),
+              ratingSteps: (25, 50, 100),
               locked: false,
             ),
             'map2': GameMap._(
               identifier: 'map2',
               path: Assets.tiles.map2,
               score: 0,
-              ratingSteps: (100, 50, 25),
+              ratingSteps: (25, 50, 100),
               locked: true,
             ),
           },
@@ -92,9 +94,9 @@ enum ScoreRating {
     required int score,
     required RatingSteps steps,
   }) {
-    if (score >= steps.$3) return gold;
-    if (score >= steps.$2) return silver;
-    if (score >= steps.$1) return bronze;
+    if (score <= steps.$1) return gold;
+    if (score <= steps.$2) return silver;
+    if (score <= steps.$3) return bronze;
     return none;
   }
 

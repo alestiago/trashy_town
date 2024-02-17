@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/loading/loading.dart';
 import 'package:trashy_road/src/maps/maps.dart';
+import 'package:trashy_road/src/score/score.dart';
 
 class ScorePage extends StatelessWidget {
   const ScorePage({
@@ -39,16 +40,15 @@ class ScorePage extends StatelessWidget {
     final gameMapsBloc = context.read<GameMapsBloc>();
 
     final map = gameMapsBloc.state.maps[_identifier]!;
-
-    final score = map.score;
     final nextMap = gameMapsBloc.state.next(_identifier);
+    final scoreRating = map.scoreRating;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Score'),
       ),
       body: Center(
-        child: Text('Score: $score'),
+        child: AnimatedStarRating(rating: scoreRating.value),
       ),
       floatingActionButton: nextMap != null
           ? FloatingActionButton(

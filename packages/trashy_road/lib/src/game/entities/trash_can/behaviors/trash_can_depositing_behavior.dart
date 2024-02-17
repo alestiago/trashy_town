@@ -51,6 +51,7 @@ class TrashCanDepositingBehavior extends Behavior<TrashCan>
         .first
         ._updateText(_capacity);
     bloc.add(GameDepositedTrashEvent(item: parent.trashType));
+    parent.firstChild<SpriteAnimationComponent>()?.playing = true;
   }
 
   @override

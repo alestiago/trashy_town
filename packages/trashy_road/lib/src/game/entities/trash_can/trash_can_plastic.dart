@@ -13,7 +13,7 @@ class TrashCanPlastic extends TrashCan {
       : super(
           trashType: TrashType.plastic,
           children: [
-            _TrashPlasticSpriteComponent(),
+            _TrashCanPlasticSpriteComponent(),
           ],
         );
 
@@ -25,9 +25,14 @@ class TrashCanPlastic extends TrashCan {
   }
 }
 
-class _TrashPlasticSpriteComponent extends SpriteComponent
+class _TrashCanPlasticSpriteComponent extends SpriteAnimationComponent
     with HasGameReference {
-  _TrashPlasticSpriteComponent() : super();
+  _TrashCanPlasticSpriteComponent()
+      : super(
+          scale: Vector2.all(1.25),
+          position: Vector2(-0.1, -0.5)..toGameSize(),
+          playing: false,
+        );
 
   @override
   FutureOr<void> onLoad() async {
@@ -42,7 +47,26 @@ class _TrashPlasticSpriteComponent extends SpriteComponent
         opacityTo: 0.5,
       ),
     );
-    sprite =
-        await Sprite.load(Assets.images.trashCan.path, images: game.images);
+
+    final spriteSheet = await game.images.fetchOrGenerate(
+      Assets.images.trashCanOpening.path,
+      () => game.images.load(Assets.images.trashCanOpening.path),
+    );
+
+    animation = SpriteAnimation.fromFrameData(
+      spriteSheet,
+      SpriteAnimationData.sequenced(
+        amount: 20,
+        amountPerRow: 5,
+        textureSize: Vector2.all(128),
+        stepTime: 1 / 24,
+        loop: false,
+      ),
+    );
+
+    animationTicker!.onComplete = () {
+      playing = false;
+      animationTicker!.reset();
+    };
   }
 }

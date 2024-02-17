@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:collection';
+
 import 'package:flutter/widgets.dart';
 import 'package:rive/rive.dart';
 import 'package:trashy_road/gen/gen.dart';
@@ -25,41 +28,69 @@ class AnimatedStarRating extends StatefulWidget {
   State<AnimatedStarRating> createState() => _AnimatedStarRatingState();
 }
 
-class _AnimatedStarRatingState extends State<AnimatedStarRating> {
+class _AnimatedStarRatingState extends State<AnimatedStarRating>
+    with SingleTickerProviderStateMixin {
   late final _StarRatingController _controller;
-  late final SMINumber _rating;
+
+  late final _animationController = AnimationController(
+    vsync: this,
+    duration: Duration(seconds: widget._rating),
+  );
+
+  late final _animation = Tween<double>(
+    begin: 0,
+    end: widget._rating.toDouble(),
+  ).animate(
+    CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeOut,
+    ),
+  );
 
   void _onRiveInit(Artboard artboard) {
     _controller = _StarRatingController(artboard);
     artboard.addController(_controller);
-    _rating = _controller.findInput<double>('rating')! as SMINumber;
 
-    // TODO(alestiago): Increase incrementally every 200ms.
-    _rating.value = widget._rating.toDouble();
+    _animation.addListener(_onAnimationChanged);
+    _animationController.forward(from: 0);
+  }
+
+  void _onAnimationChanged() {
+    final currentStars = _controller.rating.value;
+    if (currentStars >= widget._rating) return;
+
+    final currentProgress = _animation.value;
+    final nextStars = currentStars + 1;
+    if (currentProgress >= nextStars) {
+      _controller.rating.value = nextStars;
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant AnimatedStarRating oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    _controller.rating.value = 0;
+    _animationController.forward(from: 0);
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => _rating.value += 1,
-      child: Assets.rive.ratingAnimation.rive(
-        onInit: _onRiveInit,
-      ),
-    );
+    return Assets.rive.ratingAnimation.rive(onInit: _onRiveInit);
   }
 }
 
 /// A [StateMachineController] for the star rating animation.
 class _StarRatingController extends StateMachineController {
-  _StarRatingController(
-    Artboard artboard,
-  ) : super(
+  _StarRatingController(Artboard artboard)
+      : super(
           artboard.animations.whereType<StateMachine>().firstWhere(
                 (stateMachine) => stateMachine.name == _stateMachineName,
               ),

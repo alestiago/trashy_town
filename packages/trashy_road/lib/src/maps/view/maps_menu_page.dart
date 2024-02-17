@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/src/maps/maps.dart';
-import 'package:trashy_road/src/score/widgets/animated_star_rating.dart';
 
 /// {@template MapsMenuPage}
 /// Shows the available maps to play.
@@ -28,12 +27,6 @@ class _MapsMenuView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: AnimatedStarRating(
-        rating: 2,
-      ),
-    );
-
     return Scaffold(
       appBar: AppBar(title: const Text('Maps')),
       body: BlocSelector<GameMapsBloc, GameMapsState, GameMapsCollection>(

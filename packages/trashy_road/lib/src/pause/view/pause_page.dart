@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trashy_road/src/maps/maps.dart';
 
 /// {@template PausePage}
 /// A page that displays the pause menu.
@@ -31,6 +32,12 @@ class PausePage extends StatelessWidget {
     }
   }
 
+  void _onMenu(BuildContext context) {
+    Navigator.of(context).popUntil(
+      (route) => route.settings.name == MapsMenuPage.identifier,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +50,15 @@ class PausePage extends StatelessWidget {
             color: Colors.white,
           ),
         ),
+      ),
+      bottomNavigationBar: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TextButton(
+            onPressed: () => _onMenu(context),
+            child: const Text('Menu'),
+          ),
+        ],
       ),
     );
   }

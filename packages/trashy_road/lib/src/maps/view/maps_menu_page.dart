@@ -12,8 +12,14 @@ class MapsMenuPage extends StatelessWidget {
   /// {@macro MapsMenuPage}
   const MapsMenuPage({super.key});
 
+  /// The identifier for the route.
+  static String identifier = 'maps_menu';
+
   static Route<void> route() {
-    return MaterialPageRoute<void>(builder: (_) => const MapsMenuPage());
+    return MaterialPageRoute<void>(
+      settings: RouteSettings(name: identifier),
+      builder: (_) => const MapsMenuPage(),
+    );
   }
 
   @override

@@ -98,6 +98,10 @@ class _GameView extends StatelessWidget {
                   gameBloc.add(const GameResumedEvent());
                   return true;
                 },
+                onReplay: () {
+                  gameBloc.add(const GameResetEvent());
+                  return true;
+                },
               ),
             ),
           ),

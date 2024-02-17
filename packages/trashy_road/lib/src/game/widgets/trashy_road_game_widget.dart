@@ -42,9 +42,7 @@ class _TrashyRoadGameWidgetState extends State<TrashyRoadGameWidget> {
 
     return BlocListener<GameBloc, GameState>(
       listenWhen: (previous, current) {
-        final hasLost = previous.status == GameStatus.playing &&
-            current.status == GameStatus.resetting;
-        return hasLost;
+        return current.status == GameStatus.resetting;
       },
       listener: (context, state) {
         if (!mounted) return;

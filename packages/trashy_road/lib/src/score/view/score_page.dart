@@ -41,6 +41,21 @@ class ScorePage extends StatelessWidget {
     );
   }
 
+  void _onReplay(BuildContext context) {
+    final gameMapsBloc = context.read<GameMapsBloc>();
+    final preloadCubit = context.read<PreloadCubit>();
+
+    final map = gameMapsBloc.state.maps[_identifier]!;
+    final tiledMap = preloadCubit.tiled.fromCache(map.path);
+
+    Navigator.of(context).pushReplacement(
+      GamePage.route(
+        identifier: map.identifier,
+        tiledMap: tiledMap,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final gameMapsBloc = context.read<GameMapsBloc>();
@@ -65,6 +80,10 @@ class ScorePage extends StatelessWidget {
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          TextButton(
+            onPressed: () => _onReplay(context),
+            child: const Text('Replay'),
+          ),
           TextButton(
             onPressed: () => _onMenu(context),
             child: const Text('Menu'),

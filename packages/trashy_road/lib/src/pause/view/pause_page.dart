@@ -8,26 +8,45 @@ class PausePage extends StatelessWidget {
   /// {@macro PausePage}
   const PausePage({
     required this.onResume,
+    required this.onReplay,
     super.key,
   });
 
   static Route<void> route({
     required bool Function() onResume,
+    required bool Function() onReplay,
   }) {
     return PageRouteBuilder(
       opaque: false,
-      pageBuilder: (_, __, ___) => PausePage(onResume: onResume),
+      pageBuilder: (_, __, ___) => PausePage(
+        onResume: onResume,
+        onReplay: onReplay,
+      ),
     );
   }
 
+  /// {@template PausePage.onResume}
   /// A callback that is called when the game is resumed.
   ///
-  /// If it returns `true`, the game will be resumed. Otherwise, the game will
-  /// remain paused.
+  /// If it returns `true`, the [PausePage] will be popped.
+  /// {@endtemplate}
   final bool Function() onResume;
+
+  /// {@template PausePage.onReplay}
+  /// A callback that is called when the game is replayed.
+  ///
+  /// If it returns `true`, the [PausePage] will be popped.
+  /// {@endtemplate}
+  final bool Function() onReplay;
 
   void _onResume(BuildContext context) {
     if (onResume()) {
+      Navigator.of(context).pop();
+    }
+  }
+
+  void _onReplay(BuildContext context) {
+    if (onReplay()) {
       Navigator.of(context).pop();
     }
   }
@@ -54,6 +73,10 @@ class PausePage extends StatelessWidget {
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          TextButton(
+            onPressed: () => _onReplay(context),
+            child: const Text('Replay'),
+          ),
           TextButton(
             onPressed: () => _onMenu(context),
             child: const Text('Menu'),

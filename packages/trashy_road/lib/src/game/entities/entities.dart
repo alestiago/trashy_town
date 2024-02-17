@@ -11,5 +11,4 @@ export 'trash/trash_plastic.dart';
 export 'trash_can/trash_can.dart';
 export 'trash_can/trash_can_glass.dart';
 export 'trash_can/trash_can_plastic.dart';
-export 'untraversable_entity/untraversable_entity.dart';
 export 'vehicle/vehicle.dart';

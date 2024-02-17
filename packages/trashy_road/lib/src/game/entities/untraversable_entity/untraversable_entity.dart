@@ -1,14 +1,6 @@
-import 'package:flame_behaviors/flame_behaviors.dart';
-import 'package:trashy_road/src/game/game.dart';
+import 'package:flame/components.dart';
 
-/// An entity that cannot be traversed by other the [Player].
-abstract class UntraversableEntity extends PositionedEntity {
-  UntraversableEntity({
-    super.size,
-    super.position,
-    super.children,
-    super.anchor,
-    super.priority,
-    super.behaviors,
-  });
-}
+/// Marks a component as untraversable.
+///
+/// Untraversable components are not traversable by the `Player`.
+mixin Untraversable on PositionComponent {}

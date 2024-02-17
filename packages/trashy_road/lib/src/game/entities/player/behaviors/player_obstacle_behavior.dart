@@ -4,12 +4,11 @@ import 'package:trashy_road/src/game/game.dart';
 
 /// Communicates to the [PlayerKeyboardMovingBehavior] that the player
 /// has collided with an [Obstacle].
-class PlayerObstacleBehavior
-    extends CollisionBehavior<UntraversableEntity, Player> {
+class PlayerObstacleBehavior extends CollisionBehavior<Untraversable, Player> {
   @override
   void onCollisionStart(
     Set<Vector2> intersectionPoints,
-    UntraversableEntity other,
+    Untraversable other,
   ) {
     super.onCollisionStart(intersectionPoints, other);
     parent.findBehavior<PlayerMovingBehavior>().bounceBack();

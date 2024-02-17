@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:collection';
-
 import 'package:flutter/widgets.dart';
 import 'package:rive/rive.dart';
 import 'package:trashy_road/gen/gen.dart';

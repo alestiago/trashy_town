@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
-import 'package:trashy_road/src/game/entities/barrel/barrel.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/game/model/map_bounds.dart';
 
@@ -22,77 +21,35 @@ enum _TiledLayer {
 
 class TrashyRoadWorld extends Component {
   TrashyRoadWorld.create({required this.tiled}) {
-    final trashGroup = tiled.tileMap.getLayer<ObjectGroup>(
-      _TiledLayer.trashLayer.name,
-    );
-    for (final tiledObject in trashGroup!.objects) {
-      tiled.add(Trash.fromTiledObject(tiledObject));
-    }
+    final trashLayer =
+        tiled.tileMap.getObjectGroup(_TiledLayer.trashLayer.name);
+    tiled.addAll(trashLayer.objects.map(Trash.fromTiledObject));
 
-    for (final object in tiled.tileMap
-        .getLayer<ObjectGroup>(_TiledLayer.coreItemsLayer.name)!
-        .objects) {
-      switch (object.type) {
-        case 'player':
-          tiled.add(Player.fromTiledObject(object));
-        case 'trash_can':
-          tiled.add(TrashCan.fromTiledObject(object));
-          finishPosition = Vector2(object.x, object.y);
-        default:
-      }
-    }
+    final coreItemsLayer =
+        tiled.tileMap.getObjectGroup(_TiledLayer.coreItemsLayer.name);
+    final playerObjects =
+        coreItemsLayer.objects.where((object) => object.type == 'player');
+    tiled.addAll(playerObjects.map(Player.fromTiledObject));
+    final trashCanObjects =
+        coreItemsLayer.objects.where((object) => object.type == 'trash_can');
+    tiled.addAll(trashCanObjects.map(TrashCan.fromTiledObject));
 
     final roadLaneLayer =
-        tiled.tileMap.getLayer<ObjectGroup>(_TiledLayer.roadLayer.name);
-    if (roadLaneLayer == null) {
-      throw ArgumentError.value(
-        _TiledLayer.roadLayer.name,
-        'layer',
-        '''The Tiled map must have a layer named "${_TiledLayer.roadLayer.name}".''',
-      );
-    }
-    final roadLaneObjects = roadLaneLayer.objects;
-    for (final object in roadLaneObjects) {
-      final roadLane = RoadLane.fromTiledObject(object);
-      tiled.add(roadLane);
-    }
+        tiled.tileMap.getObjectGroup(_TiledLayer.roadLayer.name);
+    tiled.addAll(roadLaneLayer.objects.map(RoadLane.fromTiledObject));
 
     final obstaclesLayer =
-        tiled.tileMap.getLayer<ObjectGroup>(_TiledLayer.obstacles.name);
-    if (obstaclesLayer == null) {
-      throw ArgumentError.value(
-        _TiledLayer.obstacles.name,
-        'layer',
-        '''The Tiled map must have a layer named "${_TiledLayer.obstacles.name}".''',
-      );
-    }
-    final obstacles = obstaclesLayer.objects;
-    for (final object in obstacles) {
-      final obstacle = Barrel.fromTiledObject(object);
-      tiled.add(obstacle);
-    }
+        tiled.tileMap.getObjectGroup(_TiledLayer.obstacles.name);
+    tiled.addAll(obstaclesLayer.objects.map(MapEdge.fromTiledObject));
 
-    final border =
-        tiled.tileMap.getLayer<ObjectGroup>(_TiledLayer.borderLayer.name);
+    final borderLayer =
+        tiled.tileMap.getObjectGroup(_TiledLayer.borderLayer.name);
+    tiled.addAll(borderLayer.objects.map(MapEdge.fromTiledObject));
 
-    if (border == null) {
-      throw ArgumentError.value(
-        _TiledLayer.borderLayer.name,
-        'layer',
-        '''The Tiled map must have a layer named "${_TiledLayer.borderLayer.name}".''',
-      );
-    }
-    final borders = border.objects;
-    tiled.addAll(borders.map(MapEdge.fromTiledObject));
-
-    final bottomRightPosition =
-        tiled.topLeftPosition + Vector2(tiled.width, tiled.height);
-    bounds = MapBounds(tiled.topLeftPosition, bottomRightPosition);
+    bounds = MapBounds(tiled.topLeftPosition, tiled.bottomLeftPosition);
   }
 
   final TiledComponent tiled;
-
-  late Vector2 finishPosition;
 
   late MapBounds bounds;
 
@@ -101,4 +58,22 @@ class TrashyRoadWorld extends Component {
     await super.onLoad();
     add(tiled);
   }
+}
+
+extension on RenderableTiledMap {
+  ObjectGroup getObjectGroup(String name) {
+    final objectGroup = getLayer<ObjectGroup>(name);
+    if (objectGroup == null) {
+      throw ArgumentError.value(
+        name,
+        'layer',
+        '''The Tiled map must have a layer named "$name".''',
+      );
+    }
+    return objectGroup;
+  }
+}
+
+extension on TiledComponent {
+  Vector2 get bottomLeftPosition => topLeftPosition + Vector2(width, height);
 }

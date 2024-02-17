@@ -35,6 +35,12 @@ class ScorePage extends StatelessWidget {
     );
   }
 
+  void _onMenu(BuildContext context) {
+    Navigator.of(context).popUntil(
+      (route) => route.settings.name == MapsMenuPage.identifier,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final gameMapsBloc = context.read<GameMapsBloc>();
@@ -56,6 +62,15 @@ class ScorePage extends StatelessWidget {
               child: const Icon(Icons.play_arrow),
             )
           : null,
+      bottomNavigationBar: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TextButton(
+            onPressed: () => _onMenu(context),
+            child: const Text('Menu'),
+          ),
+        ],
+      ),
     );
   }
 }

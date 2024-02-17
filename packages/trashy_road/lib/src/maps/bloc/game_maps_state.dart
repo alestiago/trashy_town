@@ -34,14 +34,14 @@ class GameMapsState extends Equatable {
             'map1': GameMap._(
               identifier: 'map1',
               path: Assets.tiles.map1,
-              score: 0,
+              score: -1,
               ratingSteps: (25, 50, 100),
               locked: false,
             ),
             'map2': GameMap._(
               identifier: 'map2',
               path: Assets.tiles.map2,
-              score: 0,
+              score: -1,
               ratingSteps: (25, 50, 100),
               locked: true,
             ),
@@ -94,6 +94,7 @@ enum ScoreRating {
     required int score,
     required RatingSteps steps,
   }) {
+    if (score < 0) return none;
     if (score <= steps.$1) return gold;
     if (score <= steps.$2) return silver;
     if (score <= steps.$3) return bronze;
@@ -130,7 +131,7 @@ class GameMap extends Equatable {
 
   /// The score the player has achieved on this map.
   ///
-  /// A score of 0 means the map has not been played yet.
+  /// A score of -1 means the map has not been played yet.
   final int score;
 
   /// {@macro RatingSteps}

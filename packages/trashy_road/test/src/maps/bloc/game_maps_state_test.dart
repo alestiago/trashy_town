@@ -37,6 +37,14 @@ void main() {
           expect(rating, ScoreRating.none);
         },
       );
+
+      test(
+        '''returns ScoreRating.none when score is less than 0''',
+        () {
+          final rating = ScoreRating.fromSteps(score: -1, steps: (1, 2, 3));
+          expect(rating, ScoreRating.none);
+        },
+      );
     });
   });
 }

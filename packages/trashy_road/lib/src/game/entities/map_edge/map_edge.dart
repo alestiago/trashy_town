@@ -9,7 +9,7 @@ import 'package:trashy_road/src/game/game.dart';
 /// An untraversable rectangle.
 ///
 /// There are usually four [MapEdge]s in a map, one for each side. They delimit
-/// the area where the [Player] can move around.
+/// the area where the [Player] can moves around.
 ///
 /// Visually, it adds a semi-transparent black rectangle to the map. Which makes
 /// it easier to see the boundaries of the map, since it makes those tiles

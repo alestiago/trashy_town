@@ -21,6 +21,9 @@ class VehicleSpawningBehavior extends Behavior<RoadLane>
   /// distance between cars.
   static const _minTrafficVariation = 0.8;
 
+  /// Removes the need to create a new instance of [Vector2] every frame.
+  final Vector2 _vector2Cache = Vector2.zero();
+
   @override
   FutureOr<void> onLoad() async {
     await super.onLoad();
@@ -50,8 +53,10 @@ class VehicleSpawningBehavior extends Behavior<RoadLane>
 
     final vehicles = parent.children.whereType<Vehicle>();
     for (final vehicle in vehicles) {
-      final isWithinBound =
-          bounds.isPointInside(parent.position + vehicle.position);
+      _vector2Cache
+        ..setFrom(parent.position)
+        ..add(vehicle.position);
+      final isWithinBound = bounds.isPointInside(_vector2Cache);
       if (!isWithinBound) {
         vehicle.position.setAll(0);
       }

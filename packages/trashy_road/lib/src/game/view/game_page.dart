@@ -89,14 +89,21 @@ class _GameView extends StatelessWidget {
             alignment: Alignment.topRight,
             child: Padding(
               padding: const EdgeInsets.all(8),
-              child: PauseButton(
-                onPause: () {
-                  gameBloc.add(const GamePausedEvent());
-                  return true;
+              child: BlocBuilder<GameBloc, GameState>(
+                buildWhen: (previous, current) {
+                  return current.status == GameStatus.playing;
                 },
-                onResume: () {
-                  gameBloc.add(const GameResumedEvent());
-                  return true;
+                builder: (context, state) {
+                  return PauseButton(
+                    onPause: () {
+                      gameBloc.add(const GamePausedEvent());
+                      return true;
+                    },
+                    onResume: () {
+                      gameBloc.add(const GameResumedEvent());
+                      return true;
+                    },
+                  );
                 },
               ),
             ),

@@ -424,6 +424,38 @@ void main() {
           ),
         ],
       );
+
+      blocTest<GameBloc, GameState>(
+        'resumes the game when the user was previously paused and not started',
+        build: () {
+          return withClock<GameBloc>(
+            _IncremetalClock(
+              initialTime: DateTime(0),
+              increment: const Duration(seconds: 1),
+            ),
+            () => GameBloc(identifier: identifier, map: map),
+          );
+        },
+        act: (bloc) => bloc
+          ..add(const GamePausedEvent())
+          ..add(const GameResumedEvent()),
+        expect: () => [
+          GameState(
+            identifier: identifier,
+            map: map,
+            status: GameStatus.paused,
+            inventory: Inventory.empty(),
+            pausedAt: DateTime(0),
+          ),
+          GameState(
+            identifier: identifier,
+            map: map,
+            status: GameStatus.ready,
+            inventory: Inventory.empty(),
+            pausedDuration: const Duration(seconds: 1),
+          ),
+        ],
+      );
     });
 
     group('$GameResetEvent', () {

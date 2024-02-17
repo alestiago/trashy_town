@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 
 class ScorePage extends StatelessWidget {
-  const ScorePage({super.key});
+  const ScorePage({
+    required int score,
+    super.key,
+  }) : _score = score;
 
-  static Route<void> route() {
-    return MaterialPageRoute<void>(builder: (_) => const ScorePage());
+  final int _score;
+
+  static Route<void> route({
+    required int score,
+  }) {
+    return MaterialPageRoute<void>(
+      builder: (_) => ScorePage(score: score),
+    );
   }
 
   @override
@@ -13,8 +22,8 @@ class ScorePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Score'),
       ),
-      body: const Center(
-        child: Text('Score Page'),
+      body: Center(
+        child: Text('Score: $_score'),
       ),
     );
   }

@@ -8,17 +8,26 @@ import 'package:trashy_road/src/score/view/view.dart';
 
 class GamePage extends StatelessWidget {
   const GamePage({
+    required String identifier,
     required TiledMap map,
     super.key,
-  }) : _map = map;
+  })  : _map = map,
+        _identifier = identifier;
 
   static Route<void> route({
+    required String identifier,
     required TiledMap tiledMap,
   }) {
     return MaterialPageRoute<void>(
-      builder: (_) => GamePage(map: tiledMap),
+      builder: (_) => GamePage(
+        identifier: identifier,
+        map: tiledMap,
+      ),
     );
   }
+
+  /// The identifier of the game.
+  final String _identifier;
 
   /// The map to play.
   ///
@@ -28,7 +37,10 @@ class GamePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GameBloc(map: _map),
+      create: (context) => GameBloc(
+        identifier: _identifier,
+        map: _map,
+      ),
       child: const _GameView(),
     );
   }

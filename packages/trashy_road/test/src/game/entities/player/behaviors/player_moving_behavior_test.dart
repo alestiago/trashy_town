@@ -56,7 +56,10 @@ void main() {
       final map = _MockTiledMap();
       when(() => map.layerByName('TrashLayer')).thenReturn(objectGroup);
 
-      gameBloc = GameBloc(map: map);
+      gameBloc = GameBloc(
+        identifier: 'identifier',
+        map: map,
+      );
       game = _TestGame(gameBloc: gameBloc);
     });
 

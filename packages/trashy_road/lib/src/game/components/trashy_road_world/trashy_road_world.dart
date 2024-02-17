@@ -4,7 +4,6 @@ import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:trashy_road/src/game/entities/barrel/barrel.dart';
 import 'package:trashy_road/src/game/game.dart';
-import 'package:trashy_road/src/game/models/map_bounds.dart';
 
 /// The different layers in the Tiled map.
 enum _TiledLayer {

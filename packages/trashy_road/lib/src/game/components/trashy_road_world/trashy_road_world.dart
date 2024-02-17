@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:trashy_road/src/game/entities/barrel/barrel.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/game/model/map_bounds.dart';
 
@@ -40,7 +41,7 @@ class TrashyRoadWorld extends Component {
 
     final obstaclesLayer =
         tiled.tileMap.getObjectGroup(_TiledLayer.obstacles.name);
-    tiled.addAll(obstaclesLayer.objects.map(MapEdge.fromTiledObject));
+    tiled.addAll(obstaclesLayer.objects.map(Barrel.fromTiledObject));
 
     final borderLayer =
         tiled.tileMap.getObjectGroup(_TiledLayer.borderLayer.name);

@@ -56,11 +56,26 @@ class GameMapTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(_map.identifier),
-              if (!_map.locked) Text(_map.score.toString()),
+              if (!_map.locked) Text(_starText(_map.scoreRating.value)),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+String _starText(int stars) {
+  final buffer = StringBuffer();
+
+  const emptyStar = '☆';
+  const fullStar = '★';
+
+  for (var i = 0; i < stars; i++) {
+    buffer.write(fullStar);
+  }
+  for (var i = stars; i < 3; i++) {
+    buffer.write(emptyStar);
+  }
+  return buffer.toString();
 }

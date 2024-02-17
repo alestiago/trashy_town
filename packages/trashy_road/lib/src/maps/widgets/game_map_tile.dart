@@ -51,7 +51,15 @@ class GameMapTile extends StatelessWidget {
               : CupertinoColors.systemGreen,
           border: Border.all(),
         ),
-        child: Center(child: Text(_map.identifier)),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(_map.identifier),
+              if (!_map.locked) Text(_map.score.toString()),
+            ],
+          ),
+        ),
       ),
     );
   }

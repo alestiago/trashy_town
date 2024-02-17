@@ -8,6 +8,7 @@
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
 import 'package:flutter/widgets.dart';
+import 'package:rive/rive.dart';
 
 class $AssetsImagesGen {
   const $AssetsImagesGen();
@@ -70,6 +71,17 @@ class $AssetsImagesGen {
       ];
 }
 
+class $AssetsRiveGen {
+  const $AssetsRiveGen();
+
+  /// File path: assets/rive/rating_animation.riv
+  RiveGenImage get ratingAnimation =>
+      const RiveGenImage('assets/rive/rating_animation.riv');
+
+  /// List of all assets
+  List<RiveGenImage> get values => [ratingAnimation];
+}
+
 class $AssetsTilesGen {
   const $AssetsTilesGen();
 
@@ -78,12 +90,6 @@ class $AssetsTilesGen {
 
   /// File path: assets/tiles/barrel.tx
   String get barrel => 'assets/tiles/barrel.tx';
-
-  /// File path: assets/tiles/finish.tx
-  String get finish => 'assets/tiles/finish.tx';
-
-  /// File path: assets/tiles/map.tmx
-  String get map => 'assets/tiles/map.tmx';
 
   /// File path: assets/tiles/map1.tmx
   String get map1 => 'assets/tiles/map1.tmx';
@@ -97,6 +103,12 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/spawn.tx
   String get spawn => 'assets/tiles/spawn.tx';
 
+  /// File path: assets/tiles/trash_can_glass.tx
+  String get trashCanGlass => 'assets/tiles/trash_can_glass.tx';
+
+  /// File path: assets/tiles/trash_can_plastic.tx
+  String get trashCanPlastic => 'assets/tiles/trash_can_plastic.tx';
+
   /// File path: assets/tiles/trash_glass.tx
   String get trashGlass => 'assets/tiles/trash_glass.tx';
 
@@ -107,12 +119,12 @@ class $AssetsTilesGen {
   List<String> get values => [
         tiles,
         barrel,
-        finish,
-        map,
         map1,
         map2,
         roadLane,
         spawn,
+        trashCanGlass,
+        trashCanPlastic,
         trashGlass,
         trashPlastic
       ];
@@ -122,6 +134,7 @@ class Assets {
   Assets._();
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsRiveGen rive = $AssetsRiveGen();
   static const $AssetsTilesGen tiles = $AssetsTilesGen();
   static const String trashyRoadTiledProject =
       'assets/trashy_road.tiled-project';
@@ -199,6 +212,41 @@ class AssetGenImage {
       _assetName,
       bundle: bundle,
       package: package,
+    );
+  }
+
+  String get path => _assetName;
+
+  String get keyName => _assetName;
+}
+
+class RiveGenImage {
+  const RiveGenImage(this._assetName);
+
+  final String _assetName;
+
+  RiveAnimation rive({
+    String? artboard,
+    List<String> animations = const [],
+    List<String> stateMachines = const [],
+    BoxFit? fit,
+    Alignment? alignment,
+    Widget? placeHolder,
+    bool antialiasing = true,
+    List<RiveAnimationController> controllers = const [],
+    OnInitCallback? onInit,
+  }) {
+    return RiveAnimation.asset(
+      _assetName,
+      artboard: artboard,
+      animations: animations,
+      stateMachines: stateMachines,
+      fit: fit,
+      alignment: alignment,
+      placeHolder: placeHolder,
+      antialiasing: antialiasing,
+      controllers: controllers,
+      onInit: onInit,
     );
   }
 

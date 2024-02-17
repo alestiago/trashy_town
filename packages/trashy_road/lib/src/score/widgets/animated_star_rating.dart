@@ -31,7 +31,7 @@ class _AnimatedStarRatingState extends State<AnimatedStarRating>
 
   late final _animationController = AnimationController(
     vsync: this,
-    duration: Duration(seconds: widget._rating),
+    duration: Duration(milliseconds: widget._rating * 400),
   );
 
   late final _animation = Tween<double>(

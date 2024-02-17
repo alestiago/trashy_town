@@ -94,6 +94,10 @@ class _GameView extends StatelessWidget {
                   return current.status == GameStatus.playing;
                 },
                 builder: (context, state) {
+                  if (state.status != GameStatus.playing) {
+                    return const SizedBox.shrink();
+                  }
+
                   return PauseButton(
                     onPause: () {
                       gameBloc.add(const GamePausedEvent());

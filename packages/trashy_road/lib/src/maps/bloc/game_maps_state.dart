@@ -31,6 +31,20 @@ class GameMapsState extends Equatable {
 
   final GameMapsCollection maps;
 
+  /// Returns the next map in the collection.
+  ///
+  /// If there are no more maps, it will return `null`.
+  GameMap? next(String identifier) {
+    final mapsList = maps.keys.toList();
+    final currentIndex = mapsList.indexOf(identifier);
+    final nextIndex = currentIndex + 1;
+
+    final isLastMap = nextIndex == mapsList.length;
+    if (isLastMap) return null;
+
+    return maps[mapsList[nextIndex]];
+  }
+
   GameMapsState copyWith({
     Map<String, GameMap>? maps,
   }) {

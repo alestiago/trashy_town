@@ -65,7 +65,7 @@ class _GameView extends StatelessWidget {
             );
         Navigator.pushReplacement(
           context,
-          ScorePage.route(score: state.score),
+          ScorePage.route(identifier: state.identifier),
         );
       },
       child: Stack(

@@ -16,7 +16,7 @@ void main() {
         '''returns ScoreRating.silver when score is greater or equal than the first step '''
         'and less than the second step',
         () {
-          final rating = ScoreRating.fromSteps(score: 1, steps: (1, 2, 3));
+          final rating = ScoreRating.fromSteps(score: 2, steps: (1, 2, 3));
           expect(rating, ScoreRating.silver);
         },
       );
@@ -25,7 +25,7 @@ void main() {
         '''returns ScoreRating.bronze when score is greater or equal than the second step '''
         'and less than the third step',
         () {
-          final rating = ScoreRating.fromSteps(score: 2, steps: (1, 2, 3));
+          final rating = ScoreRating.fromSteps(score: 3, steps: (1, 2, 3));
           expect(rating, ScoreRating.bronze);
         },
       );
@@ -33,7 +33,7 @@ void main() {
       test(
         '''returns ScoreRating.none when score is greater or equal than the third step''',
         () {
-          final rating = ScoreRating.fromSteps(score: 3, steps: (1, 2, 3));
+          final rating = ScoreRating.fromSteps(score: 4, steps: (1, 2, 3));
           expect(rating, ScoreRating.none);
         },
       );

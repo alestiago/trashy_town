@@ -1,7 +1,7 @@
 export 'behaviors/behaviors.dart';
 export 'bus/bus.dart';
 export 'car/car.dart';
-export 'map_border/map_border.dart';
+export 'map_edge/map_edge.dart';
 export 'obstacle/obstacle.dart';
 export 'player/player.dart';
 export 'road_lane/road_lane.dart';
@@ -11,4 +11,5 @@ export 'trash/trash_plastic.dart';
 export 'trash_can/trash_can.dart';
 export 'trash_can/trash_can_glass.dart';
 export 'trash_can/trash_can_plastic.dart';
+export 'untraversable_entity/untraversable_entity.dart';
 export 'vehicle/vehicle.dart';

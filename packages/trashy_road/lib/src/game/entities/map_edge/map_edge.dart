@@ -9,15 +9,15 @@ import 'package:trashy_road/src/game/game.dart';
 /// A border around the map.
 ///
 /// Blocks the [Player] from leaving the map.
-class MapBorder extends PositionedEntity {
-  /// Derives a [MapBorder] from a [TiledObject].
-  factory MapBorder.fromTiledObject(TiledObject tiledObject) {
-    return MapBorder._(
+class MapEdge extends UntraversableEntity {
+  /// Derives a [MapEdge] from a [TiledObject].
+  factory MapEdge.fromTiledObject(TiledObject tiledObject) {
+    return MapEdge._(
       position: Vector2(tiledObject.x, tiledObject.y),
       size: Vector2(tiledObject.width, tiledObject.height),
     );
   }
-  MapBorder._({required super.position, required super.size})
+  MapEdge._({required super.position, required super.size})
       : super(
           anchor: Anchor.topLeft,
         ) {

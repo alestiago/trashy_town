@@ -23,8 +23,7 @@ class Player extends PositionedEntity with ZIndex {
             ),
             PlayerCollectingTrashBehavior(),
             PlayerDepositingTrashBehavior(),
-            PlayerObstacleBehavior<Obstacle>(),
-            PlayerObstacleBehavior<MapBorder>(),
+            PlayerObstacleBehavior(),
             PausingBehavior<Player>(
               selector: (player) =>
                   player.findBehaviors<PlayerKeyboardMovingBehavior>(),

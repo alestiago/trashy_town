@@ -2,8 +2,9 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:trashy_road/game_settings.dart';
+import 'package:trashy_road/src/game/game.dart';
 
-class Obstacle extends PositionedEntity {
+class Obstacle extends UntraversableEntity {
   Obstacle({
     required Vector2 super.size,
     required Vector2 super.position,

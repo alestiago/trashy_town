@@ -3,22 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/loading/loading.dart';
+import 'package:trashy_road/src/maps/maps.dart';
 import 'package:trashy_road/src/pause/pause.dart';
 import 'package:trashy_road/src/score/view/view.dart';
 
 class GamePage extends StatelessWidget {
   const GamePage({
+    required String identifier,
     required TiledMap map,
     super.key,
-  }) : _map = map;
+  })  : _map = map,
+        _identifier = identifier;
 
   static Route<void> route({
+    required String identifier,
     required TiledMap tiledMap,
   }) {
     return MaterialPageRoute<void>(
-      builder: (_) => GamePage(map: tiledMap),
+      builder: (_) => GamePage(
+        identifier: identifier,
+        map: tiledMap,
+      ),
     );
   }
+
+  /// The identifier of the game.
+  final String _identifier;
 
   /// The map to play.
   ///
@@ -28,7 +38,10 @@ class GamePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GameBloc(map: _map),
+      create: (context) => GameBloc(
+        identifier: _identifier,
+        map: _map,
+      ),
       child: const _GameView(),
     );
   }
@@ -44,7 +57,16 @@ class _GameView extends StatelessWidget {
     return BlocListener<GameBloc, GameState>(
       listenWhen: (previous, current) => current.status == GameStatus.completed,
       listener: (context, state) {
-        Navigator.pushReplacement(context, ScorePage.route());
+        context.read<GameMapsBloc>().add(
+              GameMapCompletedEvent(
+                identifier: state.identifier,
+                score: state.score,
+              ),
+            );
+        Navigator.pushReplacement(
+          context,
+          ScorePage.route(identifier: state.identifier),
+        );
       },
       child: Stack(
         children: [
@@ -67,14 +89,25 @@ class _GameView extends StatelessWidget {
             alignment: Alignment.topRight,
             child: Padding(
               padding: const EdgeInsets.all(8),
-              child: PauseButton(
-                onPause: () {
-                  gameBloc.add(const GamePausedEvent());
-                  return true;
+              child: BlocBuilder<GameBloc, GameState>(
+                buildWhen: (previous, current) {
+                  return current.status == GameStatus.playing;
                 },
-                onResume: () {
-                  gameBloc.add(const GameResumedEvent());
-                  return true;
+                builder: (context, state) {
+                  if (state.status != GameStatus.playing) {
+                    return const SizedBox.shrink();
+                  }
+
+                  return PauseButton(
+                    onPause: () {
+                      gameBloc.add(const GamePausedEvent());
+                      return true;
+                    },
+                    onResume: () {
+                      gameBloc.add(const GameResumedEvent());
+                      return true;
+                    },
+                  );
                 },
               ),
             ),

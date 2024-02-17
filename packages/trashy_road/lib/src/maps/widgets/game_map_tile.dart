@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/src/game/view/view.dart';
 import 'package:trashy_road/src/loading/loading.dart';
+import 'package:trashy_road/src/maps/bloc/game_maps_bloc.dart';
 import 'package:trashy_road/src/maps/maps.dart';
 
 /// {@template GameMapTile}
@@ -16,40 +17,27 @@ import 'package:trashy_road/src/maps/maps.dart';
 class GameMapTile extends StatelessWidget {
   /// {@macro GameMapTile}
   const GameMapTile({
-    required String title,
-    required bool locked,
-    required String path,
+    required GameMap map,
     super.key,
-  })  : _title = title,
-        _locked = locked,
-        _path = path;
-
-  factory GameMapTile.fromGameMap(GameMap gameMap) {
-    return GameMapTile(
-      title: gameMap.identifier,
-      locked: gameMap.locked,
-      path: gameMap.path,
-    );
-  }
+  }) : _map = map;
 
   /// The title to display on the tile.
   ///
   /// This is usually the map's identifier.
-  final String _title;
-
-  /// Whether the map is locked or not.
-  final bool _locked;
-
-  /// The path to the map file.
-  final String _path;
+  final GameMap _map;
 
   void _onTap(BuildContext context) {
-    if (_locked) return;
+    if (_map.locked) return;
 
     final preloadCubit = context.read<PreloadCubit>();
-    final tiledMap = preloadCubit.tiled.fromCache(_path);
+    final tiledMap = preloadCubit.tiled.fromCache(_map.path);
 
-    Navigator.of(context).push(GamePage.route(tiledMap: tiledMap));
+    Navigator.of(context).push(
+      GamePage.route(
+        identifier: _map.identifier,
+        tiledMap: tiledMap,
+      ),
+    );
   }
 
   @override
@@ -58,12 +46,20 @@ class GameMapTile extends StatelessWidget {
       onTap: () => _onTap(context),
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: _locked
+          color: _map.locked
               ? CupertinoColors.systemGrey
               : CupertinoColors.systemGreen,
           border: Border.all(),
         ),
-        child: Center(child: Text(_title)),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(_map.identifier),
+              if (!_map.locked) Text(_map.score.toString()),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -11,7 +11,10 @@ part 'game_event.dart';
 part 'game_state.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
-  GameBloc({required TiledMap map}) : super(GameState.initial(map: map)) {
+  GameBloc({
+    required String identifier,
+    required TiledMap map,
+  }) : super(GameState.initial(identifier: identifier, map: map)) {
     on<GameReadyEvent>(_onGameReady);
     on<GameInteractedEvent>(_onGameInteraction);
     on<GameCollectedTrashEvent>(_onCollectedTrash);
@@ -90,7 +93,10 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     Emitter<GameState> emit,
   ) {
     emit(
-      GameState.initial(map: state.map).copyWith(
+      GameState.initial(
+        identifier: state.identifier,
+        map: state.map,
+      ).copyWith(
         status: GameStatus.resetting,
       ),
     );
@@ -121,7 +127,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
     emit(
       state.copyWith(
-        status: GameStatus.playing,
+        status: state.startedAt == null ? GameStatus.ready : GameStatus.playing,
         pausedDuration: pausedDuration,
         pausedAt: () => null,
       ),

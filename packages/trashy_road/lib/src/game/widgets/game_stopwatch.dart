@@ -39,6 +39,13 @@ class _GameStopwatchState extends State<GameStopwatch>
   }
 
   @override
+  void dispose() {
+    _animation.dispose();
+    _stopwatch.stop();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     const style = TextStyle(
       fontSize: 24,

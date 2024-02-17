@@ -127,7 +127,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
     emit(
       state.copyWith(
-        status: GameStatus.playing,
+        status: state.startedAt == null ? GameStatus.ready : GameStatus.playing,
         pausedDuration: pausedDuration,
         pausedAt: () => null,
       ),

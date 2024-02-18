@@ -36,4 +36,10 @@ Automatically configuring the scene eradicates those errors derived from manual 
 
 12. Run the script using the `Play` button, available within the [_Text Editor's header_](https://docs.blender.org/manual/en/latest/editors/text_editor.html#header), or with `Alt-P`.
 
-13. Using the [_Render panel_](https://docs.blender.org/manual/en/2.79/render/output/render_panel.html), or with `F12`, render your scene!
+13. Check the camera viewfinder, you may find that the camera is pointing too far down, in this case modify the _y_ position to move it up and down.
+
+14. Then modify the output resolution to match the ratio of the subject (dont forget about the shadow!).
+
+15. You may also need to change the _Orthographic Scale_ on the _Camera's Lens_ data property. (This will change how zoomed in the camera is).
+
+16. Using the [_Render panel_](https://docs.blender.org/manual/en/2.79/render/output/render_panel.html), or with `F12`, render your scene!

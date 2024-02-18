@@ -104,7 +104,7 @@ class TrashCollectionAnimator extends PositionComponent {
   void removalAnimation({void Function()? onComplete}) {
     add(
       ScaleEffect.to(
-        Vector2.all(0),
+        Vector2.zero(),
         EffectController(
           duration: 0.4,
           curve: Curves.easeInBack,

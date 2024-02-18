@@ -32,6 +32,8 @@ class PreloadCubit extends Cubit<PreloadState> {
             Assets.images.player.path,
             Assets.images.road.path,
             Assets.images.trashCan.path,
+            Assets.images.trashCanOpening.path,
+            Assets.images.trashCanShadow.path,
             Assets.images.trash.path,
           ],
         ),

@@ -2,7 +2,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/animation.dart';
 import 'package:meta/meta.dart';
 import 'package:tiled/tiled.dart';
 import 'package:trashy_road/game_settings.dart';

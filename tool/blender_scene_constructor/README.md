@@ -1,10 +1,12 @@
-# Blender Scene Constructor
+# 📹 Blender Scene Constructor
 
-Prepares a blender scene to be ready for rendering, including sun positioning and camera positioning. This ensures consistency between renders and sprites.
+Prepares a Blender scene to be ready for rendering by adjusting the sun positioning and camera positioning.
+
+**Note 💡**: This process ensures consistency between all our in-game sprites.
 
 ## Why do we need this?
 
-When settings up a scene any manual input is prone to mistake (and also time consuming!). So compiling this into a script allows for quick consistent renders to be created.
+Automatically configuring the scene eradicates those errors derived from manual input. Script the configuration, allows for quick and consistent renders to be created.
 
 ## Usage
 

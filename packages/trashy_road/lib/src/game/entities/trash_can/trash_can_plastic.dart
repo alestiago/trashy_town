@@ -29,6 +29,8 @@ class TrashCanPlasticSpriteComponent extends SpriteAnimationComponent
     with HasGameReference {
   TrashCanPlasticSpriteComponent()
       : super(
+          // Scale and position have been eyeballed to make the trash can
+          // align with the tiles.
           scale: Vector2.all(1.25),
           position: Vector2(-0.1, -0.5)..toGameSize(),
           playing: false,

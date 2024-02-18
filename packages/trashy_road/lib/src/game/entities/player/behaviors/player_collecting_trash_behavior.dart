@@ -14,6 +14,6 @@ class PlayerCollectingTrashBehavior extends CollisionBehavior<Trash, Player>
     super.onCollisionStart(intersectionPoints, other);
 
     bloc.add(GameCollectedTrashEvent(item: other.trashType));
-    other.removeFromParent();
+    other.removeTrash();
   }
 }

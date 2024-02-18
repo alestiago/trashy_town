@@ -11,8 +11,14 @@ class TrashPlastic extends Trash {
       : super(
           trashType: TrashType.plastic,
           children: [
-            _TrashPlasticShadowSpriteComponent(),
-            _TrashPlasticSpriteComponent(),
+            TrashCollectionAnimator(
+              position: Vector2(0.5, 1.2)..toGameSize(),
+              scale: Vector2.all(1.2),
+              children: [
+                _TrashPlasticShadowSpriteComponent(),
+                _TrashPlasticSpriteComponent(),
+              ],
+            ),
           ],
         );
 
@@ -28,9 +34,7 @@ class _TrashPlasticSpriteComponent extends SpriteComponent
     with HasGameReference {
   _TrashPlasticSpriteComponent()
       : super(
-          // eyeballed position
-          scale: Vector2.all(0.8),
-          position: Vector2(0.35, 0.1)..toGameSize(),
+          anchor: Anchor.center,
         );
 
   @override
@@ -47,8 +51,7 @@ class _TrashPlasticShadowSpriteComponent extends SpriteComponent
     with HasGameReference {
   _TrashPlasticShadowSpriteComponent()
       : super(
-          // eyeballed position
-          position: Vector2(0.25, -0.1)..toGameSize(),
+          anchor: Anchor.center,
         );
 
   @override

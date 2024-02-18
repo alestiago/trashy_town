@@ -1,6 +1,8 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:tiled/tiled.dart';
 import 'package:trashy_road/game_settings.dart';
@@ -32,7 +34,7 @@ abstract class Trash extends PositionedEntity {
   Trash({
     required Vector2 position,
     required this.trashType,
-    Iterable<SpriteComponent>? children,
+    Iterable<Component>? children,
   }) : super(
           anchor: Anchor.bottomLeft,
           size: Vector2(1, 2)..toGameSize(),
@@ -70,5 +72,35 @@ abstract class Trash extends PositionedEntity {
     }
   }
 
+  void removeTrash() {
+    final animator = children.whereType<TrashCollectionAnimator>().firstOrNull;
+
+    if (animator != null) {
+      animator.removalAnimation(onComplete: removeFromParent);
+    } else {
+      removeFromParent();
+    }
+  }
+
   final TrashType trashType;
+}
+
+class TrashCollectionAnimator extends PositionComponent {
+  TrashCollectionAnimator({super.position, super.scale, super.children})
+      : super(
+          anchor: Anchor.center,
+        );
+
+  void removalAnimation({void Function()? onComplete}) {
+    add(
+      ScaleEffect.to(
+        Vector2.all(0),
+        EffectController(
+          duration: 0.4,
+          curve: Curves.easeInBack,
+        ),
+        onComplete: onComplete,
+      ),
+    );
+  }
 }

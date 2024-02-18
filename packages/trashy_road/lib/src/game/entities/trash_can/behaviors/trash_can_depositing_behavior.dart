@@ -22,9 +22,10 @@ class TrashCanDepositingBehavior extends Behavior<TrashCan>
       'The parent can only have a single $TrashCanDepositingBehavior.',
     );
 
-    parent
-      ..add(_TrashCapacityTextComponent().._updateText(_capacity))
-      ..children.register<_TrashCapacityTextComponent>();
+    parent.add(_TrashCapacityTextComponent().._updateText(_capacity));
+    parent.children
+      ..register<_TrashCapacityTextComponent>()
+      ..register<TrashCanPlasticSpriteComponent>();
   }
 
   /// Whether the [TrashCan] can deposit some of the [Player]'s trash.
@@ -46,12 +47,13 @@ class TrashCanDepositingBehavior extends Behavior<TrashCan>
     if (!_canDeposit()) return;
 
     _capacity++;
+    bloc.add(GameDepositedTrashEvent(item: parent.trashType));
+
     parent.children
         .query<_TrashCapacityTextComponent>()
         .first
         ._updateText(_capacity);
-    bloc.add(GameDepositedTrashEvent(item: parent.trashType));
-    parent.firstChild<SpriteAnimationComponent>()?.playing = true;
+    parent.children.query<TrashCanPlasticSpriteComponent>().first.open();
   }
 
   @override

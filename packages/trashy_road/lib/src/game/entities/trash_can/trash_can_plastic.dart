@@ -13,7 +13,7 @@ class TrashCanPlastic extends TrashCan {
       : super(
           trashType: TrashType.plastic,
           children: [
-            _TrashCanPlasticSpriteComponent(),
+            TrashCanPlasticSpriteComponent(),
           ],
         );
 
@@ -25,14 +25,24 @@ class TrashCanPlastic extends TrashCan {
   }
 }
 
-class _TrashCanPlasticSpriteComponent extends SpriteAnimationComponent
+class TrashCanPlasticSpriteComponent extends SpriteAnimationComponent
     with HasGameReference {
-  _TrashCanPlasticSpriteComponent()
+  TrashCanPlasticSpriteComponent()
       : super(
           scale: Vector2.all(1.25),
           position: Vector2(-0.1, -0.5)..toGameSize(),
           playing: false,
         );
+
+  /// Animates the [TrashCan] opening.
+  ///
+  /// The opening animation is where the lid pops up and then comes backs down.
+  ///
+  /// Does nothing if already [playing].
+  void open() {
+    if (playing) return;
+    playing = true;
+  }
 
   @override
   FutureOr<void> onLoad() async {
@@ -48,13 +58,13 @@ class _TrashCanPlasticSpriteComponent extends SpriteAnimationComponent
       ),
     );
 
-    final spriteSheet = await game.images.fetchOrGenerate(
+    final image = await game.images.fetchOrGenerate(
       Assets.images.trashCanOpening.path,
       () => game.images.load(Assets.images.trashCanOpening.path),
     );
 
     animation = SpriteAnimation.fromFrameData(
-      spriteSheet,
+      image,
       SpriteAnimationData.sequenced(
         amount: 20,
         amountPerRow: 5,

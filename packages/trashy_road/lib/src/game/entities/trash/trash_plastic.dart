@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
+import 'package:flutter/animation.dart';
 import 'package:tiled/tiled.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
@@ -10,17 +12,7 @@ class TrashPlastic extends Trash {
   TrashPlastic._({required super.position})
       : super(
           trashType: TrashType.plastic,
-          children: [
-            TrashCollectionAnimator(
-              // These have been eyeballed to sit correctly in the tiles.
-              position: Vector2(0.5, 1.2)..toGameSize(),
-              scale: Vector2.all(1.2),
-              children: [
-                _TrashPlasticShadowSpriteComponent(),
-                _TrashPlasticSpriteComponent(),
-              ],
-            ),
-          ],
+          children: [_PlasticBottle()],
         );
 
   /// Derives a [Trash] from a [TiledObject].
@@ -29,14 +21,50 @@ class TrashPlastic extends Trash {
       position: Vector2(tiledObject.x, tiledObject.y)..snap(),
     );
   }
+
+  @override
+  FutureOr<void> onLoad() async {
+    await super.onLoad();
+    children.register<_PlasticBottle>();
+  }
+
+  @override
+  void removeFromParent() {
+    children.query<_PlasticBottle>().first.add(
+          ScaleEffect.to(
+            Vector2.zero(),
+            EffectController(
+              duration: 0.4,
+              curve: Curves.easeInBack,
+            ),
+            onComplete: super.removeFromParent,
+          ),
+        );
+  }
 }
 
-class _TrashPlasticSpriteComponent extends SpriteComponent
-    with HasGameReference {
-  _TrashPlasticSpriteComponent()
+/// A plastic bottle.
+///
+/// Renders the plastic bottle and its shadow.
+class _PlasticBottle extends PositionComponent {
+  _PlasticBottle()
       : super(
+          // The `position` has been eyeballed to match with the appearance of
+          // the map.
+          position: Vector2(0.5, 1.2)..toGameSize(),
+          // The `scale` has been eyeballed to match with the appearance of the
+          // map.
+          scale: Vector2.all(1.2),
           anchor: Anchor.center,
+          children: [
+            _PlasticBottleShadow(),
+            _PlasticBottleBody(),
+          ],
         );
+}
+
+class _PlasticBottleBody extends SpriteComponent with HasGameReference {
+  _PlasticBottleBody() : super(anchor: Anchor.center);
 
   @override
   FutureOr<void> onLoad() async {
@@ -48,17 +76,12 @@ class _TrashPlasticSpriteComponent extends SpriteComponent
   }
 }
 
-class _TrashPlasticShadowSpriteComponent extends SpriteComponent
-    with HasGameReference {
-  _TrashPlasticShadowSpriteComponent()
-      : super(
-          anchor: Anchor.center,
-        );
+class _PlasticBottleShadow extends SpriteComponent with HasGameReference {
+  _PlasticBottleShadow() : super(anchor: Anchor.center);
 
   @override
   FutureOr<void> onLoad() async {
     await super.onLoad();
-
     sprite = await Sprite.load(
       Assets.images.plasticBottleShadow.path,
       images: game.images,

@@ -34,6 +34,6 @@ Automatically configuring the scene eradicates those errors derived from manual 
 
 11. In the recently opened `main.py` file, set the `ONLY_RENDER_SHADOWS` constant variable to `True` or `False` to accomodate for your desired outcome.
 
-12. Run the script using the `Play` button, available within the [_Text Editor's header_](https://docs.blender.org/manual/en/latest/editors/text_editor.html#header) or with `Alt-P`.
+12. Run the script using the `Play` button, available within the [_Text Editor's header_](https://docs.blender.org/manual/en/latest/editors/text_editor.html#header), or with `Alt-P`.
 
 13. Using the [_Render panel_](https://docs.blender.org/manual/en/2.79/render/output/render_panel.html) or with `F12` render your scene!

@@ -6,7 +6,7 @@ Prepares a Blender scene to be ready for rendering by adjusting the sun position
 
 ## Why do we need this?
 
-Automatically configuring the scene eradicates those errors derived from manual input. Script the configuration, allows for quick and consistent renders to be created.
+Automatically configuring the scene eradicates those errors derived from manual input. Scripting the configuration, allows for quick and consistent renders to be created.
 
 ## Usage
 

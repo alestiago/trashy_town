@@ -27,15 +27,20 @@ def setup_camera(camera):
 
     # Set the rotation on the X-axis to 45 degrees (converted to radians)
     camera.rotation_euler[0] = math.radians(CAMERA_ANGLE)
-
+    
 # Function to add a plane and set it as a shadow catcher
-def add_shadow_catcher_plane():
+def add_shadow_catcher_plane(): 
     # Check if a shadow catcher plane with the specific name already exists
     if "ShadowCatcherPlane" not in bpy.data.objects:
-        bpy.ops.mesh.primitive_plane_add(size=10, location=(0, 0, 0))
+        bpy.ops.mesh.primitive_plane_add(size=30, location=(0, 0, 0))
         plane = bpy.context.object
-        plane.cycles.is_shadow_catcher = True
+        plane.is_shadow_catcher = True
         plane.name = "ShadowCatcherPlane"
+        # Move the plane to the scene collection
+        bpy.context.scene.collection.objects.link(plane)
+        # Unlink from the Subject collection if it exists
+        if bpy.data.collections.get("Subject"):
+            bpy.data.collections["Subject"].objects.unlink(plane)
 
 # Function to add or move the sun lamp
 def add_or_move_sun(camera):
@@ -67,6 +72,8 @@ def add_or_move_sun(camera):
 bpy.context.scene.render.engine = 'CYCLES'
 
 def setup_only_render_shadows(only_render_shadows=True):
+    plane = bpy.data.objects["ShadowCatcherPlane"]
+    plane.hide_render = not only_render_shadows
     # Create a new material
     material = bpy.data.materials.new(name="ShadowOnlyMaterial")
 

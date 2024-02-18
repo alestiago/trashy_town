@@ -69,10 +69,6 @@ abstract class Trash extends PositionedEntity {
     }
   }
 
-  /// Removes the trash from the game.
-  ///
-  /// Triggers the removal animation if exists on the trash, otherwisem
-  /// remove the trash from the parent.
   @override
   void removeFromParent() {
     findBehavior<PropagatingCollisionBehavior>()

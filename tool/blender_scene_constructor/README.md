@@ -28,7 +28,7 @@ Automatically configuring the scene eradicates those errors derived from manual 
 
 8. Now, within Blender, open the [_Scripting_ workspace](https://docs.blender.org/manual/en/latest/interface/window_system/workspaces.html).
 
-9. Within your _Scripting_ workspave, ensure you have the [_Text Editor_](https://docs.blender.org/manual/en/latest/editors/text_editor.html) editor available.
+9. Within your _Scripting_ workspace, ensure you have the [_Text Editor_](https://docs.blender.org/manual/en/latest/editors/text_editor.html) editor available.
 
 10. Within the [_Text Editor_](https://docs.blender.org/manual/en/latest/editors/text_editor.html), open the [`main.py`](main.py) file.
 

@@ -76,6 +76,11 @@ abstract class Trash extends PositionedEntity {
   @override
   void removeFromParent() {
     final animator = children.whereType<TrashCollectionAnimator>().firstOrNull;
+    findBehavior<PropagatingCollisionBehavior>()
+        .children
+        .whereType<RectangleHitbox>()
+        .first
+        .collisionType = CollisionType.inactive;
 
     if (animator != null) {
       animator.removalAnimation(onComplete: super.removeFromParent);

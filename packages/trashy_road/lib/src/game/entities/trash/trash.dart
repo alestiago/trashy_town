@@ -34,7 +34,7 @@ abstract class Trash extends PositionedEntity {
   Trash({
     required Vector2 position,
     required this.trashType,
-    Iterable<Component>? children,
+    super.children,
   }) : super(
           anchor: Anchor.bottomLeft,
           size: Vector2(1, 2)..toGameSize(),
@@ -47,9 +47,6 @@ abstract class Trash extends PositionedEntity {
                 position: Vector2(0, GameSettings.gridDimensions.y),
               ),
             ),
-          ],
-          children: [
-            ...?children,
           ],
         );
 
@@ -72,6 +69,10 @@ abstract class Trash extends PositionedEntity {
     }
   }
 
+  /// Removes the trash from the game.
+  ///
+  /// Triggers the removal animation if exists on the trash, otherwisem
+  /// remove the trash from the parent.
   void removeTrash() {
     final animator = children.whereType<TrashCollectionAnimator>().firstOrNull;
 
@@ -85,6 +86,9 @@ abstract class Trash extends PositionedEntity {
   final TrashType trashType;
 }
 
+/// Handles the animation of the trash collection.
+///
+/// The anchor must be the center of the trash so the animation is centered.
 class TrashCollectionAnimator extends PositionComponent {
   TrashCollectionAnimator({super.position, super.scale, super.children})
       : super(

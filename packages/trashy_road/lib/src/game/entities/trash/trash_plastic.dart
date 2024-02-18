@@ -12,6 +12,7 @@ class TrashPlastic extends Trash {
           trashType: TrashType.plastic,
           children: [
             TrashCollectionAnimator(
+              // These have been eyeballed to sit correctly in the tiles.
               position: Vector2(0.5, 1.2)..toGameSize(),
               scale: Vector2.all(1.2),
               children: [

@@ -55,7 +55,9 @@ class _TrashPlasticShadowSpriteComponent extends SpriteComponent
   FutureOr<void> onLoad() async {
     await super.onLoad();
 
-    sprite = await Sprite.load(Assets.images.plasticBottleShadow.path,
-        images: game.images);
+    sprite = await Sprite.load(
+      Assets.images.plasticBottleShadow.path,
+      images: game.images,
+    );
   }
 }

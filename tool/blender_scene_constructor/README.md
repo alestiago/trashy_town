@@ -26,7 +26,7 @@ Automatically configuring the scene eradicates those errors derived from manual 
 
 7. Select your newly created "Subject" collection within your [_Outliner_](https://docs.blender.org/manual/en/latest/editors/outliner/introduction.html) editor, and within the [_Properties_](https://docs.blender.org/manual/en/latest/editors/properties_editor.html) editor ensure the _Transform_ location properties are all set to 0.
 
-8. Now, within Blender, open the [_Scripting_ workspace](https://docs.blender.org/manual/en/latest/interface/window_system/workspaces.html).
+8. Now, within Blender, open the [_Scripting_](https://docs.blender.org/manual/en/latest/interface/window_system/workspaces.html) workspace.
 
 9. Within your _Scripting_ workspace, ensure you have the [_Text Editor_](https://docs.blender.org/manual/en/latest/editors/text_editor.html) editor available.
 

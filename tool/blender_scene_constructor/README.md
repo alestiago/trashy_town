@@ -32,7 +32,7 @@ Automatically configuring the scene eradicates those errors derived from manual 
 
 10. Within the [_Text Editor_](https://docs.blender.org/manual/en/latest/editors/text_editor.html), open the [`main.py`](main.py) file.
 
-11. Within the [_Text Editor_](https://docs.blender.org/manual/en/latest/editors/text_editor.html), set the `ONLY_RENDER_SHADOWS` constant variable in `main.py` to `True` or `False` to match your desired outcome.
+11. Within the recently opened `main.py` file, set the `ONLY_RENDER_SHADOWS` constant variable to`True`or`False` to accomodate for your desired outcome.
 
 12. Within the [_Text Editor_](https://docs.blender.org/manual/en/latest/editors/text_editor.html), run the script using the `Play` button, available within the [_Text Editor's header_](https://docs.blender.org/manual/en/latest/editors/text_editor.html#header) or with `Alt-P`.
 

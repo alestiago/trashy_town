@@ -75,15 +75,24 @@ abstract class Trash extends PositionedEntity {
   /// remove the trash from the parent.
   @override
   void removeFromParent() {
-    final animator = children.whereType<TrashCollectionAnimator>().firstOrNull;
     findBehavior<PropagatingCollisionBehavior>()
         .children
         .whereType<RectangleHitbox>()
         .first
         .collisionType = CollisionType.inactive;
 
+    final animator = children.whereType<TrashCollectionAnimator>().firstOrNull;
     if (animator != null) {
-      animator.removalAnimation(onComplete: super.removeFromParent);
+      animator.add(
+        ScaleEffect.to(
+          Vector2.zero(),
+          EffectController(
+            duration: 0.4,
+            curve: Curves.easeInBack,
+          ),
+          onComplete: super.removeFromParent,
+        ),
+      );
     } else {
       super.removeFromParent();
     }
@@ -92,25 +101,9 @@ abstract class Trash extends PositionedEntity {
   final TrashType trashType;
 }
 
-/// Handles the animation of the trash collection.
-///
-/// The anchor must be the center of the trash so the animation is centered.
 class TrashCollectionAnimator extends PositionComponent {
   TrashCollectionAnimator({super.position, super.scale, super.children})
       : super(
           anchor: Anchor.center,
         );
-
-  void removalAnimation({void Function()? onComplete}) {
-    add(
-      ScaleEffect.to(
-        Vector2.zero(),
-        EffectController(
-          duration: 0.4,
-          curve: Curves.easeInBack,
-        ),
-        onComplete: onComplete,
-      ),
-    );
-  }
 }

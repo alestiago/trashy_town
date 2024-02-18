@@ -73,13 +73,14 @@ abstract class Trash extends PositionedEntity {
   ///
   /// Triggers the removal animation if exists on the trash, otherwisem
   /// remove the trash from the parent.
-  void removeTrash() {
+  @override
+  void removeFromParent() {
     final animator = children.whereType<TrashCollectionAnimator>().firstOrNull;
 
     if (animator != null) {
-      animator.removalAnimation(onComplete: removeFromParent);
+      animator.removalAnimation(onComplete: super.removeFromParent);
     } else {
-      removeFromParent();
+      super.removeFromParent();
     }
   }
 

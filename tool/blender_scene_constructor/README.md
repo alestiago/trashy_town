@@ -32,6 +32,6 @@ When settings up a scene any manual input is prone to mistake (and also time con
 
 11. Within the [_Text Editor_](https://docs.blender.org/manual/en/latest/editors/text_editor.html), set the `ONLY_RENDER_SHADOWS` constant variable in `main.py` to `True` or `False` to match your desired outcome.
 
-12. Within the [_Text Editor_](https://docs.blender.org/manual/en/latest/editors/text_editor.html), run the script using the `Play` button or with `Alt-P`.
+12. Within the [_Text Editor_](https://docs.blender.org/manual/en/latest/editors/text_editor.html), run the script using the `Play` button, available within the [_Text Editor's header_](https://docs.blender.org/manual/en/latest/editors/text_editor.html#header) or with `Alt-P`.
 
-13. Render the scene!
+13. Using the [_Render panel_](https://docs.blender.org/manual/en/2.79/render/output/render_panel.html) or with `F12` render your scene!

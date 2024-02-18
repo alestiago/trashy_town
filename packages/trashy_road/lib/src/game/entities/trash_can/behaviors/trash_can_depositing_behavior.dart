@@ -53,7 +53,7 @@ class TrashCanDepositingBehavior extends Behavior<TrashCan>
         .query<_TrashCapacityTextComponent>()
         .first
         ._updateText(_capacity);
-    parent.children.query<TrashCanPlasticSpriteComponent>().first.open();
+    parent.children.query<TrashCanPlasticSpriteComponent>().firstOrNull?.open();
   }
 
   @override

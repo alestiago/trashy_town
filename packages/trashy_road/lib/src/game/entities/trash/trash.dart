@@ -1,6 +1,8 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
+import 'package:flutter/animation.dart';
 import 'package:meta/meta.dart';
 import 'package:tiled/tiled.dart';
 import 'package:trashy_road/game_settings.dart';
@@ -31,8 +33,8 @@ enum TrashType {
 abstract class Trash extends PositionedEntity {
   Trash({
     required Vector2 position,
-    required SpriteComponent sprite,
     required this.trashType,
+    super.children,
   }) : super(
           anchor: Anchor.bottomLeft,
           size: Vector2(1, 2)..toGameSize(),
@@ -45,9 +47,6 @@ abstract class Trash extends PositionedEntity {
                 position: Vector2(0, GameSettings.gridDimensions.y),
               ),
             ),
-          ],
-          children: [
-            sprite,
           ],
         );
 
@@ -70,5 +69,37 @@ abstract class Trash extends PositionedEntity {
     }
   }
 
+  @override
+  void removeFromParent() {
+    findBehavior<PropagatingCollisionBehavior>()
+        .children
+        .whereType<RectangleHitbox>()
+        .first
+        .collisionType = CollisionType.inactive;
+
+    final animator = children.whereType<TrashCollectionAnimator>().firstOrNull;
+    if (animator != null) {
+      animator.add(
+        ScaleEffect.to(
+          Vector2.zero(),
+          EffectController(
+            duration: 0.4,
+            curve: Curves.easeInBack,
+          ),
+          onComplete: super.removeFromParent,
+        ),
+      );
+    } else {
+      super.removeFromParent();
+    }
+  }
+
   final TrashType trashType;
+}
+
+class TrashCollectionAnimator extends PositionComponent {
+  TrashCollectionAnimator({super.position, super.scale, super.children})
+      : super(
+          anchor: Anchor.center,
+        );
 }

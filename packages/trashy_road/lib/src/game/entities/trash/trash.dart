@@ -31,8 +31,8 @@ enum TrashType {
 abstract class Trash extends PositionedEntity {
   Trash({
     required Vector2 position,
-    required SpriteComponent sprite,
     required this.trashType,
+    Iterable<SpriteComponent>? children,
   }) : super(
           anchor: Anchor.bottomLeft,
           size: Vector2(1, 2)..toGameSize(),
@@ -47,7 +47,7 @@ abstract class Trash extends PositionedEntity {
             ),
           ],
           children: [
-            sprite,
+            ...?children,
           ],
         );
 

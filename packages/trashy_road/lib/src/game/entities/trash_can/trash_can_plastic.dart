@@ -51,9 +51,7 @@ class TrashCanPlasticSpriteComponent extends SpriteAnimationComponent
     add(
       ColorEffect(
         Colors.red,
-        EffectController(
-          duration: 0,
-        ),
+        EffectController(duration: 0),
         opacityTo: 0.5,
       ),
     );

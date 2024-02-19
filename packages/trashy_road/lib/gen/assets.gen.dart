@@ -10,6 +10,16 @@
 import 'package:flutter/widgets.dart';
 import 'package:rive/rive.dart';
 
+class $AssetsAudioGen {
+  const $AssetsAudioGen();
+
+  /// File path: assets/audio/plastic_bottle.mp3
+  String get plasticBottle => 'assets/audio/plastic_bottle.mp3';
+
+  /// List of all assets
+  List<String> get values => [plasticBottle];
+}
+
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
@@ -148,6 +158,7 @@ class $AssetsTilesGen {
 class Assets {
   Assets._();
 
+  static const $AssetsAudioGen audio = $AssetsAudioGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsRiveGen rive = $AssetsRiveGen();
   static const $AssetsTilesGen tiles = $AssetsTilesGen();

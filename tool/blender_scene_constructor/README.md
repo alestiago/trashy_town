@@ -6,7 +6,7 @@ Prepares a Blender scene to be ready for rendering by adjusting the sun position
 
 ## Why do we need this?
 
-Automatically configuring the scene eradicates those errors derived from manual input. Script the configuration, allows for quick and consistent renders to be created.
+Automatically configuring the scene eradicates those errors derived from manual input. Scripting the configuration, allows for quick and consistent renders to be created.
 
 ## Usage
 
@@ -36,4 +36,10 @@ Automatically configuring the scene eradicates those errors derived from manual 
 
 12. Run the script using the `Play` button, available within the [_Text Editor's header_](https://docs.blender.org/manual/en/latest/editors/text_editor.html#header), or with `Alt-P`.
 
-13. Using the [_Render panel_](https://docs.blender.org/manual/en/2.79/render/output/render_panel.html), or with `F12`, render your scene!
+13. Check the camera viewfinder, you may find that the camera is pointing too far down, in this case modify the _y_ position to move it up or down until it is in frame. It may also be the case that if you are capturing a shadow that the shadow is predominantly on one side of the image, in this case modify the _x_ position so that the entire shadow is captured without any wasted whitespace (be warned, shadows go extremely soft towards the edge, so you may need more space than you think!)
+
+14. Then modify the output resolution in the _Output Properties_ tab to match the ratio of the subject.
+
+15. You may also need to change the _Orthographic Scale_ on the _Camera's Lens_ data property (This will change how zoomed in the camera is). To find this, select the camera in the _Outliner_ and then select the camera icon in the _Properties_ tab.
+
+16. Using the [_Render panel_](https://docs.blender.org/manual/en/2.79/render/output/render_panel.html), or with `F12`, render your scene!

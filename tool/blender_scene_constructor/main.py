@@ -56,7 +56,6 @@ def add_or_move_area(camera):
     # Delete all sun lamps
     delete_all_sun_lamps()
     area = bpy.data.objects.get("Area")
-    
     if area is None:
         # Add a new area lamp
         bpy.ops.object.light_add(type='AREA', location=(camera.location.x - 3, camera.location.y, camera.location.z))

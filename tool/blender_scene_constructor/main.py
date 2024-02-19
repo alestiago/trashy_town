@@ -14,7 +14,9 @@ SHADOW_GROUP_NAME = "ShadowToggleable"
 # ----------------------------------------------------
 
 # Set this to True if you want to render only the shadows
-ONLY_RENDER_SHADOWS = True
+ONLY_RENDER_SHADOWS = False
+# Set this to True if you want to reset the camera to the default position (leave true for the first run)
+RESET_CAMERA = False
 
 def setup_camera(camera):
     # Set the camera to orthographic mode
@@ -24,10 +26,11 @@ def setup_camera(camera):
     bpy.context.scene.render.film_transparent = True
 
     # Place the camera at the specified location
-    camera.location = (0, -8, 8)
+    if (RESET_CAMERA):
+        camera.location = (0, -8, 8)
 
     # Set the rotation on the X-axis to 45 degrees (converted to radians)
-    camera.rotation_euler[0] = math.radians(CAMERA_ANGLE)
+    camera.rotation_euler = [math.radians(CAMERA_ANGLE),0,0]
     
 # Function to add a plane and set it as a shadow catcher
 def add_shadow_catcher_plane(): 
@@ -65,8 +68,8 @@ def add_or_move_area(camera):
         area = bpy.context.object
         area.name = "Area"
     
-    # Set the strength of the area lamp to 2
-    area.data.energy = 100
+    # Set the area light strength
+    area.data.energy = 300
     
     # Position the area lamp 3 units to the left of the camera and at the same Y position
     area.location.x = camera.location.x - SHADOW_SIZE
@@ -98,23 +101,32 @@ def modify_or_create_shadow_toggleable_node_group():
     input_node = group.nodes.new(type='NodeGroupInput')
     input_node.location = (-200, 0)
 
+
     output_node = group.nodes.new(type='NodeGroupOutput')
     output_node.location = (200, 0)
 
     # Add mixer node
     mixer_node = group.nodes.new(type='ShaderNodeMixShader')
     mixer_node.location = (0, 100)
-    mixer_node.inputs[0].default_value = int(not ONLY_RENDER_SHADOWS)
+    mixer_node.inputs[0].default_value = 0 # 0 if not rendering shadows
 
     # Add Transparent BSDF node
     transparent_node = group.nodes.new(type='ShaderNodeBsdfTransparent')
-    transparent_node.location = (-200, 200)
+    transparent_node.location = (-200, -100)
+    
+    # Add mixer node
+    light_path_node = group.nodes.new(type='ShaderNodeLightPath')
+    light_path_node.location = (-200, 400)
+    
+    if ONLY_RENDER_SHADOWS:
+        # Connect the light path to the mixer
+        group.links.new(light_path_node.outputs["Is Camera Ray"], mixer_node.inputs[0])
     
      # Connect Transparent node to the mixer
-    group.links.new(transparent_node.outputs["BSDF"], mixer_node.inputs[1])
+    group.links.new(transparent_node.outputs["BSDF"], mixer_node.inputs[2])
 
     # Connect Input to the mixer
-    group.links.new(input_node.outputs["Shader"], mixer_node.inputs[2])
+    group.links.new(input_node.outputs["Shader"], mixer_node.inputs[1])
 
     # Connect mixer to Output
     group.links.new(mixer_node.outputs["Shader"], output_node.inputs["Shader"])
@@ -180,11 +192,15 @@ def add_shadow_toggleable_node_to_materials(collection_name):
 
 if camera is not None:
     setup_camera(camera)
+    bpy.context.scene.render.engine = 'CYCLES'
     add_shadow_catcher_plane()
+    
     add_or_move_area(camera)
     modify_or_create_shadow_toggleable_node_group()
     add_shadow_toggleable_node_to_materials(OBJECT_COLLECTION_NAME)
-#    setup_only_render_shadows(ONLY_RENDER_SHADOWS)
+    
+    plane = bpy.data.objects["ShadowCatcherPlane"]
+    plane.hide_render = not ONLY_RENDER_SHADOWS
     
 else:
     print("No active camera found in the scene.")

@@ -1,7 +1,3 @@
-// FIXME(alestiago): Avoid ignoring deprecated_member_use as soon as:
-// https://github.com/flame-engine/flame/pull/3002 is released.
-// ignore_for_file: deprecated_member_use
-
 import 'dart:async';
 
 import 'package:flame/game.dart';
@@ -19,7 +15,7 @@ class _MockObjectGroup extends Mock implements ObjectGroup {}
 
 class _MockTiledObject extends Mock implements TiledObject {}
 
-class _MockRawKeyEventData extends Mock implements RawKeyEventData {
+class _MockKeyDownEvent extends Mock implements KeyDownEvent {
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) =>
       super.toString();
@@ -82,10 +78,10 @@ void main() {
     });
 
     group('moves', () {
-      late RawKeyEventData rawKeyEventData;
+      late KeyEvent keyDownEvent;
 
       setUp(() {
-        rawKeyEventData = _MockRawKeyEventData();
+        keyDownEvent = _MockKeyDownEvent();
       });
 
       testWithGame<_TestGame>(
@@ -96,12 +92,11 @@ void main() {
           final behavior = PlayerKeyboardMovingBehavior.arrows();
           await game.pump(behavior);
 
-          when(() => rawKeyEventData.logicalKey).thenReturn(upKey);
-          final event = RawKeyDownEvent(data: rawKeyEventData);
+          when(() => keyDownEvent.logicalKey).thenReturn(upKey);
 
           final previousVerticalPosition = behavior.parent.position.y;
 
-          behavior.onKeyEvent(event, {upKey});
+          behavior.onKeyEvent(keyDownEvent, {upKey});
 
           game.update(1);
 
@@ -124,12 +119,11 @@ void main() {
           final behavior = PlayerKeyboardMovingBehavior.arrows();
           await game.pump(behavior);
 
-          when(() => rawKeyEventData.logicalKey).thenReturn(downKey);
-          final event = RawKeyDownEvent(data: rawKeyEventData);
+          when(() => keyDownEvent.logicalKey).thenReturn(downKey);
 
           final previousVerticalPosition = behavior.parent.position.y;
 
-          behavior.onKeyEvent(event, {downKey});
+          behavior.onKeyEvent(keyDownEvent, {downKey});
 
           game.update(1);
 
@@ -152,12 +146,11 @@ void main() {
           final behavior = PlayerKeyboardMovingBehavior.arrows();
           await game.pump(behavior);
 
-          when(() => rawKeyEventData.logicalKey).thenReturn(leftKey);
-          final event = RawKeyDownEvent(data: rawKeyEventData);
+          when(() => keyDownEvent.logicalKey).thenReturn(leftKey);
 
           final previousHorizontalPosition = behavior.parent.position.x;
 
-          behavior.onKeyEvent(event, {leftKey});
+          behavior.onKeyEvent(keyDownEvent, {leftKey});
 
           game.update(1);
 
@@ -180,12 +173,11 @@ void main() {
           final behavior = PlayerKeyboardMovingBehavior.arrows();
           await game.pump(behavior);
 
-          when(() => rawKeyEventData.logicalKey).thenReturn(rightKey);
-          final event = RawKeyDownEvent(data: rawKeyEventData);
+          when(() => keyDownEvent.logicalKey).thenReturn(rightKey);
 
           final previousHorizontalPosition = behavior.parent.position.x;
 
-          behavior.onKeyEvent(event, {rightKey});
+          behavior.onKeyEvent(keyDownEvent, {rightKey});
 
           game.update(1);
 

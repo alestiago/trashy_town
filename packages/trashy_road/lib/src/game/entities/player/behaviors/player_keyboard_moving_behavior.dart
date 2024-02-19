@@ -1,7 +1,3 @@
-// FIXME(alestiago): Avoid ignoring deprecated_member_use as soon as:
-// https://github.com/flame-engine/flame/pull/3002 is released.
-// ignore_for_file: deprecated_member_use
-
 import 'dart:async';
 
 import 'package:flame/components.dart';
@@ -83,7 +79,7 @@ class PlayerKeyboardMovingBehavior extends Behavior<Player>
   }
 
   @override
-  bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+  bool onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
     final isMovementKey = event.logicalKey == _leftKey ||
         event.logicalKey == _rightKey ||
         event.logicalKey == _downKey ||
@@ -92,7 +88,7 @@ class PlayerKeyboardMovingBehavior extends Behavior<Player>
       return super.onKeyEvent(event, keysPressed);
     }
 
-    if (event is RawKeyDownEvent) {
+    if (event is KeyDownEvent) {
       if (_previouslyDownKeys.contains(event.logicalKey)) {
         // The user has to release the key before it can be pressed again.
         // or the next move time has not been reached yet.
@@ -112,7 +108,7 @@ class PlayerKeyboardMovingBehavior extends Behavior<Player>
       }
     }
 
-    if (event is RawKeyUpEvent) {
+    if (event is KeyUpEvent) {
       _previouslyDownKeys.remove(event.logicalKey);
     }
 

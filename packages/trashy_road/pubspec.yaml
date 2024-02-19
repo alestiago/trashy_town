@@ -14,10 +14,10 @@ dependencies:
   collection: ^1.18.0
   cupertino_icons: ^1.0.2
   equatable: ^2.0.5
-  flame: ^1.14.0
+  flame: ^1.16.0
   flame_behaviors: ^1.1.0
-  flame_bloc: ^1.10.9
-  flame_tiled: ^1.18.3
+  flame_bloc: ^1.11.0
+  flame_tiled: ^1.19.0
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.3

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flame/cache.dart';
 import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
@@ -28,6 +29,7 @@ class TrashyRoadGame extends FlameGame
         DragCallbacks {
   TrashyRoadGame({
     required GameBloc gameBloc,
+    required this.effectPlayer,
     required this.random,
     Images? images,
   })  : _gameBloc = gameBloc,
@@ -45,6 +47,11 @@ class TrashyRoadGame extends FlameGame
 
   /// {@macro GameBloc}
   final GameBloc _gameBloc;
+
+  /// Can play one audio at a time.
+  ///
+  /// Usually used to play very short sound effects.
+  final AudioPlayer effectPlayer;
 
   final Random random;
 

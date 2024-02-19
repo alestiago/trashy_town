@@ -76,6 +76,13 @@ class $AssetsImagesGen {
   AssetGenImage get trashCan =>
       const AssetGenImage('assets/images/trash_can.png');
 
+  /// File path: assets/images/tree-shadow.png
+  AssetGenImage get treeShadow =>
+      const AssetGenImage('assets/images/tree-shadow.png');
+
+  /// File path: assets/images/tree.png
+  AssetGenImage get tree => const AssetGenImage('assets/images/tree.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
         barrel,
@@ -92,7 +99,9 @@ class $AssetsImagesGen {
         trash,
         trashCanOpening,
         trashCanShadow,
-        trashCan
+        trashCan,
+        treeShadow,
+        tree
       ];
 }
 

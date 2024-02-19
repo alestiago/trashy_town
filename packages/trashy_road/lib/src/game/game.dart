@@ -12,7 +12,7 @@ import 'package:flame_tiled/flame_tiled.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/src/game/game.dart';
 
-export 'bloc/game_bloc.dart';
+export 'bloc/bloc.dart';
 export 'components/components.dart';
 export 'debug_game.dart';
 export 'entities/entities.dart';

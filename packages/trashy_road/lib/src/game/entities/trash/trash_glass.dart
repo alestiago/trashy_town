@@ -9,16 +9,18 @@ import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 class TrashGlass extends Trash {
-  TrashGlass._({required super.position, required super.sprite})
+  TrashGlass._({required super.position})
       : super(
           trashType: TrashType.glass,
+          children: [
+            _TrashGlassSpriteComponent(),
+          ],
         );
 
   /// Derives a [Trash] from a [TiledObject].
   factory TrashGlass.fromTiledObject(TiledObject tiledObject) {
     return TrashGlass._(
       position: Vector2(tiledObject.x, tiledObject.y)..snap(),
-      sprite: _TrashGlassSpriteComponent(),
     );
   }
 }

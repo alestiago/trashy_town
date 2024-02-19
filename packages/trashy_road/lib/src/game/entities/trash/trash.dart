@@ -31,8 +31,8 @@ enum TrashType {
 abstract class Trash extends PositionedEntity {
   Trash({
     required Vector2 position,
-    required SpriteComponent sprite,
     required this.trashType,
+    super.children,
   }) : super(
           anchor: Anchor.bottomLeft,
           size: Vector2(1, 2)..toGameSize(),
@@ -45,9 +45,6 @@ abstract class Trash extends PositionedEntity {
                 position: Vector2(0, GameSettings.gridDimensions.y),
               ),
             ),
-          ],
-          children: [
-            sprite,
           ],
         );
 
@@ -68,6 +65,16 @@ abstract class Trash extends PositionedEntity {
           'Invalid trash type',
         );
     }
+  }
+
+  @override
+  void removeFromParent() {
+    findBehavior<PropagatingCollisionBehavior>()
+        .children
+        .whereType<RectangleHitbox>()
+        .first
+        .collisionType = CollisionType.inactive;
+    super.removeFromParent();
   }
 
   final TrashType trashType;

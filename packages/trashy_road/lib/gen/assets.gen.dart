@@ -37,6 +37,14 @@ class $AssetsImagesGen {
   /// File path: assets/images/grass.png
   AssetGenImage get grass => const AssetGenImage('assets/images/grass.png');
 
+  /// File path: assets/images/plastic_bottle-shadow.png
+  AssetGenImage get plasticBottleShadow =>
+      const AssetGenImage('assets/images/plastic_bottle-shadow.png');
+
+  /// File path: assets/images/plastic_bottle.png
+  AssetGenImage get plasticBottle =>
+      const AssetGenImage('assets/images/plastic_bottle.png');
+
   /// File path: assets/images/player.png
   AssetGenImage get player => const AssetGenImage('assets/images/player.png');
 
@@ -45,6 +53,10 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/trash.png
   AssetGenImage get trash => const AssetGenImage('assets/images/trash.png');
+
+  /// File path: assets/images/trash_can-opening.png
+  AssetGenImage get trashCanOpening =>
+      const AssetGenImage('assets/images/trash_can-opening.png');
 
   /// File path: assets/images/trash_can-shadow.png
   AssetGenImage get trashCanShadow =>
@@ -63,9 +75,12 @@ class $AssetsImagesGen {
         grassRoadSouthwest,
         grassFlowers,
         grass,
+        plasticBottleShadow,
+        plasticBottle,
         player,
         road,
         trash,
+        trashCanOpening,
         trashCanShadow,
         trashCan
       ];

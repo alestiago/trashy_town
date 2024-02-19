@@ -10,6 +10,7 @@ camera = bpy.context.scene.camera
 SHADOW_SIZE = 2
 CAMERA_ANGLE = 45
 OBJECT_COLLECTION_NAME = "Subject"
+SHADOW_GROUP_NAME = "ShadowToggleable"
 # ----------------------------------------------------
 
 # Set this to True if you want to render only the shadows
@@ -56,6 +57,7 @@ def add_or_move_area(camera):
     # Delete all sun lamps
     delete_all_sun_lamps()
     area = bpy.data.objects.get("Area")
+    
     if area is None:
         # Add a new area lamp
         bpy.ops.object.light_add(type='AREA', location=(camera.location.x - 3, camera.location.y, camera.location.z))
@@ -76,79 +78,113 @@ def add_or_move_area(camera):
     # Align the area lamp to point in the calculated direction
     area.rotation_euler = direction.to_track_quat('-Z', 'Y').to_euler()
     
-# Set render engine to Cycles
-bpy.context.scene.render.engine = 'CYCLES'
+def modify_or_create_shadow_toggleable_node_group():
+    # Check if the group already exists
+    if SHADOW_GROUP_NAME in bpy.data.node_groups:
+        # Get the existing group
+        group = bpy.data.node_groups[SHADOW_GROUP_NAME]
+        # Clear existing nodes
+        group.nodes.clear()
+    else:
+        # Create a new node group
+        group = bpy.data.node_groups.new(type="ShaderNodeTree", name=SHADOW_GROUP_NAME)
+        
+        # Add the Input Sockets and change their Default Values
+        group.interface.new_socket(name="Shader",in_out ="INPUT", socket_type="NodeSocketShader")
 
-def setup_only_render_shadows(only_render_shadows=True):
-    plane = bpy.data.objects["ShadowCatcherPlane"]
-    plane.hide_render = not only_render_shadows
-    # Create a new material
-    material = bpy.data.materials.new(name="ShadowOnlyMaterial")
+        # Add the Output Sockets and change their Default Value
+        group.interface.new_socket(name="Shader",in_out ="OUTPUT", socket_type="NodeSocketShader")
 
-    # Check if the material already has a node tree
-    if not material.node_tree:
-        material.use_nodes = True
+    input_node = group.nodes.new(type='NodeGroupInput')
+    input_node.location = (-200, 0)
 
-    # Create nodes
-    nodes = material.node_tree.nodes
-    links = material.node_tree.links
+    output_node = group.nodes.new(type='NodeGroupOutput')
+    output_node.location = (200, 0)
 
-    # Clear default nodes
-    for node in nodes:
-        nodes.remove(node)
+    # Add mixer node
+    mixer_node = group.nodes.new(type='ShaderNodeMixShader')
+    mixer_node.location = (0, 100)
+    mixer_node.inputs[0].default_value = int(not ONLY_RENDER_SHADOWS)
 
-    # Create Principled BSDF node
-    principled_node = nodes.new(type='ShaderNodeBsdfPrincipled')
-    principled_node.location = (0,0)
+    # Add Transparent BSDF node
+    transparent_node = group.nodes.new(type='ShaderNodeBsdfTransparent')
+    transparent_node.location = (-200, 200)
+    
+     # Connect Transparent node to the mixer
+    group.links.new(transparent_node.outputs["BSDF"], mixer_node.inputs[1])
 
-    # Create Transparent BSDF node
-    transparent_node = nodes.new(type='ShaderNodeBsdfTransparent')
-    transparent_node.location = (-400,0)
+    # Connect Input to the mixer
+    group.links.new(input_node.outputs["Shader"], mixer_node.inputs[2])
 
-    # Create Mix Shader node
-    mix_shader_node = nodes.new(type='ShaderNodeMixShader')
-    mix_shader_node.location = (400,0)
+    # Connect mixer to Output
+    group.links.new(mixer_node.outputs["Shader"], output_node.inputs["Shader"])
 
-    # Create Material Output node
-    output_node = nodes.new(type='ShaderNodeOutputMaterial')
-    output_node.location = (800,0)
+  
+    print("ShadowToggleable node group modified or created.")
 
-    # Create Light Path node
-    light_path_node = None
-    if only_render_shadows:
-        light_path_node = nodes.new(type='ShaderNodeLightPath')
-        light_path_node.location = (-200,200)
 
-    # Link nodes
-    links.new(principled_node.outputs['BSDF'], mix_shader_node.inputs[1])
-    links.new(transparent_node.outputs['BSDF'], mix_shader_node.inputs[2])
-    if only_render_shadows:
-        links.new(light_path_node.outputs['Is Camera Ray'], mix_shader_node.inputs['Fac'])
-    links.new(mix_shader_node.outputs['Shader'], output_node.inputs['Surface'])
+def add_shadow_toggleable_node_to_materials(collection_name):
+    collection = bpy.data.collections.get(collection_name)
+    if not collection:
+        print(f"Collection '{collection_name}' not found.")
+        return
 
-    # Get the collection
-    collection = bpy.data.collections.get(OBJECT_COLLECTION_NAME)
-
-    # If the collection exists
-    if collection:
-        # Iterate over all objects in the collection
-        for obj in collection.objects:
-            # Check if the object has a material slot
-            if obj.material_slots:
-                # Assign the material to the object
-                obj.material_slots[0].material = material
-            else:
-                # If the object doesn't have a material slot, create one and assign the material
-                bpy.context.view_layer.objects.active = obj
-                bpy.ops.object.material_slot_add()
-                obj.material_slots[0].material = material
+    # Get the node group
+    shadow_toggleable_group = bpy.data.node_groups.get("ShadowToggleable")
+    if not shadow_toggleable_group:
+        print("Node group 'ShadowToggleable' not found.")
+        return
+    
+    # Iterate over each material in the collection
+    for obj in collection.objects:
+        if obj.type != 'MESH':
+            continue
+        
+        for slot in obj.material_slots:
+            material = slot.material
+            if material:
+                # Check if the node group is already added to the material
+                is_already_added = False
+                for node in material.node_tree.nodes:
+                    if node.type == 'GROUP' and node.node_tree == shadow_toggleable_group:
+                        is_already_added = True
+                        break
                 
+                if not is_already_added:
+                    # Create a new node group instance
+                    shadow_toggleable_node = material.node_tree.nodes.new('ShaderNodeGroup')
+                    shadow_toggleable_node.node_tree = shadow_toggleable_group
+                    # Position the node in the material node editor
+                    shadow_toggleable_node.location = (0, 0)
+                    
+                    # Find the output node in the material node tree
+                    output_node = None
+                    linked_node = None
+                    for node in material.node_tree.nodes:
+                        if node.type == 'OUTPUT_MATERIAL':
+                            output_node = node
+                        elif node.outputs and node.outputs[0].links:
+                            linked_node = node
+
+                    if output_node:
+                        # Link the node to the output node
+                        material.node_tree.links.new(shadow_toggleable_node.outputs[0], output_node.inputs[0])
+                    else:
+                        print(f"Material Output node not found in material '{material.name}'.")
+
+                    if linked_node:
+                        # Relink the previously linked node to the ShadowToggleable node
+                        material.node_tree.links.new(linked_node.outputs[0], shadow_toggleable_node.inputs[0])
+                    else:
+                        print("No previously linked node found.")
 
 if camera is not None:
     setup_camera(camera)
     add_shadow_catcher_plane()
     add_or_move_area(camera)
-    setup_only_render_shadows(ONLY_RENDER_SHADOWS)
+    modify_or_create_shadow_toggleable_node_group()
+    add_shadow_toggleable_node_to_materials(OBJECT_COLLECTION_NAME)
+#    setup_only_render_shadows(ONLY_RENDER_SHADOWS)
     
 else:
     print("No active camera found in the scene.")

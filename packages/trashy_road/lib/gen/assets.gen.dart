@@ -122,9 +122,6 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/Tiles.tsx
   String get tiles => 'assets/tiles/Tiles.tsx';
 
-  /// File path: assets/tiles/barrel.tx
-  String get barrel => 'assets/tiles/barrel.tx';
-
   /// File path: assets/tiles/map1.tmx
   String get map1 => 'assets/tiles/map1.tmx';
 
@@ -149,10 +146,12 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/trash_plastic.tx
   String get trashPlastic => 'assets/tiles/trash_plastic.tx';
 
+  /// File path: assets/tiles/tree.tx
+  String get tree => 'assets/tiles/tree.tx';
+
   /// List of all assets
   List<String> get values => [
         tiles,
-        barrel,
         map1,
         map2,
         roadLane,
@@ -160,7 +159,8 @@ class $AssetsTilesGen {
         trashCanGlass,
         trashCanPlastic,
         trashGlass,
-        trashPlastic
+        trashPlastic,
+        tree
       ];
 }
 

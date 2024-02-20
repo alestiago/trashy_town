@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
@@ -11,12 +13,13 @@ export 'behaviors/behaviors.dart';
 /// A trash can.
 ///
 /// Trash cans are placed around the map, they are used to dispose of trash.
-abstract class TrashCan extends Obstacle {
+abstract class TrashCan extends PositionedEntity with Untraversable {
   TrashCan({
     required Vector2 position,
     required this.trashType,
     Iterable<Component>? children,
   }) : super(
+          anchor: Anchor.bottomLeft,
           size: Vector2(1, 2)..toGameSize(),
           position: position..snap(),
           behaviors: [
@@ -27,7 +30,17 @@ abstract class TrashCan extends Obstacle {
             _TrashCanShadowSpriteComponent(),
             ...?children,
           ],
-        );
+        ) {
+    add(
+      PropagatingCollisionBehavior(
+        RectangleHitbox(
+          anchor: Anchor.topCenter,
+          size: Vector2.all(0.8)..toGameSize(),
+          position: Vector2(size.x / 2, size.y - GameSettings.gridDimensions.y),
+        ),
+      ),
+    );
+  }
 
   /// Derives a [TrashCan] from a [TiledObject].
   factory TrashCan.fromTiledObject(TiledObject tiledObject) {

@@ -4,6 +4,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/loading/loading.dart';
 
@@ -24,6 +25,10 @@ class _TrashyRoadGameWidgetState extends State<TrashyRoadGameWidget> {
     final gameBloc = context.read<GameBloc>();
     final audioBloc = context.read<AudioCubit>();
     final loadingBloc = context.read<PreloadCubit>();
+    final resolution = Size(
+      GameSettings.gridDimensions.x * 11,
+      (GameSettings.gridDimensions.x * 11) * (1280 / 720),
+    );
 
     TrashyRoadGame gameBuilder() {
       return kDebugMode
@@ -31,12 +36,14 @@ class _TrashyRoadGameWidgetState extends State<TrashyRoadGameWidget> {
               gameBloc: gameBloc,
               images: loadingBloc.images,
               effectPlayer: audioBloc.effectPlayer,
+              resolution: resolution,
               random: _random,
             )
           : TrashyRoadGame(
               gameBloc: gameBloc,
               images: loadingBloc.images,
               effectPlayer: audioBloc.effectPlayer,
+              resolution: resolution,
               random: _random,
             );
     }
@@ -52,7 +59,10 @@ class _TrashyRoadGameWidgetState extends State<TrashyRoadGameWidget> {
         setState(() => _game = gameBuilder());
         gameBloc.add(const GameReadyEvent());
       },
-      child: GameWidget(game: _game!),
+      child: SizedBox.fromSize(
+        size: resolution,
+        child: GameWidget(game: _game!),
+      ),
     );
   }
 }

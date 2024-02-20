@@ -13,6 +13,7 @@ class DebugTrashyRoadGame extends TrashyRoadGame {
     required super.gameBloc,
     required super.effectPlayer,
     required super.random,
+    required super.resolution,
     super.images,
   }) {
     debugMode = true;

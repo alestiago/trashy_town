@@ -31,12 +31,13 @@ class TrashyRoadGame extends FlameGame
     required GameBloc gameBloc,
     required this.effectPlayer,
     required this.random,
+    required Size resolution,
     Images? images,
   })  : _gameBloc = gameBloc,
         super(
           camera: CameraComponent.withFixedResolution(
-            width: 720,
-            height: 1280,
+            width: resolution.width,
+            height: resolution.height,
             viewfinder: Viewfinder()
               ..anchor = const Anchor(.5, .8)
               ..zoom = 1.2,

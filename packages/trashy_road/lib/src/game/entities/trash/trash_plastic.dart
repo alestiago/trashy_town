@@ -7,7 +7,6 @@ import 'package:flutter/animation.dart';
 import 'package:tiled/tiled.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
-import 'package:trashy_road/src/game/components/components.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 class TrashPlastic extends Trash with HasGameReference<TrashyRoadGame> {

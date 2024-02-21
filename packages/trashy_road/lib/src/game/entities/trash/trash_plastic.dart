@@ -7,13 +7,14 @@ import 'package:flutter/animation.dart';
 import 'package:tiled/tiled.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
+import 'package:trashy_road/src/game/components/components.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 class TrashPlastic extends Trash with HasGameReference<TrashyRoadGame> {
   TrashPlastic._({required super.position})
       : super(
           trashType: TrashType.plastic,
-          children: [_PlasticBottle()],
+          children: [_PlasticBottleSpriteGroup()],
         );
 
   /// Derives a [Trash] from a [TiledObject].
@@ -26,13 +27,13 @@ class TrashPlastic extends Trash with HasGameReference<TrashyRoadGame> {
   @override
   FutureOr<void> onLoad() async {
     await super.onLoad();
-    children.register<_PlasticBottle>();
+    children.register<_PlasticBottleSpriteGroup>();
   }
 
   @override
   void removeFromParent() {
     game.effectPlayer.play(AssetSource(Assets.audio.plasticBottle));
-    children.query<_PlasticBottle>().first.add(
+    children.query<_PlasticBottleSpriteGroup>().first.add(
           ScaleEffect.to(
             Vector2.zero(),
             EffectController(
@@ -48,45 +49,23 @@ class TrashPlastic extends Trash with HasGameReference<TrashyRoadGame> {
 /// A plastic bottle.
 ///
 /// Renders the plastic bottle and its shadow.
-class _PlasticBottle extends PositionComponent {
-  _PlasticBottle()
+class _PlasticBottleSpriteGroup extends PositionComponent {
+  _PlasticBottleSpriteGroup()
       : super(
-          // The `position` has been eyeballed to match with the appearance of
-          // the map.
+          // The `position` and `scale` have been eyeballed to match with the
+          // appearance of the map.
           position: Vector2(0.5, 1.2)..toGameSize(),
-          // The `scale` has been eyeballed to match with the appearance of the
-          // map.
           scale: Vector2.all(1.2),
           anchor: Anchor.center,
           children: [
-            _PlasticBottleShadow(),
-            _PlasticBottleBody(),
+            GameSpriteComponent.fromPath(
+              anchor: Anchor.center,
+              spritePath: Assets.images.plasticBottleShadow.path,
+            ),
+            GameSpriteComponent.fromPath(
+              anchor: Anchor.center,
+              spritePath: Assets.images.plasticBottle.path,
+            ),
           ],
         );
-}
-
-class _PlasticBottleBody extends SpriteComponent with HasGameReference {
-  _PlasticBottleBody() : super(anchor: Anchor.center);
-
-  @override
-  FutureOr<void> onLoad() async {
-    await super.onLoad();
-    sprite = await Sprite.load(
-      Assets.images.plasticBottle.path,
-      images: game.images,
-    );
-  }
-}
-
-class _PlasticBottleShadow extends SpriteComponent with HasGameReference {
-  _PlasticBottleShadow() : super(anchor: Anchor.center);
-
-  @override
-  FutureOr<void> onLoad() async {
-    await super.onLoad();
-    sprite = await Sprite.load(
-      Assets.images.plasticBottleShadow.path,
-      images: game.images,
-    );
-  }
 }

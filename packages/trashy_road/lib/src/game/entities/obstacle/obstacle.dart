@@ -59,8 +59,8 @@ class _TreeSpriteGroup extends PositionComponent {
           position: Vector2(-0.1, -0.1)..toGameSize(),
           scale: Vector2.all(0.8),
           children: [
-            _TreeBodySpriteComponent(),
             _TreeShadowSpriteComponent(),
+            _TreeBodySpriteComponent(),
           ],
         );
 }
@@ -81,6 +81,7 @@ class _TreeShadowSpriteComponent extends SpriteComponent with HasGameRef {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    sprite = await Sprite.load(Assets.images.tree.path, images: game.images);
+    sprite =
+        await Sprite.load(Assets.images.treeShadow.path, images: game.images);
   }
 }

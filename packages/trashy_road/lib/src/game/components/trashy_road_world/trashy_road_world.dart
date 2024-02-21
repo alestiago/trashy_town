@@ -39,9 +39,7 @@ class TrashyRoadWorld extends Component {
 
     final obstaclesLayer =
         tiled.tileMap.getObjectGroup(_TiledLayer.obstacles.name);
-    final trees =
-        obstaclesLayer.objects.where((object) => object.type == 'tree');
-    tiled.addAll(trees.map(Obstacle.treeFromTiledObject));
+    tiled.addAll(obstaclesLayer.objects.map(Obstacle.fromTiledObject));
 
     final borderLayer =
         tiled.tileMap.getObjectGroup(_TiledLayer.borderLayer.name);

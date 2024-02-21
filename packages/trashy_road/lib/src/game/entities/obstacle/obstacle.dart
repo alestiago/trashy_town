@@ -53,6 +53,8 @@ class Obstacle extends PositionedEntity with Untraversable {
 class _TreeSpriteGroup extends PositionComponent {
   _TreeSpriteGroup()
       : super(
+          // The `size`, `position` and `scale` have been eye-balled to fit with
+          // the tile size.
           size: Vector2.all(0.8)..toGameSize(),
           position: Vector2(-0.1, -0.1)..toGameSize(),
           scale: Vector2.all(0.8),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flutter/animation.dart';
@@ -8,7 +9,7 @@ import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
-class TrashPlastic extends Trash {
+class TrashPlastic extends Trash with HasGameReference<TrashyRoadGame> {
   TrashPlastic._({required super.position})
       : super(
           trashType: TrashType.plastic,
@@ -30,6 +31,7 @@ class TrashPlastic extends Trash {
 
   @override
   void removeFromParent() {
+    game.effectPlayer.play(AssetSource(Assets.audio.plasticBottle));
     children.query<_PlasticBottle>().first.add(
           ScaleEffect.to(
             Vector2.zero(),

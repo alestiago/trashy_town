@@ -22,6 +22,7 @@ class _TrashyRoadGameWidgetState extends State<TrashyRoadGameWidget> {
   @override
   Widget build(BuildContext context) {
     final gameBloc = context.read<GameBloc>();
+    final audioBloc = context.read<AudioCubit>();
     final loadingBloc = context.read<PreloadCubit>();
 
     TrashyRoadGame gameBuilder() {
@@ -29,11 +30,13 @@ class _TrashyRoadGameWidgetState extends State<TrashyRoadGameWidget> {
           ? DebugTrashyRoadGame(
               gameBloc: gameBloc,
               images: loadingBloc.images,
+              effectPlayer: audioBloc.effectPlayer,
               random: _random,
             )
           : TrashyRoadGame(
               gameBloc: gameBloc,
               images: loadingBloc.images,
+              effectPlayer: audioBloc.effectPlayer,
               random: _random,
             );
     }

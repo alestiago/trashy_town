@@ -16,6 +16,7 @@ class Obstacle extends PositionedEntity with Untraversable {
           behaviors: [
             PropagatingCollisionBehavior(
               RectangleHitbox(
+                isSolid: true,
                 anchor: Anchor.topCenter,
                 size: Vector2.all(0.8)..toGameSize(),
                 position: Vector2(

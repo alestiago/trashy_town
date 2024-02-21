@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
  <tileset firstgid="1" source="Tiles.tsx"/>
- <object class="barrel" gid="5" width="128" height="128"/>
+ <object class="tree" gid="10" width="100" height="100"/>
 </template>

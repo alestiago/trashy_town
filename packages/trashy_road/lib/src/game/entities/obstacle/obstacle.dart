@@ -31,6 +31,9 @@ class Obstacle extends PositionedEntity with Untraversable {
           ],
         );
 
+  // An Obstacle that is a tree.
+  //
+  // The tree takes up 1x1 tile space.
   Obstacle.tree({required Vector2 position})
       : this._(
           position: position,

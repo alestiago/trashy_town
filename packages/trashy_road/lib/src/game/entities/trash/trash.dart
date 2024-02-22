@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
@@ -59,7 +60,7 @@ class Trash extends PositionedEntity with HasGameReference<TrashyRoadGame> {
   }) : this._(
           position: position,
           trashType: TrashType.plastic,
-          children: [_PlasticBottleSpriteGroup()],
+          children: [_PlasticBottleSpriteGroup.getRandomStyle()],
         );
 
   Trash._glassBottle({
@@ -113,25 +114,50 @@ class Trash extends PositionedEntity with HasGameReference<TrashyRoadGame> {
 /// A plastic bottle.
 ///
 /// Renders the plastic bottle and its shadow.
-class _PlasticBottleSpriteGroup extends PositionComponent {
-  _PlasticBottleSpriteGroup()
-      : super(
+class _PlasticBottleSpriteGroup extends PositionComponent
+    with HasGameRef<TrashyRoadGame> {
+  _PlasticBottleSpriteGroup._({
+    required String spritePath,
+    required String shadowPath,
+  }) : super(
           // The `position` and `scale` have been eyeballed to match with the
           // appearance of the map.
-          position: Vector2(0.5, 1.2)..toGameSize(),
+          position: Vector2(0.5, 1.4)..toGameSize(),
           scale: Vector2.all(1.2),
           anchor: Anchor.center,
           children: [
             GameSpriteComponent.fromPath(
               anchor: Anchor.center,
-              spritePath: Assets.images.plasticBottleShadow.path,
+              spritePath: shadowPath,
             ),
             GameSpriteComponent.fromPath(
               anchor: Anchor.center,
-              spritePath: Assets.images.plasticBottle.path,
+              spritePath: spritePath,
             ),
           ],
         );
+
+  factory _PlasticBottleSpriteGroup.getRandomStyle() {
+    // This is temp, what is the best way to get Random from the game in a
+    //factory, DI?
+    switch (Random().nextInt(2)) {
+      case 0:
+        return _PlasticBottleSpriteGroup.styleOne();
+      case 1:
+        return _PlasticBottleSpriteGroup.styleTwo();
+    }
+    return _PlasticBottleSpriteGroup.styleOne();
+  }
+
+  factory _PlasticBottleSpriteGroup.styleOne() => _PlasticBottleSpriteGroup._(
+        spritePath: Assets.images.plasticBottle1.path,
+        shadowPath: Assets.images.plasticBottle1Shadow.path,
+      );
+
+  factory _PlasticBottleSpriteGroup.styleTwo() => _PlasticBottleSpriteGroup._(
+        spritePath: Assets.images.plasticBottle2.path,
+        shadowPath: Assets.images.plasticBottle2Shadow.path,
+      );
 }
 
 class _GlassBottleSprite extends SpriteComponent with HasGameReference {

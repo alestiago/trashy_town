@@ -62,13 +62,21 @@ class $AssetsImagesGen {
   /// File path: assets/images/grass.png
   AssetGenImage get grass => const AssetGenImage('assets/images/grass.png');
 
-  /// File path: assets/images/plastic_bottle-shadow.png
-  AssetGenImage get plasticBottleShadow =>
-      const AssetGenImage('assets/images/plastic_bottle-shadow.png');
+  /// File path: assets/images/plastic_bottle_1-shadow.png
+  AssetGenImage get plasticBottle1Shadow =>
+      const AssetGenImage('assets/images/plastic_bottle_1-shadow.png');
 
-  /// File path: assets/images/plastic_bottle.png
-  AssetGenImage get plasticBottle =>
-      const AssetGenImage('assets/images/plastic_bottle.png');
+  /// File path: assets/images/plastic_bottle_1.png
+  AssetGenImage get plasticBottle1 =>
+      const AssetGenImage('assets/images/plastic_bottle_1.png');
+
+  /// File path: assets/images/plastic_bottle_2-shadow.png
+  AssetGenImage get plasticBottle2Shadow =>
+      const AssetGenImage('assets/images/plastic_bottle_2-shadow.png');
+
+  /// File path: assets/images/plastic_bottle_2.png
+  AssetGenImage get plasticBottle2 =>
+      const AssetGenImage('assets/images/plastic_bottle_2.png');
 
   /// File path: assets/images/player.png
   AssetGenImage get player => const AssetGenImage('assets/images/player.png');
@@ -111,8 +119,10 @@ class $AssetsImagesGen {
         grassRoadSouthwest,
         grassFlowers,
         grass,
-        plasticBottleShadow,
-        plasticBottle,
+        plasticBottle1Shadow,
+        plasticBottle1,
+        plasticBottle2Shadow,
+        plasticBottle2,
         player,
         road,
         trash,
@@ -140,6 +150,9 @@ class $AssetsTilesGen {
 
   /// File path: assets/tiles/Tiles.tsx
   String get tiles => 'assets/tiles/Tiles.tsx';
+
+  /// File path: assets/tiles/bush.tx
+  String get bush => 'assets/tiles/bush.tx';
 
   /// File path: assets/tiles/fire_hydrant.tx
   String get fireHydrant => 'assets/tiles/fire_hydrant.tx';
@@ -174,6 +187,7 @@ class $AssetsTilesGen {
   /// List of all assets
   List<String> get values => [
         tiles,
+        bush,
         fireHydrant,
         map1,
         map2,

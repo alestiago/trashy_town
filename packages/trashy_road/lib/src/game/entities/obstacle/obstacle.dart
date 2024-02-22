@@ -33,7 +33,7 @@ class Obstacle extends PositionedEntity with Untraversable {
   // An Obstacle that is a tree.
   //
   // The tree takes up 1x1 tile space.
-  Obstacle.tree({required Vector2 position})
+  Obstacle._tree({required Vector2 position})
       : this._(
           position: position,
           children: [_TreeSpriteGroup()],
@@ -42,7 +42,7 @@ class Obstacle extends PositionedEntity with Untraversable {
   // An Obstacle that is a fire hydrant.
   //
   // The fire hydrant takes up 1x1 tile space.
-  Obstacle.fireHydrant({required Vector2 position})
+  Obstacle._fireHydrant({required Vector2 position})
       : this._(
           position: position,
           children: [_FireHydrantSpriteGroup()],
@@ -51,7 +51,7 @@ class Obstacle extends PositionedEntity with Untraversable {
   // An Obstacle that is a bush.
   //
   // The bush takes up 1x1 tile space.
-  Obstacle.bush({required Vector2 position})
+  Obstacle._bush({required Vector2 position})
       : this._(
           position: position,
           children: [_BushSpriteGroup()],
@@ -63,11 +63,11 @@ class Obstacle extends PositionedEntity with Untraversable {
 
     switch (type) {
       case 'tree':
-        return Obstacle.tree(position: position);
+        return Obstacle._tree(position: position);
       case 'fire_hydrant':
-        return Obstacle.fireHydrant(position: position);
+        return Obstacle._fireHydrant(position: position);
       case 'bush':
-        return Obstacle.bush(position: position);
+        return Obstacle._bush(position: position);
       default:
         throw ArgumentError('Unknown obstacle type: $type');
     }

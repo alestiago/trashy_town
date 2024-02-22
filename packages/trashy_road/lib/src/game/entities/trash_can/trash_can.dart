@@ -44,14 +44,14 @@ class TrashCan extends PositionedEntity with Untraversable {
     );
   }
 
-  TrashCan.glass({required Vector2 position})
+  TrashCan._glass({required Vector2 position})
       : this._(
           position: position,
           trashType: TrashType.glass,
           children: [_GlassTrashSpriteGroup()],
         );
 
-  TrashCan.plastic({required Vector2 position})
+  TrashCan._plastic({required Vector2 position})
       : this._(
           position: position,
           trashType: TrashType.plastic,
@@ -67,9 +67,9 @@ class TrashCan extends PositionedEntity with Untraversable {
 
     switch (type) {
       case TrashType.plastic:
-        return TrashCan.plastic(position: position);
+        return TrashCan._plastic(position: position);
       case TrashType.glass:
-        return TrashCan.glass(position: position);
+        return TrashCan._glass(position: position);
       case null:
         throw Exception('Invalid trash type: ${tiledObject.properties}');
     }

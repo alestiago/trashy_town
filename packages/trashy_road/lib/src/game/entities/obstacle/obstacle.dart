@@ -39,6 +39,15 @@ class Obstacle extends PositionedEntity with Untraversable {
           children: [_TreeSpriteGroup()],
         );
 
+  // An Obstacle that is a fire hydrant.
+  //
+  // The fire hydrant takes up 1x1 tile space.
+  Obstacle.fireHydrant({required Vector2 position})
+      : this._(
+          position: position,
+          children: [_FireHydrantGroup()],
+        );
+
   factory Obstacle.fromTiledObject(TiledObject tiledObject) {
     final type = tiledObject.type;
     final position = Vector2(tiledObject.x, tiledObject.y);
@@ -46,6 +55,8 @@ class Obstacle extends PositionedEntity with Untraversable {
     switch (type) {
       case 'tree':
         return Obstacle.tree(position: position);
+      case 'fire_hydrant':
+        return Obstacle.fireHydrant(position: position);
       default:
         throw ArgumentError('Unknown obstacle type: $type');
     }
@@ -68,6 +79,27 @@ class _TreeSpriteGroup extends PositionComponent {
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
               spritePath: Assets.images.tree.path,
+            ),
+          ],
+        );
+}
+
+class _FireHydrantGroup extends PositionComponent {
+  _FireHydrantGroup()
+      : super(
+          // The `size`, `position` and `scale` have been eye-balled to fit with
+          // the tile size.
+          size: Vector2.all(1)..toGameSize(),
+          position: Vector2(0.2, 0)..toGameSize(),
+          scale: Vector2.all(1),
+          children: [
+            GameSpriteComponent.fromPath(
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.fireHydrantShadow.path,
+            ),
+            GameSpriteComponent.fromPath(
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.fireHydrant.path,
             ),
           ],
         );

@@ -32,6 +32,14 @@ class $AssetsImagesGen {
   /// File path: assets/images/car.png
   AssetGenImage get car => const AssetGenImage('assets/images/car.png');
 
+  /// File path: assets/images/fire_hydrant-shadow.png
+  AssetGenImage get fireHydrantShadow =>
+      const AssetGenImage('assets/images/fire_hydrant-shadow.png');
+
+  /// File path: assets/images/fire_hydrant.png
+  AssetGenImage get fireHydrant =>
+      const AssetGenImage('assets/images/fire_hydrant.png');
+
   /// File path: assets/images/grass--road-east.png
   AssetGenImage get grassRoadEast =>
       const AssetGenImage('assets/images/grass--road-east.png');
@@ -88,6 +96,8 @@ class $AssetsImagesGen {
         barrel,
         bus,
         car,
+        fireHydrantShadow,
+        fireHydrant,
         grassRoadEast,
         grassRoadSouthwest,
         grassFlowers,

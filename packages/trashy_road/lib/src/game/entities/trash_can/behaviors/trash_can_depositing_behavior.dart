@@ -25,7 +25,7 @@ class TrashCanDepositingBehavior extends Behavior<TrashCan>
     parent.add(_TrashCapacityTextComponent().._updateText(_capacity));
     parent.children
       ..register<_TrashCapacityTextComponent>()
-      ..register<TrashCanPlasticSpriteComponent>();
+      ..register<PlasticTrashCanSpriteAnimationComponent>();
   }
 
   /// Whether the [TrashCan] can deposit some of the [Player]'s trash.
@@ -53,7 +53,11 @@ class TrashCanDepositingBehavior extends Behavior<TrashCan>
         .query<_TrashCapacityTextComponent>()
         .first
         ._updateText(_capacity);
-    parent.children.query<TrashCanPlasticSpriteComponent>().firstOrNull?.open();
+
+    parent.children
+        .query<PlasticTrashCanSpriteAnimationComponent>()
+        .firstOrNull
+        ?.open();
   }
 
   @override

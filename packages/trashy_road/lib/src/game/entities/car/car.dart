@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
@@ -16,7 +15,8 @@ class Car extends Vehicle {
   Car({required super.roadLane})
       : super(
           children: [
-            _CarSpriteComponent(),
+            _CarShadowComponent.fromDirection(roadLane.direction),
+            _CarSpriteComponent.fromDirection(roadLane.direction),
           ],
           hitbox: RectangleHitbox(
             isSolid: true,
@@ -25,19 +25,98 @@ class Car extends Vehicle {
         );
 }
 
-class _CarSpriteComponent extends SpriteComponent with HasGameReference {
-  _CarSpriteComponent()
+class _CarSpriteComponent extends SpriteAnimationComponent
+    with HasGameReference<TrashyRoadGame>, ParentIsA<Car> {
+  _CarSpriteComponent._({required super.position})
       : super(
-          anchor: const Anchor(0, 0.3),
-          paint: Paint()..filterQuality = FilterQuality.high,
+          // eye-balled size to match hitbox
+          scale: Vector2.all(0.9),
         );
+
+  factory _CarSpriteComponent.fromDirection(RoadLaneDirection direction) =>
+      direction == RoadLaneDirection.leftToRight
+          ? _CarSpriteComponent.leftToRight()
+          : _CarSpriteComponent.rightToLeft();
+
+  factory _CarSpriteComponent.rightToLeft() => _CarSpriteComponent._(
+        // eye-balled position to match hitbox
+        position: Vector2(-0.25, -1.5)..toGameSize(),
+      );
+
+  factory _CarSpriteComponent.leftToRight() => _CarSpriteComponent._(
+        // eye-balled position to match hitbox
+        position: Vector2(1.6, -1.5)..toGameSize(),
+      )..flipHorizontally();
+
+  String get _randomCarAssetPath {
+    switch (game.random.nextInt(3)) {
+      case 0:
+        return Assets.images.carBlueDriving.path;
+      case 1:
+        return Assets.images.carRedDriving.path;
+      case 2:
+        return Assets.images.carYellowDriving.path;
+      default:
+        throw UnimplementedError();
+    }
+  }
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+
+    final assetPath = _randomCarAssetPath;
+    final image = await game.images.fetchOrGenerate(
+      assetPath,
+      () => game.images.load(assetPath),
+    );
+
+    animation = SpriteAnimation.fromFrameData(
+      image,
+      SpriteAnimationData.sequenced(
+        amount: 16,
+        amountPerRow: 4,
+        textureSize: Vector2(400, 200),
+        stepTime: 1 / 24,
+      ),
+    );
+  }
+}
+
+class _CarShadowComponent extends SpriteComponent
+    with ParentIsA<Car>, HasGameRef {
+  factory _CarShadowComponent.fromDirection(RoadLaneDirection direction) =>
+      direction == RoadLaneDirection.leftToRight
+          ? _CarShadowComponent.leftToRight()
+          : _CarShadowComponent.rightToLeft();
+
+  factory _CarShadowComponent.rightToLeft() {
+    return _CarShadowComponent._(
+      assetPath: Assets.images.carRightToLeftShadow.path,
+      // eye-balled position to match hitbox
+      position: Vector2(-0.25, -1.5)..toGameSize(),
+    );
+  }
+
+  factory _CarShadowComponent.leftToRight() {
+    return _CarShadowComponent._(
+      assetPath: Assets.images.carLeftToRightShadow.path,
+      // eye-balled position to match hitbox
+      position: Vector2(-0.2, -1.5)..toGameSize(),
+    );
+  }
+  _CarShadowComponent._({required this.assetPath, required super.position})
+      // eye-balled size to match hitbox
+      : super(scale: Vector2.all(0.9));
+
+  final String assetPath;
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
 
     sprite = await Sprite.load(
-      Assets.images.car.path,
+      assetPath,
       images: game.images,
     );
   }

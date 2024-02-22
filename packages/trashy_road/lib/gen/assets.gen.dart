@@ -55,6 +55,26 @@ class $AssetsImagesGen {
   /// File path: assets/images/car.png
   AssetGenImage get car => const AssetGenImage('assets/images/car.png');
 
+  /// File path: assets/images/car_blue-driving.png
+  AssetGenImage get carBlueDriving =>
+      const AssetGenImage('assets/images/car_blue-driving.png');
+
+  /// File path: assets/images/car_left_to_right_shadow.png
+  AssetGenImage get carLeftToRightShadow =>
+      const AssetGenImage('assets/images/car_left_to_right_shadow.png');
+
+  /// File path: assets/images/car_red-driving.png
+  AssetGenImage get carRedDriving =>
+      const AssetGenImage('assets/images/car_red-driving.png');
+
+  /// File path: assets/images/car_right_to_left_shadow.png
+  AssetGenImage get carRightToLeftShadow =>
+      const AssetGenImage('assets/images/car_right_to_left_shadow.png');
+
+  /// File path: assets/images/car_yellow-driving.png
+  AssetGenImage get carYellowDriving =>
+      const AssetGenImage('assets/images/car_yellow-driving.png');
+
   /// File path: assets/images/fire_hydrant-shadow.png
   AssetGenImage get fireHydrantShadow =>
       const AssetGenImage('assets/images/fire_hydrant-shadow.png');
@@ -147,6 +167,11 @@ class $AssetsImagesGen {
         bushShadow,
         bush,
         car,
+        carBlueDriving,
+        carLeftToRightShadow,
+        carRedDriving,
+        carRightToLeftShadow,
+        carYellowDriving,
         fireHydrantShadow,
         fireHydrant,
         grassRoadEast,

@@ -96,7 +96,7 @@ class Trash extends PositionedEntity with HasGameReference<TrashyRoadGame> {
     // TODO(alestiago): Play a sound according to what type of trash it is.
     game.effectPlayer.play(AssetSource(Assets.audio.plasticBottle));
 
-    // TODO(alestiago): Consider wether or not to add the scale effect to the
+    // TODO(alestiago): Consider whether or not to add the scale effect to the
     // trash again.
 
     findBehavior<PropagatingCollisionBehavior>()

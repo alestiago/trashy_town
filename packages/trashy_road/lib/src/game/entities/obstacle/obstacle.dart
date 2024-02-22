@@ -45,7 +45,7 @@ class Obstacle extends PositionedEntity with Untraversable {
   Obstacle.fireHydrant({required Vector2 position})
       : this._(
           position: position,
-          children: [_FireHydrantGroup()],
+          children: [_FireHydrantSpriteGroup()],
         );
 
   // An Obstacle that is a bush.
@@ -54,7 +54,7 @@ class Obstacle extends PositionedEntity with Untraversable {
   Obstacle.bush({required Vector2 position})
       : this._(
           position: position,
-          children: [_BushGroup()],
+          children: [_BushSpriteGroup()],
         );
 
   factory Obstacle.fromTiledObject(TiledObject tiledObject) {
@@ -95,8 +95,8 @@ class _TreeSpriteGroup extends PositionComponent {
         );
 }
 
-class _FireHydrantGroup extends PositionComponent {
-  _FireHydrantGroup()
+class _FireHydrantSpriteGroup extends PositionComponent {
+  _FireHydrantSpriteGroup()
       : super(
           // The `size`, `position` and `scale` have been eye-balled to fit with
           // the tile size.
@@ -116,8 +116,8 @@ class _FireHydrantGroup extends PositionComponent {
         );
 }
 
-class _BushGroup extends PositionComponent {
-  _BushGroup()
+class _BushSpriteGroup extends PositionComponent {
+  _BushSpriteGroup()
       : super(
           // The `size`, `position` and `scale` have been eye-balled to fit with
           // the tile size.

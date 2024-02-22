@@ -29,8 +29,23 @@ class $AssetsImagesGen {
   /// File path: assets/images/bus.png
   AssetGenImage get bus => const AssetGenImage('assets/images/bus.png');
 
+  /// File path: assets/images/bush-shadow.png
+  AssetGenImage get bushShadow =>
+      const AssetGenImage('assets/images/bush-shadow.png');
+
+  /// File path: assets/images/bush.png
+  AssetGenImage get bush => const AssetGenImage('assets/images/bush.png');
+
   /// File path: assets/images/car.png
   AssetGenImage get car => const AssetGenImage('assets/images/car.png');
+
+  /// File path: assets/images/fire_hydrant-shadow.png
+  AssetGenImage get fireHydrantShadow =>
+      const AssetGenImage('assets/images/fire_hydrant-shadow.png');
+
+  /// File path: assets/images/fire_hydrant.png
+  AssetGenImage get fireHydrant =>
+      const AssetGenImage('assets/images/fire_hydrant.png');
 
   /// File path: assets/images/grass--road-east.png
   AssetGenImage get grassRoadEast =>
@@ -87,7 +102,11 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [
         barrel,
         bus,
+        bushShadow,
+        bush,
         car,
+        fireHydrantShadow,
+        fireHydrant,
         grassRoadEast,
         grassRoadSouthwest,
         grassFlowers,
@@ -122,6 +141,9 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/Tiles.tsx
   String get tiles => 'assets/tiles/Tiles.tsx';
 
+  /// File path: assets/tiles/fire_hydrant.tx
+  String get fireHydrant => 'assets/tiles/fire_hydrant.tx';
+
   /// File path: assets/tiles/map1.tmx
   String get map1 => 'assets/tiles/map1.tmx';
 
@@ -152,6 +174,7 @@ class $AssetsTilesGen {
   /// List of all assets
   List<String> get values => [
         tiles,
+        fireHydrant,
         map1,
         map2,
         roadLane,

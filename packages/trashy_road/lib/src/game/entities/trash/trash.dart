@@ -54,7 +54,7 @@ class Trash extends PositionedEntity with HasGameReference<TrashyRoadGame> {
           ],
         );
 
-  Trash.plasticBottle({
+  Trash._plasticBottle({
     required Vector2 position,
   }) : this._(
           position: position,
@@ -62,7 +62,7 @@ class Trash extends PositionedEntity with HasGameReference<TrashyRoadGame> {
           children: [_PlasticBottleSpriteGroup()],
         );
 
-  Trash.glassBottle({
+  Trash._glassBottle({
     required Vector2 position,
   }) : this._(
           position: position,
@@ -79,9 +79,9 @@ class Trash extends PositionedEntity with HasGameReference<TrashyRoadGame> {
 
     switch (type) {
       case TrashType.plastic:
-        return Trash.plasticBottle(position: position);
+        return Trash._plasticBottle(position: position);
       case TrashType.glass:
-        return Trash.glassBottle(position: position);
+        return Trash._glassBottle(position: position);
       case null:
         throw ArgumentError.value(
           type,

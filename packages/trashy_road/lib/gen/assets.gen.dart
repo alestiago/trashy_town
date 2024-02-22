@@ -29,6 +29,13 @@ class $AssetsImagesGen {
   /// File path: assets/images/bus.png
   AssetGenImage get bus => const AssetGenImage('assets/images/bus.png');
 
+  /// File path: assets/images/bush-shadow.png
+  AssetGenImage get bushShadow =>
+      const AssetGenImage('assets/images/bush-shadow.png');
+
+  /// File path: assets/images/bush.png
+  AssetGenImage get bush => const AssetGenImage('assets/images/bush.png');
+
   /// File path: assets/images/car.png
   AssetGenImage get car => const AssetGenImage('assets/images/car.png');
 
@@ -95,6 +102,8 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [
         barrel,
         bus,
+        bushShadow,
+        bush,
         car,
         fireHydrantShadow,
         fireHydrant,
@@ -132,6 +141,9 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/Tiles.tsx
   String get tiles => 'assets/tiles/Tiles.tsx';
 
+  /// File path: assets/tiles/fire_hydrant.tx
+  String get fireHydrant => 'assets/tiles/fire_hydrant.tx';
+
   /// File path: assets/tiles/map1.tmx
   String get map1 => 'assets/tiles/map1.tmx';
 
@@ -162,6 +174,7 @@ class $AssetsTilesGen {
   /// List of all assets
   List<String> get values => [
         tiles,
+        fireHydrant,
         map1,
         map2,
         roadLane,

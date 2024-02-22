@@ -62,6 +62,12 @@ class _CarSpriteComponent extends SpriteAnimationComponent
   }
 
   @override
+  void update(double dt) {
+    super.update(dt);
+    playing = game.camera.canSee(this);
+  }
+
+  @override
   Future<void> onLoad() async {
     await super.onLoad();
 

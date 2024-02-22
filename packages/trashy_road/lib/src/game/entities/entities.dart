@@ -7,6 +7,4 @@ export 'player/player.dart';
 export 'road_lane/road_lane.dart';
 export 'trash/trash.dart';
 export 'trash_can/trash_can.dart';
-export 'trash_can/trash_can_glass.dart';
-export 'trash_can/trash_can_plastic.dart';
 export 'vehicle/vehicle.dart';

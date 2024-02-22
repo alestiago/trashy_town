@@ -25,7 +25,6 @@ class TrashCan extends PositionedEntity with Untraversable {
           size: Vector2(1, 2)..toGameSize(),
           position: position..snap(),
           behaviors: [
-            TrashCanFocusingBehavior(),
             TrashCanDepositingBehavior(),
           ],
           children: [
@@ -74,9 +73,6 @@ class TrashCan extends PositionedEntity with Untraversable {
         throw Exception('Invalid trash type: ${tiledObject.properties}');
     }
   }
-
-  /// Whether the trash can is focused.
-  bool focused = false;
 
   /// The type of trash that the trash can accepts.
   final TrashType trashType;

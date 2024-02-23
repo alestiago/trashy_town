@@ -51,7 +51,8 @@ class _CarSpriteComponent extends GameSpriteAnimationComponent {
   _CarSpriteComponent._rightToLeft({required String spritePath})
       : this._(
           spritePath: spritePath,
-          // The `position` has been eyeballed to match with the overall tile map.
+          // The `position` has been eyeballed to match with the overall tile
+          // map.
           position: Vector2(-0.25, -1.5)..toGameSize(),
         );
 

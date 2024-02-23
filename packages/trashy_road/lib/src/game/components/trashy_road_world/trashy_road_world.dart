@@ -22,9 +22,7 @@ class TrashyRoadWorld extends Component {
   TrashyRoadWorld.create({required this.tiled}) {
     final trashLayer =
         tiled.tileMap.getObjectGroup(_TiledLayer.trashLayer.name);
-    tiled.addAll(
-      trashLayer.objects.map(Trash.fromTiledObject),
-    );
+    tiled.addAll(trashLayer.objects.map(Trash.fromTiledObject));
 
     final coreItemsLayer =
         tiled.tileMap.getObjectGroup(_TiledLayer.coreItemsLayer.name);

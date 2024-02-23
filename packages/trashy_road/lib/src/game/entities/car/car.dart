@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:flame/collisions.dart';
@@ -16,10 +15,7 @@ import 'package:trashy_road/src/game/game.dart';
 class Car extends Vehicle {
   Car({required super.roadLane})
       : super(
-          children: [
-            _CarShadowComponent.fromDirection(roadLane.direction),
-            _CarSpriteComponent.fromDirection(roadLane.direction),
-          ],
+          children: [_CarSpriteGroup.fromDirection(roadLane.direction)],
           hitbox: RectangleHitbox(
             isSolid: true,
             size: Vector2(1.3, 1)..toGameSize(),
@@ -27,106 +23,100 @@ class Car extends Vehicle {
         );
 }
 
-class _CarSpriteComponent extends SpriteAnimationComponent
-    with HasGameReference<TrashyRoadGame>, ParentIsA<Car> {
-  _CarSpriteComponent._({required super.position})
+class _CarSpriteGroup extends Component {
+  _CarSpriteGroup.fromDirection(RoadLaneDirection direction)
       : super(
-          // The `size` has been eyeballed to match with the hitbox.
-          scale: Vector2.all(0.9),
+          children: [
+            _CarShadowComponent._fromDirection(direction),
+            _CarSpriteComponent._fromDirection(direction: direction),
+          ],
         );
-
-  factory _CarSpriteComponent.fromDirection(RoadLaneDirection direction) =>
-      direction == RoadLaneDirection.leftToRight
-          ? _CarSpriteComponent.leftToRight()
-          : _CarSpriteComponent.rightToLeft();
-
-  factory _CarSpriteComponent.rightToLeft() => _CarSpriteComponent._(
-        // eye-balled position to match hitbox
-        position: Vector2(-0.25, -1.5)..toGameSize(),
-      );
-
-  factory _CarSpriteComponent.leftToRight() => _CarSpriteComponent._(
-        // eye-balled position to match hitbox
-        position: Vector2(1.6, -1.5)..toGameSize(),
-      )..flipHorizontally();
-
-  String get _randomCarAssetPath {
-    switch (game.random.nextInt(3)) {
-      case 0:
-        return Assets.images.carBlueDriving.path;
-      case 1:
-        return Assets.images.carRedDriving.path;
-      case 2:
-        return Assets.images.carYellowDriving.path;
-      default:
-        throw UnimplementedError();
-    }
-  }
-
-  @override
-  void update(double dt) {
-    super.update(dt);
-    playing = game.camera.canSee(this);
-  }
-
-  @override
-  Future<void> onLoad() async {
-    await super.onLoad();
-
-    final assetPath = _randomCarAssetPath;
-    final image = await game.images.fetchOrGenerate(
-      assetPath,
-      () => game.images.load(assetPath),
-    );
-
-    animation = SpriteAnimation.fromFrameData(
-      image,
-      SpriteAnimationData.sequenced(
-        amount: 16,
-        amountPerRow: 4,
-        textureSize: Vector2(400, 200),
-        stepTime: 1 / 24,
-      ),
-    );
-  }
 }
 
-class _CarShadowComponent extends SpriteComponent
-    with ParentIsA<Car>, HasGameRef {
-  _CarShadowComponent._({required this.assetPath, required super.position})
-      // eye-balled size to match hitbox
-      : super(scale: Vector2.all(0.9));
+class _CarSpriteComponent extends GameSpriteAnimationComponent {
+  _CarSpriteComponent._({
+    required super.spritePath,
+    super.position,
+  }) : super.fromPath(
+          // The `scale` has been eyeballed to match with the overall tile map.
+          scale: Vector2.all(0.9),
+          animationData: SpriteAnimationData.sequenced(
+            amount: 16,
+            amountPerRow: 4,
+            textureSize: Vector2(400, 200),
+            stepTime: 1 / 24,
+          ),
+        );
 
-  factory _CarShadowComponent.fromDirection(RoadLaneDirection direction) =>
-      direction == RoadLaneDirection.leftToRight
-          ? _CarShadowComponent.leftToRight()
-          : _CarShadowComponent.rightToLeft();
-
-  _CarShadowComponent.rightToLeft()
+  _CarSpriteComponent._rightToLeft({required String spritePath})
       : this._(
-          assetPath: Assets.images.carRightToLeftShadow.path,
-          // The `position` has been eyeballed to match with the hitbox.
+          spritePath: spritePath,
+          // The `position` has been eyeballed to match with the overall tile map.
           position: Vector2(-0.25, -1.5)..toGameSize(),
         );
 
-  _CarShadowComponent.leftToRight()
-      : this._(
-          assetPath: Assets.images.carLeftToRightShadow.path,
-          // The `position` has been eyeballed to match with the hitbox.
+  factory _CarSpriteComponent._leftToRight({required String spritePath}) {
+    return _CarSpriteComponent._(
+      spritePath: spritePath,
+      // The `position` has been eyeballed to match with the overall tile map.
+      position: Vector2(1.6, -1.5)..toGameSize(),
+    )..flipHorizontally();
+  }
+
+  /// Creates a [_CarSpriteComponent] that is oriented as per the [direction].
+  ///
+  /// The `style` of the car is selected randomly.
+  factory _CarSpriteComponent._fromDirection({
+    required RoadLaneDirection direction,
+  }) {
+    final style = CarStyle._randomize();
+    final spritePath = () {
+      switch (style) {
+        case CarStyle.blue:
+          return Assets.images.carBlueDriving.path;
+        case CarStyle.red:
+          return Assets.images.carRedDriving.path;
+        case CarStyle.yellow:
+          return Assets.images.carYellowDriving.path;
+      }
+    }();
+
+    return direction == RoadLaneDirection.leftToRight
+        ? _CarSpriteComponent._leftToRight(spritePath: spritePath)
+        : _CarSpriteComponent._rightToLeft(spritePath: spritePath);
+  }
+}
+
+class _CarShadowComponent extends GameSpriteComponent {
+  _CarShadowComponent.fromPath({
+    required super.spritePath,
+    super.position,
+  }) : super.fromPath(
+          // The `scale` has been eyeballed to match with the overall tile map.
+          scale: Vector2.all(0.9),
+        );
+
+  _CarShadowComponent._rightToLeft()
+      : this.fromPath(
+          spritePath: Assets.images.carRightToLeftShadow.path,
+          // The `position` has been eyeballed to match with the overall tile
+          // map.
+          position: Vector2(-0.25, -1.5)..toGameSize(),
+        );
+
+  _CarShadowComponent._leftToRight()
+      : this.fromPath(
+          spritePath: Assets.images.carLeftToRightShadow.path,
+          // The `position` has been eyeballed to match with the overall tile
+          // map.
           position: Vector2(-0.2, -1.5)..toGameSize(),
         );
 
-  final String assetPath;
-
-  @override
-  Future<void> onLoad() async {
-    await super.onLoad();
-
-    sprite = await Sprite.load(
-      assetPath,
-      images: game.images,
-    );
-  }
+  /// Creates a [_CarShadowComponent] that is oriented as per the [direction].
+  factory _CarShadowComponent._fromDirection(RoadLaneDirection direction) =>
+      direction == RoadLaneDirection.leftToRight
+          ? _CarShadowComponent._leftToRight()
+          : _CarShadowComponent._rightToLeft();
 }
 
 /// The different styles of cars.

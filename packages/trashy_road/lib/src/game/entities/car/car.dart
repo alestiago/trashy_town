@@ -130,7 +130,7 @@ class _CarShadowComponent extends SpriteComponent
   }
 }
 
-/// The different styles of plastic bottles.
+/// The different styles of cars.
 enum CarStyle {
   /// {@template _CarStyle.blue}
   /// A five-door hatchback blue car.

@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:meta/meta.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/game.dart';
@@ -29,7 +31,7 @@ class _CarSpriteComponent extends SpriteAnimationComponent
     with HasGameReference<TrashyRoadGame>, ParentIsA<Car> {
   _CarSpriteComponent._({required super.position})
       : super(
-          // eye-balled size to match hitbox
+          // The `size` has been eyeballed to match with the hitbox.
           scale: Vector2.all(0.9),
         );
 
@@ -99,7 +101,7 @@ class _CarShadowComponent extends SpriteComponent
   factory _CarShadowComponent.rightToLeft() {
     return _CarShadowComponent._(
       assetPath: Assets.images.carRightToLeftShadow.path,
-      // eye-balled position to match hitbox
+      // The `position` has been eyeballed to match with the hitbox.
       position: Vector2(-0.25, -1.5)..toGameSize(),
     );
   }
@@ -107,7 +109,7 @@ class _CarShadowComponent extends SpriteComponent
   factory _CarShadowComponent.leftToRight() {
     return _CarShadowComponent._(
       assetPath: Assets.images.carLeftToRightShadow.path,
-      // eye-balled position to match hitbox
+      // The `position` has been eyeballed to match with the hitbox.
       position: Vector2(-0.2, -1.5)..toGameSize(),
     );
   }
@@ -126,4 +128,30 @@ class _CarShadowComponent extends SpriteComponent
       images: game.images,
     );
   }
+}
+
+/// The different styles of plastic bottles.
+enum CarStyle {
+  /// {@template _CarStyle.blue}
+  /// A five-door hatchback blue car.
+  /// {@endtemplate}
+  blue,
+
+  /// {@template _CarStyle.red}
+  /// A five-door hatchback red car.
+  /// {@endtemplate}
+  red,
+
+  /// {@template _CarStyle.red}
+  /// A five-door hatchback yellow car.
+  /// {@endtemplate}
+  yellow;
+
+  factory CarStyle._randomize({
+    @visibleForTesting Random? random,
+  }) {
+    return CarStyle.values[(random ?? _random).nextInt(CarStyle.values.length)];
+  }
+
+  static final _random = Random();
 }

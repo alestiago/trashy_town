@@ -23,6 +23,22 @@ class $AssetsAudioGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/apple_core_1-shadow.png
+  AssetGenImage get appleCore1Shadow =>
+      const AssetGenImage('assets/images/apple_core_1-shadow.png');
+
+  /// File path: assets/images/apple_core_1.png
+  AssetGenImage get appleCore1 =>
+      const AssetGenImage('assets/images/apple_core_1.png');
+
+  /// File path: assets/images/apple_core_2-shadow.png
+  AssetGenImage get appleCore2Shadow =>
+      const AssetGenImage('assets/images/apple_core_2-shadow.png');
+
+  /// File path: assets/images/apple_core_2.png
+  AssetGenImage get appleCore2 =>
+      const AssetGenImage('assets/images/apple_core_2.png');
+
   /// File path: assets/images/barrel.png
   AssetGenImage get barrel => const AssetGenImage('assets/images/barrel.png');
 
@@ -108,6 +124,10 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
+        appleCore1Shadow,
+        appleCore1,
+        appleCore2Shadow,
+        appleCore2,
         barrel,
         bus,
         bushShadow,
@@ -172,11 +192,17 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/trash_can_glass.tx
   String get trashCanGlass => 'assets/tiles/trash_can_glass.tx';
 
+  /// File path: assets/tiles/trash_can_organic.tx
+  String get trashCanOrganic => 'assets/tiles/trash_can_organic.tx';
+
   /// File path: assets/tiles/trash_can_plastic.tx
   String get trashCanPlastic => 'assets/tiles/trash_can_plastic.tx';
 
   /// File path: assets/tiles/trash_glass.tx
   String get trashGlass => 'assets/tiles/trash_glass.tx';
+
+  /// File path: assets/tiles/trash_organic.tx
+  String get trashOrganic => 'assets/tiles/trash_organic.tx';
 
   /// File path: assets/tiles/trash_plastic.tx
   String get trashPlastic => 'assets/tiles/trash_plastic.tx';
@@ -194,8 +220,10 @@ class $AssetsTilesGen {
         roadLane,
         spawn,
         trashCanGlass,
+        trashCanOrganic,
         trashCanPlastic,
         trashGlass,
+        trashOrganic,
         trashPlastic,
         tree
       ];

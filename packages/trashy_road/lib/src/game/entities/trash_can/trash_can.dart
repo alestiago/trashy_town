@@ -50,6 +50,13 @@ class TrashCan extends PositionedEntity with Untraversable {
           children: [_GlassTrashSpriteGroup()],
         );
 
+  TrashCan._organic({required Vector2 position})
+      : this._(
+          position: position,
+          trashType: TrashType.organic,
+          children: [_OrganicTrashSpriteGroup()],
+        );
+
   TrashCan._plastic({required Vector2 position})
       : this._(
           position: position,
@@ -69,6 +76,8 @@ class TrashCan extends PositionedEntity with Untraversable {
         return TrashCan._plastic(position: position);
       case TrashType.glass:
         return TrashCan._glass(position: position);
+      case TrashType.organic:
+        return TrashCan._organic(position: position);
       case null:
         throw Exception('Invalid trash type: ${tiledObject.properties}');
     }
@@ -105,6 +114,27 @@ class _GlassTrashSpriteGroup extends SpriteComponent with HasGameReference {
     add(
       ColorEffect(
         Colors.green,
+        EffectController(
+          duration: 0,
+        ),
+        opacityTo: 0.5,
+      ),
+    );
+    sprite = await Sprite.load(
+      Assets.images.trashCan.path,
+      images: game.images,
+    );
+  }
+}
+
+class _OrganicTrashSpriteGroup extends SpriteComponent with HasGameReference {
+  @override
+  FutureOr<void> onLoad() async {
+    await super.onLoad();
+
+    add(
+      ColorEffect(
+        Colors.brown,
         EffectController(
           duration: 0,
         ),

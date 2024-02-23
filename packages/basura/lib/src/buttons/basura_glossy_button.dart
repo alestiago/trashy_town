@@ -9,8 +9,9 @@ class BasuraGlossyButton extends StatelessWidget {
   /// {@macro BasuraGlossyButton}
   const BasuraGlossyButton({
     required this.child,
-    super.key,
+    this.onPressed,
     this.style,
+    super.key,
   });
 
   /// {@macro BasuraGlossyButtonStyle}
@@ -21,6 +22,11 @@ class BasuraGlossyButton extends StatelessWidget {
   /// Usually a [Text] showing the button's label.
   final Widget child;
 
+  /// {@template BasuraGlossyButton.onPressed}
+  /// A callback that is called when the button is pressed.
+  /// {@endtemplate}
+  final VoidCallback? onPressed;
+
   @override
   Widget build(BuildContext context) {
     // TODO(alestiago): Add semantic tree.
@@ -30,40 +36,44 @@ class BasuraGlossyButton extends StatelessWidget {
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: const Color(0xFFFFFFFF).withOpacity(0.9),
-          borderRadius: BorderRadius.circular(15),
-          gradient: const RadialGradient(
-            radius: 2,
-            colors: [
-              Color(0xFF009042),
-              Color(0xFFFFFFFF),
-            ],
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(4),
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                width: 2,
-                color: const Color(0xFF096F00),
-              ),
-              gradient: const LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment(0, -1.1),
-                stops: [0, 1.1],
-                colors: [
-                  Color(0xFF2F965E),
-                  Color(0xFFFFFBF3),
-                ],
-              ),
+      child: GestureDetector(
+        onTap: onPressed,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: const Color(0xFFFFFFFF).withOpacity(0.9),
+            borderRadius: BorderRadius.circular(15),
+            gradient: const RadialGradient(
+              radius: 2,
+              colors: [
+                Color(0xFF009042),
+                Color(0xFFFFFFFF),
+              ],
             ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 6),
-              child: child,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(4),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  width: 2,
+                  color: const Color(0xFF096F00),
+                ),
+                gradient: const LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment(0, -1.1),
+                  stops: [0, 1.1],
+                  colors: [
+                    Color(0xFF2F965E),
+                    Color(0xFFFFFBF3),
+                  ],
+                ),
+              ),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 6),
+                child: child,
+              ),
             ),
           ),
         ),
@@ -87,15 +97,20 @@ class BasuraGlossyTextButton extends StatelessWidget {
   /// {@macro BasuraGlossyTextButton}
   const BasuraGlossyTextButton({
     required this.label,
+    this.onPressed,
     super.key,
   });
 
   /// The button's label.
   final String label;
 
+  /// {@macro BasuraGlossyButton.onPressed}
+  final VoidCallback? onPressed;
+
   @override
   Widget build(BuildContext context) {
     return BasuraGlossyButton(
+      onPressed: onPressed,
       child: BasuraOutlinedText(
         outlineColor: const Color(0xFF096F00),
         strokeWidth: 6,

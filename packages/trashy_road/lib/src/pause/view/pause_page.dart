@@ -1,3 +1,4 @@
+import 'package:basura/basura.dart';
 import 'package:flutter/material.dart';
 import 'package:trashy_road/src/maps/maps.dart';
 
@@ -73,13 +74,13 @@ class PausePage extends StatelessWidget {
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextButton(
+          BasuraGlossyTextButton(
+            label: 'Replay',
             onPressed: () => _onReplay(context),
-            child: const Text('Replay'),
           ),
-          TextButton(
+          BasuraGlossyTextButton(
+            label: 'Menu',
             onPressed: () => _onMenu(context),
-            child: const Text('Menu'),
           ),
         ],
       ),

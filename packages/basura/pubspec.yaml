@@ -1,7 +1,7 @@
 name: basura
 description: >-
-  Flutter widgets and themes implementing the Trashy Road design language,
-  named "Basura".
+  Flutter widgets and themes implementing the Trashy Road design language, named
+  "Basura".
 version: 0.1.0+1
 publish_to: none
 
@@ -10,6 +10,7 @@ environment:
   flutter: "^3.19.0"
 
 dependencies:
+  equatable: ^2.0.5
   flutter:
     sdk: flutter
 

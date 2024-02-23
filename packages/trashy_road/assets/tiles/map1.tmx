@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="16" height="32" tilewidth="128" tileheight="64" infinite="0" nextlayerid="9" nextobjectid="118">
+<map version="1.9" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="16" height="32" tilewidth="128" tileheight="64" infinite="0" nextlayerid="9" nextobjectid="121">
  <tileset firstgid="1" source="Tiles.tsx"/>
  <layer id="1" name="Background" width="16" height="32">
   <data encoding="csv">
@@ -166,6 +166,16 @@
     <property name="type" value="organic"/>
    </properties>
   </object>
+  <object id="119" template="trash_paper.tx" name="paper" class="trash" gid="3" x="1152" y="1920" width="128" height="128">
+   <properties>
+    <property name="type" value="paper"/>
+   </properties>
+  </object>
+  <object id="120" template="trash_paper.tx" name="paper" class="trash" gid="3" x="1280" y="1920" width="128" height="128">
+   <properties>
+    <property name="type" value="paper"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="4" name="CoreItemsLayer">
   <object id="70" template="trash_can_plastic.tx" name="trash_can_plastic" class="trash_can" gid="4" x="768" y="1664" width="128" height="128">
@@ -173,15 +183,20 @@
     <property name="type" value="plastic"/>
    </properties>
   </object>
-  <object id="71" template="trash_can_glass.tx" name="trash_can_glass" class="trash_can" gid="4" x="1024" y="1472" width="128" height="128">
+  <object id="71" template="trash_can_glass.tx" name="trash_can_glass" class="trash_can" gid="4" x="1024" y="1664" width="128" height="128">
    <properties>
     <property name="type" value="glass"/>
    </properties>
   </object>
   <object id="77" template="spawn.tx" name="player" class="player" x="832" y="1952"/>
-  <object id="114" template="trash_can_organic.tx" name="trash_can_organic" class="trash_can" gid="4" x="1152" y="1536" width="128" height="128">
+  <object id="114" template="trash_can_organic.tx" name="trash_can_organic" class="trash_can" gid="4" x="1152" y="1664" width="128" height="128">
    <properties>
     <property name="type" value="organic"/>
+   </properties>
+  </object>
+  <object id="118" template="trash_can_paper.tx" name="trash_can_paper" class="trash_can" gid="4" x="896" y="1536" width="128" height="128">
+   <properties>
+    <property name="type" value="paper"/>
    </properties>
   </object>
  </objectgroup>

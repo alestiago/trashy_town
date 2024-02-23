@@ -17,7 +17,8 @@ import 'package:trashy_road/src/game/game.dart';
 enum TrashType {
   plastic._('plastic'),
   glass._('glass'),
-  organic._('organic');
+  organic._('organic'),
+  paper._('paper');
 
   const TrashType._(this.name);
 
@@ -82,6 +83,15 @@ class Trash extends PositionedEntity with HasGameReference<TrashyRoadGame> {
           children: [_AppleCoreSpriteGroup._fromStyle(style)],
         );
 
+  Trash._paper({
+    required Vector2 position,
+    required PaperStackStyle style,
+  }) : this._(
+          position: position,
+          trashType: TrashType.paper,
+          children: [_PaperStackSpriteGroup._fromStyle(style)],
+        );
+
   /// Derives a [Trash] from a [TiledObject].
   factory Trash.fromTiledObject(TiledObject tiledObject) {
     final type = TrashType.tryParse(
@@ -98,6 +108,9 @@ class Trash extends PositionedEntity with HasGameReference<TrashyRoadGame> {
       case TrashType.organic:
         final style = AppleCoreStyle._randomize();
         return Trash._appleCore(position: position, style: style);
+      case TrashType.paper:
+        final style = PaperStackStyle._randomize();
+        return Trash._paper(position: position, style: style);
       case null:
         throw ArgumentError.value(
           type,
@@ -168,6 +181,28 @@ enum AppleCoreStyle {
   }) {
     return AppleCoreStyle
         .values[(random ?? _random).nextInt(AppleCoreStyle.values.length)];
+  }
+
+  static final _random = Random();
+}
+
+/// The different styles of paper.
+enum PaperStackStyle {
+  /// {@template _PaperStyle.one}
+  /// Paper in a neat pile.
+  /// {@endtemplate}
+  one,
+
+  /// {@template _PaperStyle.two}
+  /// Paper scattered around.
+  /// {@endtemplate}
+  two;
+
+  factory PaperStackStyle._randomize({
+    @visibleForTesting Random? random,
+  }) {
+    return PaperStackStyle
+        .values[(random ?? _random).nextInt(PaperStackStyle.values.length)];
   }
 
   static final _random = Random();
@@ -292,5 +327,56 @@ class _AppleCoreSpriteGroup extends PositionComponent
   factory _AppleCoreSpriteGroup._styleTwo() => _AppleCoreSpriteGroup._(
         spritePath: Assets.images.appleCore2.path,
         shadowPath: Assets.images.appleCore2Shadow.path,
+      );
+}
+
+/// A stack of paper
+///
+/// Renders a stack of paper and its shadow.
+class _PaperStackSpriteGroup extends PositionComponent
+    with HasGameRef<TrashyRoadGame> {
+  _PaperStackSpriteGroup._({
+    required String spritePath,
+    required String shadowPath,
+  }) : super(
+          // The `position` and `scale` have been eyeballed to match with the
+          // appearance of the map.
+          position: Vector2(0.6, 1.4)..toGameSize(),
+          scale: Vector2.all(1),
+          anchor: Anchor.center,
+          children: [
+            GameSpriteComponent.fromPath(
+              anchor: Anchor.center,
+              spritePath: shadowPath,
+            ),
+            GameSpriteComponent.fromPath(
+              anchor: Anchor.center,
+              spritePath: spritePath,
+            ),
+          ],
+        );
+
+  /// Derives an [_PaperStackSpriteGroup] from an [PaperStackStyle].
+  factory _PaperStackSpriteGroup._fromStyle(
+    PaperStackStyle style,
+  ) {
+    switch (style) {
+      case PaperStackStyle.one:
+        return _PaperStackSpriteGroup._styleOne();
+      case PaperStackStyle.two:
+        return _PaperStackSpriteGroup._styleTwo();
+    }
+  }
+
+  /// {@macro _PaperStackStyle.one}
+  factory _PaperStackSpriteGroup._styleOne() => _PaperStackSpriteGroup._(
+        spritePath: Assets.images.paper1.path,
+        shadowPath: Assets.images.paper1Shadow.path,
+      );
+
+  /// {@macro _PaperStackStyle.two}
+  factory _PaperStackSpriteGroup._styleTwo() => _PaperStackSpriteGroup._(
+        spritePath: Assets.images.paper2.path,
+        shadowPath: Assets.images.paper2Shadow.path,
       );
 }

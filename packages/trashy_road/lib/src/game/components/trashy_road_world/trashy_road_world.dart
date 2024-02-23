@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
@@ -19,10 +20,16 @@ enum _TiledLayer {
 }
 
 class TrashyRoadWorld extends Component {
-  TrashyRoadWorld.create({required this.tiled}) {
+  TrashyRoadWorld.create({
+    required this.tiled,
+    required Random random,
+  }) {
     final trashLayer =
         tiled.tileMap.getObjectGroup(_TiledLayer.trashLayer.name);
-    tiled.addAll(trashLayer.objects.map(Trash.fromTiledObject));
+    tiled.addAll(
+      trashLayer.objects
+          .map((object) => Trash.fromTiledObject(object, random: random)),
+    );
 
     final coreItemsLayer =
         tiled.tileMap.getObjectGroup(_TiledLayer.coreItemsLayer.name);

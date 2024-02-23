@@ -5,11 +5,14 @@ class BasuraOutlinedText extends StatelessWidget {
     super.key,
     required this.child,
     required this.outlineColor,
+    this.strokeWidth = 1,
   });
 
   final Text child;
 
   final Color outlineColor;
+
+  final double strokeWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,7 @@ class BasuraOutlinedText extends StatelessWidget {
           style: child.style?.copyWith(
             foreground: Paint()
               ..style = PaintingStyle.stroke
-              ..strokeWidth = 6
+              ..strokeWidth = strokeWidth
               ..color = outlineColor,
           ),
         ),

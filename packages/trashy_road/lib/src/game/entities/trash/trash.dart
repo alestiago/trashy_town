@@ -13,14 +13,6 @@ import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
-/// Random number generator.
-///
-/// Usually uses to randomize the appearence of trash.
-// TODO(alestiago): Consider refactoring to re-use the game's random number
-// generator.
-// https://github.com/alestiago/trashy_road/issues/181
-final _random = Random();
-
 /// The different types of [Trash].
 enum TrashType {
   plastic._('plastic'),
@@ -65,10 +57,11 @@ class Trash extends PositionedEntity with HasGameReference<TrashyRoadGame> {
 
   Trash._plasticBottle({
     required Vector2 position,
+    required PlasticBottleStyle style,
   }) : this._(
           position: position,
           trashType: TrashType.plastic,
-          children: [_PlasticBottleSpriteGroup.getRandomStyle()],
+          children: [_PlasticBottleSpriteGroup._fromStyle(style)],
         );
 
   Trash._glassBottle({
@@ -88,7 +81,8 @@ class Trash extends PositionedEntity with HasGameReference<TrashyRoadGame> {
 
     switch (type) {
       case TrashType.plastic:
-        return Trash._plasticBottle(position: position);
+        final style = PlasticBottleStyle._randomize();
+        return Trash._plasticBottle(position: position, style: style);
       case TrashType.glass:
         return Trash._glassBottle(position: position);
       case null:
@@ -119,6 +113,30 @@ class Trash extends PositionedEntity with HasGameReference<TrashyRoadGame> {
   final TrashType trashType;
 }
 
+/// The different styles of plastic bottles.
+enum PlasticBottleStyle {
+  /// {@template _PlasticBottleStyle.one}
+  /// A crashed plastic bottle that is laying on the ground with its lid facing
+  /// east.
+  /// {@endtemplate}
+  one,
+
+  /// {@template _PlasticBottleStyle.two}
+  /// A crashed plastic bottle that is laying on the ground with its lid facing
+  /// south-east.
+  /// {@endtemplate}
+  two;
+
+  factory PlasticBottleStyle._randomize({
+    @visibleForTesting Random? random,
+  }) {
+    return PlasticBottleStyle
+        .values[(random ?? _random).nextInt(PlasticBottleStyle.values.length)];
+  }
+
+  static final _random = Random();
+}
+
 /// A plastic bottle.
 ///
 /// Renders the plastic bottle and its shadow.
@@ -145,27 +163,26 @@ class _PlasticBottleSpriteGroup extends PositionComponent
           ],
         );
 
-  factory _PlasticBottleSpriteGroup.getRandomStyle() {
-    switch (_random.nextInt(2)) {
-      case 0:
-        return _PlasticBottleSpriteGroup.styleOne();
-      case 1:
-        return _PlasticBottleSpriteGroup.styleTwo();
-      default:
-        return _PlasticBottleSpriteGroup.styleOne();
+  /// Derives a [_PlasticBottleSpriteGroup] from a [PlasticBottleStyle].
+  factory _PlasticBottleSpriteGroup._fromStyle(
+    PlasticBottleStyle style,
+  ) {
+    switch (style) {
+      case PlasticBottleStyle.one:
+        return _PlasticBottleSpriteGroup._styleOne();
+      case PlasticBottleStyle.two:
+        return _PlasticBottleSpriteGroup._styleTwo();
     }
   }
 
-  /// A crashed plastic bottle that is lying on the ground with its lid facing
-  /// east.
-  factory _PlasticBottleSpriteGroup.styleOne() => _PlasticBottleSpriteGroup._(
+  /// {@macro _PlasticBottleStyle.one}
+  factory _PlasticBottleSpriteGroup._styleOne() => _PlasticBottleSpriteGroup._(
         spritePath: Assets.images.plasticBottle1.path,
         shadowPath: Assets.images.plasticBottle1Shadow.path,
       );
 
-  /// A crashed plastic bottle that is lying on the ground with its lid facing
-  /// south-east.
-  factory _PlasticBottleSpriteGroup.styleTwo() => _PlasticBottleSpriteGroup._(
+  /// {@macro _PlasticBottleStyle.two}
+  factory _PlasticBottleSpriteGroup._styleTwo() => _PlasticBottleSpriteGroup._(
         spritePath: Assets.images.plasticBottle2.path,
         shadowPath: Assets.images.plasticBottle2Shadow.path,
       );

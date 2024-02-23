@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:basura/basura.dart';
 import 'package:flame/cache.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,13 +30,16 @@ class _MyApp extends StatelessWidget {
           create: (context) => GameMapsBloc(),
         ),
       ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
+      child: BasuraTheme(
+        data: BasuraThemeData.light(),
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          home: const LoadingPage(),
         ),
-        home: const LoadingPage(),
       ),
     );
   }

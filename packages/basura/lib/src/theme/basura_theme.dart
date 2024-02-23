@@ -65,8 +65,9 @@ class BasuraThemeData extends Equatable {
     final textTheme = BasuraTextThemeData(
       button: TextStyle(
         fontFamily: BasuraFontFamily.lilitaOne.name,
-        fontSize: 16,
+        fontSize: 50,
         package: Basura.packageName,
+        color: const Color(0xFFFFFFFF),
       ),
     );
 

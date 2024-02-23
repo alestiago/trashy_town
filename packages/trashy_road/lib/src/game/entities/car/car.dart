@@ -93,29 +93,28 @@ class _CarSpriteComponent extends SpriteAnimationComponent
 
 class _CarShadowComponent extends SpriteComponent
     with ParentIsA<Car>, HasGameRef {
+  _CarShadowComponent._({required this.assetPath, required super.position})
+      // eye-balled size to match hitbox
+      : super(scale: Vector2.all(0.9));
+
   factory _CarShadowComponent.fromDirection(RoadLaneDirection direction) =>
       direction == RoadLaneDirection.leftToRight
           ? _CarShadowComponent.leftToRight()
           : _CarShadowComponent.rightToLeft();
 
-  factory _CarShadowComponent.rightToLeft() {
-    return _CarShadowComponent._(
-      assetPath: Assets.images.carRightToLeftShadow.path,
-      // The `position` has been eyeballed to match with the hitbox.
-      position: Vector2(-0.25, -1.5)..toGameSize(),
-    );
-  }
+  _CarShadowComponent.rightToLeft()
+      : this._(
+          assetPath: Assets.images.carRightToLeftShadow.path,
+          // The `position` has been eyeballed to match with the hitbox.
+          position: Vector2(-0.25, -1.5)..toGameSize(),
+        );
 
-  factory _CarShadowComponent.leftToRight() {
-    return _CarShadowComponent._(
-      assetPath: Assets.images.carLeftToRightShadow.path,
-      // The `position` has been eyeballed to match with the hitbox.
-      position: Vector2(-0.2, -1.5)..toGameSize(),
-    );
-  }
-  _CarShadowComponent._({required this.assetPath, required super.position})
-      // eye-balled size to match hitbox
-      : super(scale: Vector2.all(0.9));
+  _CarShadowComponent.leftToRight()
+      : this._(
+          assetPath: Assets.images.carLeftToRightShadow.path,
+          // The `position` has been eyeballed to match with the hitbox.
+          position: Vector2(-0.2, -1.5)..toGameSize(),
+        );
 
   final String assetPath;
 

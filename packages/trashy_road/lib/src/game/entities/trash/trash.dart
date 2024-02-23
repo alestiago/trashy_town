@@ -116,13 +116,13 @@ class Trash extends PositionedEntity with HasGameReference<TrashyRoadGame> {
 /// The different styles of plastic bottles.
 enum PlasticBottleStyle {
   /// {@template _PlasticBottleStyle.one}
-  /// A crashed plastic bottle that is lying on the ground with its lid facing
+  /// A crashed plastic bottle that is laying on the ground with its lid facing
   /// east.
   /// {@endtemplate}
   one,
 
   /// {@template _PlasticBottleStyle.two}
-  /// A crashed plastic bottle that is lying on the ground with its lid facing
+  /// A crashed plastic bottle that is laying on the ground with its lid facing
   /// south-east.
   /// {@endtemplate}
   two;
@@ -175,15 +175,13 @@ class _PlasticBottleSpriteGroup extends PositionComponent
     }
   }
 
-  /// A crashed plastic bottle that is lying on the ground with its lid facing
-  /// east.
+  /// {@macro _PlasticBottleStyle.one}
   factory _PlasticBottleSpriteGroup._styleOne() => _PlasticBottleSpriteGroup._(
         spritePath: Assets.images.plasticBottle1.path,
         shadowPath: Assets.images.plasticBottle1Shadow.path,
       );
 
-  /// A crashed plastic bottle that is lying on the ground with its lid facing
-  /// south-east.
+  /// {@macro _PlasticBottleStyle.two}
   factory _PlasticBottleSpriteGroup._styleTwo() => _PlasticBottleSpriteGroup._(
         spritePath: Assets.images.plasticBottle2.path,
         shadowPath: Assets.images.plasticBottle2Shadow.path,

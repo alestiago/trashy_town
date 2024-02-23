@@ -38,18 +38,7 @@ class _MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          home: Builder(
-            builder: (context) {
-              return Scaffold(
-                body: BasuraGlossyButton(
-                  child: Text(
-                    'Hello',
-                    style: BasuraTheme.of(context).textTheme.button,
-                  ),
-                ),
-              );
-            },
-          ),
+          home: const LoadingPage(),
         ),
       ),
     );

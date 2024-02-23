@@ -39,15 +39,22 @@ class _MapsMenuView extends StatelessWidget {
         selector: (state) => state.maps,
         builder: (context, maps) {
           final mapsValues = maps.values.toList();
+          final screenSize = MediaQuery.sizeOf(context);
 
-          return GridView.count(
-            crossAxisCount: 4,
-            mainAxisSpacing: 8,
-            crossAxisSpacing: 8,
-            padding: EdgeInsets.zero,
-            children: [
-              for (final map in mapsValues) GameMapTile(map: map),
-            ],
+          return Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: screenSize.width * 0.1,
+              vertical: screenSize.height * 0.1,
+            ),
+            child: GridView.count(
+              crossAxisCount: 5,
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 8,
+              padding: EdgeInsets.zero,
+              children: [
+                for (final map in mapsValues) GameMapTile(map: map),
+              ],
+            ),
           );
         },
       ),

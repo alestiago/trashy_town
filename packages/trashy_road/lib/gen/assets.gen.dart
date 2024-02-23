@@ -78,6 +78,20 @@ class $AssetsImagesGen {
   /// File path: assets/images/grass.png
   AssetGenImage get grass => const AssetGenImage('assets/images/grass.png');
 
+  /// File path: assets/images/paper_1-shadow.png
+  AssetGenImage get paper1Shadow =>
+      const AssetGenImage('assets/images/paper_1-shadow.png');
+
+  /// File path: assets/images/paper_1.png
+  AssetGenImage get paper1 => const AssetGenImage('assets/images/paper_1.png');
+
+  /// File path: assets/images/paper_2-shadow.png
+  AssetGenImage get paper2Shadow =>
+      const AssetGenImage('assets/images/paper_2-shadow.png');
+
+  /// File path: assets/images/paper_2.png
+  AssetGenImage get paper2 => const AssetGenImage('assets/images/paper_2.png');
+
   /// File path: assets/images/plastic_bottle_1-shadow.png
   AssetGenImage get plasticBottle1Shadow =>
       const AssetGenImage('assets/images/plastic_bottle_1-shadow.png');
@@ -139,6 +153,10 @@ class $AssetsImagesGen {
         grassRoadSouthwest,
         grassFlowers,
         grass,
+        paper1Shadow,
+        paper1,
+        paper2Shadow,
+        paper2,
         plasticBottle1Shadow,
         plasticBottle1,
         plasticBottle2Shadow,
@@ -195,6 +213,9 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/trash_can_organic.tx
   String get trashCanOrganic => 'assets/tiles/trash_can_organic.tx';
 
+  /// File path: assets/tiles/trash_can_paper.tx
+  String get trashCanPaper => 'assets/tiles/trash_can_paper.tx';
+
   /// File path: assets/tiles/trash_can_plastic.tx
   String get trashCanPlastic => 'assets/tiles/trash_can_plastic.tx';
 
@@ -203,6 +224,9 @@ class $AssetsTilesGen {
 
   /// File path: assets/tiles/trash_organic.tx
   String get trashOrganic => 'assets/tiles/trash_organic.tx';
+
+  /// File path: assets/tiles/trash_paper.tx
+  String get trashPaper => 'assets/tiles/trash_paper.tx';
 
   /// File path: assets/tiles/trash_plastic.tx
   String get trashPlastic => 'assets/tiles/trash_plastic.tx';
@@ -221,9 +245,11 @@ class $AssetsTilesGen {
         spawn,
         trashCanGlass,
         trashCanOrganic,
+        trashCanPaper,
         trashCanPlastic,
         trashGlass,
         trashOrganic,
+        trashPaper,
         trashPlastic,
         tree
       ];

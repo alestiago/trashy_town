@@ -79,7 +79,7 @@ class _GameView extends StatelessWidget {
       },
       child: Stack(
         children: [
-          const TrashyRoadGameWidget(),
+          const Align(child: TrashyRoadGameWidget()),
           const Align(
             alignment: Alignment.topCenter,
             child: Padding(

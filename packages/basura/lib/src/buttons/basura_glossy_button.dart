@@ -1,3 +1,4 @@
+import 'package:basura/basura.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 
@@ -23,7 +24,24 @@ class BasuraGlossyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO(alestiago): Implement BasuraGlossyButton.
-    return child;
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        gradient: const LinearGradient(
+          begin: Alignment.bottomCenter,
+          end: Alignment(0, -1.2),
+          colors: [
+            Color(0xFF2F965E),
+            Color(0xFFFFFBF3),
+          ],
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: child,
+      ),
+    );
   }
 }
 
@@ -33,4 +51,23 @@ class BasuraGlossyButton extends StatelessWidget {
 class BasuraGlossyButtonStyle extends Equatable {
   @override
   List<Object?> get props => [];
+}
+
+class BasuraGlossyTextButton extends StatelessWidget {
+  const BasuraGlossyTextButton({
+    super.key,
+    required this.label,
+  });
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return BasuraGlossyButton(
+      child: BasuraOutlinedText(
+        outlineColor: const Color(0xFF000000),
+        child: Text(label, style: BasuraTheme.of(context).textTheme.button),
+      ),
+    );
+  }
 }

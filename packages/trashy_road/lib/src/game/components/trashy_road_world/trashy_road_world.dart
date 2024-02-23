@@ -20,15 +20,11 @@ enum _TiledLayer {
 }
 
 class TrashyRoadWorld extends Component {
-  TrashyRoadWorld.create({
-    required this.tiled,
-    required Random random,
-  }) {
+  TrashyRoadWorld.create({required this.tiled}) {
     final trashLayer =
         tiled.tileMap.getObjectGroup(_TiledLayer.trashLayer.name);
     tiled.addAll(
-      trashLayer.objects
-          .map((object) => Trash.fromTiledObject(object, random: random)),
+      trashLayer.objects.map(Trash.fromTiledObject),
     );
 
     final coreItemsLayer =

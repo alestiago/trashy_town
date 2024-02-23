@@ -72,10 +72,7 @@ class TrashyRoadGame extends FlameGame
       GameSettings.gridDimensions,
     );
     final tiled = TiledComponent(renderableTiledMap);
-    final trashyRoadWorld = TrashyRoadWorld.create(
-      tiled: tiled,
-      random: random,
-    );
+    final trashyRoadWorld = TrashyRoadWorld.create(tiled: tiled);
     children.register<TrashyRoadWorld>();
 
     final blocProvider = FlameBlocProvider<GameBloc, GameState>(

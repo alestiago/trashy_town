@@ -73,10 +73,7 @@ class Trash extends PositionedEntity with HasGameReference<TrashyRoadGame> {
         );
 
   /// Derives a [Trash] from a [TiledObject].
-  factory Trash.fromTiledObject(
-    TiledObject tiledObject, {
-    required Random random,
-  }) {
+  factory Trash.fromTiledObject(TiledObject tiledObject) {
     final type = TrashType.tryParse(
       tiledObject.properties.getValue<String>('type') ?? '',
     );
@@ -84,7 +81,7 @@ class Trash extends PositionedEntity with HasGameReference<TrashyRoadGame> {
 
     switch (type) {
       case TrashType.plastic:
-        final style = PlasticBottleStyle._random(random: random);
+        final style = PlasticBottleStyle._randomize();
         return Trash._plasticBottle(position: position, style: style);
       case TrashType.glass:
         return Trash._glassBottle(position: position);
@@ -130,10 +127,14 @@ enum PlasticBottleStyle {
   /// {@endtemplate}
   two;
 
-  factory PlasticBottleStyle._random({required Random random}) {
+  factory PlasticBottleStyle._randomize({
+    @visibleForTesting Random? random,
+  }) {
     return PlasticBottleStyle
-        .values[random.nextInt(PlasticBottleStyle.values.length)];
+        .values[(random ?? _random).nextInt(PlasticBottleStyle.values.length)];
   }
+
+  static final _random = Random();
 }
 
 /// A plastic bottle.

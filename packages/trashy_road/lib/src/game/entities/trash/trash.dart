@@ -13,6 +13,14 @@ import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
+/// Random number generator.
+///
+/// Usually uses to randomize the appearence of trash.
+// TODO(alestiago): Consider refactoring to re-use the game's random number
+// generator.
+// https://github.com/alestiago/trashy_road/issues/181
+final _random = Random();
+
 /// The different types of [Trash].
 enum TrashType {
   plastic._('plastic'),
@@ -138,22 +146,25 @@ class _PlasticBottleSpriteGroup extends PositionComponent
         );
 
   factory _PlasticBottleSpriteGroup.getRandomStyle() {
-    // This is temp, what is the best way to get Random from the game in a
-    //factory, DI?
-    switch (Random().nextInt(2)) {
+    switch (_random.nextInt(2)) {
       case 0:
         return _PlasticBottleSpriteGroup.styleOne();
       case 1:
         return _PlasticBottleSpriteGroup.styleTwo();
+      default:
+        return _PlasticBottleSpriteGroup.styleOne();
     }
-    return _PlasticBottleSpriteGroup.styleOne();
   }
 
+  /// A crashed plastic bottle that is lying on the ground with its lid facing
+  /// east.
   factory _PlasticBottleSpriteGroup.styleOne() => _PlasticBottleSpriteGroup._(
         spritePath: Assets.images.plasticBottle1.path,
         shadowPath: Assets.images.plasticBottle1Shadow.path,
       );
 
+  /// A crashed plastic bottle that is lying on the ground with its lid facing
+  /// south-east.
   factory _PlasticBottleSpriteGroup.styleTwo() => _PlasticBottleSpriteGroup._(
         spritePath: Assets.images.plasticBottle2.path,
         shadowPath: Assets.images.plasticBottle2Shadow.path,

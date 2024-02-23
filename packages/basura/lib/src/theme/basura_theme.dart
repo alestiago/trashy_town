@@ -68,6 +68,13 @@ class BasuraThemeData extends Equatable {
         fontSize: 50,
         package: Basura.packageName,
         color: const Color(0xFFFFFFFF),
+        shadows: [
+          Shadow(
+            offset: Offset(0, 4.0),
+            blurRadius: 4.0,
+            color: Color(0xFF096F00),
+          ),
+        ],
       ),
     );
 

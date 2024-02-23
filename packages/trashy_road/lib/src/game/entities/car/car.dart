@@ -71,16 +71,11 @@ class _CarSpriteComponent extends GameSpriteAnimationComponent {
     required RoadLaneDirection direction,
   }) {
     final style = CarStyle._randomize();
-    final spritePath = () {
-      switch (style) {
-        case CarStyle.blue:
-          return Assets.images.carBlueDriving.path;
-        case CarStyle.red:
-          return Assets.images.carRedDriving.path;
-        case CarStyle.yellow:
-          return Assets.images.carYellowDriving.path;
-      }
-    }();
+    final spritePath = switch (style) {
+      CarStyle.blue => Assets.images.carBlueDriving.path,
+      CarStyle.red => Assets.images.carRedDriving.path,
+      CarStyle.yellow => Assets.images.carYellowDriving.path,
+    };
 
     return direction == RoadLaneDirection.leftToRight
         ? _CarSpriteComponent._leftToRight(spritePath: spritePath)

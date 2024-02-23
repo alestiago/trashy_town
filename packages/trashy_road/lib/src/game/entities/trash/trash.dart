@@ -270,7 +270,7 @@ class _AppleCoreSpriteGroup extends PositionComponent
           ],
         );
 
-  /// Derives a [_AppleCoreSpriteGroup] from a [AppleCoreStyle].
+  /// Derives an [_AppleCoreSpriteGroup] from an [AppleCoreStyle].
   factory _AppleCoreSpriteGroup._fromStyle(
     AppleCoreStyle style,
   ) {

@@ -1,4 +1,7 @@
+import 'package:basura/basura.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/src/game/view/view.dart';
 import 'package:trashy_road/src/loading/loading.dart';
@@ -42,40 +45,26 @@ class GameMapTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => _onTap(context),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: _map.locked
-              ? CupertinoColors.systemGrey
-              : CupertinoColors.systemGreen,
-          border: Border.all(),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(_map.identifier),
-              if (!_map.locked) Text(_starText(_map.scoreRating.value)),
-            ],
+    return BasuraGlossyButton(
+      onPressed: () => _onTap(context),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          FittedBox(
+            child: BasuraOutlinedText(
+              outlineColor: const Color(0xFF096F00),
+              strokeWidth: 6,
+              child: Text(
+                '1',
+                style: BasuraTheme.of(context).textTheme.button.copyWith(
+                      height: 1,
+                    ),
+              ),
+            ),
           ),
-        ),
+          GameMapStars(stars: _map.scoreRating.value),
+        ],
       ),
     );
   }
-}
-
-String _starText(int stars) {
-  final buffer = StringBuffer();
-
-  const emptyStar = '☆';
-  const fullStar = '★';
-
-  for (var i = 0; i < stars; i++) {
-    buffer.write(fullStar);
-  }
-  for (var i = stars; i < 3; i++) {
-    buffer.write(emptyStar);
-  }
-  return buffer.toString();
 }

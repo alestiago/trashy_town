@@ -40,19 +40,14 @@ class _MapsMenuView extends StatelessWidget {
         builder: (context, maps) {
           final mapsValues = maps.values.toList();
 
-          return GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 5,
-            ),
-            itemCount: maps.length,
-            itemBuilder: (context, index) {
-              final map = mapsValues[index];
-
-              return Padding(
-                padding: const EdgeInsets.all(8),
-                child: GameMapTile(map: map),
-              );
-            },
+          return GridView.count(
+            crossAxisCount: 4,
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
+            padding: EdgeInsets.zero,
+            children: [
+              for (final map in mapsValues) GameMapTile(map: map),
+            ],
           );
         },
       ),

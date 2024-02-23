@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
@@ -30,15 +28,5 @@ abstract class Vehicle extends PositionedEntity {
             ),
           ],
         );
-
-  @override
-  FutureOr<void> onLoad() async {
-    await super.onLoad();
-
-    if (roadLane.direction == RoadLaneDirection.leftToRight) {
-      flipHorizontally();
-    }
-  }
-
   final RoadLane roadLane;
 }

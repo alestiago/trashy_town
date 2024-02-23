@@ -16,7 +16,8 @@ import 'package:trashy_road/src/game/game.dart';
 /// The different types of [Trash].
 enum TrashType {
   plastic._('plastic'),
-  glass._('glass');
+  glass._('glass'),
+  organic._('organic');
 
   const TrashType._(this.name);
 
@@ -72,6 +73,15 @@ class Trash extends PositionedEntity with HasGameReference<TrashyRoadGame> {
           children: [_GlassBottleSprite()],
         );
 
+  Trash._appleCore({
+    required Vector2 position,
+    required AppleCoreStyle style,
+  }) : this._(
+          position: position,
+          trashType: TrashType.organic,
+          children: [_AppleCoreSpriteGroup._fromStyle(style)],
+        );
+
   /// Derives a [Trash] from a [TiledObject].
   factory Trash.fromTiledObject(TiledObject tiledObject) {
     final type = TrashType.tryParse(
@@ -85,6 +95,9 @@ class Trash extends PositionedEntity with HasGameReference<TrashyRoadGame> {
         return Trash._plasticBottle(position: position, style: style);
       case TrashType.glass:
         return Trash._glassBottle(position: position);
+      case TrashType.organic:
+        final style = AppleCoreStyle._randomize();
+        return Trash._appleCore(position: position, style: style);
       case null:
         throw ArgumentError.value(
           type,
@@ -116,13 +129,13 @@ class Trash extends PositionedEntity with HasGameReference<TrashyRoadGame> {
 /// The different styles of plastic bottles.
 enum PlasticBottleStyle {
   /// {@template _PlasticBottleStyle.one}
-  /// A crashed plastic bottle that is laying on the ground with its lid facing
+  /// A crushed plastic bottle that is laying on the ground with its lid facing
   /// east.
   /// {@endtemplate}
   one,
 
   /// {@template _PlasticBottleStyle.two}
-  /// A crashed plastic bottle that is laying on the ground with its lid facing
+  /// A crushed plastic bottle that is laying on the ground with its lid facing
   /// south-east.
   /// {@endtemplate}
   two;
@@ -132,6 +145,29 @@ enum PlasticBottleStyle {
   }) {
     return PlasticBottleStyle
         .values[(random ?? _random).nextInt(PlasticBottleStyle.values.length)];
+  }
+
+  static final _random = Random();
+}
+
+/// The different styles of apple cores.
+enum AppleCoreStyle {
+  /// {@template _AppleCoreStyle.one}
+  /// Two apple cores in a group, one is laying on the ground and the other is
+  /// laying on top of the first one.
+  /// {@endtemplate}
+  one,
+
+  /// {@template _AppleCoreStyle.two}
+  /// A single apple core laying on the ground.
+  /// {@endtemplate}
+  two;
+
+  factory AppleCoreStyle._randomize({
+    @visibleForTesting Random? random,
+  }) {
+    return AppleCoreStyle
+        .values[(random ?? _random).nextInt(AppleCoreStyle.values.length)];
   }
 
   static final _random = Random();
@@ -206,4 +242,55 @@ class _GlassBottleSprite extends SpriteComponent with HasGameReference {
     );
     sprite = await Sprite.load(Assets.images.trash.path, images: game.images);
   }
+}
+
+/// An apple core.
+///
+/// Renders an apple core and its shadow.
+class _AppleCoreSpriteGroup extends PositionComponent
+    with HasGameRef<TrashyRoadGame> {
+  _AppleCoreSpriteGroup._({
+    required String spritePath,
+    required String shadowPath,
+  }) : super(
+          // The `position` and `scale` have been eyeballed to match with the
+          // appearance of the map.
+          position: Vector2(0.6, 1.4)..toGameSize(),
+          scale: Vector2.all(1),
+          anchor: Anchor.center,
+          children: [
+            GameSpriteComponent.fromPath(
+              anchor: Anchor.center,
+              spritePath: shadowPath,
+            ),
+            GameSpriteComponent.fromPath(
+              anchor: Anchor.center,
+              spritePath: spritePath,
+            ),
+          ],
+        );
+
+  /// Derives a [_AppleCoreSpriteGroup] from a [AppleCoreStyle].
+  factory _AppleCoreSpriteGroup._fromStyle(
+    AppleCoreStyle style,
+  ) {
+    switch (style) {
+      case AppleCoreStyle.one:
+        return _AppleCoreSpriteGroup._styleOne();
+      case AppleCoreStyle.two:
+        return _AppleCoreSpriteGroup._styleTwo();
+    }
+  }
+
+  /// {@macro _AppleCoreStyle.one}
+  factory _AppleCoreSpriteGroup._styleOne() => _AppleCoreSpriteGroup._(
+        spritePath: Assets.images.appleCore1.path,
+        shadowPath: Assets.images.appleCore1Shadow.path,
+      );
+
+  /// {@macro _AppleCoreStyle.two}
+  factory _AppleCoreSpriteGroup._styleTwo() => _AppleCoreSpriteGroup._(
+        spritePath: Assets.images.appleCore2.path,
+        shadowPath: Assets.images.appleCore2Shadow.path,
+      );
 }

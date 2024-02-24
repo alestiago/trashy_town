@@ -97,7 +97,7 @@ class _GameView extends StatelessWidget {
             ),
           ),
           const Align(
-            alignment: Alignment.bottomLeft,
+            alignment: Alignment.bottomCenter,
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 24, horizontal: 8),
               child: InventoryHud(),

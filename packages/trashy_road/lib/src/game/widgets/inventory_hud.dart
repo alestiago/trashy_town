@@ -26,6 +26,7 @@ class InventoryHud extends StatelessWidget {
           },
           builder: (context, trash) {
             return Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 _TrashTypeCounter.organic(trash: trash),
                 _TrashTypeCounter.paper(trash: trash),

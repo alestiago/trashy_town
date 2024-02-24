@@ -174,7 +174,7 @@ class BasuraGlossyButtonTheme extends Equatable {
   final BasuraGlossyButtonStyle disabled;
 
   /// The style to use when a [BasuraGlossyButtonStyle] is not specified.
-  BasuraGlossyButtonStyle get fallback => primary;
+  BasuraGlossyButtonStyle get fallback => secondary;
 
   @override
   List<Object?> get props => [

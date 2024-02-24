@@ -1,3 +1,4 @@
+import 'package:basura/basura.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/src/game/view/view.dart';
@@ -42,40 +43,15 @@ class GameMapTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => _onTap(context),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: _map.locked
-              ? CupertinoColors.systemGrey
-              : CupertinoColors.systemGreen,
-          border: Border.all(),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(_map.displayName),
-              if (!_map.locked) Text(_starText(_map.scoreRating.value)),
-            ],
-          ),
-        ),
-      ),
+    final theme = BasuraTheme.of(context);
+    final style = _map.locked
+        ? theme.glossyButtonTheme.secondary
+        : theme.glossyButtonTheme.primary;
+
+    return BasuraGlossyTextButton(
+      onPressed: () => _onTap(context),
+      label: _map.displayName,
+      style: style,
     );
   }
-}
-
-String _starText(int stars) {
-  final buffer = StringBuffer();
-
-  const emptyStar = '☆';
-  const fullStar = '★';
-
-  for (var i = 0; i < stars; i++) {
-    buffer.write(fullStar);
-  }
-  for (var i = stars; i < 3; i++) {
-    buffer.write(emptyStar);
-  }
-  return buffer.toString();
 }

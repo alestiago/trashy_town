@@ -55,7 +55,7 @@ class GameMapTile extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(_map.identifier),
+              Text(_map.displayName),
               if (!_map.locked) Text(_starText(_map.scoreRating.value)),
             ],
           ),

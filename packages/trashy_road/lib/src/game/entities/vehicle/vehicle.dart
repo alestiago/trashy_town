@@ -11,7 +11,7 @@ export 'behaviors/behaviors.dart';
 ///
 /// * [VehicleSpawningBehavior], which is used to spawn vehicles on a
 /// [RoadLane].
-abstract class Vehicle extends PositionedEntity {
+abstract class Vehicle extends PositionedEntity with ParentIsA<RoadLane> {
   Vehicle({
     required ShapeHitbox hitbox,
     required this.roadLane,

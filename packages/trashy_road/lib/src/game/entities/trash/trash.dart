@@ -37,7 +37,8 @@ enum TrashType {
 ///
 /// Trash is usually scattered around the road and the player has to pick it up
 /// to keep the map clean.
-class Trash extends PositionedEntity with HasGameReference<TrashyRoadGame> {
+class Trash extends PositionedEntity
+    with HasGameReference<TrashyRoadGame>, ZIndex {
   Trash._({
     required Vector2 position,
     required this.trashType,
@@ -55,7 +56,9 @@ class Trash extends PositionedEntity with HasGameReference<TrashyRoadGame> {
               ),
             ),
           ],
-        );
+        ) {
+    zIndex = position.y.floor();
+  }
 
   Trash._plasticBottle({
     required Vector2 position,

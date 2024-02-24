@@ -6,7 +6,7 @@ import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
-class Obstacle extends PositionedEntity with Untraversable {
+class Obstacle extends PositionedEntity with Untraversable, ZIndex {
   Obstacle._({
     required Vector2 super.position,
     super.children,
@@ -28,7 +28,9 @@ class Obstacle extends PositionedEntity with Untraversable {
               ),
             ),
           ],
-        );
+        ) {
+    zIndex = position.y.floor();
+  }
 
   // An Obstacle that is a tree.
   //

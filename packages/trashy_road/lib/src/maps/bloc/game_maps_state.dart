@@ -33,6 +33,7 @@ class GameMapsState extends Equatable {
           {
             'map1': GameMap._(
               identifier: 'map1',
+              displayName: '1',
               path: Assets.tiles.map1,
               score: -1,
               ratingSteps: (25, 50, 100),
@@ -40,6 +41,7 @@ class GameMapsState extends Equatable {
             ),
             'map2': GameMap._(
               identifier: 'map2',
+              displayName: '2',
               path: Assets.tiles.map2,
               score: -1,
               ratingSteps: (25, 50, 100),
@@ -117,6 +119,7 @@ enum ScoreRating {
 class GameMap extends Equatable {
   GameMap._({
     required this.identifier,
+    required this.displayName,
     required this.score,
     required this.ratingSteps,
     required this.locked,
@@ -128,6 +131,9 @@ class GameMap extends Equatable {
 
   /// The identifier of the map.
   final String identifier;
+
+  /// The display name of the map.
+  final String displayName;
 
   /// The score the player has achieved on this map.
   ///
@@ -150,6 +156,7 @@ class GameMap extends Equatable {
 
   GameMap copyWith({
     String? identifier,
+    String? displayName,
     int? score,
     RatingSteps? ratingSteps,
     bool? locked,
@@ -157,6 +164,7 @@ class GameMap extends Equatable {
   }) {
     return GameMap._(
       identifier: identifier ?? this.identifier,
+      displayName: displayName ?? this.displayName,
       score: score ?? this.score,
       ratingSteps: ratingSteps ?? this.ratingSteps,
       locked: locked ?? this.locked,
@@ -167,6 +175,7 @@ class GameMap extends Equatable {
   @override
   List<Object?> get props => [
         identifier,
+        displayName,
         score,
         ratingSteps,
         scoreRating,

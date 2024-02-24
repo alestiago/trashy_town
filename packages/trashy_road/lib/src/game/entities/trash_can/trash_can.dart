@@ -15,7 +15,7 @@ export 'behaviors/behaviors.dart';
 /// A trash can.
 ///
 /// Trash cans are placed around the map, they are used to dispose of trash.
-class TrashCan extends PositionedEntity with Untraversable {
+class TrashCan extends PositionedEntity with Untraversable, ZIndex {
   TrashCan._({
     required Vector2 position,
     required this.trashType,
@@ -32,6 +32,7 @@ class TrashCan extends PositionedEntity with Untraversable {
             ...?children,
           ],
         ) {
+    zIndex = position.y.floor();
     add(
       PropagatingCollisionBehavior(
         RectangleHitbox(

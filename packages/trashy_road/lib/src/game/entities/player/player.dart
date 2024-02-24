@@ -32,11 +32,7 @@ class Player extends PositionedEntity with ZIndex {
           children: [
             _PlayerSpriteComponent(),
           ],
-        ) {
-    // TODO(alestiago): We should actually update the `zIndex` of the player
-    // based on its position in the world.
-    zIndex = 1;
-  }
+        );
 
   @visibleForTesting
   Player.empty();
@@ -66,6 +62,12 @@ class Player extends PositionedEntity with ZIndex {
     return vector -
         (vector % GameSettings.gridDimensions) +
         (GameSettings.gridDimensions / 2);
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    zIndex = position.y.floor();
   }
 
   @override

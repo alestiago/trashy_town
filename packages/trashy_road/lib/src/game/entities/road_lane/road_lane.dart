@@ -33,7 +33,7 @@ enum RoadLaneDirection {
 ///
 /// Road lanes dictate how vehicles move and spawn in the game.
 /// {@endtemplate}
-class RoadLane extends PositionedEntity {
+class RoadLane extends PositionedEntity with ZIndex {
   RoadLane({
     required this.speed,
     required this.direction,
@@ -42,7 +42,7 @@ class RoadLane extends PositionedEntity {
   }) : super(
           behaviors: [VehicleSpawningBehavior()],
         ) {
-    priority = super.position.y.floor();
+    zIndex = super.position.y.floor();
   }
 
   /// Derives a [Player] from a [TiledObject].

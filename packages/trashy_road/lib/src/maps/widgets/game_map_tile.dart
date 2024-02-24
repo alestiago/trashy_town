@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:basura/basura.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -93,7 +91,7 @@ class _Stars extends StatelessWidget {
         final starWidth = maxWidth / 2.8;
         final middle = maxWidth / 2;
 
-        SvgGenImage star(bool filled) =>
+        SvgGenImage star({required bool filled}) =>
             filled ? Assets.images.starFilled : Assets.images.starEmpty;
 
         return SizedBox(
@@ -103,16 +101,16 @@ class _Stars extends StatelessWidget {
             children: [
               Positioned(
                 left: middle - starWidth,
-                child: star(value >= 1).svg(width: starWidth),
+                child: star(filled: value >= 1).svg(width: starWidth),
               ),
               Positioned(
                 top: -2,
                 left: middle - (starWidth / 2),
-                child: star(value >= 2).svg(width: starWidth),
+                child: star(filled: value >= 2).svg(width: starWidth),
               ),
               Positioned(
                 left: middle,
-                child: star(value >= 3).svg(width: starWidth),
+                child: star(filled: value >= 3).svg(width: starWidth),
               ),
             ],
           ),

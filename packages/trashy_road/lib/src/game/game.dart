@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:math' hide Rectangle;
-import 'dart:ui';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flame/cache.dart';

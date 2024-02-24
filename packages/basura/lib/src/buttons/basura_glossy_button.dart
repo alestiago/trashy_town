@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:basura/basura.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
@@ -211,19 +212,22 @@ class BasuraGlossyTextButton extends StatelessWidget {
 
     return BasuraGlossyButton(
       onPressed: onPressed,
-      child: BasuraOutlinedText(
-        outlineColor: style.outlineColor,
-        strokeWidth: 6,
-        child: Text(
-          label.toUpperCase(),
-          style: BasuraTheme.of(context).textTheme.button.copyWith(
-            shadows: [
-              Shadow(
-                offset: const Offset(0, 4),
-                blurRadius: 4,
-                color: style.outlineColor,
-              ),
-            ],
+      style: style,
+      child: Center(
+        child: BasuraOutlinedText(
+          outlineColor: style.outlineColor,
+          strokeWidth: 6,
+          child: AutoSizeText(
+            label.toUpperCase(),
+            style: BasuraTheme.of(context).textTheme.button.copyWith(
+              shadows: [
+                Shadow(
+                  offset: const Offset(0, 4),
+                  blurRadius: 4,
+                  color: style.outlineColor,
+                ),
+              ],
+            ),
           ),
         ),
       ),

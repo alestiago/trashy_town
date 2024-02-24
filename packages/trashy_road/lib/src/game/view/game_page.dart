@@ -1,6 +1,7 @@
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/loading/loading.dart';
 import 'package:trashy_road/src/maps/maps.dart';
@@ -79,6 +80,14 @@ class _GameView extends StatelessWidget {
       },
       child: Stack(
         children: [
+          Positioned.fill(
+            child: Image.asset(
+              Assets.images.grass.path,
+              repeat: ImageRepeat.repeat,
+              color: const Color.fromARGB(40, 0, 0, 0),
+              colorBlendMode: BlendMode.darken,
+            ),
+          ),
           const Align(child: TrashyRoadGameWidget()),
           const Align(
             alignment: Alignment.topCenter,

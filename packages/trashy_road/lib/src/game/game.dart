@@ -3,7 +3,6 @@ import 'dart:math' hide Rectangle;
 import 'dart:ui';
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:basura/basura.dart';
 import 'package:flame/cache.dart';
 import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
@@ -11,6 +10,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:flutter/material.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/src/game/game.dart';
 
@@ -59,7 +59,7 @@ class TrashyRoadGame extends FlameGame
 
   @override
   Color backgroundColor() {
-    return BasuraColors.white;
+    return Colors.transparent;
   }
 
   @override
@@ -96,7 +96,6 @@ class TrashyRoadGame extends FlameGame
   @override
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
-
     camera.viewfinder.zoom = (size.x / resolution.width) + 0.2;
   }
 

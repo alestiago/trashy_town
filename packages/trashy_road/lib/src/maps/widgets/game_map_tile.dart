@@ -59,11 +59,11 @@ class GameMapTile extends StatelessWidget {
           BasuraGlossyTextButton(
             onPressed: () => _onTap(context),
             label: label,
+            style: theme.glossyButtonTheme.secondary,
             textStyle: theme.textTheme.button.copyWith(
               height: 0.6,
-              color: BasuraColors.mediumCadiumYellow,
+              color: BasuraColors.lightCadmiumYellow,
             ),
-            style: theme.glossyButtonTheme.primary,
           ),
           if (!_map.locked)
             Positioned(
@@ -115,26 +115,6 @@ class _Stars extends StatelessWidget {
             ],
           ),
         );
-
-        // return ColoredBox(
-        //   color: Color(0xff00ff00).withOpacity(0.2),
-        //   child: Row(
-        //     children: [
-        //       Transform.translate(
-        //         offset: Offset(starWidth / 2, 0),
-        //         child: Assets.images.startEmpty.svg(width: starWidth),
-        //       ),
-        //       Transform.translate(
-        //         offset: const Offset(0, -2),
-        //         child: Assets.images.startEmpty.svg(width: starWidth),
-        //       ),
-        //       Transform.translate(
-        //         offset: Offset(-starWidth / 2, 0),
-        //         child: Assets.images.startEmpty.svg(width: starWidth),
-        //       ),
-        //     ],
-        //   ),
-        // );
       },
     );
   }

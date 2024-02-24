@@ -223,7 +223,7 @@ class _PlasticBottleSpriteGroup extends PositionComponent
           // The `position` and `scale` have been eyeballed to match with the
           // appearance of the map.
           position: Vector2(0.5, 1.4)..toGameSize(),
-          scale: Vector2.all(1.2),
+          scale: Vector2.all(0.8),
           anchor: Anchor.center,
           children: [
             GameSpriteComponent.fromPath(
@@ -294,7 +294,7 @@ class _AppleCoreSpriteGroup extends PositionComponent
           // The `position` and `scale` have been eyeballed to match with the
           // appearance of the map.
           position: Vector2(0.6, 1.4)..toGameSize(),
-          scale: Vector2.all(1),
+          scale: Vector2.all(0.5),
           anchor: Anchor.center,
           children: [
             GameSpriteComponent.fromPath(
@@ -345,7 +345,7 @@ class _PaperStackSpriteGroup extends PositionComponent
           // The `position` and `scale` have been eyeballed to match with the
           // appearance of the map.
           position: Vector2(0.6, 1.4)..toGameSize(),
-          scale: Vector2.all(1),
+          scale: Vector2.all(0.5),
           anchor: Anchor.center,
           children: [
             GameSpriteComponent.fromPath(

@@ -16,7 +16,7 @@ class InventoryHud extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         border: Border.all(width: 2),
-        color: BasuraColors.white,
+        color: BasuraColors.white.withOpacity(0.5),
       ),
       child: Padding(
         padding: const EdgeInsets.all(8),

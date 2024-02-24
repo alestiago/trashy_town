@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:math';
-import 'dart:ui';
+import 'dart:math' hide Rectangle;
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:basura/basura.dart';
 import 'package:flame/cache.dart';
 import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
@@ -11,6 +9,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:flutter/material.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/src/game/game.dart';
 
@@ -32,20 +31,18 @@ class TrashyRoadGame extends FlameGame
     required GameBloc gameBloc,
     required this.effectPlayer,
     required this.random,
-    required Size resolution,
+    required this.resolution,
     Images? images,
   })  : _gameBloc = gameBloc,
         super(
-          camera: CameraComponent.withFixedResolution(
-            width: resolution.width,
-            height: resolution.height,
-            viewfinder: Viewfinder()
-              ..anchor = const Anchor(.5, .8)
-              ..zoom = 1.2,
+          camera: CameraComponent(
+            viewfinder: Viewfinder(),
           ),
         ) {
     if (images != null) this.images = images;
   }
+
+  final Size resolution;
 
   /// {@macro GameBloc}
   final GameBloc _gameBloc;
@@ -61,7 +58,7 @@ class TrashyRoadGame extends FlameGame
 
   @override
   Color backgroundColor() {
-    return BasuraColors.white;
+    return Colors.transparent;
   }
 
   @override
@@ -80,7 +77,9 @@ class TrashyRoadGame extends FlameGame
       create: () => _gameBloc,
       children: [
         ZCanvasComponent(
-          children: [trashyRoadWorld],
+          children: [
+            trashyRoadWorld,
+          ],
         ),
       ],
     );
@@ -91,6 +90,12 @@ class TrashyRoadGame extends FlameGame
     _player.children.register<PlayerDragMovingBehavior>();
 
     camera.follow(_player);
+  }
+
+  @override
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
+    camera.viewfinder.zoom = (size.x / resolution.width) + 0.2;
   }
 
   @override

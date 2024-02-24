@@ -63,7 +63,7 @@ class GameMapTile extends StatelessWidget {
             label: label,
             textStyle: theme.textTheme.button.copyWith(
               height: 0.6,
-              color: Color(0xFFFFDF94),
+              color: BasuraColors.mediumCadiumYellow,
             ),
             style: theme.glossyButtonTheme.primary,
           ),

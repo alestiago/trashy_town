@@ -33,41 +33,38 @@ class _MapsMenuView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Maps')),
-      body: BlocSelector<GameMapsBloc, GameMapsState, GameMapsCollection>(
-        selector: (state) => state.maps,
-        builder: (context, maps) {
-          final mapsValues = maps.values.toList();
-          final screenSize = MediaQuery.sizeOf(context);
+    return BlocSelector<GameMapsBloc, GameMapsState, GameMapsCollection>(
+      selector: (state) => state.maps,
+      builder: (context, maps) {
+        final mapsValues = maps.values.toList();
+        final screenSize = MediaQuery.sizeOf(context);
 
-          const mainCrossAxisExtent = 150.0;
-          const mainAxisSpacing = 20.0;
+        const mainCrossAxisExtent = 150.0;
+        const mainAxisSpacing = 20.0;
 
-          final padding = EdgeInsets.symmetric(
-            vertical: mainAxisSpacing * 2,
-            horizontal: screenSize.width * 0.1,
-          );
+        final padding = EdgeInsets.symmetric(
+          vertical: mainAxisSpacing * 3,
+          horizontal: screenSize.width * 0.1,
+        );
 
-          return Center(
-            child: SizedBox(
-              width: mainCrossAxisExtent * 5 + padding.horizontal,
-              child: GridView.builder(
-                padding: padding,
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: mainCrossAxisExtent,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: mainAxisSpacing,
-                ),
-                itemCount: mapsValues.length,
-                itemBuilder: (context, index) {
-                  return GameMapTile(map: mapsValues[index]);
-                },
+        return Center(
+          child: SizedBox(
+            width: mainCrossAxisExtent * 5 + padding.horizontal,
+            child: GridView.builder(
+              padding: padding,
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: mainCrossAxisExtent,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: mainAxisSpacing,
               ),
+              itemCount: mapsValues.length,
+              itemBuilder: (context, index) {
+                return GameMapTile(map: mapsValues[index]);
+              },
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

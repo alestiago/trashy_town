@@ -48,10 +48,13 @@ class GameMapTile extends StatelessWidget {
         ? theme.glossyButtonTheme.secondary
         : theme.glossyButtonTheme.primary;
 
-    return BasuraGlossyTextButton(
-      onPressed: () => _onTap(context),
-      label: _map.displayName,
-      style: style,
+    return DefaultTextStyle(
+      style: theme.textTheme.button,
+      child: BasuraGlossyTextButton(
+        onPressed: () => _onTap(context),
+        label: _map.displayName,
+        style: style,
+      ),
     );
   }
 }

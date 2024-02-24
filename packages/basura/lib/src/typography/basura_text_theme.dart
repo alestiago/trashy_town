@@ -1,3 +1,4 @@
+import 'package:basura/basura.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 
@@ -24,6 +25,18 @@ class BasuraTextThemeData extends Equatable {
   const BasuraTextThemeData({
     required this.button,
   });
+
+  /// Light [BasuraTextThemeData] for the Basura design system.
+  factory BasuraTextThemeData.light() {
+    return BasuraTextThemeData(
+      button: TextStyle(
+        fontFamily: BasuraFontFamily.lilitaOne.name,
+        fontSize: 50,
+        package: Basura.packageName,
+        color: BasuraColors.white,
+      ),
+    );
+  }
 
   /// A text style for buttons.
   final TextStyle button;

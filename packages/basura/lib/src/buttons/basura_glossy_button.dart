@@ -32,7 +32,9 @@ class BasuraGlossyButton extends StatelessWidget {
     // TODO(alestiago): Add semantic tree.
     // TODO(alestiago): Add gesture detector.
     // TODO(alestiago): Add hover effect.
-    // TODO(alestiago): Get colors from style and theme.
+
+    final style =
+        this.style ?? BasuraTheme.of(context).glossyButtonTheme.fallback;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -42,11 +44,11 @@ class BasuraGlossyButton extends StatelessWidget {
           decoration: BoxDecoration(
             color: BasuraColors.white.withOpacity(0.9),
             borderRadius: BorderRadius.circular(15),
-            gradient: const RadialGradient(
+            gradient: RadialGradient(
               radius: 2,
               colors: [
-                BasuraColors.mediumGreen,
-                BasuraColors.white,
+                style.innerBackgroundColor,
+                style.outterHighlightColor,
               ],
             ),
           ),
@@ -57,15 +59,15 @@ class BasuraGlossyButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                   width: 2,
-                  color: BasuraColors.deepGreen,
+                  color: style.outlineColor,
                 ),
-                gradient: const LinearGradient(
+                gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
-                  end: Alignment(0, -1.1),
-                  stops: [0, 1.1],
+                  end: const Alignment(0, -1.1),
+                  stops: const [0, 1.1],
                   colors: [
-                    BasuraColors.mediumGreen,
-                    BasuraColors.lightCadmiumYellow,
+                    style.innerBackgroundColor,
+                    style.innerHighlightColor,
                   ],
                 ),
               ),
@@ -86,8 +88,99 @@ class BasuraGlossyButton extends StatelessWidget {
 /// The style for a [BasuraGlossyButton].
 /// {@endtemplate}
 class BasuraGlossyButtonStyle extends Equatable {
+  /// {@macro BasuraGlossyButtonStyle}
+  const BasuraGlossyButtonStyle({
+    required this.outterHighlightColor,
+    required this.innerHighlightColor,
+    required this.outterBackgroundColor,
+    required this.innerBackgroundColor,
+    required this.outlineColor,
+  });
+
+  /// Represents those lighter areas, where the light is reflected within the
+  /// outter area of the button.
+  final Color outterHighlightColor;
+
+  /// Represents those lighter areas, where the light is reflected within the
+  /// inner area of the button.
+  final Color innerHighlightColor;
+
+  /// The color of the outter background of the button.
+  final Color outterBackgroundColor;
+
+  /// The color of the inner background of the button.
+  final Color innerBackgroundColor;
+
+  /// Used as the border of shapes.
+  final Color outlineColor;
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [
+        outterHighlightColor,
+        innerHighlightColor,
+        outterBackgroundColor,
+        innerBackgroundColor,
+        outlineColor,
+      ];
+}
+
+/// {@template BasuraGlossyButtonTheme}
+/// Collection of [BasuraGlossyButtonStyle]s.
+/// {@endtemplate}
+class BasuraGlossyButtonTheme extends Equatable {
+  /// {@macro BasuraGlossyButtonTheme}
+  const BasuraGlossyButtonTheme({
+    required this.primary,
+    required this.secondary,
+    required this.disabled,
+  });
+
+  /// Derives a [BasuraGlossyButtonTheme] from a [BasuraThemeData].
+  // ignore: avoid_unused_constructor_parameters
+  factory BasuraGlossyButtonTheme.light() {
+    return BasuraGlossyButtonTheme(
+      primary: const BasuraGlossyButtonStyle(
+        outterHighlightColor: BasuraColors.white,
+        innerHighlightColor: BasuraColors.lightCadmiumYellow,
+        outterBackgroundColor: BasuraColors.deepCadmiumYellow,
+        innerBackgroundColor: BasuraColors.deepCadmiumYellow,
+        outlineColor: BasuraColors.brown,
+      ),
+      secondary: const BasuraGlossyButtonStyle(
+        outterHighlightColor: BasuraColors.lightCadmiumYellow,
+        innerHighlightColor: BasuraColors.lightCadmiumYellow,
+        outterBackgroundColor: BasuraColors.mediumGreen,
+        innerBackgroundColor: BasuraColors.mediumGreen,
+        outlineColor: BasuraColors.deepGreen,
+      ),
+      disabled: BasuraGlossyButtonStyle(
+        outterHighlightColor: BasuraColors.lightCadmiumYellow.withOpacity(0.5),
+        innerHighlightColor: BasuraColors.lightCadmiumYellow.withOpacity(0.5),
+        outterBackgroundColor: BasuraColors.mediumGreen.withOpacity(0.5),
+        innerBackgroundColor: BasuraColors.lightCadmiumYellow.withOpacity(0.5),
+        outlineColor: BasuraColors.deepGreen.withOpacity(0.5),
+      ),
+    );
+  }
+
+  // ignore: public_member_api_docs
+  final BasuraGlossyButtonStyle primary;
+
+  // ignore: public_member_api_docs
+  final BasuraGlossyButtonStyle secondary;
+
+  // ignore: public_member_api_docs
+  final BasuraGlossyButtonStyle disabled;
+
+  /// The style to use when a [BasuraGlossyButtonStyle] is not specified.
+  BasuraGlossyButtonStyle get fallback => primary;
+
+  @override
+  List<Object?> get props => [
+        primary,
+        secondary,
+        disabled,
+      ];
 }
 
 /// {@template BasuraGlossyTextButton}
@@ -98,8 +191,12 @@ class BasuraGlossyTextButton extends StatelessWidget {
   const BasuraGlossyTextButton({
     required this.label,
     this.onPressed,
+    this.style,
     super.key,
   });
+
+  /// {@macro BasuraGlossyButtonStyle}
+  final BasuraGlossyButtonStyle? style;
 
   /// The button's label.
   final String label;
@@ -109,14 +206,25 @@ class BasuraGlossyTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style =
+        this.style ?? BasuraTheme.of(context).glossyButtonTheme.fallback;
+
     return BasuraGlossyButton(
       onPressed: onPressed,
       child: BasuraOutlinedText(
-        outlineColor: BasuraColors.deepGreen,
+        outlineColor: style.outlineColor,
         strokeWidth: 6,
         child: Text(
           label.toUpperCase(),
-          style: BasuraTheme.of(context).textTheme.button,
+          style: BasuraTheme.of(context).textTheme.button.copyWith(
+            shadows: [
+              Shadow(
+                offset: const Offset(0, 4),
+                blurRadius: 4,
+                color: style.outlineColor,
+              ),
+            ],
+          ),
         ),
       ),
     );

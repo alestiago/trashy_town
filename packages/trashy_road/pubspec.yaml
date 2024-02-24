@@ -26,6 +26,7 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.1.3
   flutter_gen: ^5.4.0
+  flutter_svg: ^2.0.10+1
   meta: ^1.11.0
   path: ^1.8.3
   rive: ^0.12.4
@@ -40,11 +41,10 @@ dev_dependencies:
   mocktail: ^1.0.3
   very_good_analysis: ^5.1.0
 
-# pubspec.yaml
-# ...
 flutter_gen:
   integrations:
     rive: true
+    flutter_svg: true
 
 flutter:
   uses-material-design: true

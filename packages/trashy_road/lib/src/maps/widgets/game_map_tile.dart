@@ -1,6 +1,12 @@
+import 'dart:math';
+
 import 'package:basura/basura.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trashy_road/gen/assets.gen.dart';
+import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/view/view.dart';
 import 'package:trashy_road/src/loading/loading.dart';
 import 'package:trashy_road/src/maps/bloc/game_maps_bloc.dart';
@@ -44,17 +50,94 @@ class GameMapTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = BasuraTheme.of(context);
-    final style = _map.locked
-        ? theme.glossyButtonTheme.secondary
-        : theme.glossyButtonTheme.primary;
+
+    final label = _map.locked ? '.' : _map.displayName;
 
     return DefaultTextStyle(
       style: theme.textTheme.button,
-      child: BasuraGlossyTextButton(
-        onPressed: () => _onTap(context),
-        label: _map.displayName,
-        style: style,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          BasuraGlossyTextButton(
+            onPressed: () => _onTap(context),
+            label: label,
+            textStyle: theme.textTheme.button.copyWith(
+              height: 0.6,
+              color: BasuraColors.mediumCadiumYellow,
+            ),
+            style: theme.glossyButtonTheme.primary,
+          ),
+          if (!_map.locked)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: -10,
+              child: _Stars(value: _map.scoreRating.value),
+            ),
+        ],
       ),
+    );
+  }
+}
+
+class _Stars extends StatelessWidget {
+  const _Stars({required this.value});
+
+  final int value;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final maxWidth = constraints.maxWidth;
+        final starWidth = maxWidth / 2.8;
+        final middle = maxWidth / 2;
+
+        SvgGenImage star(bool filled) =>
+            filled ? Assets.images.starFilled : Assets.images.starEmpty;
+
+        return SizedBox(
+          height: starWidth,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Positioned(
+                left: middle - starWidth,
+                child: star(value >= 1).svg(width: starWidth),
+              ),
+              Positioned(
+                top: -2,
+                left: middle - (starWidth / 2),
+                child: star(value >= 2).svg(width: starWidth),
+              ),
+              Positioned(
+                left: middle,
+                child: star(value >= 3).svg(width: starWidth),
+              ),
+            ],
+          ),
+        );
+
+        // return ColoredBox(
+        //   color: Color(0xff00ff00).withOpacity(0.2),
+        //   child: Row(
+        //     children: [
+        //       Transform.translate(
+        //         offset: Offset(starWidth / 2, 0),
+        //         child: Assets.images.startEmpty.svg(width: starWidth),
+        //       ),
+        //       Transform.translate(
+        //         offset: const Offset(0, -2),
+        //         child: Assets.images.startEmpty.svg(width: starWidth),
+        //       ),
+        //       Transform.translate(
+        //         offset: Offset(-starWidth / 2, 0),
+        //         child: Assets.images.startEmpty.svg(width: starWidth),
+        //       ),
+        //     ],
+        //   ),
+        // );
+      },
     );
   }
 }

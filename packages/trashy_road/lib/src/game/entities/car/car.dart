@@ -21,7 +21,7 @@ class Car extends Vehicle {
             _CarSpriteGroup(
               direction: roadLane.direction,
               style: style,
-            )
+            ),
           ],
           hitbox: RectangleHitbox(
             isSolid: true,

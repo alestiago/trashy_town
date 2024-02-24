@@ -1,3 +1,4 @@
+import 'package:basura/basura.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/src/game/game.dart';
@@ -47,10 +48,11 @@ class _GameStopwatchState extends State<GameStopwatch>
 
   @override
   Widget build(BuildContext context) {
-    const style = TextStyle(
-      fontSize: 24,
-      fontWeight: FontWeight.bold,
-    );
+    final style = BasuraTheme.of(context).textTheme.button.copyWith(
+          color: BasuraColors.white,
+          fontSize: 40,
+          letterSpacing: 2,
+        );
 
     return MultiBlocListener(
       listeners: [
@@ -87,29 +89,16 @@ class _GameStopwatchState extends State<GameStopwatch>
         style: style,
         child: AnimatedBuilder(
           animation: _animation,
-          builder: (_, __) => Text(_stopwatch.elapsed.format()),
+          builder: (_, __) => BasuraOutlinedText(
+            outlineColor: BasuraColors.deepGreen,
+            strokeWidth: 3,
+            child: AutoSizeText(
+              _stopwatch.elapsed.inSeconds.toString().padLeft(3, '0'),
+              style: style,
+            ),
+          ),
         ),
       ),
     );
-  }
-}
-
-extension on Duration {
-  String format() {
-    final parts = <String>[];
-
-    if (inHours > 0) {
-      parts.add(inHours.toString().padLeft(2, '0'));
-    }
-    if (inMinutes > 0) {
-      parts.add(inMinutes.remainder(60).toString().padLeft(2, '0'));
-    }
-    parts
-      ..add(inSeconds.remainder(60).toString().padLeft(2, '0'))
-      ..add(
-        (inMilliseconds.remainder(1000) ~/ 10).toString().padLeft(2, '0'),
-      );
-
-    return parts.take(2).join(':');
   }
 }

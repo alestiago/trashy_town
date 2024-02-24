@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:basura/basura.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';

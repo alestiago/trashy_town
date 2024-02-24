@@ -62,7 +62,7 @@ class GameMapTile extends StatelessWidget {
             style: theme.glossyButtonTheme.secondary,
             textStyle: theme.textTheme.button.copyWith(
               height: 0.6,
-              color: BasuraColors.lightCadmiumYellow,
+              color: BasuraColors.white,
             ),
           ),
           if (!_map.locked)

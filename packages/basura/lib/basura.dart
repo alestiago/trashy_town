@@ -4,6 +4,7 @@ library basura;
 
 import 'package:meta/meta.dart';
 
+export 'package:auto_size_text/auto_size_text.dart' show AutoSizeText;
 export 'src/basura.dart';
 
 /// Metadata for the Basura package.

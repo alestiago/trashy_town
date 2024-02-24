@@ -78,6 +78,7 @@ class Player extends PositionedEntity with ZIndex {
       [
         PlayerMovingBehavior(),
         PlayerKeyboardMovingBehavior.arrows(),
+        PlayerKeyboardMovingBehavior.wasd(),
         PlayerDragMovingBehavior(),
       ],
     );

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:math';
+import 'dart:math' hide Rectangle;
 import 'dart:ui';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -32,20 +32,18 @@ class TrashyRoadGame extends FlameGame
     required GameBloc gameBloc,
     required this.effectPlayer,
     required this.random,
-    required Size resolution,
+    required this.resolution,
     Images? images,
   })  : _gameBloc = gameBloc,
         super(
-          camera: CameraComponent.withFixedResolution(
-            width: resolution.width,
-            height: resolution.height,
-            viewfinder: Viewfinder()
-              ..anchor = const Anchor(.5, .8)
-              ..zoom = 1.2,
+          camera: CameraComponent(
+            viewfinder: Viewfinder(),
           ),
         ) {
     if (images != null) this.images = images;
   }
+
+  final Size resolution;
 
   /// {@macro GameBloc}
   final GameBloc _gameBloc;
@@ -80,7 +78,9 @@ class TrashyRoadGame extends FlameGame
       create: () => _gameBloc,
       children: [
         ZCanvasComponent(
-          children: [trashyRoadWorld],
+          children: [
+            trashyRoadWorld,
+          ],
         ),
       ],
     );
@@ -91,6 +91,13 @@ class TrashyRoadGame extends FlameGame
     _player.children.register<PlayerDragMovingBehavior>();
 
     camera.follow(_player);
+  }
+
+  @override
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
+
+    camera.viewfinder.zoom = (size.x / resolution.width) + 0.2;
   }
 
   @override

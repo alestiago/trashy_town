@@ -30,6 +30,10 @@ class VehicleSpawningBehavior extends Behavior<RoadLane>
 
     final world = ancestors().whereType<TrashyRoadWorld>().first;
 
+    // TODO(alestiago): Consider specifying the style of the cars in the Tiled
+    // map.
+    final style = CarStyle.randomize();
+
     for (var i = 0; i < parent.traffic; i++) {
       var startPosition = (i / parent.traffic) * world.tiled.size.x;
 
@@ -41,7 +45,10 @@ class VehicleSpawningBehavior extends Behavior<RoadLane>
       }
 
       parent.add(
-        Car(roadLane: parent)..position.x = startPosition,
+        Car(
+          roadLane: parent,
+          style: style,
+        )..position.x = startPosition,
       );
     }
   }

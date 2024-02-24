@@ -13,9 +13,16 @@ import 'package:trashy_road/src/game/game.dart';
 ///
 /// * [Vehicle], the base class for all vehicles.
 class Car extends Vehicle {
-  Car({required super.roadLane})
-      : super(
-          children: [_CarSpriteGroup.fromDirection(roadLane.direction)],
+  Car({
+    required super.roadLane,
+    required CarStyle style,
+  }) : super(
+          children: [
+            _CarSpriteGroup(
+              direction: roadLane.direction,
+              style: style,
+            ),
+          ],
           hitbox: RectangleHitbox(
             isSolid: true,
             size: Vector2(1.3, 1)..toGameSize(),
@@ -24,16 +31,34 @@ class Car extends Vehicle {
 }
 
 class _CarSpriteGroup extends Component {
-  _CarSpriteGroup.fromDirection(RoadLaneDirection direction)
-      : super(
+  _CarSpriteGroup({
+    required CarStyle style,
+    required RoadLaneDirection direction,
+  }) : super(
           children: [
             _CarShadowComponent._fromDirection(direction),
-            _CarSpriteComponent._fromDirection(direction: direction),
+            _CarSpriteComponent(direction: direction, style: style),
           ],
         );
 }
 
 class _CarSpriteComponent extends GameSpriteAnimationComponent {
+  /// Creates a [_CarSpriteComponent] that is oriented as per the [direction].
+  factory _CarSpriteComponent({
+    required RoadLaneDirection direction,
+    required CarStyle style,
+  }) {
+    final spritePath = switch (style) {
+      CarStyle.blue => Assets.images.carBlueDriving.path,
+      CarStyle.red => Assets.images.carRedDriving.path,
+      CarStyle.yellow => Assets.images.carYellowDriving.path,
+    };
+
+    return direction == RoadLaneDirection.leftToRight
+        ? _CarSpriteComponent._leftToRight(spritePath: spritePath)
+        : _CarSpriteComponent._rightToLeft(spritePath: spritePath);
+  }
+
   _CarSpriteComponent._({
     required super.spritePath,
     super.position,
@@ -62,24 +87,6 @@ class _CarSpriteComponent extends GameSpriteAnimationComponent {
       // The `position` has been eyeballed to match with the overall tile map.
       position: Vector2(1.6, -1.5)..toGameSize(),
     )..flipHorizontally();
-  }
-
-  /// Creates a [_CarSpriteComponent] that is oriented as per the [direction].
-  ///
-  /// The `style` of the car is selected randomly.
-  factory _CarSpriteComponent._fromDirection({
-    required RoadLaneDirection direction,
-  }) {
-    final style = CarStyle._randomize();
-    final spritePath = switch (style) {
-      CarStyle.blue => Assets.images.carBlueDriving.path,
-      CarStyle.red => Assets.images.carRedDriving.path,
-      CarStyle.yellow => Assets.images.carYellowDriving.path,
-    };
-
-    return direction == RoadLaneDirection.leftToRight
-        ? _CarSpriteComponent._leftToRight(spritePath: spritePath)
-        : _CarSpriteComponent._rightToLeft(spritePath: spritePath);
   }
 }
 
@@ -132,7 +139,7 @@ enum CarStyle {
   /// {@endtemplate}
   yellow;
 
-  factory CarStyle._randomize({
+  factory CarStyle.randomize({
     @visibleForTesting Random? random,
   }) {
     return CarStyle.values[(random ?? _random).nextInt(CarStyle.values.length)];

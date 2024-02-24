@@ -31,7 +31,7 @@ class BasuraTextThemeData extends Equatable {
     return BasuraTextThemeData(
       button: TextStyle(
         fontFamily: BasuraFontFamily.lilitaOne.name,
-        fontSize: 50,
+        fontSize: 100,
         package: Basura.packageName,
         color: BasuraColors.white,
       ),

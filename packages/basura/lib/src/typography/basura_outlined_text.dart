@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/widgets.dart';
 
 /// {@template BasuraOutlinedText}
@@ -13,7 +14,7 @@ class BasuraOutlinedText extends StatelessWidget {
   });
 
   /// The [Text] to outline.
-  final Text child;
+  final AutoSizeText child;
 
   /// The color of the outline.
   final Color outlineColor;
@@ -26,7 +27,7 @@ class BasuraOutlinedText extends StatelessWidget {
     return Stack(
       children: <Widget>[
         // Stroked text as border.
-        Text(
+        AutoSizeText(
           child.data!,
           style: child.style?.copyWith(
             foreground: Paint()

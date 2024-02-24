@@ -40,13 +40,13 @@ class BasuraGlossyButton extends StatelessWidget {
         onTap: onPressed,
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: const Color(0xFFFFFFFF).withOpacity(0.9),
+            color: BasuraColors.white.withOpacity(0.9),
             borderRadius: BorderRadius.circular(15),
             gradient: const RadialGradient(
               radius: 2,
               colors: [
-                Color(0xFF009042),
-                Color(0xFFFFFFFF),
+                BasuraColors.mediumGreen,
+                BasuraColors.white,
               ],
             ),
           ),
@@ -57,15 +57,15 @@ class BasuraGlossyButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                   width: 2,
-                  color: const Color(0xFF096F00),
+                  color: BasuraColors.deepGreen,
                 ),
                 gradient: const LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment(0, -1.1),
                   stops: [0, 1.1],
                   colors: [
-                    Color(0xFF2F965E),
-                    Color(0xFFFFFBF3),
+                    BasuraColors.mediumGreen,
+                    BasuraColors.lightCadmiumYellow,
                   ],
                 ),
               ),
@@ -112,7 +112,7 @@ class BasuraGlossyTextButton extends StatelessWidget {
     return BasuraGlossyButton(
       onPressed: onPressed,
       child: BasuraOutlinedText(
-        outlineColor: const Color(0xFF096F00),
+        outlineColor: BasuraColors.deepGreen,
         strokeWidth: 6,
         child: Text(
           label.toUpperCase(),

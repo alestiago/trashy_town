@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:basura/basura.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/rendering.dart';
 import 'package:trashy_road/src/game/game.dart';
@@ -28,8 +29,7 @@ class DebugTrashyRoadGame extends TrashyRoadGame {
         ..position = Vector2(10, 55)
         ..textRenderer = TextPaint(
           style: const TextStyle(
-            color: Color(0xFF000000),
-            fontFamily: 'Arial',
+            color: BasuraColors.black,
             fontSize: 24,
           ),
         ),

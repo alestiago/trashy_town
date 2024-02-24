@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:basura/basura.dart';
 import 'package:flame/cache.dart';
 import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
@@ -60,7 +61,7 @@ class TrashyRoadGame extends FlameGame
 
   @override
   Color backgroundColor() {
-    return const Color(0xFFFFFFFF);
+    return BasuraColors.white;
   }
 
   @override

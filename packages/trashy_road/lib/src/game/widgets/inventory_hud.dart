@@ -1,3 +1,4 @@
+import 'package:basura/basura.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/gen/gen.dart';
@@ -15,7 +16,7 @@ class InventoryHud extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         border: Border.all(width: 2),
-        color: const Color(0xFFFFFFFF),
+        color: BasuraColors.white,
       ),
       child: Padding(
         padding: const EdgeInsets.all(8),
@@ -97,7 +98,7 @@ class _TrashTypeCounter extends StatelessWidget {
             style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF000000),
+              color: BasuraColors.black,
             ),
             child: Text(amount.toString()),
           ),

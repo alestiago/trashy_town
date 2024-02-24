@@ -1,3 +1,4 @@
+import 'package:basura/basura.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/src/loading/loading.dart';
@@ -53,14 +54,14 @@ class _LoadingInternal extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: AnimatedProgressBar(
                 progress: state.progress,
-                backgroundColor: const Color(0xFF2A48DF),
-                foregroundColor: const Color(0xFFFFFFFF),
+                backgroundColor: BasuraColors.deepGreen,
+                foregroundColor: BasuraColors.white,
               ),
             ),
             Text(
               loadingMessage,
               style: primaryTextTheme.bodySmall!.copyWith(
-                color: const Color(0xFF2A48DF),
+                color: BasuraColors.lightGreen,
                 fontWeight: FontWeight.w900,
               ),
             ),

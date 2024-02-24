@@ -193,6 +193,7 @@ class BasuraGlossyTextButton extends StatelessWidget {
     required this.label,
     this.onPressed,
     this.style,
+    this.textStyle,
     super.key,
   });
 
@@ -202,6 +203,9 @@ class BasuraGlossyTextButton extends StatelessWidget {
   /// The button's label.
   final String label;
 
+  /// The label's style.
+  final TextStyle? textStyle;
+
   /// {@macro BasuraGlossyButton.onPressed}
   final VoidCallback? onPressed;
 
@@ -209,6 +213,8 @@ class BasuraGlossyTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final style =
         this.style ?? BasuraTheme.of(context).glossyButtonTheme.fallback;
+    final textStyle =
+        this.textStyle ?? BasuraTheme.of(context).textTheme.button;
 
     return BasuraGlossyButton(
       onPressed: onPressed,
@@ -219,7 +225,7 @@ class BasuraGlossyTextButton extends StatelessWidget {
           strokeWidth: 6,
           child: AutoSizeText(
             label.toUpperCase(),
-            style: BasuraTheme.of(context).textTheme.button.copyWith(
+            style: textStyle.copyWith(
               shadows: [
                 Shadow(
                   offset: const Offset(0, 4),

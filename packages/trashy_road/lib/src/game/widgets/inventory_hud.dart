@@ -26,18 +26,10 @@ class InventoryHud extends StatelessWidget {
           builder: (context, trash) {
             return Row(
               children: [
-                TrashTypeCounter.organic(
-                  trash: trash,
-                ),
-                TrashTypeCounter.paper(
-                  trash: trash,
-                ),
-                TrashTypeCounter.plastic(
-                  trash: trash,
-                ),
-                TrashTypeCounter.glass(
-                  trash: trash,
-                ),
+                _TrashTypeCounter.organic(trash: trash),
+                _TrashTypeCounter.paper(trash: trash),
+                _TrashTypeCounter.plastic(trash: trash),
+                _TrashTypeCounter.glass(trash: trash),
               ],
             );
           },
@@ -47,65 +39,58 @@ class InventoryHud extends StatelessWidget {
   }
 }
 
-class TrashTypeCounter extends StatelessWidget {
-  factory TrashTypeCounter.organic({
-    required List<TrashType> trash,
-  }) {
-    return TrashTypeCounter._(
-      trash: trash,
-      iconPath: Assets.images.appleCore2.path,
-      type: TrashType.organic,
-      displayName: 'Organic',
-    );
-  }
-  factory TrashTypeCounter.glass({
-    required List<TrashType> trash,
-  }) {
-    return TrashTypeCounter._(
-      trash: trash,
-      iconPath: Assets.images.plasticBottle1.path,
-      type: TrashType.glass,
-      displayName: 'Glass',
-    );
-  }
-  factory TrashTypeCounter.plastic({
-    required List<TrashType> trash,
-  }) {
-    return TrashTypeCounter._(
-      trash: trash,
-      iconPath: Assets.images.plasticBottle1.path,
-      type: TrashType.plastic,
-      displayName: 'Plastic',
-    );
-  }
-  factory TrashTypeCounter.paper({
-    required List<TrashType> trash,
-  }) {
-    return TrashTypeCounter._(
-      trash: trash,
-      iconPath: Assets.images.paper1.path,
-      type: TrashType.paper,
-      displayName: 'Organic',
-    );
-  }
-  const TrashTypeCounter._({
-    required this.trash,
-    required this.type,
-    required this.displayName,
-    required this.iconPath,
+class _TrashTypeCounter extends StatelessWidget {
+  const _TrashTypeCounter._({
+    required this.amount,
+    required this.imagePath,
   });
 
-  final List<TrashType> trash;
-  final TrashType type;
-  final String displayName;
-  final String iconPath;
+  factory _TrashTypeCounter.organic({
+    required List<TrashType> trash,
+  }) {
+    return _TrashTypeCounter._(
+      amount: trash.where((type) => type == TrashType.organic).length,
+      imagePath: Assets.images.appleCore2.path,
+    );
+  }
+
+  factory _TrashTypeCounter.glass({
+    required List<TrashType> trash,
+  }) {
+    return _TrashTypeCounter._(
+      amount: trash.where((type) => type == TrashType.glass).length,
+      imagePath: Assets.images.plasticBottle1.path,
+    );
+  }
+
+  factory _TrashTypeCounter.plastic({
+    required List<TrashType> trash,
+  }) {
+    return _TrashTypeCounter._(
+      amount: trash.where((type) => type == TrashType.plastic).length,
+      imagePath: Assets.images.plasticBottle1.path,
+    );
+  }
+
+  factory _TrashTypeCounter.paper({
+    required List<TrashType> trash,
+  }) {
+    return _TrashTypeCounter._(
+      amount: trash.where((type) => type == TrashType.paper).length,
+      imagePath: Assets.images.paper1.path,
+    );
+  }
+
+  /// The amount of trash.
+  final int amount;
+
+  /// The image path for the trash type.
+  final String imagePath;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 4,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Row(
         children: [
           DefaultTextStyle(
@@ -114,11 +99,9 @@ class TrashTypeCounter extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: Color(0xFF000000),
             ),
-            child: Text(
-              '${trash.where((t) => t == type).length}',
-            ),
+            child: Text(amount.toString()),
           ),
-          Image.asset(iconPath, width: 48, height: 48),
+          Image.asset(imagePath, width: 48, height: 48),
         ],
       ),
     );

@@ -67,12 +67,12 @@ class BasuraThemeData extends Equatable {
         fontFamily: BasuraFontFamily.lilitaOne.name,
         fontSize: 50,
         package: Basura.packageName,
-        color: const Color(0xFFFFFFFF),
+        color: BasuraColors.white,
         shadows: const [
           Shadow(
             offset: Offset(0, 4),
             blurRadius: 4,
-            color: Color(0xFF096F00),
+            color: BasuraColors.deepGreen,
           ),
         ],
       ),

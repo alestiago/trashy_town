@@ -58,33 +58,22 @@ class BasuraThemeData extends Equatable {
   /// {@macro BasuraThemeData}
   const BasuraThemeData({
     required this.textTheme,
+    required this.glossyButtonTheme,
   });
 
   /// A light theme for the Basura design system.
   factory BasuraThemeData.light() {
-    final textTheme = BasuraTextThemeData(
-      button: TextStyle(
-        fontFamily: BasuraFontFamily.lilitaOne.name,
-        fontSize: 50,
-        package: Basura.packageName,
-        color: BasuraColors.white,
-        shadows: const [
-          Shadow(
-            offset: Offset(0, 4),
-            blurRadius: 4,
-            color: BasuraColors.deepGreen,
-          ),
-        ],
-      ),
-    );
-
     return BasuraThemeData(
-      textTheme: textTheme,
+      textTheme: BasuraTextThemeData.light(),
+      glossyButtonTheme: BasuraGlossyButtonTheme.light(),
     );
   }
 
   /// {@macro BasuraTextThemeData}
   final BasuraTextThemeData textTheme;
+
+  /// {@macro BasuraGlossyButtonTheme}
+  final BasuraGlossyButtonTheme glossyButtonTheme;
 
   @override
   List<Object?> get props => [textTheme];

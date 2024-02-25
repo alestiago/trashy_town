@@ -90,7 +90,7 @@ class _GameView extends StatelessWidget {
           ),
           const Align(child: TrashyRoadGameWidget()),
           const Align(
-            alignment: Alignment.topLeft,
+            alignment: Alignment.topRight,
             child: Padding(
               padding: EdgeInsets.all(8),
               child: GameStopwatch(),
@@ -104,7 +104,7 @@ class _GameView extends StatelessWidget {
             ),
           ),
           Align(
-            alignment: Alignment.topRight,
+            alignment: Alignment.topLeft,
             child: Padding(
               padding: const EdgeInsets.all(8),
               child: PauseButton(

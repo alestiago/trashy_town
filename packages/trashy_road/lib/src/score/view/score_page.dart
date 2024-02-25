@@ -1,5 +1,7 @@
+import 'package:basura/basura.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/loading/loading.dart';
 import 'package:trashy_road/src/maps/maps.dart';
@@ -58,35 +60,70 @@ class ScorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = BasuraTheme.of(context);
     final gameMapsBloc = context.read<GameMapsBloc>();
 
     final map = gameMapsBloc.state.maps[_identifier]!;
     final nextMap = gameMapsBloc.state.next(_identifier);
     final scoreRating = map.scoreRating;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Score'),
-      ),
-      body: Center(
-        child: AnimatedStarRating(rating: scoreRating.value),
-      ),
-      floatingActionButton: nextMap != null
-          ? FloatingActionButton(
-              onPressed: () => _onNextMap(context, nextMap: nextMap),
-              child: const Icon(Icons.play_arrow),
-            )
-          : null,
-      bottomNavigationBar: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+    const textButtonSize = Size(200, 64);
+    const spacing = SizedBox.square(dimension: 8);
+
+    return DefaultTextStyle(
+      style: theme.textTheme.button,
+      child: Stack(
         children: [
-          TextButton(
-            onPressed: () => _onReplay(context),
-            child: const Text('Replay'),
+          Positioned.fill(
+            child: Image.asset(
+              // TODO(alestiago): Use background render when available.
+              Assets.images.grass.path,
+              repeat: ImageRepeat.repeat,
+            ),
           ),
-          TextButton(
-            onPressed: () => _onMenu(context),
-            child: const Text('Menu'),
+          SizedBox.fromSize(
+            size: MediaQuery.sizeOf(context),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: MediaQuery.sizeOf(context).height * 0.3,
+                  child: AnimatedStarRating(rating: scoreRating.value),
+                ),
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  runAlignment: WrapAlignment.center,
+                  spacing: spacing.height!,
+                  runSpacing: spacing.height!,
+                  children: [
+                    SizedBox.fromSize(
+                      size: textButtonSize,
+                      child: BasuraGlossyTextButton(
+                        onPressed: () => _onReplay(context),
+                        label: 'Replay',
+                      ),
+                    ),
+                    SizedBox.fromSize(
+                      size: textButtonSize,
+                      child: BasuraGlossyTextButton(
+                        onPressed: () => _onMenu(context),
+                        label: 'Menu',
+                      ),
+                    ),
+                    if (nextMap != null)
+                      SizedBox.fromSize(
+                        size: textButtonSize,
+                        child: BasuraGlossyTextButton(
+                          style: theme.glossyButtonTheme.primary,
+                          onPressed: () =>
+                              _onNextMap(context, nextMap: nextMap),
+                          label: 'Next',
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),

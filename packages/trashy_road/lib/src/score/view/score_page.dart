@@ -119,7 +119,7 @@ class ScorePage extends StatelessWidget {
                               _onNextMap(context, nextMap: nextMap),
                           label: 'Next',
                         ),
-                      )
+                      ),
                   ],
                 ),
               ],

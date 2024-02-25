@@ -71,11 +71,7 @@ class BasuraGlossyButton extends StatelessWidget {
                   ],
                 ),
               ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 6),
-                child: child,
-              ),
+              child: child,
             ),
           ),
         ),
@@ -219,19 +215,22 @@ class BasuraGlossyTextButton extends StatelessWidget {
       onPressed: onPressed,
       style: style,
       child: Center(
-        child: BasuraOutlinedText(
-          outlineColor: style.outlineColor,
-          strokeWidth: 6,
-          child: AutoSizeText(
-            label.toUpperCase(),
-            style: textStyle.copyWith(
-              shadows: [
-                Shadow(
-                  offset: const Offset(0, 4),
-                  blurRadius: 4,
-                  color: style.outlineColor,
-                ),
-              ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 6),
+          child: BasuraOutlinedText(
+            outlineColor: style.outlineColor,
+            strokeWidth: 6,
+            child: AutoSizeText(
+              label.toUpperCase(),
+              style: textStyle.copyWith(
+                shadows: [
+                  Shadow(
+                    offset: const Offset(0, 4),
+                    blurRadius: 4,
+                    color: style.outlineColor,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

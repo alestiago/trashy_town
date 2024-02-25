@@ -64,14 +64,6 @@ class _AnimatedStarRatingState extends State<AnimatedStarRating>
   }
 
   @override
-  void didUpdateWidget(covariant AnimatedStarRating oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    _controller.rating.value = 0;
-    _animationController.forward(from: 0);
-  }
-
-  @override
   void dispose() {
     _controller.dispose();
     _animationController.dispose();

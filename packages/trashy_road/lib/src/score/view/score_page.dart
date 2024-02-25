@@ -110,17 +110,16 @@ class ScorePage extends StatelessWidget {
                         label: 'Menu',
                       ),
                     ),
-                    SizedBox.fromSize(
-                      size: textButtonSize,
-                      child: nextMap != null
-                          ? BasuraGlossyTextButton(
-                              style: theme.glossyButtonTheme.primary,
-                              onPressed: () =>
-                                  _onNextMap(context, nextMap: nextMap),
-                              label: 'Next',
-                            )
-                          : null,
-                    ),
+                    if (nextMap != null)
+                      SizedBox.fromSize(
+                        size: textButtonSize,
+                        child: BasuraGlossyTextButton(
+                          style: theme.glossyButtonTheme.primary,
+                          onPressed: () =>
+                              _onNextMap(context, nextMap: nextMap),
+                          label: 'Next',
+                        ),
+                      )
                   ],
                 ),
               ],

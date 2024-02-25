@@ -25,7 +25,7 @@ class GameMapsBloc extends Bloc<GameMapsEvent, GameMapsState> {
     Map<String, GameMap>? newMaps;
     final currentMap = state.maps[event.identifier]!;
 
-    final firstTimeCompleted = currentMap.score == 0;
+    final firstTimeCompleted = currentMap.score == -1;
     if (firstTimeCompleted) {
       final nextMap = state.next(currentMap.identifier);
 

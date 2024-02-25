@@ -44,7 +44,9 @@ class PauseButton extends StatelessWidget {
       onPressed: () => _onPause(context),
       child: Padding(
         padding: const EdgeInsets.all(12),
-        child: _PauseIcon(style: style),
+        child: Center(
+          child: _PauseIcon(style: style),
+        ),
       ),
     );
   }

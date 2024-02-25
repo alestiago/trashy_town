@@ -89,14 +89,15 @@ class _GameStopwatchState extends State<GameStopwatch>
         style: style,
         child: AnimatedBuilder(
           animation: _animation,
-          builder: (_, __) => BasuraOutlinedText(
-            outlineColor: BasuraColors.deepGreen,
-            strokeWidth: 3,
-            child: AutoSizeText(
-              _stopwatch.elapsed.inSeconds.toString().padLeft(3, '0'),
-              style: style,
-            ),
-          ),
+          builder: (_, __) {
+            final seconds = _stopwatch.elapsed.inSeconds;
+            final label =
+                seconds > 999 ? '999' : seconds.toString().padLeft(3, '0');
+            return BasuraGlossyTextButton(
+              onPressed: _reset,
+              label: label,
+            );
+          },
         ),
       ),
     );

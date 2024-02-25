@@ -60,29 +60,42 @@ class PausePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = BasuraTheme.of(context);
+    const textButtonSize = Size(200, 64);
+    const spacing = SizedBox(height: 8);
+
     return Scaffold(
-      backgroundColor: Colors.black.withOpacity(0.3),
+      backgroundColor: BasuraColors.black.withOpacity(0.3),
       body: Center(
-        child: IconButton(
-          onPressed: () => _onResume(context),
-          icon: const Icon(
-            Icons.play_arrow,
-            color: Colors.white,
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox.fromSize(
+              size: textButtonSize,
+              child: BasuraGlossyTextButton(
+                label: 'Resume',
+                style: theme.glossyButtonTheme.primary,
+                onPressed: () => _onResume(context),
+              ),
+            ),
+            spacing,
+            SizedBox.fromSize(
+              size: textButtonSize,
+              child: BasuraGlossyTextButton(
+                label: 'Replay',
+                onPressed: () => _onReplay(context),
+              ),
+            ),
+            spacing,
+            SizedBox.fromSize(
+              size: textButtonSize,
+              child: BasuraGlossyTextButton(
+                label: 'Menu',
+                onPressed: () => _onMenu(context),
+              ),
+            ),
+          ],
         ),
-      ),
-      bottomNavigationBar: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          BasuraGlossyTextButton(
-            label: 'Replay',
-            onPressed: () => _onReplay(context),
-          ),
-          BasuraGlossyTextButton(
-            label: 'Menu',
-            onPressed: () => _onMenu(context),
-          ),
-        ],
       ),
     );
   }

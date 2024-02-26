@@ -9,7 +9,7 @@ enum Direction { up, down, left, right }
 
 /// A behavior that allows the player to move around the game.
 final class PlayerMovingBehavior extends Behavior<Player>
-    with FlameBlocReader<GameBloc, GameState> {
+    with FlameBlocReader<GameBloc, GameState>, ParentIsA<Player> {
   /// The delay between player moves.
   static const _moveDelay = Duration(milliseconds: 100);
 
@@ -74,6 +74,7 @@ final class PlayerMovingBehavior extends Behavior<Player>
     } else if (direction == Direction.up) {
       _targetPosition.y -= GameSettings.gridDimensions.y;
     }
+    parent.children.query<PlayerSpriteComponent>().first.hop();
     _nextMoveTime = now.add(_moveDelay);
   }
 

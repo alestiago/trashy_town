@@ -133,6 +133,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/player.png
   AssetGenImage get player => const AssetGenImage('assets/images/player.png');
 
+  /// File path: assets/images/player_straight-jump.png
+  AssetGenImage get playerStraightJump =>
+      const AssetGenImage('assets/images/player_straight-jump.png');
+
   /// File path: assets/images/road.png
   AssetGenImage get road => const AssetGenImage('assets/images/road.png');
 
@@ -204,6 +208,7 @@ class $AssetsImagesGen {
         plasticBottle2Shadow,
         plasticBottle2,
         player,
+        playerStraightJump,
         road,
         starEmpty,
         starFilled,
@@ -277,8 +282,11 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/trash_plastic.tx
   String get trashPlastic => 'assets/tiles/trash_plastic.tx';
 
-  /// File path: assets/tiles/tree.tx
-  String get tree => 'assets/tiles/tree.tx';
+  /// File path: assets/tiles/tree_1.tx
+  String get tree1 => 'assets/tiles/tree_1.tx';
+
+  /// File path: assets/tiles/tree_2.tx
+  String get tree2 => 'assets/tiles/tree_2.tx';
 
   /// List of all assets
   List<String> get values => [
@@ -297,7 +305,8 @@ class $AssetsTilesGen {
         trashOrganic,
         trashPaper,
         trashPlastic,
-        tree
+        tree1,
+        tree2
       ];
 }
 

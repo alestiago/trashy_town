@@ -26,12 +26,15 @@
   <image width="128" height="64" source="../images/grass-flowers.png"/>
  </tile>
  <tile id="9">
-  <image width="300" height="300" source="../images/tree.png"/>
+  <image width="300" height="300" source="../images/tree_1.png"/>
  </tile>
  <tile id="10">
   <image width="128" height="128" source="../images/fire_hydrant.png"/>
  </tile>
  <tile id="11">
   <image width="128" height="128" source="../images/bush.png"/>
+ </tile>
+ <tile id="12">
+  <image width="300" height="300" source="../images/tree_2.png"/>
  </tile>
 </tileset>

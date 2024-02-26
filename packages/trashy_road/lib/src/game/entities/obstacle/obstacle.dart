@@ -32,13 +32,22 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
     zIndex = position.y.floor();
   }
 
-  // An Obstacle that is a tree.
+  // An Obstacle that is a tree with a single large ball of leaves.
   //
   // The tree takes up 1x1 tile space.
-  Obstacle._tree({required Vector2 position})
+  Obstacle._tree1({required Vector2 position})
       : this._(
           position: position,
-          children: [_TreeSpriteGroup()],
+          children: [_Tree1SpriteGroup()],
+        );
+
+  // An Obstacle that is a tree with three balls as the leaves.
+  //
+  // The tree takes up 1x1 tile space.
+  Obstacle._tree2({required Vector2 position})
+      : this._(
+          position: position,
+          children: [_Tree2SpriteGroup()],
         );
 
   // An Obstacle that is a fire hydrant.
@@ -64,8 +73,10 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
     final position = Vector2(tiledObject.x, tiledObject.y);
 
     switch (type) {
-      case 'tree':
-        return Obstacle._tree(position: position);
+      case 'tree_1':
+        return Obstacle._tree1(position: position);
+      case 'tree_2':
+        return Obstacle._tree2(position: position);
       case 'fire_hydrant':
         return Obstacle._fireHydrant(position: position);
       case 'bush':
@@ -76,8 +87,8 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
   }
 }
 
-class _TreeSpriteGroup extends PositionComponent {
-  _TreeSpriteGroup()
+class _Tree1SpriteGroup extends PositionComponent {
+  _Tree1SpriteGroup()
       : super(
           // The `size`, `position` and `scale` have been eye-balled to fit with
           // the tile size.
@@ -92,6 +103,27 @@ class _TreeSpriteGroup extends PositionComponent {
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
               spritePath: Assets.images.tree1.path,
+            ),
+          ],
+        );
+}
+
+class _Tree2SpriteGroup extends PositionComponent {
+  _Tree2SpriteGroup()
+      : super(
+          // The `size`, `position` and `scale` have been eye-balled to fit with
+          // the tile size.
+          size: Vector2.all(0.8)..toGameSize(),
+          position: Vector2(-0.1, 0.5)..toGameSize(),
+          scale: Vector2.all(0.8),
+          children: [
+            GameSpriteComponent.fromPath(
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.tree2Shadow.path,
+            ),
+            GameSpriteComponent.fromPath(
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.tree2.path,
             ),
           ],
         );

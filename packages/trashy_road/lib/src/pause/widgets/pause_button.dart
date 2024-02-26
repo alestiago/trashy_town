@@ -39,9 +39,9 @@ class PauseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = BasuraTheme.of(context).glossyButtonTheme.secondary;
 
-    return BasuraGlossyButton(
-      style: style,
-      onPressed: () => _onPause(context),
+    return GestureDetector(
+      onTap: () => _onPause(context),
+      behavior: HitTestBehavior.opaque,
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Center(

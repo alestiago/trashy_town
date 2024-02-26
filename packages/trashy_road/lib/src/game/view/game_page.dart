@@ -5,7 +5,6 @@ import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/loading/loading.dart';
 import 'package:trashy_road/src/maps/maps.dart';
-import 'package:trashy_road/src/pause/pause.dart';
 import 'package:trashy_road/src/score/view/view.dart';
 
 class GamePage extends StatelessWidget {
@@ -62,8 +61,6 @@ class _GameView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gameBloc = context.read<GameBloc>();
-
     return BlocListener<GameBloc, GameState>(
       listenWhen: (previous, current) => current.status == GameStatus.completed,
       listener: (context, state) {
@@ -90,46 +87,8 @@ class _GameView extends StatelessWidget {
           ),
           const Align(child: TrashyRoadGameWidget()),
           const Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 24, horizontal: 8),
-              child: InventoryHud(),
-            ),
-          ),
-          const Align(
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding: EdgeInsets.all(8),
-              child: SizedBox(
-                height: 60,
-                width: 150,
-                child: GameStopwatch(),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: SizedBox(
-                height: 60,
-                width: 60,
-                child: PauseButton(
-                  onPause: () {
-                    gameBloc.add(const GamePausedEvent());
-                    return true;
-                  },
-                  onResume: () {
-                    gameBloc.add(const GameResumedEvent());
-                    return true;
-                  },
-                  onReplay: () {
-                    gameBloc.add(const GameResetEvent());
-                    return true;
-                  },
-                ),
-              ),
-            ),
+            alignment: Alignment.topCenter,
+            child: Hud(),
           ),
         ],
       ),

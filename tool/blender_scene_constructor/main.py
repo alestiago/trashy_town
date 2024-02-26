@@ -16,7 +16,7 @@ SHADOW_GROUP_NAME = "ShadowToggleable"
 # Set this to True if you want to render only the shadows
 ONLY_RENDER_SHADOWS = False
 # Set this to True if you want to reset the camera to the default position (leave true for the first run)
-RESET_CAMERA = False
+RESET_CAMERA = True
 
 def setup_camera(camera):
     # Set the camera to orthographic mode
@@ -59,27 +59,48 @@ def delete_all_sun_lamps():
 def add_or_move_area(camera):
     # Delete all sun lamps
     delete_all_sun_lamps()
-    area = bpy.data.objects.get("Area")
+    shadow_caster = bpy.data.objects.get("ShadowCaster")
+    key_light = bpy.data.objects.get("KeyLight")
     
-    if area is None:
+    if shadow_caster is None:
         # Add a new area lamp
         bpy.ops.object.light_add(type='AREA', location=(camera.location.x - 3, camera.location.y, camera.location.z))
         # Fetch the newly created area lamp
-        area = bpy.context.object
-        area.name = "Area"
+        shadow_caster = bpy.context.object
+        shadow_caster.name = "ShadowCaster"
+        
+    if key_light is None:
+        # Add a new area lamp
+        bpy.ops.object.light_add(type='AREA', location=(camera.location.x, camera.location.y, camera.location.z))
+        # Fetch the newly created area lamp
+        key_light = bpy.context.object
+        key_light.name = "KeyLight"
     
     # Set the area light strength
-    area.data.energy = 300
+    shadow_caster.data.energy = 1000
+    shadow_caster.data.size = 5
+    key_light.data.energy=500
+    key_light.data.size = 5
+    key_light.data.cycles.cast_shadow = False
+
     
     # Position the area lamp 3 units to the left of the camera and at the same Y position
-    area.location.x = camera.location.x - SHADOW_SIZE
-    area.location.y = camera.location.y
-    area.location.z = camera.location.z
+    shadow_caster.location.x = -SHADOW_SIZE
+    shadow_caster.location.y = camera.location.y+SHADOW_SIZE*3
+    shadow_caster.location.z = camera.location.z
+    
+    # position key light with  the camera
+    key_light.location = camera.location
     
     # Calculate the direction vector from area lamp location to origin
-    direction = -area.location
+    key_light_direction = -key_light.location
     # Align the area lamp to point in the calculated direction
-    area.rotation_euler = direction.to_track_quat('-Z', 'Y').to_euler()
+    key_light.rotation_euler = key_light_direction.to_track_quat('-Z', 'Y').to_euler()
+    
+    # Calculate the direction vector from area lamp location to origin
+    shadow_caster_direction = -shadow_caster.location
+    # Align the area lamp to point in the calculated direction
+    shadow_caster.rotation_euler = shadow_caster_direction.to_track_quat('-Z', 'Y').to_euler()
     
 def modify_or_create_shadow_toggleable_node_group():
     # Check if the group already exists

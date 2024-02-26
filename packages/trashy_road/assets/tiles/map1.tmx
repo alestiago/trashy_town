@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="16" height="32" tilewidth="128" tileheight="64" infinite="0" nextlayerid="9" nextobjectid="121">
+<map version="1.9" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="16" height="32" tilewidth="128" tileheight="64" infinite="0" nextlayerid="9" nextobjectid="122">
   <tileset firstgid="1" source="Tiles.tsx"/>
   <layer id="1" name="Background" width="16" height="32">
     <data encoding="csv">1,1,1,1,1,1,1,1,1,1,8,8,8,8,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 1,1,1,1,1,1,1,1,1,1,1,1,8,1,1,1, 1,1,1,1,8,8,8,1,1,1,1,1,8,1,1,1, 1,1,1,1,1,1,8,1,1,1,1,1,1,1,1,1, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,8,8,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,8,1,1,1,1,8,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,8,8,1,1,1, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 1,1,1,1,6,2,2147483654,1,1,1,1,1,1,1,1,1, 1,8,8,1,6,2,2147483654,1,1,1,1,1,1,1,1,1, 1,8,1,1,6,2,2147483654,1,1,1,1,1,1,1,1,1, 1,1,1,1,6,2,2147483654,1,1,8,8,8,8,1,1,1, 1,1,1,1,6,2,2147483654,1,1,1,1,1,1,1,1,1, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,8,8,1,1,1,1,1,1,1,1,1,1,1,8,8, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8, 1,1,1,1,1,1,1,1,8,8,8,8,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 1,1,1,1,1,8,1,1,1,1,1,1,1,1,1,1, 8,1,1,1,1,8,1,1,1,1,1,1,1,1,1,8, 8,8,1,1,1,8,1,1,1,1,1,1,1,1,8,8</data>
@@ -11,24 +11,25 @@
     <object id="86" x="1920" y="0" width="128" height="2048"/>
   </objectgroup>
   <objectgroup id="5" name="Obstacles">
-    <object id="89" template="tree.tx" class="tree" gid="10" x="1536" y="1472" width="128" height="128"/>
-    <object id="92" template="tree.tx" class="tree" gid="10" x="128" y="1920" width="128" height="128"/>
-    <object id="93" template="tree.tx" class="tree" gid="10" x="256" y="1920" width="128" height="128"/>
-    <object id="94" template="tree.tx" class="tree" gid="10" x="384" y="1920" width="128" height="128"/>
-    <object id="95" template="tree.tx" class="tree" gid="10" x="512" y="1920" width="128" height="128"/>
-    <object id="96" template="tree.tx" class="tree" gid="10" x="640" y="1920" width="128" height="128"/>
-    <object id="97" template="tree.tx" class="tree" gid="10" x="640" y="1728" width="128" height="128"/>
-    <object id="98" template="tree.tx" class="tree" gid="10" x="640" y="1664" width="128" height="128"/>
-    <object id="99" template="tree.tx" class="tree" gid="10" x="640" y="1600" width="128" height="128"/>
-    <object id="100" template="tree.tx" class="tree" gid="10" x="640" y="1536" width="128" height="128"/>
-    <object id="101" template="tree.tx" class="tree" gid="10" x="640" y="1472" width="128" height="128"/>
-    <object id="102" template="tree.tx" class="tree" gid="10" x="1024" y="1920" width="128" height="128"/>
-    <object id="103" template="tree.tx" class="tree" gid="10" x="1024" y="1984" width="128" height="128"/>
-    <object id="104" template="tree.tx" class="tree" gid="10" x="1024" y="2048" width="128" height="128"/>
-    <object id="105" template="tree.tx" class="tree" gid="10" x="640" y="1984" width="128" height="128"/>
-    <object id="106" template="tree.tx" class="tree" gid="10" x="640" y="2048" width="128" height="128"/>
+    <object id="89" template="tree_1.tx" class="tree_1" gid="10" x="1536" y="1472" width="128" height="128"/>
+    <object id="92" template="tree_1.tx" class="tree_1" gid="10" x="128" y="1920" width="128" height="128"/>
+    <object id="93" template="tree_1.tx" class="tree_1" gid="10" x="256" y="1920" width="128" height="128"/>
+    <object id="94" template="tree_1.tx" class="tree_1" gid="10" x="384" y="1920" width="128" height="128"/>
+    <object id="95" template="tree_1.tx" class="tree_1" gid="10" x="512" y="1920" width="128" height="128"/>
+    <object id="96" template="tree_1.tx" class="tree_1" gid="10" x="640" y="1920" width="128" height="128"/>
+    <object id="97" template="tree_1.tx" class="tree_1" gid="10" x="640" y="1728" width="128" height="128"/>
+    <object id="98" template="tree_1.tx" class="tree_1" gid="10" x="640" y="1664" width="128" height="128"/>
+    <object id="99" template="tree_1.tx" class="tree_1" gid="10" x="640" y="1600" width="128" height="128"/>
+    <object id="100" template="tree_1.tx" class="tree_1" gid="10" x="640" y="1536" width="128" height="128"/>
+    <object id="101" template="tree_1.tx" class="tree_1" gid="10" x="640" y="1472" width="128" height="128"/>
+    <object id="102" template="tree_1.tx" class="tree_1" gid="10" x="1024" y="1920" width="128" height="128"/>
+    <object id="103" template="tree_1.tx" class="tree_1" gid="10" x="1024" y="1984" width="128" height="128"/>
+    <object id="104" template="tree_1.tx" class="tree_1" gid="10" x="1024" y="2048" width="128" height="128"/>
+    <object id="105" template="tree_1.tx" class="tree_1" gid="10" x="640" y="1984" width="128" height="128"/>
+    <object id="106" template="tree_1.tx" class="tree_1" gid="10" x="640" y="2048" width="128" height="128"/>
     <object id="108" template="fire_hydrant.tx" class="fire_hydrant" gid="11" x="896" y="1920" width="128" height="128"/>
     <object id="109" template="bush.tx" class="bush" gid="12" x="1152" y="1984" width="128" height="128"/>
+    <object id="121" template="tree_2.tx" x="512" y="1728" class="tree_2" gid="13" width="100" height="100"/>
   </objectgroup>
   <objectgroup id="6" name="RoadLayer">
     <object id="36" template="road_lane.tx" name="road_lane" class="road_lane" x="1984" y="240">

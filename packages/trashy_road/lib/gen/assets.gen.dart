@@ -159,12 +159,19 @@ class $AssetsImagesGen {
   AssetGenImage get trashCan =>
       const AssetGenImage('assets/images/trash_can.png');
 
-  /// File path: assets/images/tree-shadow.png
-  AssetGenImage get treeShadow =>
-      const AssetGenImage('assets/images/tree-shadow.png');
+  /// File path: assets/images/tree_1-shadow.png
+  AssetGenImage get tree1Shadow =>
+      const AssetGenImage('assets/images/tree_1-shadow.png');
 
-  /// File path: assets/images/tree.png
-  AssetGenImage get tree => const AssetGenImage('assets/images/tree.png');
+  /// File path: assets/images/tree_1.png
+  AssetGenImage get tree1 => const AssetGenImage('assets/images/tree_1.png');
+
+  /// File path: assets/images/tree_2-shadow.png
+  AssetGenImage get tree2Shadow =>
+      const AssetGenImage('assets/images/tree_2-shadow.png');
+
+  /// File path: assets/images/tree_2.png
+  AssetGenImage get tree2 => const AssetGenImage('assets/images/tree_2.png');
 
   /// List of all assets
   List<dynamic> get values => [
@@ -204,8 +211,10 @@ class $AssetsImagesGen {
         trashCanOpening,
         trashCanShadow,
         trashCan,
-        treeShadow,
-        tree
+        tree1Shadow,
+        tree1,
+        tree2Shadow,
+        tree2
       ];
 }
 

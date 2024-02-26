@@ -82,16 +82,16 @@ class _TreeSpriteGroup extends PositionComponent {
           // The `size`, `position` and `scale` have been eye-balled to fit with
           // the tile size.
           size: Vector2.all(0.8)..toGameSize(),
-          position: Vector2(-0.1, -0.1)..toGameSize(),
+          position: Vector2(-0.1, 0.5)..toGameSize(),
           scale: Vector2.all(0.8),
           children: [
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.treeShadow.path,
+              spritePath: Assets.images.tree1Shadow.path,
             ),
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.tree.path,
+              spritePath: Assets.images.tree1.path,
             ),
           ],
         );

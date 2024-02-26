@@ -30,7 +30,7 @@ class Player extends PositionedEntity with ZIndex {
             ),
           ],
           children: [
-            _PlayerSpriteComponent(),
+            PlayerSpriteComponent(),
           ],
         );
 
@@ -85,14 +85,43 @@ class Player extends PositionedEntity with ZIndex {
   }
 }
 
-class _PlayerSpriteComponent extends SpriteComponent with HasGameReference {
+class PlayerSpriteComponent extends SpriteAnimationComponent
+    with HasGameReference {
+  PlayerSpriteComponent()
+      : super(
+          position: Vector2(-0.4, -2.5)..toGameSize(),
+          scale: Vector2.all(0.45),
+        );
+
   @override
   Future<void> onLoad() async {
-    anchor = const Anchor(0.5, 0.8);
-    sprite = await Sprite.load(
-      Assets.images.player.path,
-      images: game.images,
+    await super.onLoad();
+
+    final image = await game.images.fetchOrGenerate(
+      Assets.images.playerStraightJump.path,
+      () => game.images.load(Assets.images.playerStraightJump.path),
     );
-    return super.onLoad();
+
+    animation = SpriteAnimation.fromFrameData(
+      image,
+      SpriteAnimationData.sequenced(
+        amount: 13,
+        amountPerRow: 4,
+        textureSize: Vector2.all(512),
+        stepTime: 1 / 24,
+        loop: false,
+      ),
+    );
+    playing = false;
+
+    animationTicker!.onComplete = () {
+      playing = false;
+      animationTicker!.reset();
+    };
+  }
+
+  void hop() {
+    if (playing) return;
+    playing = true;
   }
 }

@@ -137,6 +137,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/player.png
   AssetGenImage get player => const AssetGenImage('assets/images/player.png');
 
+  /// File path: assets/images/player_straight-jump.png
+  AssetGenImage get playerStraightJump =>
+      const AssetGenImage('assets/images/player_straight-jump.png');
+
   /// File path: assets/images/road.png
   AssetGenImage get road => const AssetGenImage('assets/images/road.png');
 
@@ -225,6 +229,7 @@ class $AssetsImagesGen {
         plasticBottle2Shadow,
         plasticBottle2,
         player,
+        playerStraightJump,
         road,
         slotAppleCore,
         slotEmpty,

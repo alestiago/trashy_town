@@ -2,6 +2,7 @@ import 'package:clock/clock.dart';
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_bloc/flame_bloc.dart';
+import 'package:flutter/widgets.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/src/game/game.dart';
 
@@ -11,10 +12,10 @@ enum Direction { up, down, left, right }
 final class PlayerMovingBehavior extends Behavior<Player>
     with FlameBlocReader<GameBloc, GameState>, ParentIsA<Player> {
   /// The delay between player moves.
-  static const _moveDelay = Duration(milliseconds: 100);
+  static const moveDelay = Duration(milliseconds: 200);
 
-  /// The lerp time for player movement.
-  static const _playerMoveAnimationSpeed = 15;
+  /// States whether the player is currently moving
+  bool isMoving = false;
 
   /// The position the player is trying to move to.
   ///
@@ -38,17 +39,28 @@ final class PlayerMovingBehavior extends Behavior<Player>
   @override
   void update(double dt) {
     super.update(dt);
+    final now = clock.now();
+    final timeUntilDone = _nextMoveTime.difference(now);
+    final hasArrived = _nextMoveTime.isBefore(now);
 
-    final hasArrived = parent.position.distanceTo(_targetPosition) < 0.01;
-    if (!hasArrived) {
-      parent.position.lerp(_targetPosition, _playerMoveAnimationSpeed * dt);
-      parent.priority = parent.position.y.floor();
+    if (!hasArrived && isMoving) {
+      parent.position.curve(
+        from: _previousPosition,
+        to: _targetPosition,
+        curve: Curves.easeInOut,
+        percentCompletion:
+            1 - (timeUntilDone.inMilliseconds / moveDelay.inMilliseconds),
+      );
     }
 
-    final isMidThrough = parent.position.distanceTo(_targetPosition) <
-        GameSettings.gridDimensions.y / 2;
-    final movingElsewhere = _targetPosition != _previousPosition;
-    if (isMidThrough && movingElsewhere) {
+    // This ensures there has been at least one frame of the user at the end
+    // destination before the user can set the next location.
+
+    // If this isn't done the user will skip back momentarily as the
+    //_previousPosition is outdated.
+    if (hasArrived && isMoving) {
+      isMoving = false;
+      parent.position.setFrom(_targetPosition);
       _previousPosition.setFrom(_targetPosition);
     }
   }
@@ -61,10 +73,10 @@ final class PlayerMovingBehavior extends Behavior<Player>
 
     final now = clock.now();
 
-    if (now.isBefore(_nextMoveTime)) {
+    if (now.isBefore(_nextMoveTime) || isMoving) {
       return;
     }
-
+    _targetPosition.setFrom(parent.position);
     if (direction == Direction.left) {
       _targetPosition.x -= GameSettings.gridDimensions.x;
     } else if (direction == Direction.right) {
@@ -74,11 +86,33 @@ final class PlayerMovingBehavior extends Behavior<Player>
     } else if (direction == Direction.up) {
       _targetPosition.y -= GameSettings.gridDimensions.y;
     }
-    parent.children.query<PlayerSpriteComponent>().first.hop();
-    _nextMoveTime = now.add(_moveDelay);
+    parent.hop(direction);
+    isMoving = true;
+    _nextMoveTime = now.add(moveDelay);
   }
 
   void bounceBack() {
     _targetPosition.setFrom(_previousPosition);
+    _previousPosition.setFrom(parent.position);
+  }
+}
+
+extension on Vector2 {
+  static final _reusableVector = Vector2.zero();
+
+  /// Moves the vector to the target position using a [Curve].
+  void curve({
+    required Vector2 from,
+    required Vector2 to,
+    required Curve curve,
+    required double percentCompletion,
+  }) {
+    setFrom(
+      _reusableVector
+        ..setFrom(to)
+        ..sub(from)
+        ..scale(curve.transform(percentCompletion))
+        ..add(from),
+    );
   }
 }

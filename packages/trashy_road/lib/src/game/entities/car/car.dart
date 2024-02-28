@@ -66,7 +66,7 @@ class _CarSpriteComponent extends GameSpriteAnimationComponent {
           // The `scale` has been eyeballed to match with the overall tile map.
           scale: Vector2.all(0.9),
           animationData: SpriteAnimationData.sequenced(
-            amount: 16,
+            amount: 12,
             amountPerRow: 4,
             textureSize: Vector2(400, 200),
             stepTime: 1 / 24,

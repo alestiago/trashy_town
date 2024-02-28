@@ -64,8 +64,7 @@ class _InventorySlot extends StatelessWidget {
         return _InventorySlot.paperBox();
       case TrashType.plastic:
         return _InventorySlot.plasticBottle();
-      case TrashType.glass:
-        return _InventorySlot.plasticBottle();
+
       case null:
         return _InventorySlot.empty();
     }

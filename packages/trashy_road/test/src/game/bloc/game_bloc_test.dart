@@ -130,7 +130,7 @@ void main() {
         act: (bloc) => bloc
           ..add(const GameInteractedEvent())
           ..add(const GameCollectedTrashEvent(item: TrashType.plastic))
-          ..add(const GameCollectedTrashEvent(item: TrashType.glass)),
+          ..add(const GameCollectedTrashEvent(item: TrashType.paper)),
         expect: () => [
           GameState(
             identifier: identifier,
@@ -151,7 +151,7 @@ void main() {
             map: map,
             status: GameStatus.playing,
             inventory:
-                Inventory(items: const [TrashType.plastic, TrashType.glass]),
+                Inventory(items: const [TrashType.plastic, TrashType.paper]),
             startedAt: DateTime(0),
           ),
         ],
@@ -222,7 +222,7 @@ void main() {
         act: (bloc) => bloc
           ..add(const GameInteractedEvent())
           ..add(const GameCollectedTrashEvent(item: TrashType.plastic))
-          ..add(const GameCollectedTrashEvent(item: TrashType.glass))
+          ..add(const GameCollectedTrashEvent(item: TrashType.paper))
           ..add(const GameDepositedTrashEvent(item: TrashType.plastic)),
         expect: () => [
           GameState(
@@ -244,14 +244,14 @@ void main() {
             map: map,
             status: GameStatus.playing,
             inventory:
-                Inventory(items: const [TrashType.plastic, TrashType.glass]),
+                Inventory(items: const [TrashType.plastic, TrashType.paper]),
             startedAt: DateTime(0),
           ),
           GameState(
             identifier: identifier,
             map: map,
             status: GameStatus.playing,
-            inventory: Inventory(items: const [TrashType.glass]),
+            inventory: Inventory(items: const [TrashType.paper]),
             collectedTrash: 1,
             startedAt: DateTime(0),
           ),

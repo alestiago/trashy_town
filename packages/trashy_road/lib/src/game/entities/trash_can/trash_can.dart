@@ -48,13 +48,6 @@ class TrashCan extends PositionedEntity with Untraversable, ZIndex {
     );
   }
 
-  TrashCan._glass({required Vector2 position})
-      : this._(
-          position: position,
-          trashType: TrashType.glass,
-          children: [_GlassTrashSpriteGroup()],
-        );
-
   TrashCan._organic({required Vector2 position})
       : this._(
           position: position,
@@ -86,8 +79,6 @@ class TrashCan extends PositionedEntity with Untraversable, ZIndex {
     switch (type) {
       case TrashType.plastic:
         return TrashCan._plastic(position: position);
-      case TrashType.glass:
-        return TrashCan._glass(position: position);
       case TrashType.organic:
         return TrashCan._organic(position: position);
       case TrashType.paper:
@@ -113,20 +104,6 @@ class _TrashCanShadowSpriteComponent extends SpriteComponent
     await super.onLoad();
     sprite = await Sprite.load(
       Assets.images.trashCanShadow.path,
-      images: game.images,
-    );
-  }
-}
-
-// TODO(OlliePugh): Make it a SpriteGroup with the actual 3D renders of the
-// model and its shadow.
-class _GlassTrashSpriteGroup extends SpriteComponent with HasGameReference {
-  @override
-  FutureOr<void> onLoad() async {
-    await super.onLoad();
-
-    sprite = await Sprite.load(
-      Assets.images.trashCan.path,
       images: game.images,
     );
   }

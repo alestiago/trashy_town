@@ -278,9 +278,6 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/spawn.tx
   String get spawn => 'assets/tiles/spawn.tx';
 
-  /// File path: assets/tiles/trash_can_glass.tx
-  String get trashCanGlass => 'assets/tiles/trash_can_glass.tx';
-
   /// File path: assets/tiles/trash_can_organic.tx
   String get trashCanOrganic => 'assets/tiles/trash_can_organic.tx';
 
@@ -317,7 +314,6 @@ class $AssetsTilesGen {
         map2,
         roadLane,
         spawn,
-        trashCanGlass,
         trashCanOrganic,
         trashCanPaper,
         trashCanPlastic,

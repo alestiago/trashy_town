@@ -125,6 +125,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/paper_2.png
   AssetGenImage get paper2 => const AssetGenImage('assets/images/paper_2.png');
 
+  /// File path: assets/images/paper_background.png
+  AssetGenImage get paperBackground =>
+      const AssetGenImage('assets/images/paper_background.png');
+
   /// File path: assets/images/pause_button.png
   AssetGenImage get pauseButton =>
       const AssetGenImage('assets/images/pause_button.png');
@@ -233,6 +237,7 @@ class $AssetsImagesGen {
         paper1,
         paper2Shadow,
         paper2,
+        paperBackground,
         pauseButton,
         plasticBottle1Shadow,
         plasticBottle1,

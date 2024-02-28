@@ -32,9 +32,12 @@
   <image width="128" height="128" source="../images/fire_hydrant.png"/>
  </tile>
  <tile id="11">
-  <image width="128" height="128" source="../images/bush.png"/>
+  <image width="128" height="128" source="../images/bush_1.png"/>
  </tile>
  <tile id="12">
   <image width="300" height="300" source="../images/tree_2.png"/>
+ </tile>
+ <tile id="13">
+  <image width="128" height="128" source="../images/bush_2.png"/>
  </tile>
 </tileset>

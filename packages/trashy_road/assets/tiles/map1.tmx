@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="16" height="32" tilewidth="128" tileheight="64" infinite="0" nextlayerid="9" nextobjectid="122">
+<map version="1.9" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="16" height="32" tilewidth="128" tileheight="64" infinite="0" nextlayerid="9" nextobjectid="123">
   <tileset firstgid="1" source="Tiles.tsx"/>
   <layer id="1" name="Background" width="16" height="32">
     <data encoding="csv">1,1,1,1,1,1,1,1,1,1,8,8,8,8,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 1,1,1,1,1,1,1,1,1,1,1,1,8,1,1,1, 1,1,1,1,8,8,8,1,1,1,1,1,8,1,1,1, 1,1,1,1,1,1,8,1,1,1,1,1,1,1,1,1, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,8,8,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,8,1,1,1,1,8,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,8,8,1,1,1, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 1,1,1,1,6,2,2147483654,1,1,1,1,1,1,1,1,1, 1,8,8,1,6,2,2147483654,1,1,1,1,1,1,1,1,1, 1,8,1,1,6,2,2147483654,1,1,1,1,1,1,1,1,1, 1,1,1,1,6,2,2147483654,1,1,8,8,8,8,1,1,1, 1,1,1,1,6,2,2147483654,1,1,1,1,1,1,1,1,1, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,8,8,1,1,1,1,1,1,1,1,1,1,1,8,8, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8, 1,1,1,1,1,1,1,1,8,8,8,8,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 1,1,1,1,1,8,1,1,1,1,1,1,1,1,1,1, 8,1,1,1,1,8,1,1,1,1,1,1,1,1,1,8, 8,8,1,1,1,8,1,1,1,1,1,1,1,1,8,8</data>
@@ -28,8 +28,9 @@
     <object id="105" template="tree_1.tx" class="tree_1" gid="10" x="640" y="1984" width="128" height="128"/>
     <object id="106" template="tree_1.tx" class="tree_1" gid="10" x="640" y="2048" width="128" height="128"/>
     <object id="108" template="fire_hydrant.tx" class="fire_hydrant" gid="11" x="896" y="1920" width="128" height="128"/>
-    <object id="109" template="bush.tx" class="bush" gid="12" x="1152" y="1984" width="128" height="128"/>
-    <object id="121" template="tree_2.tx" x="512" y="1728" class="tree_2" gid="13" width="100" height="100"/>
+    <object id="109" template="bush_1.tx" class="bush_1" gid="12" x="1152" y="1984" width="128" height="128"/>
+    <object id="121" template="tree_2.tx" class="tree_2" gid="13" x="512" y="1728" width="100" height="100"/>
+    <object id="122" template="bush_2.tx" x="512" y="1984" class="bush_2" gid="14" width="128" height="128"/>
   </objectgroup>
   <objectgroup id="6" name="RoadLayer">
     <object id="36" template="road_lane.tx" name="road_lane" class="road_lane" x="1984" y="240">

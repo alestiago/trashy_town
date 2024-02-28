@@ -47,12 +47,19 @@ class $AssetsImagesGen {
   /// File path: assets/images/bus.png
   AssetGenImage get bus => const AssetGenImage('assets/images/bus.png');
 
-  /// File path: assets/images/bush-shadow.png
-  AssetGenImage get bushShadow =>
-      const AssetGenImage('assets/images/bush-shadow.png');
+  /// File path: assets/images/bush_1-shadow.png
+  AssetGenImage get bush1Shadow =>
+      const AssetGenImage('assets/images/bush_1-shadow.png');
 
-  /// File path: assets/images/bush.png
-  AssetGenImage get bush => const AssetGenImage('assets/images/bush.png');
+  /// File path: assets/images/bush_1.png
+  AssetGenImage get bush1 => const AssetGenImage('assets/images/bush_1.png');
+
+  /// File path: assets/images/bush_2-shadow.png
+  AssetGenImage get bush2Shadow =>
+      const AssetGenImage('assets/images/bush_2-shadow.png');
+
+  /// File path: assets/images/bush_2.png
+  AssetGenImage get bush2 => const AssetGenImage('assets/images/bush_2.png');
 
   /// File path: assets/images/car.png
   AssetGenImage get car => const AssetGenImage('assets/images/car.png');
@@ -201,8 +208,10 @@ class $AssetsImagesGen {
         appleCore2,
         barrel,
         bus,
-        bushShadow,
-        bush,
+        bush1Shadow,
+        bush1,
+        bush2Shadow,
+        bush2,
         car,
         carBlueDriving,
         carLeftToRightShadow,
@@ -260,8 +269,11 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/Tiles.tsx
   String get tiles => 'assets/tiles/Tiles.tsx';
 
-  /// File path: assets/tiles/bush.tx
-  String get bush => 'assets/tiles/bush.tx';
+  /// File path: assets/tiles/bush_1.tx
+  String get bush1 => 'assets/tiles/bush_1.tx';
+
+  /// File path: assets/tiles/bush_2.tx
+  String get bush2 => 'assets/tiles/bush_2.tx';
 
   /// File path: assets/tiles/fire_hydrant.tx
   String get fireHydrant => 'assets/tiles/fire_hydrant.tx';
@@ -308,7 +320,8 @@ class $AssetsTilesGen {
   /// List of all assets
   List<String> get values => [
         tiles,
-        bush,
+        bush1,
+        bush2,
         fireHydrant,
         map1,
         map2,
@@ -333,10 +346,14 @@ class Assets {
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsRiveGen rive = $AssetsRiveGen();
   static const $AssetsTilesGen tiles = $AssetsTilesGen();
-  static const String trashyRoad = 'assets/trashy_road.tiled-project';
+  static const String trashyRoadTiledProject =
+      'assets/trashy_road.tiled-project';
+  static const String trashyRoadTiledSession =
+      'assets/trashy_road.tiled-session';
 
   /// List of all assets
-  static List<String> get values => [trashyRoad];
+  static List<String> get values =>
+      [trashyRoadTiledProject, trashyRoadTiledSession];
 }
 
 class AssetGenImage {

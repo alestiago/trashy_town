@@ -25,6 +25,10 @@ class TrashCan extends PositionedEntity with Untraversable, ZIndex {
           size: Vector2(1, 2)..toGameSize(),
           position: position..snap(),
           behaviors: [
+            DroppingBehavior(
+              drop: Vector2(0, -50),
+              minDuration: 0.15,
+            ),
             TrashCanDepositingBehavior(),
           ],
           children: [

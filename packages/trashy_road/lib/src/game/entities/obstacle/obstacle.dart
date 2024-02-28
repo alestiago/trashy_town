@@ -14,6 +14,10 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
           anchor: Anchor.bottomLeft,
           priority: position.y.floor(),
           behaviors: [
+            DroppingBehavior(
+              drop: Vector2(0, -50),
+              minDuration: 0.15,
+            ),
             PropagatingCollisionBehavior(
               RectangleHitbox(
                 isSolid: true,

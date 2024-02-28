@@ -93,14 +93,14 @@ class _GameView extends StatelessWidget {
           const Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 24, horizontal: 8),
+              padding: EdgeInsets.all(12),
               child: InventoryHud(),
             ),
           ),
           const Align(
-            alignment: Alignment.topRight,
+            alignment: Alignment.topLeft,
             child: Padding(
-              padding: EdgeInsets.all(8),
+              padding: EdgeInsets.all(12),
               child: SizedBox(
                 height: 60,
                 width: 150,
@@ -109,26 +109,22 @@ class _GameView extends StatelessWidget {
             ),
           ),
           Align(
-            alignment: Alignment.topLeft,
+            alignment: Alignment.topRight,
             child: Padding(
               padding: const EdgeInsets.all(8),
-              child: SizedBox(
-                height: 60,
-                width: 60,
-                child: PauseButton(
-                  onPause: () {
-                    gameBloc.add(const GamePausedEvent());
-                    return true;
-                  },
-                  onResume: () {
-                    gameBloc.add(const GameResumedEvent());
-                    return true;
-                  },
-                  onReplay: () {
-                    gameBloc.add(const GameResetEvent());
-                    return true;
-                  },
-                ),
+              child: PauseButton(
+                onPause: () {
+                  gameBloc.add(const GamePausedEvent());
+                  return true;
+                },
+                onResume: () {
+                  gameBloc.add(const GameResumedEvent());
+                  return true;
+                },
+                onReplay: () {
+                  gameBloc.add(const GameResetEvent());
+                  return true;
+                },
               ),
             ),
           ),

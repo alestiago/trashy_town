@@ -5,6 +5,7 @@
    <property name="leftToRight" type="bool" value="false"/>
    <property name="speed" type="int" value="0"/>
    <property name="traffic" type="int" value="0"/>
+   <property name="type" value="car_red"/>
   </properties>
   <point/>
  </object>

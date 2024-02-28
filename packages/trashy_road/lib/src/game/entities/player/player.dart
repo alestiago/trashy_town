@@ -31,8 +31,8 @@ class Player extends PositionedEntity with ZIndex {
             ),
           ],
           children: [
-            PlayerShadowSpriteComponent(),
-            PlayerSpriteComponent(),
+            _PlayerShadowSpriteComponent(),
+            _PlayerSpriteComponent(),
           ],
         );
 
@@ -73,8 +73,8 @@ class Player extends PositionedEntity with ZIndex {
   }
 
   void hop(Direction direction) {
-    final sprite = children.query<PlayerSpriteComponent>().first;
-    final shadow = children.query<PlayerShadowSpriteComponent>().first;
+    final sprite = children.query<_PlayerSpriteComponent>().first;
+    final shadow = children.query<_PlayerShadowSpriteComponent>().first;
 
     sprite.hop(direction);
     shadow.hop();
@@ -95,9 +95,9 @@ class Player extends PositionedEntity with ZIndex {
   }
 }
 
-class PlayerSpriteComponent extends SpriteAnimationComponent
+class _PlayerSpriteComponent extends SpriteAnimationComponent
     with HasGameReference {
-  PlayerSpriteComponent()
+  _PlayerSpriteComponent()
       : super(
           position: Vector2(-0.4, -2.5)..toGameSize(),
           scale: Vector2.all(0.45),
@@ -173,9 +173,9 @@ class PlayerSpriteComponent extends SpriteAnimationComponent
   }
 }
 
-class PlayerShadowSpriteComponent extends SpriteAnimationComponent
+class _PlayerShadowSpriteComponent extends SpriteAnimationComponent
     with HasGameReference {
-  PlayerShadowSpriteComponent()
+  _PlayerShadowSpriteComponent()
       : super(
           position: Vector2(-0.4, -2.5)..toGameSize(),
           scale: Vector2.all(0.45),

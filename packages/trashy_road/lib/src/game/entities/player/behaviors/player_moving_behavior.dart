@@ -14,8 +14,8 @@ final class PlayerMovingBehavior extends Behavior<Player>
   /// The delay between player moves.
   static const moveDelay = Duration(milliseconds: 200);
 
-  /// States whether the player is currently moving
-  bool isMoving = false;
+  /// States whether the player is currently moving.
+  bool _isMoving = false;
 
   /// The position the player is trying to move to.
   ///
@@ -43,7 +43,7 @@ final class PlayerMovingBehavior extends Behavior<Player>
     final timeUntilDone = _nextMoveTime.difference(now);
     final hasArrived = _nextMoveTime.isBefore(now);
 
-    if (!hasArrived && isMoving) {
+    if (!hasArrived && _isMoving) {
       parent.position.curve(
         from: _previousPosition,
         to: _targetPosition,
@@ -58,8 +58,8 @@ final class PlayerMovingBehavior extends Behavior<Player>
 
     // If this isn't done the user will skip back momentarily as the
     //_previousPosition is outdated.
-    if (hasArrived && isMoving) {
-      isMoving = false;
+    if (hasArrived && _isMoving) {
+      _isMoving = false;
       parent.position.setFrom(_targetPosition);
       _previousPosition.setFrom(_targetPosition);
     }
@@ -73,7 +73,7 @@ final class PlayerMovingBehavior extends Behavior<Player>
 
     final now = clock.now();
 
-    if (now.isBefore(_nextMoveTime) || isMoving) {
+    if (now.isBefore(_nextMoveTime) || _isMoving) {
       return;
     }
     _targetPosition.setFrom(parent.position);
@@ -87,7 +87,7 @@ final class PlayerMovingBehavior extends Behavior<Player>
       _targetPosition.y -= GameSettings.gridDimensions.y;
     }
     parent.hop(direction);
-    isMoving = true;
+    _isMoving = true;
     _nextMoveTime = now.add(moveDelay);
   }
 

@@ -101,16 +101,6 @@
     </object>
   </objectgroup>
   <objectgroup id="2" name="TrashLayer">
-    <object id="70" template="trash_glass.tx" name="glass" class="trash" gid="3" x="1024" y="1728" width="128" height="128">
-      <properties>
-        <property name="type" value="glass"/>
-      </properties>
-    </object>
-    <object id="71" template="trash_glass.tx" name="glass" class="trash" gid="3" x="768" y="1728" width="128" height="128">
-      <properties>
-        <property name="type" value="glass"/>
-      </properties>
-    </object>
     <object id="72" template="trash_plastic.tx" name="plastic" class="trash" gid="3" x="896" y="1728" width="128" height="128">
       <properties>
         <property name="type" value="plastic"/>
@@ -127,11 +117,6 @@
     <object id="70" template="trash_can_plastic.tx" name="trash_can_plastic" class="trash_can" gid="4" x="768" y="1664" width="128" height="128">
       <properties>
         <property name="type" value="plastic"/>
-      </properties>
-    </object>
-    <object id="13" template="trash_can_glass.tx" name="trash_can" class="trash_can" gid="4" x="768" y="1216" width="128" height="128">
-      <properties>
-        <property name="type" value="glass"/>
       </properties>
     </object>
   </objectgroup>

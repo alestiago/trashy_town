@@ -1,4 +1,5 @@
-import 'package:basura/basura.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/gen/gen.dart';
@@ -15,8 +16,10 @@ class InventoryHud extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        border: Border.all(width: 2),
-        color: BasuraColors.white.withOpacity(0.5),
+        image: DecorationImage(
+          image: Assets.images.inventoryBackground.provider(),
+          fit: BoxFit.fill,
+        ),
       ),
       child: Padding(
         padding: const EdgeInsets.all(8),
@@ -25,13 +28,20 @@ class InventoryHud extends StatelessWidget {
             return state.inventory.items;
           },
           builder: (context, trash) {
+            final filledTrash = List<TrashType?>.from(trash)
+              ..length = Inventory.size;
+
             return Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                _TrashTypeCounter.organic(trash: trash),
-                _TrashTypeCounter.paper(trash: trash),
-                _TrashTypeCounter.plastic(trash: trash),
-                _TrashTypeCounter.glass(trash: trash),
+                for (final type in filledTrash)
+                  Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: SizedBox.square(
+                      dimension: 50,
+                      child: _InventorySlot.fromType(type),
+                    ),
+                  ),
               ],
             );
           },
@@ -41,71 +51,42 @@ class InventoryHud extends StatelessWidget {
   }
 }
 
-class _TrashTypeCounter extends StatelessWidget {
-  const _TrashTypeCounter._({
-    required this.amount,
-    required this.imagePath,
+class _InventorySlot extends StatelessWidget {
+  const _InventorySlot({
+    required this.image,
   });
 
-  factory _TrashTypeCounter.organic({
-    required List<TrashType> trash,
-  }) {
-    return _TrashTypeCounter._(
-      amount: trash.where((type) => type == TrashType.organic).length,
-      imagePath: Assets.images.appleCore2.path,
-    );
+  factory _InventorySlot.fromType(TrashType? type) {
+    switch (type) {
+      case TrashType.organic:
+        return _InventorySlot.appleCore();
+      case TrashType.paper:
+        return _InventorySlot.paperBox();
+      case TrashType.plastic:
+        return _InventorySlot.plasticBottle();
+      case TrashType.glass:
+        return _InventorySlot.plasticBottle();
+      case null:
+        return _InventorySlot.empty();
+    }
   }
 
-  factory _TrashTypeCounter.glass({
-    required List<TrashType> trash,
-  }) {
-    return _TrashTypeCounter._(
-      amount: trash.where((type) => type == TrashType.glass).length,
-      imagePath: Assets.images.plasticBottle1.path,
-    );
-  }
+  _InventorySlot.empty() : image = Assets.images.slotEmpty.image();
 
-  factory _TrashTypeCounter.plastic({
-    required List<TrashType> trash,
-  }) {
-    return _TrashTypeCounter._(
-      amount: trash.where((type) => type == TrashType.plastic).length,
-      imagePath: Assets.images.plasticBottle1.path,
-    );
-  }
+  _InventorySlot.appleCore() : image = Assets.images.slotAppleCore.image();
 
-  factory _TrashTypeCounter.paper({
-    required List<TrashType> trash,
-  }) {
-    return _TrashTypeCounter._(
-      amount: trash.where((type) => type == TrashType.paper).length,
-      imagePath: Assets.images.paper1.path,
-    );
-  }
+  _InventorySlot.paperBox() : image = Assets.images.slotPaperBox.image();
 
-  /// The amount of trash.
-  final int amount;
+  _InventorySlot.plasticBottle()
+      : image = Assets.images.slotPlasticBottle.image();
 
-  /// The image path for the trash type.
-  final String imagePath;
+  final Image image;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4),
-      child: Row(
-        children: [
-          DefaultTextStyle(
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: BasuraColors.black,
-            ),
-            child: Text(amount.toString()),
-          ),
-          Image.asset(imagePath, width: 48, height: 48),
-        ],
-      ),
+    return AspectRatio(
+      aspectRatio: 1,
+      child: image,
     );
   }
 }

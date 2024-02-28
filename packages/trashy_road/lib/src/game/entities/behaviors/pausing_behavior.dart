@@ -53,15 +53,15 @@ class PausingBehavior<T extends EntityMixin> extends Behavior<T> {
     await addAll([
       FlameBlocListener<GameBloc, GameState>(
         listenWhen: (previousState, newState) {
-          return previousState.status == GameStatus.playing &&
-              newState.status == GameStatus.paused;
+          return !(newState.status == GameStatus.playing ||
+              newState.status == GameStatus.ready);
         },
         onNewState: (_) => _removeBehaviors(),
       ),
       FlameBlocListener<GameBloc, GameState>(
         listenWhen: (previousState, newState) {
-          return previousState.status == GameStatus.paused &&
-              newState.status == GameStatus.playing;
+          return newState.status == GameStatus.playing ||
+              newState.status == GameStatus.ready;
         },
         onNewState: (_) => _addBehaviors(),
       ),

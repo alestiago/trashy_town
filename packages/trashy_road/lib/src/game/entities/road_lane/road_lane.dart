@@ -38,6 +38,7 @@ class RoadLane extends PositionedEntity with ZIndex {
     required this.speed,
     required this.direction,
     required this.traffic,
+    required this.vehicleType,
     super.position,
   }) : super(
           behaviors: [VehicleSpawningBehavior()],
@@ -87,10 +88,23 @@ class RoadLane extends PositionedEntity with ZIndex {
     final traffic = rawTraffic.value;
     final position = Vector2(object.x, object.y)..snap();
 
+    final vehicleType = VehicleType.tryParse(
+      object.properties.getValue<String>('type') ?? '',
+    );
+
+    if (vehicleType == null) {
+      throw ArgumentError.value(
+        vehicleType,
+        'object.properties["type"]',
+        'Invalid vehicle type',
+      );
+    }
+
     return RoadLane(
       speed: speed,
       direction: direction,
       traffic: traffic,
+      vehicleType: vehicleType,
       position: position,
     );
   }
@@ -103,4 +117,7 @@ class RoadLane extends PositionedEntity with ZIndex {
 
   /// The amount of vehicles in the lane.
   final int traffic;
+
+  /// The type of vehicles in the lane.
+  final VehicleType vehicleType;
 }

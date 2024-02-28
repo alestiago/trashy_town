@@ -12,6 +12,27 @@ class VehicleSpawningBehavior extends Behavior<RoadLane>
   /// {@macro VehicleSpawningBehavior}
   VehicleSpawningBehavior();
 
+  /// Creates a vehicle based on the [parent]'s [VehicleType].
+  static Vehicle _createVehicle(RoadLane parent) {
+    switch (parent.vehicleType) {
+      case VehicleType.redCar:
+        return Car(
+          roadLane: parent,
+          style: CarStyle.red,
+        );
+      case VehicleType.blueCar:
+        return Car(
+          roadLane: parent,
+          style: CarStyle.blue,
+        );
+      case VehicleType.yellowCar:
+        return Car(
+          roadLane: parent,
+          style: CarStyle.yellow,
+        );
+    }
+  }
+
   /// The minimum traffic variation.
   ///
   /// A random amount between [_minTrafficVariation] and 1 will be used to
@@ -30,10 +51,6 @@ class VehicleSpawningBehavior extends Behavior<RoadLane>
 
     final world = ancestors().whereType<TrashyRoadWorld>().first;
 
-    // TODO(alestiago): Consider specifying the style of the cars in the Tiled
-    // map.
-    final style = CarStyle.randomize();
-
     for (var i = 0; i < parent.traffic; i++) {
       var startPosition = (i / parent.traffic) * world.tiled.size.x;
 
@@ -45,10 +62,7 @@ class VehicleSpawningBehavior extends Behavior<RoadLane>
       }
 
       parent.add(
-        Car(
-          roadLane: parent,
-          style: style,
-        )..position.x = startPosition,
+        _createVehicle(parent)..position.x = startPosition,
       );
     }
   }

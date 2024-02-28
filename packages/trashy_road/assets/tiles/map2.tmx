@@ -34,6 +34,7 @@
         <property name="leftToRight" type="bool" value="false"/>
         <property name="speed" type="int" value="1"/>
         <property name="traffic" type="int" value="1"/>
+        <property name="type" value="car_red"/>
       </properties>
     </object>
     <object id="38" template="road_lane.tx" name="road_lane" class="road_lane" x="64" y="544">
@@ -41,6 +42,7 @@
         <property name="leftToRight" type="bool" value="true"/>
         <property name="speed" type="int" value="2"/>
         <property name="traffic" type="int" value="3"/>
+        <property name="type" value="car_red"/>
       </properties>
     </object>
     <object id="40" template="road_lane.tx" name="road_lane" class="road_lane" x="64" y="928">
@@ -48,6 +50,7 @@
         <property name="leftToRight" type="bool" value="true"/>
         <property name="speed" type="int" value="1"/>
         <property name="traffic" type="int" value="1"/>
+        <property name="type" value="car_red"/>
       </properties>
     </object>
     <object id="42" template="road_lane.tx" name="road_lane" class="road_lane" x="1984" y="1376">
@@ -55,6 +58,7 @@
         <property name="leftToRight" type="bool" value="false"/>
         <property name="speed" type="int" value="4"/>
         <property name="traffic" type="int" value="0"/>
+        <property name="type" value="car_red"/>
       </properties>
     </object>
     <object id="44" template="road_lane.tx" name="road_lane" class="road_lane" x="64" y="1824">
@@ -62,6 +66,7 @@
         <property name="leftToRight" type="bool" value="true"/>
         <property name="speed" type="int" value="5"/>
         <property name="traffic" type="int" value="2"/>
+        <property name="type" value="car_red"/>
       </properties>
     </object>
     <object id="35" template="road_lane.tx" name="road_lane" class="road_lane" x="64" y="176">
@@ -69,6 +74,7 @@
         <property name="leftToRight" type="bool" value="true"/>
         <property name="speed" type="int" value="10"/>
         <property name="traffic" type="int" value="1"/>
+        <property name="type" value="car_red"/>
       </properties>
     </object>
     <object id="37" template="road_lane.tx" name="road_lane" class="road_lane" x="1984" y="480">
@@ -76,6 +82,7 @@
         <property name="leftToRight" type="bool" value="false"/>
         <property name="speed" type="int" value="2"/>
         <property name="traffic" type="int" value="2"/>
+        <property name="type" value="car_red"/>
       </properties>
     </object>
     <object id="39" template="road_lane.tx" name="road_lane" class="road_lane" x="1984" y="864">
@@ -83,6 +90,7 @@
         <property name="leftToRight" type="bool" value="false"/>
         <property name="speed" type="int" value="10"/>
         <property name="traffic" type="int" value="3"/>
+        <property name="type" value="car_red"/>
       </properties>
     </object>
     <object id="41" template="road_lane.tx" name="road_lane" class="road_lane" x="1984" y="1312">
@@ -90,6 +98,7 @@
         <property name="leftToRight" type="bool" value="false"/>
         <property name="speed" type="int" value="2"/>
         <property name="traffic" type="int" value="2"/>
+        <property name="type" value="car_red"/>
       </properties>
     </object>
     <object id="43" template="road_lane.tx" name="road_lane" class="road_lane" x="1984" y="1760">
@@ -97,6 +106,7 @@
         <property name="leftToRight" type="bool" value="false"/>
         <property name="speed" type="int" value="2"/>
         <property name="traffic" type="int" value="4"/>
+        <property name="type" value="car_red"/>
       </properties>
     </object>
   </objectgroup>

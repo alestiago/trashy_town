@@ -1,8 +1,6 @@
-import 'dart:math';
-
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:meta/meta.dart';
+
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/game.dart';
@@ -138,12 +136,4 @@ enum CarStyle {
   /// A five-door hatchback yellow car.
   /// {@endtemplate}
   yellow;
-
-  factory CarStyle.randomize({
-    @visibleForTesting Random? random,
-  }) {
-    return CarStyle.values[(random ?? _random).nextInt(CarStyle.values.length)];
-  }
-
-  static final _random = Random();
 }

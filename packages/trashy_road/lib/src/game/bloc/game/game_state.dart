@@ -155,15 +155,22 @@ class Inventory extends Equatable {
   /// {@macro Inventory}
   Inventory({
     required List<TrashType> items,
-  }) : this._(items: UnmodifiableListView(items));
-
-  /// {@macro Inventory}
-  const Inventory._({required this.items});
+  })  : assert(
+          items.length <= size,
+          'The inventory can only hold up to $size items.',
+        ),
+        items = UnmodifiableListView(items);
 
   /// A completely empty inventory.
   Inventory.empty() : this(items: const []);
 
+  /// The maximum amount of items that the inventory can hold.
+  static const size = 5;
+
   final UnmodifiableListView<TrashType> items;
+
+  /// Whether the inventory is full.
+  bool get isFull => items.length >= size;
 
   Inventory copyWith({
     List<TrashType>? items,

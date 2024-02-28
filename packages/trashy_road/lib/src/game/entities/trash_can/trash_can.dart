@@ -125,15 +125,6 @@ class _GlassTrashSpriteGroup extends SpriteComponent with HasGameReference {
   FutureOr<void> onLoad() async {
     await super.onLoad();
 
-    add(
-      ColorEffect(
-        Colors.green,
-        EffectController(
-          duration: 0,
-        ),
-        opacityTo: 0.5,
-      ),
-    );
     sprite = await Sprite.load(
       Assets.images.trashCan.path,
       images: game.images,
@@ -148,7 +139,7 @@ class _OrganicTrashSpriteGroup extends SpriteComponent with HasGameReference {
 
     add(
       ColorEffect(
-        Colors.brown,
+        Colors.red,
         EffectController(
           duration: 0,
         ),
@@ -169,7 +160,7 @@ class _PaperTrashCanSpriteGroup extends SpriteComponent with HasGameReference {
 
     add(
       ColorEffect(
-        Colors.white,
+        Colors.green,
         EffectController(
           duration: 0,
         ),
@@ -210,7 +201,7 @@ class PlasticTrashCanSpriteAnimationComponent extends SpriteAnimationComponent
 
     add(
       ColorEffect(
-        Colors.red,
+        Colors.blue,
         EffectController(duration: 0),
         opacityTo: 0.5,
       ),

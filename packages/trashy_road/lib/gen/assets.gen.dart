@@ -125,6 +125,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/paper_2.png
   AssetGenImage get paper2 => const AssetGenImage('assets/images/paper_2.png');
 
+  /// File path: assets/images/pause_button.png
+  AssetGenImage get pauseButton =>
+      const AssetGenImage('assets/images/pause_button.png');
+
   /// File path: assets/images/plastic_bottle_1-shadow.png
   AssetGenImage get plasticBottle1Shadow =>
       const AssetGenImage('assets/images/plastic_bottle_1-shadow.png');
@@ -229,6 +233,7 @@ class $AssetsImagesGen {
         paper1,
         paper2Shadow,
         paper2,
+        pauseButton,
         plasticBottle1Shadow,
         plasticBottle1,
         plasticBottle2Shadow,
@@ -346,14 +351,10 @@ class Assets {
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsRiveGen rive = $AssetsRiveGen();
   static const $AssetsTilesGen tiles = $AssetsTilesGen();
-  static const String trashyRoadTiledProject =
-      'assets/trashy_road.tiled-project';
-  static const String trashyRoadTiledSession =
-      'assets/trashy_road.tiled-session';
+  static const String trashyRoad = 'assets/trashy_road.tiled-project';
 
   /// List of all assets
-  static List<String> get values =>
-      [trashyRoadTiledProject, trashyRoadTiledSession];
+  static List<String> get values => [trashyRoad];
 }
 
 class AssetGenImage {

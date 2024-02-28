@@ -49,6 +49,10 @@ class Trash extends PositionedEntity
           position: position..snap(),
           priority: position.y.floor(),
           behaviors: [
+            DroppingBehavior(
+              drop: Vector2(0, -35),
+              minDuration: 0.1,
+            ),
             PropagatingCollisionBehavior(
               RectangleHitbox(
                 size: GameSettings.gridDimensions,

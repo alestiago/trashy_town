@@ -50,7 +50,7 @@ class Trash extends PositionedEntity
           priority: position.y.floor(),
           behaviors: [
             DroppingBehavior(
-              drop: Vector2(0, -35),
+              drop: Vector2(0, -45),
               minDuration: 0.1,
             ),
             PropagatingCollisionBehavior(

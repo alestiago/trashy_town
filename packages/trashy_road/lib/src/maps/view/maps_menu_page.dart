@@ -1,3 +1,4 @@
+import 'package:basura/basura.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
@@ -17,7 +18,7 @@ class MapsMenuPage extends StatelessWidget {
   static String identifier = 'maps_menu';
 
   static Route<void> route() {
-    return MaterialPageRoute<void>(
+    return BasuraBlackEaseInOut<void>(
       settings: RouteSettings(name: identifier),
       builder: (_) => const MapsMenuPage(),
     );

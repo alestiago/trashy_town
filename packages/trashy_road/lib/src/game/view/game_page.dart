@@ -1,3 +1,4 @@
+import 'package:basura/basura.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +21,7 @@ class GamePage extends StatelessWidget {
     required String identifier,
     required TiledMap tiledMap,
   }) {
-    return MaterialPageRoute<void>(
+    return BasuraBlackEaseInOut<void>(
       builder: (_) => GamePage(
         identifier: identifier,
         map: tiledMap,

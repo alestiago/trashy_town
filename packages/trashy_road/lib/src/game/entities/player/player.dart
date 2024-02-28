@@ -31,8 +31,8 @@ class Player extends PositionedEntity with ZIndex {
             ),
           ],
           children: [
-            PlayerShadowSpriteComponent(),
-            PlayerSpriteComponent(),
+            _PlayerShadowSpriteComponent(),
+            _PlayerSpriteComponent(),
           ],
         );
 
@@ -53,14 +53,14 @@ class Player extends PositionedEntity with ZIndex {
     }
 
     final objectPosition = Vector2(tiledObject.x, tiledObject.y);
-    final snappedPosition = snapToGrid(objectPosition);
+    final snappedPosition = _snapToGrid(objectPosition);
 
     return Player(
       position: snappedPosition,
     );
   }
 
-  static Vector2 snapToGrid(Vector2 vector) {
+  static Vector2 _snapToGrid(Vector2 vector) {
     return vector -
         (vector % GameSettings.gridDimensions) +
         (GameSettings.gridDimensions / 2);
@@ -73,8 +73,8 @@ class Player extends PositionedEntity with ZIndex {
   }
 
   void hop(Direction direction) {
-    final sprite = children.query<PlayerSpriteComponent>().first;
-    final shadow = children.query<PlayerShadowSpriteComponent>().first;
+    final sprite = children.query<_PlayerSpriteComponent>().first;
+    final shadow = children.query<_PlayerShadowSpriteComponent>().first;
 
     sprite.hop(direction);
     shadow.hop();
@@ -83,7 +83,6 @@ class Player extends PositionedEntity with ZIndex {
   @override
   FutureOr<void> onLoad() async {
     await super.onLoad();
-
     await addAll(
       [
         PlayerMovingBehavior(),
@@ -95,18 +94,17 @@ class Player extends PositionedEntity with ZIndex {
   }
 }
 
-class PlayerSpriteComponent extends SpriteAnimationComponent
+class _PlayerSpriteComponent extends SpriteAnimationComponent
     with HasGameReference {
-  PlayerSpriteComponent()
+  _PlayerSpriteComponent()
       : super(
           position: Vector2(-0.4, -2.5)..toGameSize(),
           scale: Vector2.all(0.45),
         );
 
   final Map<Direction, Map<Direction, SpriteAnimation>> _animations = {};
-  Direction previousDirection = Direction.up;
 
-  static final List<List<Direction>> animationDirectionOrder = [
+  static final List<List<Direction>> _animationDirectionOrder = [
     [Direction.right, Direction.right],
     [Direction.right, Direction.up],
     [Direction.right, Direction.down],
@@ -125,12 +123,14 @@ class PlayerSpriteComponent extends SpriteAnimationComponent
     [Direction.left, Direction.left],
   ];
 
+  Direction _previousDirection = Direction.up;
+
   SpriteAnimation _createAnimation(ui.Image image, int row) {
     const frameCount = 7;
     return SpriteAnimation.fromFrameData(
       image,
       SpriteAnimationData.range(
-        amount: frameCount * animationDirectionOrder.length,
+        amount: frameCount * _animationDirectionOrder.length,
         amountPerRow: frameCount,
         textureSize: Vector2.all(512),
         start: row * frameCount,
@@ -153,8 +153,8 @@ class PlayerSpriteComponent extends SpriteAnimationComponent
       () => game.images.load(Assets.images.playerHop.path),
     );
 
-    for (var i = 0; i < animationDirectionOrder.length; i++) {
-      final [startingDirection, endDirection] = animationDirectionOrder[i];
+    for (var i = 0; i < _animationDirectionOrder.length; i++) {
+      final [startingDirection, endDirection] = _animationDirectionOrder[i];
       _animations[startingDirection] ??= {};
       _animations[startingDirection]![endDirection] = _createAnimation(
         image,
@@ -167,15 +167,15 @@ class PlayerSpriteComponent extends SpriteAnimationComponent
 
   void hop(Direction direction) {
     animationTicker!.reset();
-    animation = _animations[previousDirection]![direction];
-    previousDirection = direction;
+    animation = _animations[_previousDirection]![direction];
+    _previousDirection = direction;
     playing = true;
   }
 }
 
-class PlayerShadowSpriteComponent extends SpriteAnimationComponent
+class _PlayerShadowSpriteComponent extends SpriteAnimationComponent
     with HasGameReference {
-  PlayerShadowSpriteComponent()
+  _PlayerShadowSpriteComponent()
       : super(
           position: Vector2(-0.4, -2.5)..toGameSize(),
           scale: Vector2.all(0.45),

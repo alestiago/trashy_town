@@ -66,10 +66,20 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
   // An Obstacle that is a bush.
   //
   // The bush takes up 1x1 tile space.
-  Obstacle._bush({required Vector2 position})
+  Obstacle._bush1({required Vector2 position})
       : this._(
           position: position,
-          children: [_BushSpriteGroup()],
+          children: [_Bush1SpriteGroup()],
+        );
+
+  // An Obstacle that is a bush.
+  //
+  // The bush takes up 1x1 tile space and this variation is composed if four
+  // small bushes.
+  Obstacle._bush2({required Vector2 position})
+      : this._(
+          position: position,
+          children: [_Bush2SpriteGroup()],
         );
 
   factory Obstacle.fromTiledObject(TiledObject tiledObject) {
@@ -83,8 +93,10 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
         return Obstacle._tree2(position: position);
       case 'fire_hydrant':
         return Obstacle._fireHydrant(position: position);
-      case 'bush':
-        return Obstacle._bush(position: position);
+      case 'bush_1':
+        return Obstacle._bush1(position: position);
+      case 'bush_2':
+        return Obstacle._bush2(position: position);
       default:
         throw ArgumentError('Unknown obstacle type: $type');
     }
@@ -154,8 +166,8 @@ class _FireHydrantSpriteGroup extends PositionComponent {
         );
 }
 
-class _BushSpriteGroup extends PositionComponent {
-  _BushSpriteGroup()
+class _Bush1SpriteGroup extends PositionComponent {
+  _Bush1SpriteGroup()
       : super(
           // The `size`, `position` and `scale` have been eye-balled to fit with
           // the tile size.
@@ -165,11 +177,32 @@ class _BushSpriteGroup extends PositionComponent {
           children: [
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.bushShadow.path,
+              spritePath: Assets.images.bush1Shadow.path,
             ),
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.bush.path,
+              spritePath: Assets.images.bush1.path,
+            ),
+          ],
+        );
+}
+
+class _Bush2SpriteGroup extends PositionComponent {
+  _Bush2SpriteGroup()
+      : super(
+          // The `size`, `position` and `scale` have been eye-balled to fit with
+          // the tile size.
+          size: Vector2.all(0.5)..toGameSize(),
+          position: Vector2(0.12, -0.1)..toGameSize(),
+          scale: Vector2.all(0.5),
+          children: [
+            GameSpriteComponent.fromPath(
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.bush2Shadow.path,
+            ),
+            GameSpriteComponent.fromPath(
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.bush2.path,
             ),
           ],
         );

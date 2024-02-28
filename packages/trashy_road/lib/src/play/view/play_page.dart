@@ -10,7 +10,7 @@ class PlayPage extends StatelessWidget {
   static String identifier = 'play';
 
   static Route<void> route() {
-    return MaterialPageRoute<void>(
+    return BasuraBlackEaseInOut<void>(
       settings: RouteSettings(name: identifier),
       builder: (_) => const PlayPage(),
     );

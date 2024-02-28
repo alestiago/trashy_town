@@ -1,12 +1,9 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flame/effects.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
-import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:tiled/tiled.dart';
 import 'package:trashy_road/game_settings.dart';
@@ -16,7 +13,6 @@ import 'package:trashy_road/src/game/game.dart';
 /// The different types of [Trash].
 enum TrashType {
   plastic._('plastic'),
-  glass._('glass'),
   organic._('organic'),
   paper._('paper');
 
@@ -49,6 +45,10 @@ class Trash extends PositionedEntity
           position: position..snap(),
           priority: position.y.floor(),
           behaviors: [
+            DroppingBehavior(
+              drop: Vector2(0, -45),
+              minDuration: 0.1,
+            ),
             PropagatingCollisionBehavior(
               RectangleHitbox(
                 size: GameSettings.gridDimensions,
@@ -67,14 +67,6 @@ class Trash extends PositionedEntity
           position: position,
           trashType: TrashType.plastic,
           children: [_PlasticBottleSpriteGroup._fromStyle(style)],
-        );
-
-  Trash._glassBottle({
-    required Vector2 position,
-  }) : this._(
-          position: position,
-          trashType: TrashType.glass,
-          children: [_GlassBottleSprite()],
         );
 
   Trash._appleCore({
@@ -106,8 +98,6 @@ class Trash extends PositionedEntity
       case TrashType.plastic:
         final style = PlasticBottleStyle._randomize();
         return Trash._plasticBottle(position: position, style: style);
-      case TrashType.glass:
-        return Trash._glassBottle(position: position);
       case TrashType.organic:
         final style = AppleCoreStyle._randomize();
         return Trash._appleCore(position: position, style: style);
@@ -260,26 +250,6 @@ class _PlasticBottleSpriteGroup extends PositionComponent
         spritePath: Assets.images.plasticBottle2.path,
         shadowPath: Assets.images.plasticBottle2Shadow.path,
       );
-}
-
-class _GlassBottleSprite extends SpriteComponent with HasGameReference {
-  // TODO(OlliePugh): Make it a SpriteGroup with the actual 3D renders of the
-  // glass bottle and its shadow.
-  @override
-  FutureOr<void> onLoad() async {
-    await super.onLoad();
-
-    add(
-      ColorEffect(
-        Colors.green,
-        EffectController(
-          duration: 0,
-        ),
-        opacityTo: 0.5,
-      ),
-    );
-    sprite = await Sprite.load(Assets.images.trash.path, images: game.images);
-  }
 }
 
 /// An apple core.

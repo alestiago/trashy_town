@@ -18,7 +18,7 @@ class ScorePage extends StatelessWidget {
   static Route<void> route({
     required String identifier,
   }) {
-    return MaterialPageRoute<void>(
+    return BasuraBlackEaseInOut<void>(
       builder: (_) => ScorePage(identifier: identifier),
     );
   }

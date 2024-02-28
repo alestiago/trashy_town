@@ -100,6 +100,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/grass.png
   AssetGenImage get grass => const AssetGenImage('assets/images/grass.png');
 
+  /// File path: assets/images/inventory_background.png
+  AssetGenImage get inventoryBackground =>
+      const AssetGenImage('assets/images/inventory_background.png');
+
   /// File path: assets/images/paper_1-shadow.png
   AssetGenImage get paper1Shadow =>
       const AssetGenImage('assets/images/paper_1-shadow.png');
@@ -143,6 +147,22 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/road.png
   AssetGenImage get road => const AssetGenImage('assets/images/road.png');
+
+  /// File path: assets/images/slot_apple_core.png
+  AssetGenImage get slotAppleCore =>
+      const AssetGenImage('assets/images/slot_apple_core.png');
+
+  /// File path: assets/images/slot_empty.png
+  AssetGenImage get slotEmpty =>
+      const AssetGenImage('assets/images/slot_empty.png');
+
+  /// File path: assets/images/slot_paper_box.png
+  AssetGenImage get slotPaperBox =>
+      const AssetGenImage('assets/images/slot_paper_box.png');
+
+  /// File path: assets/images/slot_plastic_bottle.png
+  AssetGenImage get slotPlasticBottle =>
+      const AssetGenImage('assets/images/slot_plastic_bottle.png');
 
   /// File path: assets/images/star_empty.svg
   SvgGenImage get starEmpty =>
@@ -203,6 +223,7 @@ class $AssetsImagesGen {
         grassRoadSouthwest,
         grassFlowers,
         grass,
+        inventoryBackground,
         paper1Shadow,
         paper1,
         paper2Shadow,
@@ -215,6 +236,10 @@ class $AssetsImagesGen {
         playerHopShadow,
         playerHop,
         road,
+        slotAppleCore,
+        slotEmpty,
+        slotPaperBox,
+        slotPlasticBottle,
         starEmpty,
         starFilled,
         trash,
@@ -263,9 +288,6 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/spawn.tx
   String get spawn => 'assets/tiles/spawn.tx';
 
-  /// File path: assets/tiles/trash_can_glass.tx
-  String get trashCanGlass => 'assets/tiles/trash_can_glass.tx';
-
   /// File path: assets/tiles/trash_can_organic.tx
   String get trashCanOrganic => 'assets/tiles/trash_can_organic.tx';
 
@@ -302,7 +324,6 @@ class $AssetsTilesGen {
         map2,
         roadLane,
         spawn,
-        trashCanGlass,
         trashCanOrganic,
         trashCanPaper,
         trashCanPlastic,
@@ -322,14 +343,10 @@ class Assets {
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsRiveGen rive = $AssetsRiveGen();
   static const $AssetsTilesGen tiles = $AssetsTilesGen();
-  static const String trashyRoadTiledProject =
-      'assets/trashy_road.tiled-project';
-  static const String trashyRoadTiledSession =
-      'assets/trashy_road.tiled-session';
+  static const String trashyRoad = 'assets/trashy_road.tiled-project';
 
   /// List of all assets
-  static List<String> get values =>
-      [trashyRoadTiledProject, trashyRoadTiledSession];
+  static List<String> get values => [trashyRoad];
 }
 
 class AssetGenImage {

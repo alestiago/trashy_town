@@ -25,6 +25,10 @@ class TrashCan extends PositionedEntity with Untraversable, ZIndex {
           size: Vector2(1, 2)..toGameSize(),
           position: position..snap(),
           behaviors: [
+            DroppingBehavior(
+              drop: Vector2(0, -50),
+              minDuration: 0.15,
+            ),
             TrashCanDepositingBehavior(),
           ],
           children: [
@@ -43,13 +47,6 @@ class TrashCan extends PositionedEntity with Untraversable, ZIndex {
       ),
     );
   }
-
-  TrashCan._glass({required Vector2 position})
-      : this._(
-          position: position,
-          trashType: TrashType.glass,
-          children: [_GlassTrashSpriteGroup()],
-        );
 
   TrashCan._organic({required Vector2 position})
       : this._(
@@ -82,8 +79,6 @@ class TrashCan extends PositionedEntity with Untraversable, ZIndex {
     switch (type) {
       case TrashType.plastic:
         return TrashCan._plastic(position: position);
-      case TrashType.glass:
-        return TrashCan._glass(position: position);
       case TrashType.organic:
         return TrashCan._organic(position: position);
       case TrashType.paper:
@@ -114,29 +109,6 @@ class _TrashCanShadowSpriteComponent extends SpriteComponent
   }
 }
 
-// TODO(OlliePugh): Make it a SpriteGroup with the actual 3D renders of the
-// model and its shadow.
-class _GlassTrashSpriteGroup extends SpriteComponent with HasGameReference {
-  @override
-  FutureOr<void> onLoad() async {
-    await super.onLoad();
-
-    add(
-      ColorEffect(
-        Colors.green,
-        EffectController(
-          duration: 0,
-        ),
-        opacityTo: 0.5,
-      ),
-    );
-    sprite = await Sprite.load(
-      Assets.images.trashCan.path,
-      images: game.images,
-    );
-  }
-}
-
 class _OrganicTrashSpriteGroup extends SpriteComponent with HasGameReference {
   @override
   FutureOr<void> onLoad() async {
@@ -144,7 +116,7 @@ class _OrganicTrashSpriteGroup extends SpriteComponent with HasGameReference {
 
     add(
       ColorEffect(
-        Colors.brown,
+        Colors.red,
         EffectController(
           duration: 0,
         ),
@@ -165,7 +137,7 @@ class _PaperTrashCanSpriteGroup extends SpriteComponent with HasGameReference {
 
     add(
       ColorEffect(
-        Colors.white,
+        Colors.green,
         EffectController(
           duration: 0,
         ),
@@ -206,7 +178,7 @@ class PlasticTrashCanSpriteAnimationComponent extends SpriteAnimationComponent
 
     add(
       ColorEffect(
-        Colors.red,
+        Colors.blue,
         EffectController(duration: 0),
         opacityTo: 0.5,
       ),

@@ -26,6 +26,10 @@ abstract class Vehicle extends PositionedEntity with ParentIsA<RoadLane> {
               selector: (vehicle) =>
                   vehicle.findBehaviors<VehicleDrivingBehavior>(),
             ),
+            DroppingBehavior(
+              drop: Vector2(0, -75),
+              minDuration: 0.2,
+            ),
           ],
         );
   final RoadLane roadLane;

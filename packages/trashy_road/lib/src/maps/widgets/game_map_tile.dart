@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:basura/basura.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,32 +49,37 @@ class GameMapTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (_map.locked) {
+      return const _CrumbledPaper();
+    }
     final theme = BasuraTheme.of(context);
 
-    final label = _map.locked ? '.' : _map.displayName;
-
     return DefaultTextStyle(
-      style: theme.textTheme.button,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          BasuraGlossyTextButton(
-            onPressed: () => _onTap(context),
-            label: label,
-            style: theme.glossyButtonTheme.secondary,
-            textStyle: theme.textTheme.button.copyWith(
-              height: 0.6,
-              color: BasuraColors.white,
+      style: theme.textTheme.button.copyWith(
+        fontSize: 40,
+        color: BasuraColors.black,
+      ),
+      child: AnimatedHoverBrightness(
+        child: GestureDetector(
+          onTap: () => _onTap(context),
+          behavior: HitTestBehavior.opaque,
+          child: _PaperBackground(
+            child: Padding(
+              padding: const EdgeInsets.all(18),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    child: Center(
+                      child: Text(_map.displayName),
+                    ),
+                  ),
+                  _Stars(value: _map.scoreRating.value),
+                ],
+              ),
             ),
           ),
-          if (!_map.locked)
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: -10,
-              child: _Stars(value: _map.scoreRating.value),
-            ),
-        ],
+        ),
       ),
     );
   }
@@ -116,6 +123,46 @@ class _Stars extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _PaperBackground extends StatelessWidget {
+  const _PaperBackground({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: Assets.images.paperBackgroundSquare.provider(),
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: child,
+    );
+  }
+}
+
+class _CrumbledPaper extends StatelessWidget {
+  const _CrumbledPaper();
+
+  static final _images = [
+    Assets.images.crumpledPaper1,
+    Assets.images.crumbledPaper2,
+    Assets.images.crumbledPaper3,
+  ];
+
+  static final _random = Random();
+
+  @override
+  Widget build(BuildContext context) {
+    final image = _images[_random.nextInt(_images.length)];
+    return AspectRatio(
+      aspectRatio: 1,
+      child: image.image(),
     );
   }
 }

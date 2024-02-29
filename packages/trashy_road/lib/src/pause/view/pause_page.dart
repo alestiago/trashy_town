@@ -46,7 +46,7 @@ class PausePage extends StatelessWidget {
 
         final opacityCurve =
             CurvedAnimation(parent: animation, curve: Curves.linear);
-        final opacityTween = Tween<double>(begin: 0, end: 1);
+        final opacityTween = Tween<double>(begin: 0.2, end: 1);
         final opacityAnimate = opacityTween.animate(opacityCurve);
 
         return DecoratedBoxTransition(

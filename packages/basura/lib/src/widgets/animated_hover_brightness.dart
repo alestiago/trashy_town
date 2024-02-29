@@ -20,8 +20,6 @@ class AnimatedHoverBrightness extends StatefulWidget {
 
 class _AnimatedHoverBrightnessState extends State<AnimatedHoverBrightness>
     with SingleTickerProviderStateMixin {
-  bool _isFocused = false;
-
   late final _animationController = AnimationController(
     duration: const Duration(milliseconds: 200),
     vsync: this,
@@ -32,12 +30,10 @@ class _AnimatedHoverBrightnessState extends State<AnimatedHoverBrightness>
   );
 
   void _focus() {
-    setState(() => _isFocused = true);
     _animationController.forward();
   }
 
   void _unfocus() {
-    setState(() => _isFocused = false);
     _animationController.reverse();
   }
 

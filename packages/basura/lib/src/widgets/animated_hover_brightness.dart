@@ -1,3 +1,4 @@
+import 'package:basura/basura.dart';
 import 'package:flutter/widgets.dart';
 
 /// {@template AnimatedHoverBrightness}
@@ -45,29 +46,22 @@ class _AnimatedHoverBrightnessState extends State<AnimatedHoverBrightness>
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (_) => _focus(),
-      onExit: (_) => _unfocus(),
-      child: GestureDetector(
-        onTapDown: (_) => _focus(),
-        onTapUp: (_) => _unfocus(),
-        onTapCancel: _unfocus,
-        behavior: HitTestBehavior.translucent,
-        child: AnimatedBuilder(
-          animation: _saturationAnimation,
-          child: widget.child,
-          builder: (context, child) {
-            return ColorFiltered(
-              colorFilter: ColorFilter.matrix(
-                _brightnessAdjustMatrix(
-                  brightness: _saturationAnimation.value,
-                ),
+    return Hoverable(
+      onHoverStart: (_) => _focus(),
+      onHoverExit: (_) => _unfocus(),
+      child: AnimatedBuilder(
+        animation: _saturationAnimation,
+        child: widget.child,
+        builder: (context, child) {
+          return ColorFiltered(
+            colorFilter: ColorFilter.matrix(
+              _brightnessAdjustMatrix(
+                brightness: _saturationAnimation.value,
               ),
-              child: child,
-            );
-          },
-        ),
+            ),
+            child: child,
+          );
+        },
       ),
     );
   }

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:trashy_road/game_settings.dart';
@@ -18,24 +16,95 @@ class Bus extends Vehicle {
   Bus({required super.roadLane})
       : super(
           children: [
-            _BusSpriteComponent(),
+            _BusSpriteGroup(direction: roadLane.direction),
           ],
           hitbox: RectangleHitbox(
             isSolid: true,
-            size: Vector2(2, 1)..toGameSize(),
+            size: Vector2(1.4, 1)..toGameSize(),
           ),
         );
 }
 
-class _BusSpriteComponent extends SpriteComponent with HasGameReference {
-  _BusSpriteComponent() : super();
+class _BusSpriteGroup extends Component {
+  _BusSpriteGroup({
+    required RoadLaneDirection direction,
+  }) : super(
+          children: [
+            _BusShadowComponent._fromDirection(direction),
+            _BusSpriteComponent(direction: direction),
+          ],
+        );
+}
 
-  @override
-  Future<void> onLoad() async {
-    await super.onLoad();
-    sprite = await Sprite.load(
-      Assets.images.bus.path,
-      images: game.images,
-    );
+class _BusSpriteComponent extends GameSpriteAnimationComponent {
+  /// Creates a [_BusSpriteComponent] that is oriented as per the [direction].
+  factory _BusSpriteComponent({
+    required RoadLaneDirection direction,
+  }) {
+    return direction == RoadLaneDirection.leftToRight
+        ? _BusSpriteComponent._leftToRight()
+        : _BusSpriteComponent._rightToLeft();
   }
+
+  _BusSpriteComponent._({
+    required super.spritePath,
+    super.position,
+  }) : super.fromPath(
+          // The `scale` has been eyeballed to match with the overall tile map.
+          scale: Vector2.all(0.9),
+          animationData: SpriteAnimationData.sequenced(
+            amount: 12,
+            amountPerRow: 4,
+            textureSize: Vector2(384, 254),
+            stepTime: 1 / 24,
+          ),
+        );
+
+  _BusSpriteComponent._rightToLeft()
+      : this._(
+          spritePath: Assets.images.busDriving.path,
+          // The `position` has been eyeballed to match with the overall tile
+          // map.
+          position: Vector2(-0.3, -2.2)..toGameSize(),
+        );
+
+  factory _BusSpriteComponent._leftToRight() {
+    return _BusSpriteComponent._(
+      spritePath: Assets.images.busDriving.path,
+      // The `position` has been eyeballed to match with the overall tile map.
+      position: Vector2(1.7, -2.2)..toGameSize(),
+    )..flipHorizontally();
+  }
+}
+
+class _BusShadowComponent extends GameSpriteComponent {
+  _BusShadowComponent.fromPath({
+    required super.spritePath,
+    super.position,
+  }) : super.fromPath(
+          // The `scale` has been eyeballed to match with the overall tile map.
+          scale: Vector2.all(0.9),
+        );
+
+  _BusShadowComponent._rightToLeft()
+      : this.fromPath(
+          spritePath: Assets.images.busRightToLeftShadow.path,
+          // The `position` has been eyeballed to match with the overall tile
+          // map.
+          position: Vector2(-0.3, -2.2)..toGameSize(),
+        );
+
+  _BusShadowComponent._leftToRight()
+      : this.fromPath(
+          spritePath: Assets.images.busLeftToRightShadow.path,
+          // The `position` has been eyeballed to match with the overall tile
+          // map.
+          position: Vector2(0, -2.2)..toGameSize(),
+        );
+
+  /// Creates a [_BusShadowComponent] that is oriented as per the [direction].
+  factory _BusShadowComponent._fromDirection(RoadLaneDirection direction) =>
+      direction == RoadLaneDirection.leftToRight
+          ? _BusShadowComponent._leftToRight()
+          : _BusShadowComponent._rightToLeft();
 }

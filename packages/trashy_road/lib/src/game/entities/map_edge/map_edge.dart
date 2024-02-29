@@ -27,7 +27,7 @@ class MapEdge extends PositionedEntity with Untraversable {
         ) {
     addAll([
       PropagatingCollisionBehavior(
-        RectangleHitbox(size: size),
+        RectangleHitbox(size: size, isSolid: true),
       ),
       RectangleComponent(size: size)
         ..setColor(

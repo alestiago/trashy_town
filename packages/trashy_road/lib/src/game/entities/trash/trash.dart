@@ -51,6 +51,7 @@ class Trash extends PositionedEntity
             ),
             PropagatingCollisionBehavior(
               RectangleHitbox(
+                isSolid: true,
                 size: GameSettings.gridDimensions,
                 position: Vector2(0, GameSettings.gridDimensions.y),
               ),

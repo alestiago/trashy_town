@@ -69,8 +69,6 @@ class ScorePage extends StatelessWidget {
     final nextMap = gameMapsBloc.state.next(_identifier);
     final scoreRating = map.scoreRating;
 
-    const spacing = SizedBox.square(dimension: 8);
-
     return Center(
       child: SizedBox.square(
         dimension: (screenSize.shortestSide * 0.5).clamp(250, double.infinity),

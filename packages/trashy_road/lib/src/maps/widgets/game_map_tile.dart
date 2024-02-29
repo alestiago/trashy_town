@@ -59,19 +59,23 @@ class GameMapTile extends StatelessWidget {
         fontSize: 40,
         color: BasuraColors.black,
       ),
-      child: _PaperBackground(
-        child: Padding(
-          padding: const EdgeInsets.all(18),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                child: Center(
-                  child: Text(_map.displayName),
+      child: GestureDetector(
+        onTap: () => _onTap(context),
+        behavior: HitTestBehavior.opaque,
+        child: _PaperBackground(
+          child: Padding(
+            padding: const EdgeInsets.all(18),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: Center(
+                    child: Text(_map.displayName),
+                  ),
                 ),
-              ),
-              _Stars(value: _map.scoreRating.value),
-            ],
+                _Stars(value: _map.scoreRating.value),
+              ],
+            ),
           ),
         ),
       ),

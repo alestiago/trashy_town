@@ -1,5 +1,6 @@
 import 'package:basura/basura.dart';
 import 'package:flutter/material.dart';
+import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/maps/maps.dart';
 
 /// {@template PausePage}
@@ -67,36 +68,85 @@ class PausePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: BasuraColors.black.withOpacity(0.3),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox.fromSize(
-              size: textButtonSize,
-              child: BasuraGlossyTextButton(
-                label: 'Resume',
-                style: theme.glossyButtonTheme.primary,
-                onPressed: () => _onResume(context),
-              ),
+        child: _PaperBackground(
+          child: Padding(
+            padding: const EdgeInsets.all(32),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox.fromSize(
+                  size: textButtonSize,
+                  child: BasuraGlossyTextButton(
+                    label: 'Resume',
+                    style: theme.glossyButtonTheme.primary,
+                    onPressed: () => _onResume(context),
+                  ),
+                ),
+                spacing,
+                SizedBox.fromSize(
+                  size: textButtonSize,
+                  child: BasuraGlossyTextButton(
+                    label: 'Replay',
+                    onPressed: () => _onReplay(context),
+                  ),
+                ),
+                spacing,
+                SizedBox.fromSize(
+                  size: textButtonSize,
+                  child: BasuraGlossyTextButton(
+                    label: 'Menu',
+                    onPressed: () => _onMenu(context),
+                  ),
+                ),
+              ],
             ),
-            spacing,
-            SizedBox.fromSize(
-              size: textButtonSize,
-              child: BasuraGlossyTextButton(
-                label: 'Replay',
-                onPressed: () => _onReplay(context),
-              ),
-            ),
-            spacing,
-            SizedBox.fromSize(
-              size: textButtonSize,
-              child: BasuraGlossyTextButton(
-                label: 'Menu',
-                onPressed: () => _onMenu(context),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
+    );
+  }
+}
+
+class _PaperBackground extends StatefulWidget {
+  const _PaperBackground({required this.child});
+
+  final Widget child;
+
+  @override
+  State<_PaperBackground> createState() => __PaperBackgroundState();
+}
+
+class __PaperBackgroundState extends State<_PaperBackground> {
+  final _image = Assets.images.paperBackground.provider();
+
+  late final Future<void> _cacheImage;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _cacheImage = precacheImage(_image, context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _cacheImage,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const SizedBox.shrink();
+        }
+
+        return DecoratedBox(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: _image,
+              fit: BoxFit.fill,
+            ),
+          ),
+          child: widget.child,
+        );
+      },
     );
   }
 }

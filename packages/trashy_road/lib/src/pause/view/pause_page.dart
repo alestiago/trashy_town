@@ -77,72 +77,25 @@ class PausePage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _ResumeButton(onPressed: _onResume),
+                  _HoverableTextButton(
+                    text: 'Resume',
+                    onPressed: _onResume,
+                  ),
                   spacing,
-                  _ReplayButton(onPressed: _onReplay),
+                  _HoverableTextButton(
+                    text: 'Replay',
+                    onPressed: _onReplay,
+                  ),
                   spacing,
-                  _MenuButton(onPressed: _onMenu),
+                  _HoverableTextButton(
+                    text: 'Menu',
+                    onPressed: _onMenu,
+                  ),
                 ],
               ),
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _ResumeButton extends StatelessWidget {
-  const _ResumeButton({required this.onPressed});
-
-  final void Function(BuildContext context) onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = BasuraTheme.of(context);
-    return GestureDetector(
-      onTap: () => onPressed(context),
-      child: AnimatedHoverBrightness(
-        child: AutoSizeText(
-          'Resume',
-          style: theme.textTheme.cardSubheading,
-        ),
-      ),
-    );
-  }
-}
-
-class _MenuButton extends StatelessWidget {
-  const _MenuButton({required this.onPressed});
-
-  final void Function(BuildContext context) onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = BasuraTheme.of(context);
-    return GestureDetector(
-      onTap: () => onPressed(context),
-      child: AutoSizeText(
-        'Menu',
-        style: theme.textTheme.cardSubheading,
-      ),
-    );
-  }
-}
-
-class _ReplayButton extends StatelessWidget {
-  const _ReplayButton({required this.onPressed});
-
-  final void Function(BuildContext context) onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = BasuraTheme.of(context);
-    return GestureDetector(
-      onTap: () => onPressed(context),
-      child: AutoSizeText(
-        'Replay',
-        style: theme.textTheme.cardSubheading,
       ),
     );
   }
@@ -187,6 +140,58 @@ class __PaperBackgroundState extends State<_PaperBackground> {
           child: widget.child,
         );
       },
+    );
+  }
+}
+
+class _HoverableTextButton extends StatefulWidget {
+  const _HoverableTextButton({
+    required this.text,
+    required this.onPressed,
+  });
+
+  final String text;
+
+  final void Function(BuildContext context) onPressed;
+
+  @override
+  State<_HoverableTextButton> createState() => __HoverableTextButtonState();
+}
+
+class __HoverableTextButtonState extends State<_HoverableTextButton>
+    with SingleTickerProviderStateMixin {
+  late final _animationController = AnimationController(
+    duration: const Duration(milliseconds: 200),
+    vsync: this,
+  );
+
+  late final _colorTween = ColorTween(
+    begin: BasuraColors.black,
+    end: BasuraColors.deepGreen,
+  ).animate(
+    _animationController,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = BasuraTheme.of(context);
+    return Hoverable(
+      onHoverStart: (_) => _animationController.forward(),
+      onHoverExit: (_) => _animationController.reverse(),
+      child: GestureDetector(
+        onTap: () => widget.onPressed(context),
+        child: AnimatedBuilder(
+          animation: _colorTween,
+          builder: (context, child) {
+            return AutoSizeText(
+              widget.text,
+              style: theme.textTheme.cardSubheading.copyWith(
+                color: _colorTween.value,
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }

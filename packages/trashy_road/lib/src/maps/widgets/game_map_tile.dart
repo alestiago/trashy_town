@@ -55,10 +55,7 @@ class GameMapTile extends StatelessWidget {
     final theme = BasuraTheme.of(context);
 
     return DefaultTextStyle(
-      style: theme.textTheme.button.copyWith(
-        fontSize: 40,
-        color: BasuraColors.black,
-      ),
+      style: theme.textTheme.cardHeading,
       child: AnimatedHoverBrightness(
         child: GestureDetector(
           onTap: () => _onTap(context),
@@ -71,10 +68,19 @@ class GameMapTile extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Center(
-                      child: Text(_map.displayName),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: AutoSizeText(
+                          _map.displayName,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
                     ),
                   ),
-                  _Stars(value: _map.scoreRating.value),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: _Stars(value: _map.scoreRating.value),
+                  ),
                 ],
               ),
             ),
@@ -92,35 +98,24 @@ class _Stars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SvgGenImage star({required bool filled}) =>
+        filled ? Assets.images.starFilled : Assets.images.starEmpty;
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final maxWidth = constraints.maxWidth;
-        final starWidth = maxWidth / 2.8;
-        final middle = maxWidth / 2;
+        final starWidth = maxWidth / 4;
 
-        SvgGenImage star({required bool filled}) =>
-            filled ? Assets.images.starFilled : Assets.images.starEmpty;
-
-        return SizedBox(
-          height: starWidth,
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Positioned(
-                left: middle - starWidth,
-                child: star(filled: value >= 1).svg(width: starWidth),
-              ),
-              Positioned(
-                top: -2,
-                left: middle - (starWidth / 2),
-                child: star(filled: value >= 2).svg(width: starWidth),
-              ),
-              Positioned(
-                left: middle,
-                child: star(filled: value >= 3).svg(width: starWidth),
-              ),
-            ],
-          ),
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            star(filled: value >= 1).svg(width: starWidth),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: star(filled: value >= 2).svg(width: starWidth),
+            ),
+            star(filled: value >= 3).svg(width: starWidth),
+          ],
         );
       },
     );

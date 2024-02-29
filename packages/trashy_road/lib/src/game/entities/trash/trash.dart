@@ -60,31 +60,31 @@ class Trash extends PositionedEntity
     zIndex = position.y.floor();
   }
 
-  Trash._plasticBottle({
+  Trash._plastic({
     required Vector2 position,
-    required PlasticBottleStyle style,
+    required PlasticStyle style,
   }) : this._(
           position: position,
           trashType: TrashType.plastic,
-          children: [_PlasticBottleSpriteGroup._fromStyle(style)],
+          children: [_PlasticSpriteGroup._fromStyle(style)],
         );
 
-  Trash._appleCore({
+  Trash._organic({
     required Vector2 position,
-    required AppleCoreStyle style,
+    required OrganicStyle style,
   }) : this._(
           position: position,
           trashType: TrashType.organic,
-          children: [_AppleCoreSpriteGroup._fromStyle(style)],
+          children: [_OrganicSpriteGroup._fromStyle(style)],
         );
 
   Trash._paper({
     required Vector2 position,
-    required PaperStackStyle style,
+    required PaperStyle style,
   }) : this._(
           position: position,
           trashType: TrashType.paper,
-          children: [_PaperStackSpriteGroup._fromStyle(style)],
+          children: [_PaperSpriteGroup._fromStyle(style)],
         );
 
   /// Derives a [Trash] from a [TiledObject].
@@ -96,13 +96,13 @@ class Trash extends PositionedEntity
 
     switch (type) {
       case TrashType.plastic:
-        final style = PlasticBottleStyle._randomize();
-        return Trash._plasticBottle(position: position, style: style);
+        final style = PlasticStyle._randomize();
+        return Trash._plastic(position: position, style: style);
       case TrashType.organic:
-        final style = AppleCoreStyle._randomize();
-        return Trash._appleCore(position: position, style: style);
+        final style = OrganicStyle._randomize();
+        return Trash._organic(position: position, style: style);
       case TrashType.paper:
-        final style = PaperStackStyle._randomize();
+        final style = PaperStyle._randomize();
         return Trash._paper(position: position, style: style);
       case null:
         throw ArgumentError.value(
@@ -133,54 +133,64 @@ class Trash extends PositionedEntity
 }
 
 /// The different styles of plastic bottles.
-enum PlasticBottleStyle {
-  /// {@template _PlasticBottleStyle.one}
+enum PlasticStyle {
+  /// {@template _PlasticStyle.one}
   /// A crushed plastic bottle that is laying on the ground with its lid facing
   /// east.
   /// {@endtemplate}
   one,
 
-  /// {@template _PlasticBottleStyle.two}
+  /// {@template _PlasticStyle.two}
   /// A crushed plastic bottle that is laying on the ground with its lid facing
   /// south-east.
   /// {@endtemplate}
-  two;
+  two,
 
-  factory PlasticBottleStyle._randomize({
+  /// {@template _PlasticStyle.coldTakeAwayCup}
+  /// A takeaway cup with a straw.
+  /// {@endtemplate}
+  coldTakeAwayCup;
+
+  factory PlasticStyle._randomize({
     @visibleForTesting Random? random,
   }) {
-    return PlasticBottleStyle
-        .values[(random ?? _random).nextInt(PlasticBottleStyle.values.length)];
+    return PlasticStyle
+        .values[(random ?? _random).nextInt(PlasticStyle.values.length)];
   }
 
   static final _random = Random();
 }
 
 /// The different styles of apple cores.
-enum AppleCoreStyle {
-  /// {@template _AppleCoreStyle.one}
+enum OrganicStyle {
+  /// {@template _OrganicStyle.one}
   /// Two apple cores in a group, one is laying on the ground and the other is
   /// laying on top of the first one.
   /// {@endtemplate}
   one,
 
-  /// {@template _AppleCoreStyle.two}
+  /// {@template _OrganicStyle.two}
   /// A single apple core laying on the ground.
   /// {@endtemplate}
-  two;
+  two,
 
-  factory AppleCoreStyle._randomize({
+  /// {@template _OrganicStyle.banana}
+  /// A single banana peel on the ground.
+  /// {@endtemplate}
+  banana;
+
+  factory OrganicStyle._randomize({
     @visibleForTesting Random? random,
   }) {
-    return AppleCoreStyle
-        .values[(random ?? _random).nextInt(AppleCoreStyle.values.length)];
+    return OrganicStyle
+        .values[(random ?? _random).nextInt(OrganicStyle.values.length)];
   }
 
   static final _random = Random();
 }
 
 /// The different styles of paper.
-enum PaperStackStyle {
+enum PaperStyle {
   /// {@template _PaperStyle.one}
   /// Paper in a neat pile.
   /// {@endtemplate}
@@ -189,13 +199,23 @@ enum PaperStackStyle {
   /// {@template _PaperStyle.two}
   /// Paper scattered around.
   /// {@endtemplate}
-  two;
+  two,
 
-  factory PaperStackStyle._randomize({
+  /// {@template _PaperStyle.hotTakeAwayCup}
+  /// A hot coffee takeaway cup.
+  /// {@endtemplate}
+  hotTakeAwayCup,
+
+  /// {@template _PaperStyle.hotTakeAwayCup}
+  /// A scrumpled up piece of paper.
+  /// {@endtemplate}
+  paperBall;
+
+  factory PaperStyle._randomize({
     @visibleForTesting Random? random,
   }) {
-    return PaperStackStyle
-        .values[(random ?? _random).nextInt(PaperStackStyle.values.length)];
+    return PaperStyle
+        .values[(random ?? _random).nextInt(PaperStyle.values.length)];
   }
 
   static final _random = Random();
@@ -204,9 +224,9 @@ enum PaperStackStyle {
 /// A plastic bottle.
 ///
 /// Renders the plastic bottle and its shadow.
-class _PlasticBottleSpriteGroup extends PositionComponent
+class _PlasticSpriteGroup extends PositionComponent
     with HasGameRef<TrashyRoadGame> {
-  _PlasticBottleSpriteGroup._({
+  _PlasticSpriteGroup._({
     required String spritePath,
     required String shadowPath,
   }) : super(
@@ -227,37 +247,45 @@ class _PlasticBottleSpriteGroup extends PositionComponent
           ],
         );
 
-  /// Derives a [_PlasticBottleSpriteGroup] from a [PlasticBottleStyle].
-  factory _PlasticBottleSpriteGroup._fromStyle(
-    PlasticBottleStyle style,
+  /// Derives a [_PlasticSpriteGroup] from a [PlasticStyle].
+  factory _PlasticSpriteGroup._fromStyle(
+    PlasticStyle style,
   ) {
     switch (style) {
-      case PlasticBottleStyle.one:
-        return _PlasticBottleSpriteGroup._styleOne();
-      case PlasticBottleStyle.two:
-        return _PlasticBottleSpriteGroup._styleTwo();
+      case PlasticStyle.one:
+        return _PlasticSpriteGroup._styleOne();
+      case PlasticStyle.two:
+        return _PlasticSpriteGroup._styleTwo();
+      case PlasticStyle.coldTakeAwayCup:
+        return _PlasticSpriteGroup._coldTakeAwayCup();
     }
   }
 
-  /// {@macro _PlasticBottleStyle.one}
-  factory _PlasticBottleSpriteGroup._styleOne() => _PlasticBottleSpriteGroup._(
+  /// {@macro _PlasticStyle.one}
+  factory _PlasticSpriteGroup._styleOne() => _PlasticSpriteGroup._(
         spritePath: Assets.images.plasticBottle1.path,
         shadowPath: Assets.images.plasticBottle1Shadow.path,
       );
 
-  /// {@macro _PlasticBottleStyle.two}
-  factory _PlasticBottleSpriteGroup._styleTwo() => _PlasticBottleSpriteGroup._(
+  /// {@macro _PlasticBo_PlasticStylettleStyle.two}
+  factory _PlasticSpriteGroup._styleTwo() => _PlasticSpriteGroup._(
         spritePath: Assets.images.plasticBottle2.path,
         shadowPath: Assets.images.plasticBottle2Shadow.path,
+      );
+
+  /// {@macro _PlasticStyle.coldTakeAwayCup}
+  factory _PlasticSpriteGroup._coldTakeAwayCup() => _PlasticSpriteGroup._(
+        spritePath: Assets.images.takeawayCupCold.path,
+        shadowPath: Assets.images.takeawayCupColdShadow.path,
       );
 }
 
 /// An apple core.
 ///
 /// Renders an apple core and its shadow.
-class _AppleCoreSpriteGroup extends PositionComponent
+class _OrganicSpriteGroup extends PositionComponent
     with HasGameRef<TrashyRoadGame> {
-  _AppleCoreSpriteGroup._({
+  _OrganicSpriteGroup._({
     required String spritePath,
     required String shadowPath,
   }) : super(
@@ -278,37 +306,45 @@ class _AppleCoreSpriteGroup extends PositionComponent
           ],
         );
 
-  /// Derives an [_AppleCoreSpriteGroup] from an [AppleCoreStyle].
-  factory _AppleCoreSpriteGroup._fromStyle(
-    AppleCoreStyle style,
+  /// Derives an [_OrganicSpriteGroup] from an [OrganicStyle].
+  factory _OrganicSpriteGroup._fromStyle(
+    OrganicStyle style,
   ) {
     switch (style) {
-      case AppleCoreStyle.one:
-        return _AppleCoreSpriteGroup._styleOne();
-      case AppleCoreStyle.two:
-        return _AppleCoreSpriteGroup._styleTwo();
+      case OrganicStyle.one:
+        return _OrganicSpriteGroup._styleOne();
+      case OrganicStyle.two:
+        return _OrganicSpriteGroup._styleTwo();
+      case OrganicStyle.banana:
+        return _OrganicSpriteGroup._banana();
     }
   }
 
-  /// {@macro _AppleCoreStyle.one}
-  factory _AppleCoreSpriteGroup._styleOne() => _AppleCoreSpriteGroup._(
+  /// {@macro _OrganicStyle.one}
+  factory _OrganicSpriteGroup._styleOne() => _OrganicSpriteGroup._(
         spritePath: Assets.images.appleCore1.path,
         shadowPath: Assets.images.appleCore1Shadow.path,
       );
 
-  /// {@macro _AppleCoreStyle.two}
-  factory _AppleCoreSpriteGroup._styleTwo() => _AppleCoreSpriteGroup._(
+  /// {@macro _OrganicStyle.two}
+  factory _OrganicSpriteGroup._styleTwo() => _OrganicSpriteGroup._(
         spritePath: Assets.images.appleCore2.path,
         shadowPath: Assets.images.appleCore2Shadow.path,
+      );
+
+  /// {@macro _OrganicStyle.two}
+  factory _OrganicSpriteGroup._banana() => _OrganicSpriteGroup._(
+        spritePath: Assets.images.banana.path,
+        shadowPath: Assets.images.bananaShadow.path,
       );
 }
 
 /// A stack of paper
 ///
 /// Renders a stack of paper and its shadow.
-class _PaperStackSpriteGroup extends PositionComponent
+class _PaperSpriteGroup extends PositionComponent
     with HasGameRef<TrashyRoadGame> {
-  _PaperStackSpriteGroup._({
+  _PaperSpriteGroup._({
     required String spritePath,
     required String shadowPath,
   }) : super(
@@ -329,27 +365,43 @@ class _PaperStackSpriteGroup extends PositionComponent
           ],
         );
 
-  /// Derives an [_PaperStackSpriteGroup] from an [PaperStackStyle].
-  factory _PaperStackSpriteGroup._fromStyle(
-    PaperStackStyle style,
+  /// Derives an [_PaperSpriteGroup] from an [PaperStyle].
+  factory _PaperSpriteGroup._fromStyle(
+    PaperStyle style,
   ) {
     switch (style) {
-      case PaperStackStyle.one:
-        return _PaperStackSpriteGroup._styleOne();
-      case PaperStackStyle.two:
-        return _PaperStackSpriteGroup._styleTwo();
+      case PaperStyle.one:
+        return _PaperSpriteGroup._styleOne();
+      case PaperStyle.two:
+        return _PaperSpriteGroup._styleTwo();
+      case PaperStyle.hotTakeAwayCup:
+        return _PaperSpriteGroup._hotTakeAwayCup();
+      case PaperStyle.paperBall:
+        return _PaperSpriteGroup._paperBall();
     }
   }
 
-  /// {@macro _PaperStackStyle.one}
-  factory _PaperStackSpriteGroup._styleOne() => _PaperStackSpriteGroup._(
+  /// {@macro _PaperStyle.one}
+  factory _PaperSpriteGroup._styleOne() => _PaperSpriteGroup._(
         spritePath: Assets.images.paper1.path,
         shadowPath: Assets.images.paper1Shadow.path,
       );
 
-  /// {@macro _PaperStackStyle.two}
-  factory _PaperStackSpriteGroup._styleTwo() => _PaperStackSpriteGroup._(
+  /// {@macro _PaperStyle.two}
+  factory _PaperSpriteGroup._styleTwo() => _PaperSpriteGroup._(
         spritePath: Assets.images.paper2.path,
         shadowPath: Assets.images.paper2Shadow.path,
+      );
+
+  /// {@macro _PaperStyle.hotTakeAwayCup}
+  factory _PaperSpriteGroup._hotTakeAwayCup() => _PaperSpriteGroup._(
+        spritePath: Assets.images.takeawayCupHot.path,
+        shadowPath: Assets.images.takeawayCupHotShadow.path,
+      );
+
+  /// {@macro _PaperStyle.hotTakeAwayCup}
+  factory _PaperSpriteGroup._paperBall() => _PaperSpriteGroup._(
+        spritePath: Assets.images.paperBall.path,
+        shadowPath: Assets.images.paperBallShadow.path,
       );
 }

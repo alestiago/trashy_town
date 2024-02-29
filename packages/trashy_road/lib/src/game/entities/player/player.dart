@@ -8,6 +8,7 @@ import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/widgets.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
+import 'package:trashy_road/src/game/entities/entities.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 export 'behaviors/behaviors.dart';
@@ -31,8 +32,8 @@ class Player extends PositionedEntity with ZIndex {
             ),
           ],
           children: [
-            _PlayerShadowSpriteComponent(),
-            _PlayerSpriteComponent(),
+            PlayerShadowSpriteComponent(),
+            PlayerSpriteComponent(),
           ],
         );
 
@@ -73,8 +74,8 @@ class Player extends PositionedEntity with ZIndex {
   }
 
   void hop(Direction direction) {
-    final sprite = children.query<_PlayerSpriteComponent>().first;
-    final shadow = children.query<_PlayerShadowSpriteComponent>().first;
+    final sprite = children.query<PlayerSpriteComponent>().first;
+    final shadow = children.query<PlayerShadowSpriteComponent>().first;
 
     sprite.hop(direction);
     shadow.hop();
@@ -94,13 +95,17 @@ class Player extends PositionedEntity with ZIndex {
   }
 }
 
-class _PlayerSpriteComponent extends SpriteAnimationComponent
+@visibleForTesting
+class PlayerSpriteComponent extends SpriteAnimationComponent
     with HasGameReference {
-  _PlayerSpriteComponent()
+  PlayerSpriteComponent()
       : super(
           position: Vector2(-0.4, -2.5)..toGameSize(),
           scale: Vector2.all(0.45),
         );
+
+  @visibleForTesting
+  PlayerSpriteComponent.empty();
 
   final Map<Direction, Map<Direction, SpriteAnimation>> _animations = {};
 
@@ -173,13 +178,17 @@ class _PlayerSpriteComponent extends SpriteAnimationComponent
   }
 }
 
-class _PlayerShadowSpriteComponent extends SpriteAnimationComponent
+@visibleForTesting
+class PlayerShadowSpriteComponent extends SpriteAnimationComponent
     with HasGameReference {
-  _PlayerShadowSpriteComponent()
+  PlayerShadowSpriteComponent()
       : super(
           position: Vector2(-0.4, -2.5)..toGameSize(),
           scale: Vector2.all(0.45),
         );
+
+  @visibleForTesting
+  PlayerShadowSpriteComponent.empty();
 
   @override
   Future<void> onLoad() async {

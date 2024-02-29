@@ -40,6 +40,7 @@ class TrashCan extends PositionedEntity with Untraversable, ZIndex {
     add(
       PropagatingCollisionBehavior(
         RectangleHitbox(
+          isSolid: true,
           anchor: Anchor.topCenter,
           size: Vector2.all(0.8)..toGameSize(),
           position: Vector2(size.x / 2, size.y - GameSettings.gridDimensions.y),

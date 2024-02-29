@@ -31,3 +31,8 @@ flutter:
     - family: LilitaOne
       fonts:
         - asset: assets/fonts/lilita_one/LilitaOne-Regular.ttf
+    - family: Caveat
+      fonts:
+        - asset: assets/fonts/caveat/Caveat-Regular.ttf
+        - asset: assets/fonts/caveat/Caveat-Bold.ttf
+          weight: 700

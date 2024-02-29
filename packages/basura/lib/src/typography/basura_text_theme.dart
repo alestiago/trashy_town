@@ -9,7 +9,14 @@ enum BasuraFontFamily {
   /// See also:
   ///
   /// * [Lilita One Google Fonts](https://fonts.google.com/specimen/Lilita+One)
-  lilitaOne._(name: 'LilitaOne');
+  lilitaOne._(name: 'LilitaOne'),
+
+  /// The Caveat font family.
+  ///
+  /// See also:
+  ///
+  /// * [Caveat Google Fonts](https://fonts.google.com/specimen/Caveat)
+  caveat._(name: 'Caveat');
 
   const BasuraFontFamily._({required this.name});
 

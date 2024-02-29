@@ -8,7 +8,6 @@ import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/widgets.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
-import 'package:trashy_road/src/game/entities/entities.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 export 'behaviors/behaviors.dart';

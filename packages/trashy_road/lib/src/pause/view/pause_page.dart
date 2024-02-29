@@ -61,48 +61,88 @@ class PausePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = BasuraTheme.of(context);
-    const textButtonSize = Size(200, 64);
     const spacing = SizedBox(height: 8);
+    final screenSize = MediaQuery.sizeOf(context);
 
     return Scaffold(
       backgroundColor: BasuraColors.black.withOpacity(0.3),
       body: Center(
-        child: _PaperBackground(
-          child: Padding(
-            padding: const EdgeInsets.all(32),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox.fromSize(
-                  size: textButtonSize,
-                  child: BasuraGlossyTextButton(
-                    label: 'Resume',
-                    style: theme.glossyButtonTheme.primary,
-                    onPressed: () => _onResume(context),
-                  ),
-                ),
-                spacing,
-                SizedBox.fromSize(
-                  size: textButtonSize,
-                  child: BasuraGlossyTextButton(
-                    label: 'Replay',
-                    onPressed: () => _onReplay(context),
-                  ),
-                ),
-                spacing,
-                SizedBox.fromSize(
-                  size: textButtonSize,
-                  child: BasuraGlossyTextButton(
-                    label: 'Menu',
-                    onPressed: () => _onMenu(context),
-                  ),
-                ),
-              ],
+        child: SizedBox.square(
+          dimension:
+              (screenSize.shortestSide * 0.4).clamp(250, double.infinity),
+          child: _PaperBackground(
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _ResumeButton(onPressed: _onResume),
+                  spacing,
+                  _ReplayButton(onPressed: _onReplay),
+                  spacing,
+                  _MenuButton(onPressed: _onMenu),
+                ],
+              ),
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _ResumeButton extends StatelessWidget {
+  const _ResumeButton({required this.onPressed});
+
+  final void Function(BuildContext context) onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = BasuraTheme.of(context);
+    return GestureDetector(
+      onTap: () => onPressed(context),
+      child: AnimatedHoverBrightness(
+        child: AutoSizeText(
+          'Resume',
+          style: theme.textTheme.cardSubheading,
+        ),
+      ),
+    );
+  }
+}
+
+class _MenuButton extends StatelessWidget {
+  const _MenuButton({required this.onPressed});
+
+  final void Function(BuildContext context) onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = BasuraTheme.of(context);
+    return GestureDetector(
+      onTap: () => onPressed(context),
+      child: AutoSizeText(
+        'Menu',
+        style: theme.textTheme.cardSubheading,
+      ),
+    );
+  }
+}
+
+class _ReplayButton extends StatelessWidget {
+  const _ReplayButton({required this.onPressed});
+
+  final void Function(BuildContext context) onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = BasuraTheme.of(context);
+    return GestureDetector(
+      onTap: () => onPressed(context),
+      child: AutoSizeText(
+        'Replay',
+        style: theme.textTheme.cardSubheading,
       ),
     );
   }

@@ -137,7 +137,7 @@ class _PaperTrashCanSpriteGroup extends SpriteComponent with HasGameReference {
 
     add(
       ColorEffect(
-        Colors.green,
+        Colors.blue,
         EffectController(
           duration: 0,
         ),
@@ -178,7 +178,7 @@ class PlasticTrashCanSpriteAnimationComponent extends SpriteAnimationComponent
 
     add(
       ColorEffect(
-        Colors.blue,
+        Colors.orange,
         EffectController(duration: 0),
         opacityTo: 0.5,
       ),

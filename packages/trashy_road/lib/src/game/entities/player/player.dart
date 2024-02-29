@@ -32,8 +32,8 @@ class Player extends PositionedEntity with ZIndex {
             ),
           ],
           children: [
-            PlayerShadowSpriteComponent(),
-            PlayerSpriteComponent(),
+            _PlayerShadowSpriteComponent(),
+            _PlayerSpriteComponent(),
           ],
         );
 
@@ -74,8 +74,8 @@ class Player extends PositionedEntity with ZIndex {
   }
 
   void hop(Direction direction) {
-    final sprite = children.query<PlayerSpriteComponent>().first;
-    final shadow = children.query<PlayerShadowSpriteComponent>().first;
+    final sprite = children.query<_PlayerSpriteComponent>().first;
+    final shadow = children.query<_PlayerShadowSpriteComponent>().first;
 
     sprite.hop(direction);
     shadow.hop();
@@ -95,21 +95,18 @@ class Player extends PositionedEntity with ZIndex {
   }
 }
 
-@visibleForTesting
-class PlayerSpriteComponent extends SpriteAnimationComponent
+class _PlayerSpriteComponent extends SpriteAnimationComponent
     with HasGameReference {
-  PlayerSpriteComponent()
+  _PlayerSpriteComponent()
       : super(
           position: Vector2(-0.4, -2.5)..toGameSize(),
           scale: Vector2.all(0.45),
         );
 
-  @visibleForTesting
-  PlayerSpriteComponent.empty();
-
   final Map<Direction, Map<Direction, SpriteAnimation>> _animations = {};
 
-  static final List<List<Direction>> _animationDirectionOrder = [
+  static final List<List<Direction>> _animationDirectionOrder =
+      List.unmodifiable([
     [Direction.right, Direction.right],
     [Direction.right, Direction.up],
     [Direction.right, Direction.down],
@@ -126,7 +123,7 @@ class PlayerSpriteComponent extends SpriteAnimationComponent
     [Direction.left, Direction.up],
     [Direction.left, Direction.down],
     [Direction.left, Direction.left],
-  ];
+  ]);
 
   Direction _previousDirection = Direction.up;
 
@@ -178,17 +175,13 @@ class PlayerSpriteComponent extends SpriteAnimationComponent
   }
 }
 
-@visibleForTesting
-class PlayerShadowSpriteComponent extends SpriteAnimationComponent
+class _PlayerShadowSpriteComponent extends SpriteAnimationComponent
     with HasGameReference {
-  PlayerShadowSpriteComponent()
+  _PlayerShadowSpriteComponent()
       : super(
           position: Vector2(-0.4, -2.5)..toGameSize(),
           scale: Vector2.all(0.45),
         );
-
-  @visibleForTesting
-  PlayerShadowSpriteComponent.empty();
 
   @override
   Future<void> onLoad() async {

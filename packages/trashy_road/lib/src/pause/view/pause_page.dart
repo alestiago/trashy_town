@@ -20,10 +20,32 @@ class PausePage extends StatelessWidget {
   }) {
     return PageRouteBuilder(
       opaque: false,
-      pageBuilder: (_, __, ___) => PausePage(
+      transitionDuration: const Duration(milliseconds: 500),
+      pageBuilder: (context, animation, secondaryAnimation) => PausePage(
         onResume: onResume,
         onReplay: onReplay,
       ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        final begin = BoxDecoration(
+          color: const Color(0xff000000).withOpacity(0),
+        );
+        final end = BoxDecoration(
+          color: const Color(0xff000000).withOpacity(0.6),
+        );
+        const curve = Curves.easeIn;
+
+        final tween = DecorationTween(begin: begin, end: end);
+        final curvedAnimation = CurvedAnimation(
+          parent: animation,
+          curve: curve,
+        );
+        final animate = tween.animate(curvedAnimation);
+
+        return DecoratedBoxTransition(
+          decoration: animate,
+          child: child,
+        );
+      },
     );
   }
 
@@ -64,35 +86,31 @@ class PausePage extends StatelessWidget {
     const spacing = SizedBox(height: 8);
     final screenSize = MediaQuery.sizeOf(context);
 
-    return Scaffold(
-      backgroundColor: BasuraColors.black.withOpacity(0.3),
-      body: Center(
-        child: SizedBox.square(
-          dimension:
-              (screenSize.shortestSide * 0.4).clamp(250, double.infinity),
-          child: _PaperBackground(
-            child: Padding(
-              padding: const EdgeInsets.all(32),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _HoverableTextButton(
-                    text: 'Resume',
-                    onPressed: _onResume,
-                  ),
-                  spacing,
-                  _HoverableTextButton(
-                    text: 'Replay',
-                    onPressed: _onReplay,
-                  ),
-                  spacing,
-                  _HoverableTextButton(
-                    text: 'Menu',
-                    onPressed: _onMenu,
-                  ),
-                ],
-              ),
+    return Center(
+      child: SizedBox.square(
+        dimension: (screenSize.shortestSide * 0.4).clamp(250, double.infinity),
+        child: _PaperBackground(
+          child: Padding(
+            padding: const EdgeInsets.all(32),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _HoverableTextButton(
+                  text: 'Resume',
+                  onPressed: _onResume,
+                ),
+                spacing,
+                _HoverableTextButton(
+                  text: 'Replay',
+                  onPressed: _onReplay,
+                ),
+                spacing,
+                _HoverableTextButton(
+                  text: 'Menu',
+                  onPressed: _onMenu,
+                ),
+              ],
             ),
           ),
         ),
@@ -175,21 +193,24 @@ class __HoverableTextButtonState extends State<_HoverableTextButton>
   @override
   Widget build(BuildContext context) {
     final theme = BasuraTheme.of(context);
-    return Hoverable(
-      onHoverStart: (_) => _animationController.forward(),
-      onHoverExit: (_) => _animationController.reverse(),
-      child: GestureDetector(
-        onTap: () => widget.onPressed(context),
-        child: AnimatedBuilder(
-          animation: _colorTween,
-          builder: (context, child) {
-            return AutoSizeText(
-              widget.text,
-              style: theme.textTheme.cardSubheading.copyWith(
-                color: _colorTween.value,
-              ),
-            );
-          },
+    return DefaultTextStyle(
+      style: theme.textTheme.cardSubheading,
+      child: Hoverable(
+        onHoverStart: (_) => _animationController.forward(),
+        onHoverExit: (_) => _animationController.reverse(),
+        child: GestureDetector(
+          onTap: () => widget.onPressed(context),
+          child: AnimatedBuilder(
+            animation: _colorTween,
+            builder: (context, child) {
+              return AutoSizeText(
+                widget.text,
+                style: theme.textTheme.cardSubheading.copyWith(
+                  color: _colorTween.value,
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

@@ -32,18 +32,33 @@ class PausePage extends StatelessWidget {
         final end = BoxDecoration(
           color: const Color(0xff000000).withOpacity(0.6),
         );
-        const curve = Curves.easeIn;
 
-        final tween = DecorationTween(begin: begin, end: end);
-        final curvedAnimation = CurvedAnimation(
-          parent: animation,
-          curve: curve,
-        );
-        final animate = tween.animate(curvedAnimation);
+        final decorationCurvedAnimation =
+            CurvedAnimation(parent: animation, curve: Curves.easeIn);
+        final decorationTween = DecorationTween(begin: begin, end: end);
+        final decorationAnimate =
+            decorationTween.animate(decorationCurvedAnimation);
+
+        final scaleCurvedAnimation =
+            CurvedAnimation(parent: animation, curve: Curves.easeIn);
+        final scaleTween = Tween<double>(begin: 0.5, end: 1);
+        final scaleAnimate = scaleTween.animate(scaleCurvedAnimation);
+
+        final opacityCurve =
+            CurvedAnimation(parent: animation, curve: Curves.linear);
+        final opacityTween = Tween<double>(begin: 0, end: 1);
+        final opacityAnimate = opacityTween.animate(opacityCurve);
 
         return DecoratedBoxTransition(
-          decoration: animate,
-          child: child,
+          decoration: decorationAnimate,
+          child: ScaleTransition(
+            scale: scaleAnimate,
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 100),
+              opacity: opacityAnimate.value,
+              child: child,
+            ),
+          ),
         );
       },
     );

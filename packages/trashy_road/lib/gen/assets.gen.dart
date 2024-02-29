@@ -84,6 +84,18 @@ class $AssetsImagesGen {
   AssetGenImage get carYellowDriving =>
       const AssetGenImage('assets/images/car_yellow-driving.png');
 
+  /// File path: assets/images/crumbled_paper2.png
+  AssetGenImage get crumbledPaper2 =>
+      const AssetGenImage('assets/images/crumbled_paper2.png');
+
+  /// File path: assets/images/crumbled_paper3.png
+  AssetGenImage get crumbledPaper3 =>
+      const AssetGenImage('assets/images/crumbled_paper3.png');
+
+  /// File path: assets/images/crumpled_paper1.png
+  AssetGenImage get crumpledPaper1 =>
+      const AssetGenImage('assets/images/crumpled_paper1.png');
+
   /// File path: assets/images/fire_hydrant-shadow.png
   AssetGenImage get fireHydrantShadow =>
       const AssetGenImage('assets/images/fire_hydrant-shadow.png');
@@ -128,6 +140,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/paper_background.png
   AssetGenImage get paperBackground =>
       const AssetGenImage('assets/images/paper_background.png');
+
+  /// File path: assets/images/paper_background_square.png
+  AssetGenImage get paperBackgroundSquare =>
+      const AssetGenImage('assets/images/paper_background_square.png');
 
   /// File path: assets/images/pause_button.png
   AssetGenImage get pauseButton =>
@@ -226,6 +242,9 @@ class $AssetsImagesGen {
         carRedDriving,
         carRightToLeftShadow,
         carYellowDriving,
+        crumbledPaper2,
+        crumbledPaper3,
+        crumpledPaper1,
         fireHydrantShadow,
         fireHydrant,
         grassRoadEast,
@@ -238,6 +257,7 @@ class $AssetsImagesGen {
         paper2Shadow,
         paper2,
         paperBackground,
+        paperBackgroundSquare,
         pauseButton,
         plasticBottle1Shadow,
         plasticBottle1,

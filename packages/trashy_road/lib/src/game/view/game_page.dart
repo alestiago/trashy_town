@@ -17,11 +17,15 @@ class GamePage extends StatelessWidget {
   })  : _map = map,
         _identifier = identifier;
 
+  /// The identifier for the route.
+  static String identifier = 'maps_menu';
+
   static Route<void> route({
     required String identifier,
     required TiledMap tiledMap,
   }) {
     return BasuraBlackEaseInOut<void>(
+      settings: RouteSettings(name: identifier),
       builder: (_) => GamePage(
         identifier: identifier,
         map: tiledMap,
@@ -74,7 +78,7 @@ class _GameView extends StatelessWidget {
                 score: state.score,
               ),
             );
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
           ScorePage.route(identifier: state.identifier),
         );

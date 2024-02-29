@@ -18,49 +18,8 @@ class PausePage extends StatelessWidget {
     required bool Function() onResume,
     required bool Function() onReplay,
   }) {
-    return PageRouteBuilder(
-      opaque: false,
-      transitionDuration: const Duration(milliseconds: 500),
-      pageBuilder: (context, animation, secondaryAnimation) => PausePage(
-        onResume: onResume,
-        onReplay: onReplay,
-      ),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        final begin = BoxDecoration(
-          color: const Color(0xff000000).withOpacity(0),
-        );
-        final end = BoxDecoration(
-          color: const Color(0xff000000).withOpacity(0.6),
-        );
-
-        final decorationCurvedAnimation =
-            CurvedAnimation(parent: animation, curve: Curves.easeIn);
-        final decorationTween = DecorationTween(begin: begin, end: end);
-        final decorationAnimate =
-            decorationTween.animate(decorationCurvedAnimation);
-
-        final scaleCurvedAnimation =
-            CurvedAnimation(parent: animation, curve: Curves.easeIn);
-        final scaleTween = Tween<double>(begin: 0.5, end: 1);
-        final scaleAnimate = scaleTween.animate(scaleCurvedAnimation);
-
-        final opacityCurve =
-            CurvedAnimation(parent: animation, curve: Curves.linear);
-        final opacityTween = Tween<double>(begin: 0.2, end: 1);
-        final opacityAnimate = opacityTween.animate(opacityCurve);
-
-        return DecoratedBoxTransition(
-          decoration: decorationAnimate,
-          child: ScaleTransition(
-            scale: scaleAnimate,
-            child: AnimatedOpacity(
-              duration: const Duration(milliseconds: 100),
-              opacity: opacityAnimate.value,
-              child: child,
-            ),
-          ),
-        );
-      },
+    return _PausePageRouteBuilder(
+      builder: (context) => PausePage(onResume: onResume, onReplay: onReplay),
     );
   }
 
@@ -111,20 +70,11 @@ class PausePage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _HoverableTextButton(
-                  text: 'Resume',
-                  onPressed: _onResume,
-                ),
+                HoverableTextButton(text: 'Resume', onPressed: _onResume),
                 spacing,
-                _HoverableTextButton(
-                  text: 'Replay',
-                  onPressed: _onReplay,
-                ),
+                HoverableTextButton(text: 'Replay', onPressed: _onReplay),
                 spacing,
-                _HoverableTextButton(
-                  text: 'Menu',
-                  onPressed: _onMenu,
-                ),
+                HoverableTextButton(text: 'Menu', onPressed: _onMenu),
               ],
             ),
           ),
@@ -177,57 +127,50 @@ class __PaperBackgroundState extends State<_PaperBackground> {
   }
 }
 
-class _HoverableTextButton extends StatefulWidget {
-  const _HoverableTextButton({
-    required this.text,
-    required this.onPressed,
-  });
+class _PausePageRouteBuilder<T> extends PageRouteBuilder<T> {
+  _PausePageRouteBuilder({
+    required WidgetBuilder builder,
+    super.settings,
+  }) : super(
+          opaque: false,
+          transitionDuration: const Duration(milliseconds: 500),
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              builder(context),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            final begin = BoxDecoration(
+              color: const Color(0xff000000).withOpacity(0),
+            );
+            final end = BoxDecoration(
+              color: const Color(0xff000000).withOpacity(0.6),
+            );
 
-  final String text;
+            final decorationCurvedAnimation =
+                CurvedAnimation(parent: animation, curve: Curves.easeIn);
+            final decorationTween = DecorationTween(begin: begin, end: end);
+            final decorationAnimate =
+                decorationTween.animate(decorationCurvedAnimation);
 
-  final void Function(BuildContext context) onPressed;
+            final scaleCurvedAnimation =
+                CurvedAnimation(parent: animation, curve: Curves.easeIn);
+            final scaleTween = Tween<double>(begin: 0.5, end: 1);
+            final scaleAnimate = scaleTween.animate(scaleCurvedAnimation);
 
-  @override
-  State<_HoverableTextButton> createState() => __HoverableTextButtonState();
-}
+            final opacityCurve =
+                CurvedAnimation(parent: animation, curve: Curves.linear);
+            final opacityTween = Tween<double>(begin: 0.2, end: 1);
+            final opacityAnimate = opacityTween.animate(opacityCurve);
 
-class __HoverableTextButtonState extends State<_HoverableTextButton>
-    with SingleTickerProviderStateMixin {
-  late final _animationController = AnimationController(
-    duration: const Duration(milliseconds: 200),
-    vsync: this,
-  );
-
-  late final _colorTween = ColorTween(
-    begin: BasuraColors.black,
-    end: BasuraColors.deepGreen,
-  ).animate(
-    _animationController,
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = BasuraTheme.of(context);
-    return DefaultTextStyle(
-      style: theme.textTheme.cardSubheading,
-      child: Hoverable(
-        onHoverStart: (_) => _animationController.forward(),
-        onHoverExit: (_) => _animationController.reverse(),
-        child: GestureDetector(
-          onTap: () => widget.onPressed(context),
-          child: AnimatedBuilder(
-            animation: _colorTween,
-            builder: (context, child) {
-              return AutoSizeText(
-                widget.text,
-                style: theme.textTheme.cardSubheading.copyWith(
-                  color: _colorTween.value,
+            return DecoratedBoxTransition(
+              decoration: decorationAnimate,
+              child: ScaleTransition(
+                scale: scaleAnimate,
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 100),
+                  opacity: opacityAnimate.value,
+                  child: child,
                 ),
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
+              ),
+            );
+          },
+        );
 }

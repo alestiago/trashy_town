@@ -36,12 +36,7 @@ class PreloadCubit extends Cubit<PreloadState> {
       ),
       PreloadPhase(
         'images',
-        () => images.loadAll(
-          Assets.images.values
-              .whereType<AssetGenImage>()
-              .map((e) => e.path)
-              .toList(),
-        ),
+        () => images.loadAll([]),
       ),
       PreloadPhase(
         'maps',

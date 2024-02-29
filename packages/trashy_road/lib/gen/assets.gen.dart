@@ -41,6 +41,13 @@ class $AssetsImagesGen {
   AssetGenImage get appleCore2 =>
       const AssetGenImage('assets/images/apple_core_2.png');
 
+  /// File path: assets/images/banana-shadow.png
+  AssetGenImage get bananaShadow =>
+      const AssetGenImage('assets/images/banana-shadow.png');
+
+  /// File path: assets/images/banana.png
+  AssetGenImage get banana => const AssetGenImage('assets/images/banana.png');
+
   /// File path: assets/images/barrel.png
   AssetGenImage get barrel => const AssetGenImage('assets/images/barrel.png');
 
@@ -154,6 +161,14 @@ class $AssetsImagesGen {
   AssetGenImage get paperBackgroundSquare =>
       const AssetGenImage('assets/images/paper_background_square.png');
 
+  /// File path: assets/images/paper_ball-shadow.png
+  AssetGenImage get paperBallShadow =>
+      const AssetGenImage('assets/images/paper_ball-shadow.png');
+
+  /// File path: assets/images/paper_ball.png
+  AssetGenImage get paperBall =>
+      const AssetGenImage('assets/images/paper_ball.png');
+
   /// File path: assets/images/pause_button.png
   AssetGenImage get pauseButton =>
       const AssetGenImage('assets/images/pause_button.png');
@@ -255,6 +270,8 @@ class $AssetsImagesGen {
         appleCore1,
         appleCore2Shadow,
         appleCore2,
+        bananaShadow,
+        banana,
         barrel,
         busDriving,
         busLeftToRightShadow,
@@ -285,6 +302,8 @@ class $AssetsImagesGen {
         paper2,
         paperBackground,
         paperBackgroundSquare,
+        paperBallShadow,
+        paperBall,
         pauseButton,
         plasticBottle1Shadow,
         plasticBottle1,

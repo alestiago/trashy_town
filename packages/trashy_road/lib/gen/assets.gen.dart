@@ -44,8 +44,17 @@ class $AssetsImagesGen {
   /// File path: assets/images/barrel.png
   AssetGenImage get barrel => const AssetGenImage('assets/images/barrel.png');
 
-  /// File path: assets/images/bus.png
-  AssetGenImage get bus => const AssetGenImage('assets/images/bus.png');
+  /// File path: assets/images/bus-driving.png
+  AssetGenImage get busDriving =>
+      const AssetGenImage('assets/images/bus-driving.png');
+
+  /// File path: assets/images/bus_left_to_right-shadow.png
+  AssetGenImage get busLeftToRightShadow =>
+      const AssetGenImage('assets/images/bus_left_to_right-shadow.png');
+
+  /// File path: assets/images/bus_right_to_left-shadow.png
+  AssetGenImage get busRightToLeftShadow =>
+      const AssetGenImage('assets/images/bus_right_to_left-shadow.png');
 
   /// File path: assets/images/bush_1-shadow.png
   AssetGenImage get bush1Shadow =>
@@ -68,17 +77,17 @@ class $AssetsImagesGen {
   AssetGenImage get carBlueDriving =>
       const AssetGenImage('assets/images/car_blue-driving.png');
 
-  /// File path: assets/images/car_left_to_right_shadow.png
+  /// File path: assets/images/car_left_to_right-shadow.png
   AssetGenImage get carLeftToRightShadow =>
-      const AssetGenImage('assets/images/car_left_to_right_shadow.png');
+      const AssetGenImage('assets/images/car_left_to_right-shadow.png');
 
   /// File path: assets/images/car_red-driving.png
   AssetGenImage get carRedDriving =>
       const AssetGenImage('assets/images/car_red-driving.png');
 
-  /// File path: assets/images/car_right_to_left_shadow.png
+  /// File path: assets/images/car_right_to_left-shadow.png
   AssetGenImage get carRightToLeftShadow =>
-      const AssetGenImage('assets/images/car_right_to_left_shadow.png');
+      const AssetGenImage('assets/images/car_right_to_left-shadow.png');
 
   /// File path: assets/images/car_yellow-driving.png
   AssetGenImage get carYellowDriving =>
@@ -195,6 +204,22 @@ class $AssetsImagesGen {
   SvgGenImage get starFilled =>
       const SvgGenImage('assets/images/star_filled.svg');
 
+  /// File path: assets/images/takeaway_cup_cold-shadow.png
+  AssetGenImage get takeawayCupColdShadow =>
+      const AssetGenImage('assets/images/takeaway_cup_cold-shadow.png');
+
+  /// File path: assets/images/takeaway_cup_cold.png
+  AssetGenImage get takeawayCupCold =>
+      const AssetGenImage('assets/images/takeaway_cup_cold.png');
+
+  /// File path: assets/images/takeaway_cup_hot-shadow.png
+  AssetGenImage get takeawayCupHotShadow =>
+      const AssetGenImage('assets/images/takeaway_cup_hot-shadow.png');
+
+  /// File path: assets/images/takeaway_cup_hot.png
+  AssetGenImage get takeawayCupHot =>
+      const AssetGenImage('assets/images/takeaway_cup_hot.png');
+
   /// File path: assets/images/trash.png
   AssetGenImage get trash => const AssetGenImage('assets/images/trash.png');
 
@@ -231,7 +256,9 @@ class $AssetsImagesGen {
         appleCore2Shadow,
         appleCore2,
         barrel,
-        bus,
+        busDriving,
+        busLeftToRightShadow,
+        busRightToLeftShadow,
         bush1Shadow,
         bush1,
         bush2Shadow,
@@ -271,6 +298,10 @@ class $AssetsImagesGen {
         slotPlasticBottle,
         starEmpty,
         starFilled,
+        takeawayCupColdShadow,
+        takeawayCupCold,
+        takeawayCupHotShadow,
+        takeawayCupHot,
         trash,
         trashCanOpening,
         trashCanShadow,
@@ -376,10 +407,14 @@ class Assets {
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsRiveGen rive = $AssetsRiveGen();
   static const $AssetsTilesGen tiles = $AssetsTilesGen();
-  static const String trashyRoad = 'assets/trashy_road.tiled-project';
+  static const String trashyRoadTiledProject =
+      'assets/trashy_road.tiled-project';
+  static const String trashyRoadTiledSession =
+      'assets/trashy_road.tiled-session';
 
   /// List of all assets
-  static List<String> get values => [trashyRoad];
+  static List<String> get values =>
+      [trashyRoadTiledProject, trashyRoadTiledSession];
 }
 
 class AssetGenImage {

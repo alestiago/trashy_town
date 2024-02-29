@@ -37,17 +37,10 @@ class PreloadCubit extends Cubit<PreloadState> {
       PreloadPhase(
         'images',
         () => images.loadAll(
-          [
-            Assets.images.barrel.path,
-            Assets.images.bus.path,
-            Assets.images.grass.path,
-            Assets.images.player.path,
-            Assets.images.road.path,
-            Assets.images.trashCan.path,
-            Assets.images.trashCanOpening.path,
-            Assets.images.trashCanShadow.path,
-            Assets.images.trash.path,
-          ],
+          Assets.images.values
+              .whereType<AssetGenImage>()
+              .map((e) => e.path)
+              .toList(),
         ),
       ),
       PreloadPhase(

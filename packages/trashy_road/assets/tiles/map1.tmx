@@ -103,7 +103,7 @@
     <property name="leftToRight" type="bool" value="true"/>
     <property name="speed" type="int" value="5"/>
     <property name="traffic" type="int" value="2"/>
-    <property name="type" value="car_red"/>
+    <property name="type" value="bus"/>
    </properties>
   </object>
   <object id="35" template="road_lane.tx" name="road_lane" class="road_lane" x="64" y="176">

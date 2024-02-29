@@ -10,7 +10,8 @@ export 'behaviors/behaviors.dart';
 enum VehicleType {
   redCar._('car_red'),
   blueCar._('car_blue'),
-  yellowCar._('car_yellow');
+  yellowCar._('car_yellow'),
+  bus._('bus');
 
   const VehicleType._(this.name);
 
@@ -70,6 +71,10 @@ abstract class Vehicle extends PositionedEntity with ParentIsA<RoadLane> {
         return Car(
           roadLane: roadLane,
           style: CarStyle.yellow,
+        );
+      case VehicleType.bus:
+        return Bus(
+          roadLane: roadLane,
         );
     }
   }

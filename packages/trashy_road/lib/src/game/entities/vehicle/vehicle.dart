@@ -52,5 +52,26 @@ abstract class Vehicle extends PositionedEntity with ParentIsA<RoadLane> {
             ),
           ],
         );
+
+  /// Creates a vehicle based on the [parent]'s [VehicleType].
+  factory Vehicle.fromRoadLane(RoadLane roadLane) {
+    switch (roadLane.vehicleType) {
+      case VehicleType.redCar:
+        return Car(
+          roadLane: roadLane,
+          style: CarStyle.red,
+        );
+      case VehicleType.blueCar:
+        return Car(
+          roadLane: roadLane,
+          style: CarStyle.blue,
+        );
+      case VehicleType.yellowCar:
+        return Car(
+          roadLane: roadLane,
+          style: CarStyle.yellow,
+        );
+    }
+  }
   final RoadLane roadLane;
 }

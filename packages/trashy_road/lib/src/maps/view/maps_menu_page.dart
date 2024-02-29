@@ -65,7 +65,7 @@ class _MapsMenuView extends StatelessWidget {
                   padding: padding,
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: mainCrossAxisExtent,
-                    crossAxisSpacing: 20,
+                    crossAxisSpacing: 50,
                     mainAxisSpacing: mainAxisSpacing,
                   ),
                   itemCount: mapsValues.length,

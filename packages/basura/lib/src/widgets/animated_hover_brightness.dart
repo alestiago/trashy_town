@@ -20,7 +20,7 @@ class AnimatedHoverBrightness extends StatefulWidget {
 
 class _AnimatedHoverBrightnessState extends State<AnimatedHoverBrightness>
     with SingleTickerProviderStateMixin {
-  final _focusNode = FocusNode();
+  bool _isFocused = false;
 
   late final _animationController = AnimationController(
     duration: const Duration(milliseconds: 200),
@@ -31,54 +31,46 @@ class _AnimatedHoverBrightnessState extends State<AnimatedHoverBrightness>
     _animationController,
   );
 
-  @override
-  void initState() {
-    super.initState();
-    _focusNode.addListener(_onFocusChanged);
+  void _focus() {
+    setState(() => _isFocused = true);
+    _animationController.forward();
   }
 
-  void _onFocusChanged() {
-    if (_focusNode.hasFocus) {
-      _animationController.forward();
-    } else {
-      _animationController.reverse();
-    }
+  void _unfocus() {
+    setState(() => _isFocused = false);
+    _animationController.reverse();
   }
 
   @override
   void dispose() {
-    _focusNode.dispose();
     _animationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Focus(
-      focusNode: _focusNode,
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onEnter: (_) => setState(_focusNode.requestFocus),
-        onExit: (_) => setState(_focusNode.unfocus),
-        child: GestureDetector(
-          onTapDown: (_) => setState(_focusNode.requestFocus),
-          onTapUp: (_) => setState(_focusNode.unfocus),
-          onTapCancel: () => setState(_focusNode.unfocus),
-          behavior: HitTestBehavior.translucent,
-          child: AnimatedBuilder(
-            animation: _saturationAnimation,
-            child: widget.child,
-            builder: (context, child) {
-              return ColorFiltered(
-                colorFilter: ColorFilter.matrix(
-                  _brightnessAdjustMatrix(
-                    brightness: _saturationAnimation.value,
-                  ),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => _focus(),
+      onExit: (_) => _unfocus(),
+      child: GestureDetector(
+        onTapDown: (_) => _focus(),
+        onTapUp: (_) => _unfocus(),
+        onTapCancel: _unfocus,
+        behavior: HitTestBehavior.translucent,
+        child: AnimatedBuilder(
+          animation: _saturationAnimation,
+          child: widget.child,
+          builder: (context, child) {
+            return ColorFiltered(
+              colorFilter: ColorFilter.matrix(
+                _brightnessAdjustMatrix(
+                  brightness: _saturationAnimation.value,
                 ),
-                child: child,
-              );
-            },
-          ),
+              ),
+              child: child,
+            );
+          },
         ),
       ),
     );

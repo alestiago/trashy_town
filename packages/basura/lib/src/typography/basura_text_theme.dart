@@ -32,6 +32,7 @@ class BasuraTextThemeData extends Equatable {
   const BasuraTextThemeData({
     required this.button,
     required this.cardHeading,
+    required this.cardSubheading,
   });
 
   /// Light [BasuraTextThemeData] for the Basura design system.
@@ -51,6 +52,14 @@ class BasuraTextThemeData extends Equatable {
         package: Basura.packageName,
         color: BasuraColors.black,
       ),
+      cardSubheading: TextStyle(
+        fontFamily: BasuraFontFamily.caveat.name,
+        fontSize: 25,
+        fontWeight: FontWeight.bold,
+        letterSpacing: 10,
+        package: Basura.packageName,
+        color: BasuraColors.black,
+      ),
     );
   }
 
@@ -60,9 +69,13 @@ class BasuraTextThemeData extends Equatable {
   /// A text style for card headings.
   final TextStyle cardHeading;
 
+  /// A text style for card subheadings.
+  final TextStyle cardSubheading;
+
   @override
   List<Object?> get props => [
         button,
         cardHeading,
+        cardSubheading,
       ];
 }

@@ -61,45 +61,38 @@ class PausePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = BasuraTheme.of(context);
-    const textButtonSize = Size(200, 64);
     const spacing = SizedBox(height: 8);
+    final screenSize = MediaQuery.sizeOf(context);
 
     return Scaffold(
       backgroundColor: BasuraColors.black.withOpacity(0.3),
       body: Center(
-        child: _PaperBackground(
-          child: Padding(
-            padding: const EdgeInsets.all(32),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox.fromSize(
-                  size: textButtonSize,
-                  child: BasuraGlossyTextButton(
-                    label: 'Resume',
-                    style: theme.glossyButtonTheme.primary,
-                    onPressed: () => _onResume(context),
+        child: SizedBox.square(
+          dimension:
+              (screenSize.shortestSide * 0.4).clamp(250, double.infinity),
+          child: _PaperBackground(
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _HoverableTextButton(
+                    text: 'Resume',
+                    onPressed: _onResume,
                   ),
-                ),
-                spacing,
-                SizedBox.fromSize(
-                  size: textButtonSize,
-                  child: BasuraGlossyTextButton(
-                    label: 'Replay',
-                    onPressed: () => _onReplay(context),
+                  spacing,
+                  _HoverableTextButton(
+                    text: 'Replay',
+                    onPressed: _onReplay,
                   ),
-                ),
-                spacing,
-                SizedBox.fromSize(
-                  size: textButtonSize,
-                  child: BasuraGlossyTextButton(
-                    label: 'Menu',
-                    onPressed: () => _onMenu(context),
+                  spacing,
+                  _HoverableTextButton(
+                    text: 'Menu',
+                    onPressed: _onMenu,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -147,6 +140,58 @@ class __PaperBackgroundState extends State<_PaperBackground> {
           child: widget.child,
         );
       },
+    );
+  }
+}
+
+class _HoverableTextButton extends StatefulWidget {
+  const _HoverableTextButton({
+    required this.text,
+    required this.onPressed,
+  });
+
+  final String text;
+
+  final void Function(BuildContext context) onPressed;
+
+  @override
+  State<_HoverableTextButton> createState() => __HoverableTextButtonState();
+}
+
+class __HoverableTextButtonState extends State<_HoverableTextButton>
+    with SingleTickerProviderStateMixin {
+  late final _animationController = AnimationController(
+    duration: const Duration(milliseconds: 200),
+    vsync: this,
+  );
+
+  late final _colorTween = ColorTween(
+    begin: BasuraColors.black,
+    end: BasuraColors.deepGreen,
+  ).animate(
+    _animationController,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = BasuraTheme.of(context);
+    return Hoverable(
+      onHoverStart: (_) => _animationController.forward(),
+      onHoverExit: (_) => _animationController.reverse(),
+      child: GestureDetector(
+        onTap: () => widget.onPressed(context),
+        child: AnimatedBuilder(
+          animation: _colorTween,
+          builder: (context, child) {
+            return AutoSizeText(
+              widget.text,
+              style: theme.textTheme.cardSubheading.copyWith(
+                color: _colorTween.value,
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }

@@ -246,17 +246,25 @@ class $AssetsImagesGen {
   /// File path: assets/images/trash.png
   AssetGenImage get trash => const AssetGenImage('assets/images/trash.png');
 
-  /// File path: assets/images/trash_can-opening.png
-  AssetGenImage get trashCanOpening =>
-      const AssetGenImage('assets/images/trash_can-opening.png');
-
-  /// File path: assets/images/trash_can-shadow.png
-  AssetGenImage get trashCanShadow =>
-      const AssetGenImage('assets/images/trash_can-shadow.png');
+  /// File path: assets/images/trash_can-opening-shadow.png
+  AssetGenImage get trashCanOpeningShadow =>
+      const AssetGenImage('assets/images/trash_can-opening-shadow.png');
 
   /// File path: assets/images/trash_can.png
   AssetGenImage get trashCan =>
       const AssetGenImage('assets/images/trash_can.png');
+
+  /// File path: assets/images/trash_can_organic-opening.png
+  AssetGenImage get trashCanOrganicOpening =>
+      const AssetGenImage('assets/images/trash_can_organic-opening.png');
+
+  /// File path: assets/images/trash_can_paper-opening.png
+  AssetGenImage get trashCanPaperOpening =>
+      const AssetGenImage('assets/images/trash_can_paper-opening.png');
+
+  /// File path: assets/images/trash_can_plastic-opening.png
+  AssetGenImage get trashCanPlasticOpening =>
+      const AssetGenImage('assets/images/trash_can_plastic-opening.png');
 
   /// File path: assets/images/tree_1-shadow.png
   AssetGenImage get tree1Shadow =>
@@ -332,9 +340,11 @@ class $AssetsImagesGen {
         takeawayCupHotShadow,
         takeawayCupHot,
         trash,
-        trashCanOpening,
-        trashCanShadow,
+        trashCanOpeningShadow,
         trashCan,
+        trashCanOrganicOpening,
+        trashCanPaperOpening,
+        trashCanPlasticOpening,
         tree1Shadow,
         tree1,
         tree2Shadow,

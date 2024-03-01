@@ -77,6 +77,14 @@ class $AssetsImagesGen {
   /// File path: assets/images/bush_2.png
   AssetGenImage get bush2 => const AssetGenImage('assets/images/bush_2.png');
 
+  /// File path: assets/images/can_holder-shadow.png
+  AssetGenImage get canHolderShadow =>
+      const AssetGenImage('assets/images/can_holder-shadow.png');
+
+  /// File path: assets/images/can_holder.png
+  AssetGenImage get canHolder =>
+      const AssetGenImage('assets/images/can_holder.png');
+
   /// File path: assets/images/car.png
   AssetGenImage get car => const AssetGenImage('assets/images/car.png');
 
@@ -189,6 +197,14 @@ class $AssetsImagesGen {
   AssetGenImage get plasticBottle2 =>
       const AssetGenImage('assets/images/plastic_bottle_2.png');
 
+  /// File path: assets/images/plastic_straw-shadow.png
+  AssetGenImage get plasticStrawShadow =>
+      const AssetGenImage('assets/images/plastic_straw-shadow.png');
+
+  /// File path: assets/images/plastic_straw.png
+  AssetGenImage get plasticStraw =>
+      const AssetGenImage('assets/images/plastic_straw.png');
+
   /// File path: assets/images/player.png
   AssetGenImage get player => const AssetGenImage('assets/images/player.png');
 
@@ -202,6 +218,14 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/road.png
   AssetGenImage get road => const AssetGenImage('assets/images/road.png');
+
+  /// File path: assets/images/sandwich-shadow.png
+  AssetGenImage get sandwichShadow =>
+      const AssetGenImage('assets/images/sandwich-shadow.png');
+
+  /// File path: assets/images/sandwich.png
+  AssetGenImage get sandwich =>
+      const AssetGenImage('assets/images/sandwich.png');
 
   /// File path: assets/images/slot_apple_core.png
   AssetGenImage get slotAppleCore =>
@@ -296,6 +320,8 @@ class $AssetsImagesGen {
         bush1,
         bush2Shadow,
         bush2,
+        canHolderShadow,
+        canHolder,
         car,
         carBlueDriving,
         carLeftToRightShadow,
@@ -325,10 +351,14 @@ class $AssetsImagesGen {
         plasticBottle1,
         plasticBottle2Shadow,
         plasticBottle2,
+        plasticStrawShadow,
+        plasticStraw,
         player,
         playerHopShadow,
         playerHop,
         road,
+        sandwichShadow,
+        sandwich,
         slotAppleCore,
         slotEmpty,
         slotPaperBox,

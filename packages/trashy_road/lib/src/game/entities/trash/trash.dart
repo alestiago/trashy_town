@@ -150,7 +150,17 @@ enum PlasticStyle {
   /// {@template _PlasticStyle.coldTakeAwayCup}
   /// A takeaway cup with a straw.
   /// {@endtemplate}
-  coldTakeAwayCup;
+  coldTakeAwayCup,
+
+  /// {@template _PlasticStyle.straw}
+  /// A plastic straw.
+  /// {@endtemplate}
+  straw,
+
+  /// {@template _PlasticStyle.canHolder}
+  /// A plastic can holder.
+  /// {@endtemplate}
+  canHolder;
 
   factory PlasticStyle._randomize({
     @visibleForTesting Random? random,
@@ -178,7 +188,12 @@ enum OrganicStyle {
   /// {@template _OrganicStyle.banana}
   /// A single banana peel on the ground.
   /// {@endtemplate}
-  banana;
+  banana,
+
+  /// {@template _OrganicStyle.sandwich}
+  /// A sandwich on the ground
+  /// {@endtemplate}
+  sandwich;
 
   factory OrganicStyle._randomize({
     @visibleForTesting Random? random,
@@ -259,6 +274,10 @@ class _PlasticSpriteGroup extends PositionComponent
         return _PlasticSpriteGroup._styleTwo();
       case PlasticStyle.coldTakeAwayCup:
         return _PlasticSpriteGroup._coldTakeAwayCup();
+      case PlasticStyle.straw:
+        return _PlasticSpriteGroup._straw();
+      case PlasticStyle.canHolder:
+        return _PlasticSpriteGroup._canHolder();
     }
   }
 
@@ -278,6 +297,18 @@ class _PlasticSpriteGroup extends PositionComponent
   factory _PlasticSpriteGroup._coldTakeAwayCup() => _PlasticSpriteGroup._(
         spritePath: Assets.images.takeawayCupCold.path,
         shadowPath: Assets.images.takeawayCupColdShadow.path,
+      );
+
+  /// {@macro _PlasticStyle.straw}
+  factory _PlasticSpriteGroup._straw() => _PlasticSpriteGroup._(
+        spritePath: Assets.images.plasticStraw.path,
+        shadowPath: Assets.images.plasticStrawShadow.path,
+      );
+
+  /// {@macro _PlasticStyle.canHolder}
+  factory _PlasticSpriteGroup._canHolder() => _PlasticSpriteGroup._(
+        spritePath: Assets.images.canHolder.path,
+        shadowPath: Assets.images.canHolderShadow.path,
       );
 }
 
@@ -318,6 +349,8 @@ class _OrganicSpriteGroup extends PositionComponent
         return _OrganicSpriteGroup._styleTwo();
       case OrganicStyle.banana:
         return _OrganicSpriteGroup._banana();
+      case OrganicStyle.sandwich:
+        return _OrganicSpriteGroup._sandwich();
     }
   }
 
@@ -333,10 +366,16 @@ class _OrganicSpriteGroup extends PositionComponent
         shadowPath: Assets.images.appleCore2Shadow.path,
       );
 
-  /// {@macro _OrganicStyle.two}
+  /// {@macro _OrganicStyle.banana}
   factory _OrganicSpriteGroup._banana() => _OrganicSpriteGroup._(
         spritePath: Assets.images.banana.path,
         shadowPath: Assets.images.bananaShadow.path,
+      );
+
+  /// {@macro _OrganicStyle.sandwich}
+  factory _OrganicSpriteGroup._sandwich() => _OrganicSpriteGroup._(
+        spritePath: Assets.images.sandwich.path,
+        shadowPath: Assets.images.sandwichShadow.path,
       );
 }
 

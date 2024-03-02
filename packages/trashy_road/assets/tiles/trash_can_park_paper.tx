@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
  <tileset firstgid="1" source="Tiles.tsx"/>
- <object name="trash_can_paper_city" class="trash_can" gid="4" width="128" height="128">
+ <object name="trash_can_paper_park" class="trash_can" gid="4" width="128" height="128">
   <properties>
    <property name="type" value="paper"/>
-   <property name="variant" value="city"/>
+   <property name="variant" value="park"/>
   </properties>
  </object>
 </template>

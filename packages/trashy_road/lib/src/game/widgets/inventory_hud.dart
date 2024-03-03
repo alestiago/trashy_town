@@ -34,7 +34,8 @@ class InventoryHud extends StatelessWidget {
             return LayoutBuilder(
               builder: (context, constraints) {
                 final slotSize =
-                    ((constraints.maxWidth - 50) / 5).clamp(10.0, 50.0);
+                    ((constraints.maxWidth - 50) / filledTrash.length)
+                        .clamp(10.0, 50.0);
                 return Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [

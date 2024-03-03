@@ -51,6 +51,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/barrel.png
   AssetGenImage get barrel => const AssetGenImage('assets/images/barrel.png');
 
+  /// File path: assets/images/buliding_1.png
+  AssetGenImage get buliding1 =>
+      const AssetGenImage('assets/images/buliding_1.png');
+
   /// File path: assets/images/bus-driving.png
   AssetGenImage get busDriving =>
       const AssetGenImage('assets/images/bus-driving.png');
@@ -368,6 +372,7 @@ class $AssetsImagesGen {
         bananaShadow,
         banana,
         barrel,
+        buliding1,
         busDriving,
         busLeftToRightShadow,
         busRightToLeftShadow,

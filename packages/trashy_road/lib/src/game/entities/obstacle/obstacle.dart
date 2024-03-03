@@ -9,6 +9,7 @@ import 'package:trashy_road/src/game/game.dart';
 class Obstacle extends PositionedEntity with Untraversable, ZIndex {
   Obstacle._({
     required Vector2 super.position,
+    required RectangleHitbox hitbox,
     super.children,
   }) : super(
           anchor: Anchor.bottomLeft,
@@ -19,17 +20,9 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
               minDuration: 0.15,
             ),
             PropagatingCollisionBehavior(
-              RectangleHitbox(
-                isSolid: true,
-                anchor: Anchor.topCenter,
-                size: Vector2.all(0.8)..toGameSize(),
-                position: Vector2(
-                  // Designed for 1x1 tiles, if we need to support other sizes
-                  // we need to adjust this to take the size into account.
-                  GameSettings.gridDimensions.x / 2,
-                  -GameSettings.gridDimensions.y,
-                ),
-              ),
+              hitbox
+                ..isSolid = true
+                ..anchor = Anchor.bottomLeft,
             ),
           ],
         ) {
@@ -42,6 +35,10 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
   Obstacle._tree1({required Vector2 position})
       : this._(
           position: position,
+          hitbox: RectangleHitbox(
+            position: Vector2(0.1, 0)..toGameSize(),
+            size: Vector2(0.8, 0.8)..toGameSize(),
+          ),
           children: [_Tree1SpriteGroup()],
         );
 
@@ -51,6 +48,10 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
   Obstacle._tree2({required Vector2 position})
       : this._(
           position: position,
+          hitbox: RectangleHitbox(
+            position: Vector2(0.1, 0)..toGameSize(),
+            size: Vector2(0.8, 0.8)..toGameSize(),
+          ),
           children: [_Tree2SpriteGroup()],
         );
 
@@ -60,6 +61,10 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
   Obstacle._fireHydrant({required Vector2 position})
       : this._(
           position: position,
+          hitbox: RectangleHitbox(
+            position: Vector2(0.25, 0)..toGameSize(),
+            size: Vector2(0.5, 0.8)..toGameSize(),
+          ),
           children: [_FireHydrantSpriteGroup()],
         );
 
@@ -69,6 +74,10 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
   Obstacle._bush1({required Vector2 position})
       : this._(
           position: position,
+          hitbox: RectangleHitbox(
+            position: Vector2(0.1, 0)..toGameSize(),
+            size: Vector2(0.8, 0.8)..toGameSize(),
+          ),
           children: [_Bush1SpriteGroup()],
         );
 
@@ -79,7 +88,24 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
   Obstacle._bush2({required Vector2 position})
       : this._(
           position: position,
+          hitbox: RectangleHitbox(
+            position: Vector2(0.1, 0)..toGameSize(),
+            size: Vector2(0.8, 0.8)..toGameSize(),
+          ),
           children: [_Bush2SpriteGroup()],
+        );
+
+  // An Obstacle that is a building.
+  //
+  // The building takes up a 3x3 tile space.
+  Obstacle._building3({required Vector2 position})
+      : this._(
+          position: position,
+          hitbox: RectangleHitbox(
+            position: Vector2(0.1, 0)..toGameSize(),
+            size: Vector2(2.8, 2.8)..toGameSize(),
+          ),
+          children: [_Building3SpriteGroup()],
         );
 
   factory Obstacle.fromTiledObject(TiledObject tiledObject) {
@@ -97,6 +123,8 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
         return Obstacle._bush1(position: position);
       case 'bush_2':
         return Obstacle._bush2(position: position);
+      case 'buliding_3':
+        return Obstacle._building3(position: position);
       default:
         throw ArgumentError('Unknown obstacle type: $type');
     }
@@ -109,7 +137,7 @@ class _Tree1SpriteGroup extends PositionComponent {
           // The `size`, `position` and `scale` have been eye-balled to fit with
           // the tile size.
           size: Vector2.all(0.8)..toGameSize(),
-          position: Vector2(-0.1, 0.5)..toGameSize(),
+          position: Vector2(-0.2, 0.5)..toGameSize(),
           scale: Vector2.all(0.8),
           children: [
             GameSpriteComponent.fromPath(
@@ -130,7 +158,7 @@ class _Tree2SpriteGroup extends PositionComponent {
           // The `size`, `position` and `scale` have been eye-balled to fit with
           // the tile size.
           size: Vector2.all(0.8)..toGameSize(),
-          position: Vector2(-0.1, 0.5)..toGameSize(),
+          position: Vector2(-0.2, 0.5)..toGameSize(),
           scale: Vector2.all(0.8),
           children: [
             GameSpriteComponent.fromPath(
@@ -203,6 +231,26 @@ class _Bush2SpriteGroup extends PositionComponent {
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
               spritePath: Assets.images.bush2.path,
+            ),
+          ],
+        );
+}
+
+class _Building3SpriteGroup extends PositionedEntity {
+  _Building3SpriteGroup()
+      : super(
+          // The `size`, `position` and `scale` have been eye-balled to fit with
+          // the tile size.
+          position: Vector2(-0.05, -0.1)..toGameSize(),
+          scale: Vector2.all(0.65),
+          children: [
+            // GameSpriteComponent.fromPath(
+            //   anchor: Anchor.bottomLeft,
+            //   spritePath: Assets.images.bush2Shadow.path,
+            // ),
+            GameSpriteComponent.fromPath(
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.buliding1.path,
             ),
           ],
         );

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="16" height="32" tilewidth="128" tileheight="64" infinite="0" nextlayerid="9" nextobjectid="130">
+<map version="1.9" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="16" height="32" tilewidth="128" tileheight="64" infinite="0" nextlayerid="9" nextobjectid="131">
   <tileset firstgid="1" source="Tiles.tsx"/>
   <layer id="1" name="Background" width="16" height="32">
     <data encoding="csv">1,1,1,1,1,1,1,1,1,1,8,8,8,8,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 1,1,1,1,1,1,1,1,1,1,1,1,8,1,1,1, 1,1,1,1,8,8,8,1,1,1,1,1,8,1,1,1, 1,1,1,1,1,1,8,1,1,1,1,1,1,1,1,1, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,8,8,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,8,1,1,1,1,8,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,8,8,1,1,1, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 1,1,1,1,6,2,2147483654,1,1,1,1,1,1,1,1,1, 1,8,8,1,6,2,2147483654,1,1,1,1,1,1,1,1,1, 1,8,1,1,6,2,2147483654,1,1,1,1,1,1,1,1,1, 1,1,1,1,6,2,2147483654,1,1,8,8,8,8,1,1,1, 1,1,1,1,6,2,2147483654,1,1,1,1,1,1,1,1,1, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,8,8,1,1,1,1,1,1,1,1,1,1,1,8,8, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8, 1,1,1,1,1,1,1,1,8,8,8,8,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 1,1,1,1,1,8,1,1,1,1,1,1,1,1,1,1, 8,1,1,1,1,8,1,1,1,1,1,1,1,1,1,8, 8,8,1,1,1,8,1,1,1,1,1,1,1,1,8,8</data>
@@ -31,6 +31,9 @@
     <object id="109" template="bush_1.tx" class="bush_1" gid="12" x="1152" y="1984" width="128" height="128"/>
     <object id="121" template="tree_2.tx" class="tree_2" gid="13" x="512" y="1728" width="100" height="100"/>
     <object id="122" template="bush_2.tx" class="bush_2" gid="14" x="512" y="1984" width="128" height="128"/>
+    <object id="124" template="buliding_3.tx" class="buliding_3" gid="15" x="256" y="1664" width="384" height="649"/>
+    <object id="129" template="tree_2.tx" class="tree_2" gid="13" x="384" y="1728" width="100" height="100"/>
+    <object id="130" template="tree_2.tx" class="tree_2" gid="13" x="256" y="1728" width="100" height="100"/>
   </objectgroup>
   <objectgroup id="6" name="RoadLayer">
     <object id="36" template="road_lane.tx" name="road_lane" class="road_lane" x="1984" y="240">
@@ -147,29 +150,20 @@
     </object>
   </objectgroup>
   <objectgroup id="4" name="CoreItemsLayer">
-    <object id="77" template="spawn.tx" name="player" class="player" x="832" y="1952"/>
-    <object id="126" template="trash_can_park_organic.tx" x="768" y="1472" name="trash_can_organic_park" class="trash_can" gid="4" width="128" height="128">
-      <properties>
-        <property name="type" value="organic"/>
-        <property name="variant" value="park"/>
-      </properties>
-    </object>
-    <object id="127" template="trash_can_paper.tx" x="896" y="1536" name="trash_can_paper_city" class="trash_can" gid="4" width="128" height="128">
-      <properties>
-        <property name="type" value="paper"/>
-        <property name="variant" value="city"/>
-      </properties>
-    </object>
-    <object id="128" template="trash_can_organic.tx" x="1024" y="1536" name="trash_can_organic_city" class="trash_can" gid="4" width="128" height="128">
-      <properties>
-        <property name="type" value="organic"/>
-        <property name="variant" value="city"/>
-      </properties>
-    </object>
-    <object id="129" template="trash_can_plastic.tx" x="1152" y="1472" name="trash_can_plastic_city" class="trash_can" gid="4" width="128" height="128">
+    <object id="70" template="trash_can_plastic.tx" name="trash_can_plastic" class="trash_can" gid="4" x="768" y="1664" width="128" height="128">
       <properties>
         <property name="type" value="plastic"/>
-        <property name="variant" value="city"/>
+      </properties>
+    </object>
+    <object id="77" template="spawn.tx" name="player" class="player" x="832" y="1952"/>
+    <object id="114" template="trash_can_organic.tx" name="trash_can_organic" class="trash_can" gid="4" x="1152" y="1664" width="128" height="128">
+      <properties>
+        <property name="type" value="organic"/>
+      </properties>
+    </object>
+    <object id="118" template="trash_can_paper.tx" name="trash_can_paper" class="trash_can" gid="4" x="896" y="1536" width="128" height="128">
+      <properties>
+        <property name="type" value="paper"/>
       </properties>
     </object>
   </objectgroup>

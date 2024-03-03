@@ -1,5 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:trashy_road/game_settings.dart';
@@ -242,16 +243,58 @@ class _Building3SpriteGroup extends PositionedEntity {
           // The `size`, `position` and `scale` have been eye-balled to fit with
           // the tile size.
           position: Vector2(-0.05, -0.1)..toGameSize(),
-          scale: Vector2.all(0.65),
+          behaviors: [
+            PropagatingCollisionBehavior(
+              RectangleHitbox(
+                isSolid: true,
+                size: Vector2(2.5, 8)..toGameSize(),
+                position: Vector2(0.3, -0.4)..toGameSize(),
+                anchor: Anchor.bottomLeft,
+              ),
+            ),
+            HidingWhenPlayerBehind(),
+          ],
           children: [
             // GameSpriteComponent.fromPath(
             //   anchor: Anchor.bottomLeft,
             //   spritePath: Assets.images.bush2Shadow.path,
             // ),
             GameSpriteComponent.fromPath(
+              scale: Vector2.all(0.65),
               anchor: Anchor.bottomLeft,
               spritePath: Assets.images.buliding1.path,
             ),
           ],
         );
+}
+
+class HidingWhenPlayerBehind extends CollisionBehavior<Player, PositionedEntity>
+    with ParentIsA<PositionedEntity> {
+  @override
+  void onCollisionStart(Set<Vector2> intersectionPoints, Player other) {
+    super.onCollisionStart(intersectionPoints, other);
+
+    parent.children.whereType<SpriteComponent>().forEach((element) {
+      element.add(
+        OpacityEffect.to(
+          0.4,
+          EffectController(duration: 0.1),
+        ),
+      );
+    });
+  }
+
+  @override
+  void onCollisionEnd(Player other) {
+    super.onCollisionEnd(other);
+
+    parent.children.whereType<SpriteComponent>().forEach((element) {
+      element.add(
+        OpacityEffect.to(
+          1,
+          EffectController(duration: 0.1),
+        ),
+      );
+    });
+  }
 }

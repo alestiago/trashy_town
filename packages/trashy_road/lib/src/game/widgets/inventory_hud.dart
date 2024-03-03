@@ -17,12 +17,12 @@ class InventoryHud extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: Assets.images.paperBackground.provider(),
+          image: Assets.images.paperBackgroundRectThin.provider(),
           fit: BoxFit.fill,
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 50),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         child: BlocSelector<GameBloc, GameState, List<TrashType>>(
           selector: (state) {
             return state.inventory.items;

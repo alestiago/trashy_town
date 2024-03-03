@@ -290,6 +290,22 @@ class $AssetsImagesGen {
   AssetGenImage get trashCanPlasticOpening =>
       const AssetGenImage('assets/images/trash_can_plastic-opening.png');
 
+  /// File path: assets/images/trash_park_can-opening-shadow.png
+  AssetGenImage get trashParkCanOpeningShadow =>
+      const AssetGenImage('assets/images/trash_park_can-opening-shadow.png');
+
+  /// File path: assets/images/trash_park_can_organic-opening.png
+  AssetGenImage get trashParkCanOrganicOpening =>
+      const AssetGenImage('assets/images/trash_park_can_organic-opening.png');
+
+  /// File path: assets/images/trash_park_can_paper-opening.png
+  AssetGenImage get trashParkCanPaperOpening =>
+      const AssetGenImage('assets/images/trash_park_can_paper-opening.png');
+
+  /// File path: assets/images/trash_park_can_plastic-opening.png
+  AssetGenImage get trashParkCanPlasticOpening =>
+      const AssetGenImage('assets/images/trash_park_can_plastic-opening.png');
+
   /// File path: assets/images/tree_1-shadow.png
   AssetGenImage get tree1Shadow =>
       const AssetGenImage('assets/images/tree_1-shadow.png');
@@ -375,6 +391,10 @@ class $AssetsImagesGen {
         trashCanOrganicOpening,
         trashCanPaperOpening,
         trashCanPlasticOpening,
+        trashParkCanOpeningShadow,
+        trashParkCanOrganicOpening,
+        trashParkCanPaperOpening,
+        trashParkCanPlasticOpening,
         tree1Shadow,
         tree1,
         tree2Shadow,

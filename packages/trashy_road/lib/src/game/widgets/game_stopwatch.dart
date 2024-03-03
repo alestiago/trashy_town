@@ -1,6 +1,7 @@
 import 'package:basura/basura.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 /// {@template GameStopwatch}
@@ -48,11 +49,7 @@ class _GameStopwatchState extends State<GameStopwatch>
 
   @override
   Widget build(BuildContext context) {
-    final style = BasuraTheme.of(context).textTheme.button.copyWith(
-          color: BasuraColors.white,
-          fontSize: 40,
-          letterSpacing: 2,
-        );
+    final style = BasuraTheme.of(context).textTheme.cardSubheading;
 
     return MultiBlocListener(
       listeners: [
@@ -87,19 +84,44 @@ class _GameStopwatchState extends State<GameStopwatch>
       ],
       child: DefaultTextStyle(
         style: style,
-        child: AnimatedBuilder(
-          animation: _animation,
-          builder: (_, __) {
-            final seconds = _stopwatch.elapsed.inSeconds;
-            final label =
-                seconds > 999 ? '999' : seconds.toString().padLeft(3, '0');
-            return BasuraGlossyTextButton(
-              onPressed: _reset,
-              label: label,
-            );
-          },
+        child: _PaperBackground(
+          child: Center(
+            child: AnimatedBuilder(
+              animation: _animation,
+              builder: (_, __) {
+                final seconds = _stopwatch.elapsed.inSeconds;
+                final label =
+                    seconds > 999 ? '999' : seconds.toString().padLeft(3, '0');
+                return Text(
+                  label,
+                  textAlign: TextAlign.center,
+                );
+              },
+            ),
+          ),
         ),
       ),
+    );
+  }
+}
+
+class _PaperBackground extends StatelessWidget {
+  const _PaperBackground({
+    required this.child,
+  });
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: Assets.images.paperBackgroundRectThin.provider(),
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: child,
     );
   }
 }

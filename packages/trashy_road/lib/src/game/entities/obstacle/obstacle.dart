@@ -1,6 +1,5 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flame/effects.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:trashy_road/game_settings.dart';
@@ -124,7 +123,7 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
         return Obstacle._bush1(position: position);
       case 'bush_2':
         return Obstacle._bush2(position: position);
-      case 'buliding_3':
+      case 'building_3':
         return Obstacle._building3(position: position);
       default:
         throw ArgumentError('Unknown obstacle type: $type');
@@ -245,6 +244,8 @@ class _Building3SpriteGroup extends PositionedEntity {
           position: Vector2(-0.05, -0.1)..toGameSize(),
           behaviors: [
             PropagatingCollisionBehavior(
+              /// This hitbox is for determining if the player is behind the
+              /// sprite.
               RectangleHitbox(
                 isSolid: true,
                 size: Vector2(2.5, 8)..toGameSize(),
@@ -255,46 +256,17 @@ class _Building3SpriteGroup extends PositionedEntity {
             HidingWhenPlayerBehind(),
           ],
           children: [
-            // GameSpriteComponent.fromPath(
-            //   anchor: Anchor.bottomLeft,
-            //   spritePath: Assets.images.bush2Shadow.path,
-            // ),
+            GameSpriteComponent.fromPath(
+              scale: Vector2.all(0.8),
+              position: Vector2(-0.05, 0.12)..toGameSize(),
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.building3Shadow.path,
+            ),
             GameSpriteComponent.fromPath(
               scale: Vector2.all(0.65),
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.buliding1.path,
+              spritePath: Assets.images.building3.path,
             ),
           ],
         );
-}
-
-class HidingWhenPlayerBehind extends CollisionBehavior<Player, PositionedEntity>
-    with ParentIsA<PositionedEntity> {
-  @override
-  void onCollisionStart(Set<Vector2> intersectionPoints, Player other) {
-    super.onCollisionStart(intersectionPoints, other);
-
-    parent.children.whereType<SpriteComponent>().forEach((element) {
-      element.add(
-        OpacityEffect.to(
-          0.4,
-          EffectController(duration: 0.1),
-        ),
-      );
-    });
-  }
-
-  @override
-  void onCollisionEnd(Player other) {
-    super.onCollisionEnd(other);
-
-    parent.children.whereType<SpriteComponent>().forEach((element) {
-      element.add(
-        OpacityEffect.to(
-          1,
-          EffectController(duration: 0.1),
-        ),
-      );
-    });
-  }
 }

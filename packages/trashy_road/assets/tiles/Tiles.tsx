@@ -41,6 +41,6 @@
   <image width="256" height="256" source="../images/bush_2.png"/>
  </tile>
  <tile id="14">
-  <image width="609" height="841" source="../images/buliding_1.png"/>
+  <image width="609" height="841" source="../images/building_3.png"/>
  </tile>
 </tileset>

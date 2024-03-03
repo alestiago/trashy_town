@@ -14,13 +14,7 @@ class InventoryHud extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: Assets.images.paperBackgroundRectThin.provider(),
-          fit: BoxFit.fill,
-        ),
-      ),
+    return _PaperBackground(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         child: BlocSelector<GameBloc, GameState, List<TrashType>>(
@@ -58,6 +52,27 @@ class InventoryHud extends StatelessWidget {
   }
 }
 
+class _PaperBackground extends StatelessWidget {
+  const _PaperBackground({
+    required this.child,
+  });
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: Assets.images.paperBackgroundRectThin.provider(),
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: child,
+    );
+  }
+}
+
 class _InventorySlot extends StatelessWidget {
   const _InventorySlot({
     required this.image,
@@ -71,7 +86,6 @@ class _InventorySlot extends StatelessWidget {
         return _InventorySlot.paperBox();
       case TrashType.plastic:
         return _InventorySlot.plasticBottle();
-
       case null:
         return _InventorySlot.empty();
     }

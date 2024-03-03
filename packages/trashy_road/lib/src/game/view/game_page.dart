@@ -102,7 +102,7 @@ class _GameView extends StatelessWidget {
             ),
           ),
           const Align(
-            alignment: Alignment.topLeft,
+            alignment: Alignment.topCenter,
             child: Padding(
               padding: EdgeInsets.all(12),
               child: SizedBox(

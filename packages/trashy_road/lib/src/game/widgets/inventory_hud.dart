@@ -17,12 +17,12 @@ class InventoryHud extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: Assets.images.inventoryBackground.provider(),
+          image: Assets.images.paperBackground.provider(),
           fit: BoxFit.fill,
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 50),
         child: BlocSelector<GameBloc, GameState, List<TrashType>>(
           selector: (state) {
             return state.inventory.items;
@@ -31,18 +31,24 @@ class InventoryHud extends StatelessWidget {
             final filledTrash = List<TrashType?>.from(trash)
               ..length = Inventory.size;
 
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                for (final type in filledTrash)
-                  Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: SizedBox.square(
-                      dimension: 50,
-                      child: _InventorySlot.fromType(type),
-                    ),
-                  ),
-              ],
+            return LayoutBuilder(
+              builder: (context, constraints) {
+                final slotSize =
+                    ((constraints.maxWidth - 50) / 5).clamp(10.0, 50.0);
+                return Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    for (final type in filledTrash)
+                      Padding(
+                        padding: const EdgeInsets.all(4),
+                        child: SizedBox.square(
+                          dimension: slotSize,
+                          child: _InventorySlot.fromType(type),
+                        ),
+                      ),
+                  ],
+                );
+              },
             );
           },
         ),

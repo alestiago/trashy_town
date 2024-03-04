@@ -15,6 +15,8 @@ abstract final class BasuraColors {
 
   static const deepCadmiumYellow = Color(0xFFFFB700);
 
+  static const starYellow = Color(0xffFFCD00);
+
   static const brown = Color(0xFF885F00);
 
   static const lightGreen = Color(0xFF2F965E);

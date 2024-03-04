@@ -105,11 +105,7 @@ class _GameView extends StatelessWidget {
             alignment: Alignment.topCenter,
             child: Padding(
               padding: EdgeInsets.all(12),
-              child: SizedBox(
-                height: 60,
-                width: 150,
-                child: GameStopwatch(),
-              ),
+              child: GameStopwatch(),
             ),
           ),
           Align(

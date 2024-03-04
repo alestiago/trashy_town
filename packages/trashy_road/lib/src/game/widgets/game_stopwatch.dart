@@ -1,8 +1,11 @@
 import 'package:basura/basura.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/game.dart';
+import 'package:trashy_road/src/maps/maps.dart';
 
 /// {@template GameStopwatch}
 /// A stopwatch that shows the total time the game has been played for.
@@ -85,23 +88,140 @@ class _GameStopwatchState extends State<GameStopwatch>
       child: DefaultTextStyle(
         style: style,
         child: _PaperBackground(
-          child: Center(
-            child: AnimatedBuilder(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 32),
+            child: _ProgressBar(
               animation: _animation,
-              builder: (_, __) {
-                final seconds = _stopwatch.elapsed.inSeconds;
-                final label =
-                    seconds > 999 ? '999' : seconds.toString().padLeft(3, '0');
-                return Text(
-                  label,
-                  textAlign: TextAlign.center,
-                );
-              },
+              stopwatch: _stopwatch,
             ),
           ),
         ),
       ),
     );
+  }
+}
+
+class _ProgressBar extends StatelessWidget {
+  const _ProgressBar({
+    required AnimationController animation,
+    required Stopwatch stopwatch,
+  })  : _animation = animation,
+        _stopwatch = stopwatch;
+
+  final AnimationController _animation;
+  final Stopwatch _stopwatch;
+
+  @override
+  Widget build(BuildContext context) {
+    final gameBloc = BlocProvider.of<GameBloc>(context);
+    final gameMapsBloc = BlocProvider.of<GameMapsBloc>(context);
+    final gameMap = gameMapsBloc.state.maps[gameBloc.state.identifier]!;
+
+    final completionsSeconds = gameMap.completionSeconds;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return AnimatedBuilder(
+          animation: _animation,
+          builder: (_, __) {
+            final seconds = _stopwatch.elapsed.inSeconds;
+            final percentageLeft = 1 - (seconds / completionsSeconds);
+
+            final barSize = Size(
+              (((constraints.maxWidth - 40) / Inventory.size)
+                      .clamp(10.0, 40.0)) *
+                  Inventory.size,
+              18,
+            );
+            final starSize = Size.square(barSize.height + 20);
+
+            double alignStar(int seconds) {
+              final align = (1 - (seconds / completionsSeconds))
+                  .normalize(max: 1, min: 0, newMax: 1, newMin: -1);
+              final shift = (starSize.width / 2) / barSize.width;
+              return align + shift;
+            }
+
+            return SizedBox.fromSize(
+              size: Size(barSize.width, starSize.height),
+              child: Stack(
+                children: [
+                  Align(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        border: Border.all(
+                          color: BasuraColors.gray,
+                          width: 2,
+                          strokeAlign: BorderSide.strokeAlignOutside,
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          DecoratedBox(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  BasuraColors.starYellow.withOpacity(0.8),
+                                  BasuraColors.starYellow.withOpacity(0.4),
+                                ],
+                              ),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: SizedBox(
+                              width: barSize.width * percentageLeft,
+                              height: barSize.height,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment(alignStar(gameMap.ratingSteps.$1), 0),
+                    child: SizedBox.fromSize(
+                      size: starSize,
+                      child: AnimatedStar(
+                        faded: gameMap.ratingSteps.$1 < seconds,
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment(alignStar(gameMap.ratingSteps.$2), 0),
+                    child: SizedBox.fromSize(
+                      size: starSize,
+                      child: AnimatedStar(
+                        faded: gameMap.ratingSteps.$2 < seconds,
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment(alignStar(gameMap.ratingSteps.$3), 0),
+                    child: SizedBox.fromSize(
+                      size: starSize,
+                      child: AnimatedStar(
+                        faded: gameMap.ratingSteps.$3 < seconds,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+extension on double {
+  double normalize({
+    required double min,
+    required double max,
+    required double newMin,
+    required double newMax,
+  }) {
+    return ((this - min) / (max - min)) * (newMax - newMin) + newMin;
   }
 }
 

@@ -133,10 +133,14 @@ class _ProgressBar extends StatelessWidget {
                   Inventory.size,
               18,
             );
-            final starSize = Size.square(barSize.height + 8);
+            final starSize = Size.square(barSize.height + 20);
 
-            final star = Assets.images.starFilledGolden
-                .svg(height: starSize.height, width: starSize.width);
+            double alignStar(int seconds) {
+              final align = (1 - (seconds / completionsSeconds))
+                  .normalize(max: 1, min: 0, newMax: 1, newMin: -1);
+              final shift = (starSize.width / 2) / barSize.width;
+              return align + shift;
+            }
 
             return SizedBox.fromSize(
               size: Size(barSize.width, starSize.height),
@@ -169,28 +173,31 @@ class _ProgressBar extends StatelessWidget {
                     ),
                   ),
                   Align(
-                    alignment: Alignment(
-                      (1 - (gameMap.ratingSteps.$1 / completionsSeconds))
-                          .normalize(max: 1, min: 0, newMax: 1, newMin: -1),
-                      0,
+                    alignment: Alignment(alignStar(gameMap.ratingSteps.$1), 0),
+                    child: SizedBox.fromSize(
+                      size: starSize,
+                      child: AnimatedStar(
+                        faded: gameMap.ratingSteps.$1 < seconds,
+                      ),
                     ),
-                    child: star,
                   ),
                   Align(
-                    alignment: Alignment(
-                      (1 - (gameMap.ratingSteps.$2 / completionsSeconds))
-                          .normalize(max: 1, min: 0, newMax: 1, newMin: -1),
-                      0,
+                    alignment: Alignment(alignStar(gameMap.ratingSteps.$2), 0),
+                    child: SizedBox.fromSize(
+                      size: starSize,
+                      child: AnimatedStar(
+                        faded: gameMap.ratingSteps.$2 < seconds,
+                      ),
                     ),
-                    child: star,
                   ),
                   Align(
-                    alignment: Alignment(
-                      (1 - (gameMap.ratingSteps.$3 / completionsSeconds))
-                          .normalize(max: 1, min: 0, newMax: 1, newMin: -1),
-                      0,
+                    alignment: Alignment(alignStar(gameMap.ratingSteps.$3), 0),
+                    child: SizedBox.fromSize(
+                      size: starSize,
+                      child: AnimatedStar(
+                        faded: gameMap.ratingSteps.$3 < seconds,
+                      ),
                     ),
-                    child: star,
                   ),
                 ],
               ),

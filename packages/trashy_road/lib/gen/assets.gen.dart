@@ -414,8 +414,12 @@ class $AssetsRiveGen {
   RiveGenImage get ratingAnimation =>
       const RiveGenImage('assets/rive/rating_animation.riv');
 
+  /// File path: assets/rive/star_animation.riv
+  RiveGenImage get starAnimation =>
+      const RiveGenImage('assets/rive/star_animation.riv');
+
   /// List of all assets
-  List<RiveGenImage> get values => [ratingAnimation];
+  List<RiveGenImage> get values => [ratingAnimation, starAnimation];
 }
 
 class $AssetsTilesGen {

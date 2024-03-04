@@ -160,7 +160,12 @@ class _ProgressBar extends StatelessWidget {
                         children: [
                           DecoratedBox(
                             decoration: BoxDecoration(
-                              color: BasuraColors.starYellow.withOpacity(0.4),
+                              gradient: LinearGradient(
+                                colors: [
+                                  BasuraColors.starYellow.withOpacity(0.8),
+                                  BasuraColors.starYellow.withOpacity(0.4),
+                                ],
+                              ),
                               borderRadius: BorderRadius.circular(50),
                             ),
                             child: SizedBox(

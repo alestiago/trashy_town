@@ -251,6 +251,10 @@ class $AssetsImagesGen {
   SvgGenImage get starFilled =>
       const SvgGenImage('assets/images/star_filled.svg');
 
+  /// File path: assets/images/star_filled_golden.svg
+  SvgGenImage get starFilledGolden =>
+      const SvgGenImage('assets/images/star_filled_golden.svg');
+
   /// File path: assets/images/takeaway_cup_cold-shadow.png
   AssetGenImage get takeawayCupColdShadow =>
       const AssetGenImage('assets/images/takeaway_cup_cold-shadow.png');
@@ -381,6 +385,7 @@ class $AssetsImagesGen {
         slotPlasticBottle,
         starEmpty,
         starFilled,
+        starFilledGolden,
         takeawayCupColdShadow,
         takeawayCupCold,
         takeawayCupHotShadow,
@@ -446,6 +451,15 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/trash_can_paper.tx
   String get trashCanPaper => 'assets/tiles/trash_can_paper.tx';
 
+  /// File path: assets/tiles/trash_can_park_organic.tx
+  String get trashCanParkOrganic => 'assets/tiles/trash_can_park_organic.tx';
+
+  /// File path: assets/tiles/trash_can_park_paper.tx
+  String get trashCanParkPaper => 'assets/tiles/trash_can_park_paper.tx';
+
+  /// File path: assets/tiles/trash_can_park_plastic.tx
+  String get trashCanParkPlastic => 'assets/tiles/trash_can_park_plastic.tx';
+
   /// File path: assets/tiles/trash_can_plastic.tx
   String get trashCanPlastic => 'assets/tiles/trash_can_plastic.tx';
 
@@ -479,6 +493,9 @@ class $AssetsTilesGen {
         spawn,
         trashCanOrganic,
         trashCanPaper,
+        trashCanParkOrganic,
+        trashCanParkPaper,
+        trashCanParkPlastic,
         trashCanPlastic,
         trashGlass,
         trashOrganic,

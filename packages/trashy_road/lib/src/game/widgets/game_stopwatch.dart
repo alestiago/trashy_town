@@ -1,6 +1,9 @@
 import 'package:basura/basura.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rive/rive.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/maps/maps.dart';
@@ -50,12 +53,6 @@ class _GameStopwatchState extends State<GameStopwatch>
 
   @override
   Widget build(BuildContext context) {
-    final gameBloc = BlocProvider.of<GameBloc>(context);
-    final gameMapsBloc = BlocProvider.of<GameMapsBloc>(context);
-    final gameMap = gameMapsBloc.state.maps[gameBloc.state.identifier]!;
-
-    final completionsSeconds = gameMap.completionSeconds;
-
     final style = BasuraTheme.of(context).textTheme.cardSubheading;
 
     return MultiBlocListener(
@@ -92,31 +89,128 @@ class _GameStopwatchState extends State<GameStopwatch>
       child: DefaultTextStyle(
         style: style,
         child: _PaperBackground(
-          child: Center(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return AnimatedBuilder(
-                  animation: _animation,
-                  builder: (_, __) {
-                    final seconds = _stopwatch.elapsed.inSeconds;
-                    final percentageLeft = 1 - (seconds / completionsSeconds);
-
-                    return DecoratedBox(
-                      decoration:
-                          const BoxDecoration(color: BasuraColors.black),
-                      child: SizedBox(
-                        width: constraints.maxWidth * percentageLeft,
-                        height: 30,
-                      ),
-                    );
-                  },
-                );
-              },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 32),
+            child: _ProgressBar(
+              animation: _animation,
+              stopwatch: _stopwatch,
             ),
           ),
         ),
       ),
     );
+  }
+}
+
+class _ProgressBar extends StatelessWidget {
+  const _ProgressBar({
+    required AnimationController animation,
+    required Stopwatch stopwatch,
+  })  : _animation = animation,
+        _stopwatch = stopwatch;
+
+  final AnimationController _animation;
+  final Stopwatch _stopwatch;
+
+  @override
+  Widget build(BuildContext context) {
+    final gameBloc = BlocProvider.of<GameBloc>(context);
+    final gameMapsBloc = BlocProvider.of<GameMapsBloc>(context);
+    final gameMap = gameMapsBloc.state.maps[gameBloc.state.identifier]!;
+
+    final completionsSeconds = gameMap.completionSeconds;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return AnimatedBuilder(
+          animation: _animation,
+          builder: (_, __) {
+            final seconds = _stopwatch.elapsed.inSeconds;
+            final percentageLeft = 1 - (seconds / completionsSeconds);
+
+            final barSize = Size(
+              (((constraints.maxWidth - 40) / Inventory.size)
+                      .clamp(10.0, 40.0)) *
+                  Inventory.size,
+              18,
+            );
+            final starSize = Size.square(barSize.height + 8);
+
+            final star = Assets.images.starFilledGolden
+                .svg(height: starSize.height, width: starSize.width);
+
+            return SizedBox.fromSize(
+              size: Size(barSize.width, starSize.height),
+              child: Stack(
+                children: [
+                  Align(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        border: Border.all(
+                          color: BasuraColors.gray,
+                          width: 2,
+                          strokeAlign: BorderSide.strokeAlignOutside,
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: BasuraColors.starYellow.withOpacity(0.4),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: SizedBox(
+                              width: barSize.width * percentageLeft,
+                              height: barSize.height,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment(
+                      (1 - (gameMap.ratingSteps.$1 / completionsSeconds))
+                          .normalize(max: 1, min: 0, newMax: 1, newMin: -1),
+                      0,
+                    ),
+                    child: star,
+                  ),
+                  Align(
+                    alignment: Alignment(
+                      (1 - (gameMap.ratingSteps.$2 / completionsSeconds))
+                          .normalize(max: 1, min: 0, newMax: 1, newMin: -1),
+                      0,
+                    ),
+                    child: star,
+                  ),
+                  Align(
+                    alignment: Alignment(
+                      (1 - (gameMap.ratingSteps.$3 / completionsSeconds))
+                          .normalize(max: 1, min: 0, newMax: 1, newMin: -1),
+                      0,
+                    ),
+                    child: star,
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+extension on double {
+  double normalize({
+    required double min,
+    required double max,
+    required double newMin,
+    required double newMax,
+  }) {
+    return ((this - min) / (max - min)) * (newMax - newMin) + newMin;
   }
 }
 

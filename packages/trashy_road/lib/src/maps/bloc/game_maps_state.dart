@@ -36,7 +36,7 @@ class GameMapsState extends Equatable {
               displayName: '1',
               path: Assets.tiles.map1,
               score: -1,
-              ratingSteps: (25, 50, 100),
+              ratingSteps: (25, 100, 200),
               locked: false,
             ),
             'map2': GameMap._(

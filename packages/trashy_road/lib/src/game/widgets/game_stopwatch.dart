@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/game.dart';
+import 'package:trashy_road/src/maps/maps.dart';
 
 /// {@template GameStopwatch}
 /// A stopwatch that shows the total time the game has been played for.
@@ -49,6 +50,12 @@ class _GameStopwatchState extends State<GameStopwatch>
 
   @override
   Widget build(BuildContext context) {
+    final gameBloc = BlocProvider.of<GameBloc>(context);
+    final gameMapsBloc = BlocProvider.of<GameMapsBloc>(context);
+    final gameMap = gameMapsBloc.state.maps[gameBloc.state.identifier]!;
+
+    final completionsSeconds = gameMap.completionSeconds;
+
     final style = BasuraTheme.of(context).textTheme.cardSubheading;
 
     return MultiBlocListener(
@@ -86,15 +93,23 @@ class _GameStopwatchState extends State<GameStopwatch>
         style: style,
         child: _PaperBackground(
           child: Center(
-            child: AnimatedBuilder(
-              animation: _animation,
-              builder: (_, __) {
-                final seconds = _stopwatch.elapsed.inSeconds;
-                final label =
-                    seconds > 999 ? '999' : seconds.toString().padLeft(3, '0');
-                return Text(
-                  label,
-                  textAlign: TextAlign.center,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return AnimatedBuilder(
+                  animation: _animation,
+                  builder: (_, __) {
+                    final seconds = _stopwatch.elapsed.inSeconds;
+                    final percentageLeft = 1 - (seconds / completionsSeconds);
+
+                    return DecoratedBox(
+                      decoration:
+                          const BoxDecoration(color: BasuraColors.black),
+                      child: SizedBox(
+                        width: constraints.maxWidth * percentageLeft,
+                        height: 30,
+                      ),
+                    );
+                  },
                 );
               },
             ),

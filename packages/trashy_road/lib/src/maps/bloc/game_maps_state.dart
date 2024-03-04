@@ -16,9 +16,9 @@ typedef GameMapsCollection = UnmodifiableMapView<String, GameMap>;
 /// achieve a [ScoreRating.bronze]. Any score below the third index will achieve
 /// a rating of none.
 ///
-/// For example, if the player completes the map in 75 steps, and the score
+/// For example, if the player completes the map in 75 seconds, and the rating
 /// steps are [25, 50, 100], then the player will achieve a bronze score.
-/// Whereas if the player completes the map in 25 steps, then the player will
+/// Whereas if the player completes the map in 25 seconds, then the player will
 /// achieve a gold score.
 /// {@endtemplate}
 typedef RatingSteps = (int, int, int);
@@ -153,6 +153,9 @@ class GameMap extends Equatable {
 
   /// The path to the map file.
   final String path;
+
+  /// The maximum amount of time the player has to complete the map.
+  int get completionSeconds => ratingSteps.$3 + 30;
 
   GameMap copyWith({
     String? identifier,

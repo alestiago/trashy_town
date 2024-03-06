@@ -1,6 +1,8 @@
 import 'package:basura/basura.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
+import 'package:trashy_road/src/loading/loading.dart';
 import 'package:trashy_road/src/maps/maps.dart';
 
 /// {@template PausePage}
@@ -84,45 +86,25 @@ class PausePage extends StatelessWidget {
   }
 }
 
-class _PaperBackground extends StatefulWidget {
+class _PaperBackground extends StatelessWidget {
   const _PaperBackground({required this.child});
 
   final Widget child;
 
   @override
-  State<_PaperBackground> createState() => __PaperBackgroundState();
-}
-
-class __PaperBackgroundState extends State<_PaperBackground> {
-  final _image = Assets.images.paperBackground.provider();
-
-  late final Future<void> _cacheImage;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _cacheImage = precacheImage(_image, context);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _cacheImage,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          return const SizedBox.shrink();
-        }
+    final preloadCubit = context.read<PreloadCubit>();
+    final image = preloadCubit.imageProviderCache
+        .fromCache(Assets.images.paperBackground.path);
 
-        return DecoratedBox(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: _image,
-              fit: BoxFit.fill,
-            ),
-          ),
-          child: widget.child,
-        );
-      },
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: image,
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: child,
     );
   }
 }

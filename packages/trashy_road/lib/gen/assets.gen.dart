@@ -146,6 +146,14 @@ class $AssetsImagesGen {
   /// File path: assets/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
 
+  /// File path: assets/images/menu-icon.png
+  AssetGenImage get menuIcon =>
+      const AssetGenImage('assets/images/menu-icon.png');
+
+  /// File path: assets/images/next-icon.png
+  AssetGenImage get nextIcon =>
+      const AssetGenImage('assets/images/next-icon.png');
+
   /// File path: assets/images/paper_1-shadow.png
   AssetGenImage get paper1Shadow =>
       const AssetGenImage('assets/images/paper_1-shadow.png');
@@ -179,6 +187,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/paper_ball.png
   AssetGenImage get paperBall =>
       const AssetGenImage('assets/images/paper_ball.png');
+
+  /// File path: assets/images/pause-icon.png
+  AssetGenImage get pauseIcon =>
+      const AssetGenImage('assets/images/pause-icon.png');
 
   /// File path: assets/images/pause_button.png
   AssetGenImage get pauseButton =>
@@ -216,6 +228,10 @@ class $AssetsImagesGen {
   AssetGenImage get playBackgroundSky =>
       const AssetGenImage('assets/images/play-background-sky.png');
 
+  /// File path: assets/images/play-icon.png
+  AssetGenImage get playIcon =>
+      const AssetGenImage('assets/images/play-icon.png');
+
   /// File path: assets/images/player.png
   AssetGenImage get player => const AssetGenImage('assets/images/player.png');
 
@@ -226,6 +242,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/player_hop.png
   AssetGenImage get playerHop =>
       const AssetGenImage('assets/images/player_hop.png');
+
+  /// File path: assets/images/replay-icon.png
+  AssetGenImage get replayIcon =>
+      const AssetGenImage('assets/images/replay-icon.png');
 
   /// File path: assets/images/road.png
   AssetGenImage get road => const AssetGenImage('assets/images/road.png');
@@ -373,6 +393,8 @@ class $AssetsImagesGen {
         grassFlowers,
         grass,
         logo,
+        menuIcon,
+        nextIcon,
         paper1Shadow,
         paper1,
         paper2Shadow,
@@ -382,6 +404,7 @@ class $AssetsImagesGen {
         paperBackgroundSquare,
         paperBallShadow,
         paperBall,
+        pauseIcon,
         pauseButton,
         plasticBottle1Shadow,
         plasticBottle1,
@@ -391,9 +414,11 @@ class $AssetsImagesGen {
         plasticStraw,
         playBackgroundHouses,
         playBackgroundSky,
+        playIcon,
         player,
         playerHopShadow,
         playerHop,
+        replayIcon,
         road,
         sandwichShadow,
         sandwich,

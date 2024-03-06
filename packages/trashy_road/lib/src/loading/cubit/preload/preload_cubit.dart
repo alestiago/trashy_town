@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/loading/loading.dart';
 
+export 'image_provider_cache.dart';
 export 'tiled_cache.dart';
 
 part 'preload_state.dart';
@@ -15,6 +16,7 @@ class PreloadCubit extends Cubit<PreloadState> {
     required this.images,
     required this.tiled,
     required this.audio,
+    required this.imageProviderCache,
   }) : super(const PreloadState.initial());
 
   final Images images;
@@ -22,6 +24,8 @@ class PreloadCubit extends Cubit<PreloadState> {
   final TiledCache tiled;
 
   final AudioCache audio;
+
+  final ImageProviderCache imageProviderCache;
 
   /// Load items sequentially allows display of what is being loaded
   Future<void> loadSequentially() async {
@@ -36,6 +40,15 @@ class PreloadCubit extends Cubit<PreloadState> {
       ),
       PreloadPhase(
         'images',
+        () => imageProviderCache.loadAll(
+          [
+            Assets.images.pauseIcon,
+            Assets.images.paperBackground,
+          ],
+        ),
+      ),
+      PreloadPhase(
+        'game images',
         () => images.loadAll([]),
       ),
       PreloadPhase(

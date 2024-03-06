@@ -23,6 +23,9 @@ class _MyApp extends StatelessWidget {
             audio: AudioCache(prefix: ''),
             images: Images(prefix: ''),
             tiled: TiledCache(),
+            imageProviderCache: ImageProviderCache(
+              precacheImage: (provider) => precacheImage(provider, context),
+            ),
           )..loadSequentially(),
         ),
         BlocProvider(

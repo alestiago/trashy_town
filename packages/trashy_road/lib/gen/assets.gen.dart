@@ -255,6 +255,10 @@ class $AssetsImagesGen {
   SvgGenImage get starFilledGolden =>
       const SvgGenImage('assets/images/star_filled_golden.svg');
 
+  /// File path: assets/images/stopwatch.png
+  AssetGenImage get stopwatch =>
+      const AssetGenImage('assets/images/stopwatch.png');
+
   /// File path: assets/images/takeaway_cup_cold-shadow.png
   AssetGenImage get takeawayCupColdShadow =>
       const AssetGenImage('assets/images/takeaway_cup_cold-shadow.png');
@@ -386,6 +390,7 @@ class $AssetsImagesGen {
         starEmpty,
         starFilled,
         starFilledGolden,
+        stopwatch,
         takeawayCupColdShadow,
         takeawayCupCold,
         takeawayCupHotShadow,

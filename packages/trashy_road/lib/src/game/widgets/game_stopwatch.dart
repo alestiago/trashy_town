@@ -26,7 +26,7 @@ class _GameStopwatchState extends State<GameStopwatch>
   late final _animation = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 1),
-  )..repeat();
+  );
 
   void _stop() {
     _animation.stop();
@@ -34,7 +34,7 @@ class _GameStopwatchState extends State<GameStopwatch>
   }
 
   void _start() {
-    _animation.repeat();
+    _animation.repeat(reverse: true);
     _stopwatch.start();
   }
 
@@ -58,12 +58,7 @@ class _GameStopwatchState extends State<GameStopwatch>
       listeners: [
         BlocListener<GameBloc, GameState>(
           listenWhen: (previous, current) {
-            final hasStarted = previous.status == GameStatus.ready &&
-                current.status == GameStatus.playing;
-            final hasResumed = previous.status == GameStatus.paused &&
-                current.status == GameStatus.playing;
-
-            return hasStarted || hasResumed;
+            return current.status == GameStatus.playing;
           },
           listener: (_, __) => _start(),
         ),
@@ -119,6 +114,8 @@ class _ProgressBar extends StatelessWidget {
 
     final completionsSeconds = gameMap.completionSeconds;
 
+    final stopwatchRotationTween = Tween<double>(begin: -0.2, end: 0.2);
+
     return LayoutBuilder(
       builder: (context, constraints) {
         return AnimatedBuilder(
@@ -142,54 +139,72 @@ class _ProgressBar extends StatelessWidget {
               return align + shift;
             }
 
-            return SizedBox.fromSize(
-              size: Size(barSize.width, starSize.height),
-              child: Stack(
-                children: [
-                  Align(
-                    child: FractionallySizedBox(
-                      alignment: Alignment.centerLeft,
-                      widthFactor: percentageLeft,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          border: Border.all(
-                            width: 4,
-                            strokeAlign: BorderSide.strokeAlignOutside,
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox.fromSize(
+                  size: starSize,
+                  child: Transform.rotate(
+                    angle: stopwatchRotationTween.evaluate(_animation),
+                    child: const _StopwatchIcon(),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                SizedBox.fromSize(
+                  size: Size(barSize.width, starSize.height),
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: FractionallySizedBox(
+                          alignment: Alignment.centerLeft,
+                          widthFactor: percentageLeft,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              border: Border.all(
+                                width: 4,
+                                strokeAlign: BorderSide.strokeAlignOutside,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment(alignStar(gameMap.ratingSteps.$1), 0),
-                    child: SizedBox.fromSize(
-                      size: starSize,
-                      child: AnimatedStar(
-                        faded: gameMap.ratingSteps.$1 < seconds,
+                      Align(
+                        alignment:
+                            Alignment(alignStar(gameMap.ratingSteps.$1), 0),
+                        child: SizedBox.fromSize(
+                          size: starSize,
+                          child: AnimatedStar(
+                            faded: gameMap.ratingSteps.$1 < seconds,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment(alignStar(gameMap.ratingSteps.$2), 0),
-                    child: SizedBox.fromSize(
-                      size: starSize,
-                      child: AnimatedStar(
-                        faded: gameMap.ratingSteps.$2 < seconds,
+                      Align(
+                        alignment:
+                            Alignment(alignStar(gameMap.ratingSteps.$2), 0),
+                        child: SizedBox.fromSize(
+                          size: starSize,
+                          child: AnimatedStar(
+                            faded: gameMap.ratingSteps.$2 < seconds,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment(alignStar(gameMap.ratingSteps.$3), 0),
-                    child: SizedBox.fromSize(
-                      size: starSize,
-                      child: AnimatedStar(
-                        faded: gameMap.ratingSteps.$3 < seconds,
+                      Align(
+                        alignment:
+                            Alignment(alignStar(gameMap.ratingSteps.$3), 0),
+                        child: SizedBox.fromSize(
+                          size: starSize,
+                          child: AnimatedStar(
+                            faded: gameMap.ratingSteps.$3 < seconds,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             );
           },
         );
@@ -226,6 +241,18 @@ class _PaperBackground extends StatelessWidget {
         ),
       ),
       child: child,
+    );
+  }
+}
+
+class _StopwatchIcon extends StatelessWidget {
+  const _StopwatchIcon();
+
+  @override
+  Widget build(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 1,
+      child: Assets.images.stopwatch.image(),
     );
   }
 }

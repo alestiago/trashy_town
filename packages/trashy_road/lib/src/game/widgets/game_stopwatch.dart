@@ -82,20 +82,9 @@ class _GameStopwatchState extends State<GameStopwatch>
       ],
       child: DefaultTextStyle(
         style: style,
-        child: PlayingHudTransition(
-          slideTween: Tween<Offset>(
-            begin: const Offset(0, -1.2),
-            end: Offset.zero,
-          ),
-          child: _PaperBackground(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 32),
-              child: _ProgressBar(
-                animation: _animation,
-                stopwatch: _stopwatch,
-              ),
-            ),
-          ),
+        child: _ProgressBar(
+          animation: _animation,
+          stopwatch: _stopwatch,
         ),
       ),
     );
@@ -229,27 +218,6 @@ extension on double {
     required double newMax,
   }) {
     return ((this - min) / (max - min)) * (newMax - newMin) + newMin;
-  }
-}
-
-class _PaperBackground extends StatelessWidget {
-  const _PaperBackground({
-    required this.child,
-  });
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: Assets.images.paperBackgroundRectThin.provider(),
-          fit: BoxFit.fill,
-        ),
-      ),
-      child: child,
-    );
   }
 }
 

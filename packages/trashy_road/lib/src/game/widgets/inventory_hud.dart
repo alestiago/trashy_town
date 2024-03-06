@@ -21,7 +21,7 @@ class InventoryHud extends StatelessWidget {
       ),
       child: _PaperBackground(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 32),
           child: BlocSelector<GameBloc, GameState, List<TrashType>>(
             selector: (state) {
               return state.inventory.items;

@@ -147,33 +147,17 @@ class _ProgressBar extends StatelessWidget {
               child: Stack(
                 children: [
                   Align(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(
-                          color: BasuraColors.gray,
-                          width: 2,
-                          strokeAlign: BorderSide.strokeAlignOutside,
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          DecoratedBox(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  BasuraColors.starYellow.withOpacity(0.8),
-                                  BasuraColors.starYellow.withOpacity(0.4),
-                                ],
-                              ),
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: SizedBox(
-                              width: barSize.width * percentageLeft,
-                              height: barSize.height,
-                            ),
+                    child: FractionallySizedBox(
+                      alignment: Alignment.centerLeft,
+                      widthFactor: percentageLeft,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          border: Border.all(
+                            width: 4,
+                            strokeAlign: BorderSide.strokeAlignOutside,
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),

@@ -97,6 +97,19 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
 
   // An Obstacle that is a building.
   //
+  // The building takes up a 2x2 tile space.
+  Obstacle._building2({required Vector2 position})
+      : this._(
+          position: position,
+          hitbox: RectangleHitbox(
+            position: Vector2(0.1, -0.1)..toGameSize(),
+            size: Vector2(1.8, 2.7)..toGameSize(),
+          ),
+          children: [_Building2SpriteGroup()],
+        );
+
+  // An Obstacle that is a building.
+  //
   // The building takes up a 3x3 tile space.
   Obstacle._building3({required Vector2 position})
       : this._(
@@ -123,6 +136,8 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
         return Obstacle._bush1(position: position);
       case 'bush_2':
         return Obstacle._bush2(position: position);
+      case 'building_2':
+        return Obstacle._building2(position: position);
       case 'building_3':
         return Obstacle._building3(position: position);
       default:
@@ -236,6 +251,41 @@ class _Bush2SpriteGroup extends PositionComponent {
         );
 }
 
+class _Building2SpriteGroup extends PositionedEntity {
+  _Building2SpriteGroup()
+      : super(
+          // The `size`, `position` and `scale` have been eye-balled to fit with
+          // the tile size.
+          position: Vector2(-0.05, -0.1)..toGameSize(),
+          behaviors: [
+            PropagatingCollisionBehavior(
+              /// This hitbox is for determining if the player is behind the
+              /// sprite.
+              RectangleHitbox(
+                isSolid: true,
+                size: Vector2(1.2, 5.6)..toGameSize(),
+                position: Vector2(0.4, -0.1)..toGameSize(),
+                anchor: Anchor.bottomLeft,
+              ),
+            ),
+            HidingWhenPlayerBehind(),
+          ],
+          children: [
+            GameSpriteComponent.fromPath(
+              scale: Vector2(0.5, 0.65),
+              position: Vector2(0, 0)..toGameSize(),
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.buildingShadow.path,
+            ),
+            GameSpriteComponent.fromPath(
+              scale: Vector2.all(0.5),
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.building2.path,
+            ),
+          ],
+        );
+}
+
 class _Building3SpriteGroup extends PositionedEntity {
   _Building3SpriteGroup()
       : super(
@@ -260,7 +310,7 @@ class _Building3SpriteGroup extends PositionedEntity {
               scale: Vector2.all(0.8),
               position: Vector2(-0.05, 0.12)..toGameSize(),
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.building3Shadow.path,
+              spritePath: Assets.images.buildingShadow.path,
             ),
             GameSpriteComponent.fromPath(
               scale: Vector2.all(0.65),

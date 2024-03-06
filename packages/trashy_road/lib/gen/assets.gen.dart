@@ -51,9 +51,13 @@ class $AssetsImagesGen {
   /// File path: assets/images/barrel.png
   AssetGenImage get barrel => const AssetGenImage('assets/images/barrel.png');
 
-  /// File path: assets/images/building_3-shadow.png
-  AssetGenImage get building3Shadow =>
-      const AssetGenImage('assets/images/building_3-shadow.png');
+  /// File path: assets/images/building-shadow.png
+  AssetGenImage get buildingShadow =>
+      const AssetGenImage('assets/images/building-shadow.png');
+
+  /// File path: assets/images/building_2.png
+  AssetGenImage get building2 =>
+      const AssetGenImage('assets/images/building_2.png');
 
   /// File path: assets/images/building_3.png
   AssetGenImage get building3 =>
@@ -376,7 +380,8 @@ class $AssetsImagesGen {
         bananaShadow,
         banana,
         barrel,
-        building3Shadow,
+        buildingShadow,
+        building2,
         building3,
         busDriving,
         busLeftToRightShadow,
@@ -482,6 +487,9 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/Tiles.tsx
   String get tiles => 'assets/tiles/Tiles.tsx';
 
+  /// File path: assets/tiles/building_2.tx
+  String get building2 => 'assets/tiles/building_2.tx';
+
   /// File path: assets/tiles/building_3.tx
   String get building3 => 'assets/tiles/building_3.tx';
 
@@ -545,6 +553,7 @@ class $AssetsTilesGen {
   /// List of all assets
   List<String> get values => [
         tiles,
+        building2,
         building3,
         bush1,
         bush2,

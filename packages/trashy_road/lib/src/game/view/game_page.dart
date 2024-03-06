@@ -6,8 +6,7 @@ import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/loading/loading.dart';
 import 'package:trashy_road/src/maps/maps.dart';
-import 'package:trashy_road/src/pause/pause.dart';
-import 'package:trashy_road/src/score/view/view.dart';
+import 'package:trashy_road/src/score/score.dart';
 
 class GamePage extends StatelessWidget {
   const GamePage({
@@ -67,8 +66,6 @@ class _GameView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gameBloc = context.read<GameBloc>();
-
     return BlocListener<GameBloc, GameState>(
       listenWhen: (previous, current) => current.status == GameStatus.completed,
       listener: (context, state) {
@@ -108,24 +105,11 @@ class _GameView extends StatelessWidget {
               child: GameStopwatch(),
             ),
           ),
-          Align(
+          const Align(
             alignment: Alignment.topRight,
             child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: PauseButton(
-                onPause: () {
-                  gameBloc.add(const GamePausedEvent());
-                  return true;
-                },
-                onResume: () {
-                  gameBloc.add(const GameResumedEvent());
-                  return true;
-                },
-                onReplay: () {
-                  gameBloc.add(const GameResetEvent());
-                  return true;
-                },
-              ),
+              padding: EdgeInsets.all(12),
+              child: PauseButton(),
             ),
           ),
         ],

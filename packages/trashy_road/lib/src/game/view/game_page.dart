@@ -67,8 +67,6 @@ class _GameView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gameBloc = context.read<GameBloc>();
-
     return BlocListener<GameBloc, GameState>(
       listenWhen: (previous, current) => current.status == GameStatus.completed,
       listener: (context, state) {
@@ -108,24 +106,11 @@ class _GameView extends StatelessWidget {
               child: GameStopwatch(),
             ),
           ),
-          Align(
+          const Align(
             alignment: Alignment.topRight,
             child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: PauseButton(
-                onPause: () {
-                  gameBloc.add(const GamePausedEvent());
-                  return true;
-                },
-                onResume: () {
-                  gameBloc.add(const GameResumedEvent());
-                  return true;
-                },
-                onReplay: () {
-                  gameBloc.add(const GameResetEvent());
-                  return true;
-                },
-              ),
+              padding: EdgeInsets.all(12),
+              child: PauseButton(),
             ),
           ),
         ],

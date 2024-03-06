@@ -44,6 +44,9 @@ class PreloadCubit extends Cubit<PreloadState> {
           [
             Assets.images.pauseIcon,
             Assets.images.paperBackground,
+            Assets.images.replayIcon,
+            Assets.images.playIcon,
+            Assets.images.menuIcon,
           ],
         ),
       ),

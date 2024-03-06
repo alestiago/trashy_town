@@ -143,6 +143,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/grass.png
   AssetGenImage get grass => const AssetGenImage('assets/images/grass.png');
 
+  /// File path: assets/images/logo.png
+  AssetGenImage get logo => const AssetGenImage('assets/images/logo.png');
+
   /// File path: assets/images/paper_1-shadow.png
   AssetGenImage get paper1Shadow =>
       const AssetGenImage('assets/images/paper_1-shadow.png');
@@ -204,6 +207,14 @@ class $AssetsImagesGen {
   /// File path: assets/images/plastic_straw.png
   AssetGenImage get plasticStraw =>
       const AssetGenImage('assets/images/plastic_straw.png');
+
+  /// File path: assets/images/play-background-houses.png
+  AssetGenImage get playBackgroundHouses =>
+      const AssetGenImage('assets/images/play-background-houses.png');
+
+  /// File path: assets/images/play-background-sky.png
+  AssetGenImage get playBackgroundSky =>
+      const AssetGenImage('assets/images/play-background-sky.png');
 
   /// File path: assets/images/player.png
   AssetGenImage get player => const AssetGenImage('assets/images/player.png');
@@ -361,6 +372,7 @@ class $AssetsImagesGen {
         grassRoadSouthwest,
         grassFlowers,
         grass,
+        logo,
         paper1Shadow,
         paper1,
         paper2Shadow,
@@ -377,6 +389,8 @@ class $AssetsImagesGen {
         plasticBottle2,
         plasticStrawShadow,
         plasticStraw,
+        playBackgroundHouses,
+        playBackgroundSky,
         player,
         playerHopShadow,
         playerHop,

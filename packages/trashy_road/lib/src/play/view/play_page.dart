@@ -29,9 +29,25 @@ class PlayPage extends StatelessWidget {
       children: [
         Positioned.fill(
           child: Image.asset(
-            // TODO(alestiago): Use background render when available.
-            Assets.images.grass.path,
-            repeat: ImageRepeat.repeat,
+            Assets.images.playBackgroundSky.path,
+            fit: BoxFit.cover,
+          ),
+        ),
+        Positioned.fill(
+          top: null,
+          child: Image.asset(
+            Assets.images.playBackgroundHouses.path,
+            fit: BoxFit.cover,
+          ),
+        ),
+        Align(
+          alignment: Alignment.topCenter,
+          child: SizedBox.square(
+            dimension: MediaQuery.sizeOf(context).shortestSide / 2,
+            child: AspectRatio(
+              aspectRatio: 776 / 458,
+              child: Image.asset(Assets.images.logo.path),
+            ),
           ),
         ),
         Align(

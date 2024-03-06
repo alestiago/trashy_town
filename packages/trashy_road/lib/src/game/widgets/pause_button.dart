@@ -39,7 +39,7 @@ class PauseButton extends StatelessWidget {
     return AnimatedHoverBrightness(
       child: GestureDetector(
         onTap: () => _onPause(context),
-        child: Assets.images.pauseButton.image(width: 50, height: 50),
+        child: Assets.images.pauseIcon.image(width: 50, height: 50),
       ),
     );
   }

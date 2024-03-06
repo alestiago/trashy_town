@@ -102,14 +102,7 @@ class _GameView extends StatelessWidget {
             alignment: Alignment.topCenter,
             child: Padding(
               padding: EdgeInsets.all(12),
-              child: GameStopwatch(),
-            ),
-          ),
-          const Align(
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding: EdgeInsets.all(12),
-              child: PauseButton(),
+              child: TopHud(),
             ),
           ),
         ],

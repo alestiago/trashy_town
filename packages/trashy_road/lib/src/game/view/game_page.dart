@@ -18,7 +18,7 @@ class GamePage extends StatelessWidget {
         _identifier = identifier;
 
   /// The identifier for the route.
-  static String identifier = 'maps_menu';
+  static String identifier = 'game_page';
 
   static Route<void> route({
     required String identifier,
@@ -105,26 +105,32 @@ class _GameView extends StatelessWidget {
             alignment: Alignment.topCenter,
             child: Padding(
               padding: EdgeInsets.all(12),
-              child: GameStopwatch(),
+              child: ColoredBox(
+                color: Colors.red,
+                child: GameStopwatch(),
+              ),
             ),
           ),
           Align(
             alignment: Alignment.topRight,
             child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: PauseButton(
-                onPause: () {
-                  gameBloc.add(const GamePausedEvent());
-                  return true;
-                },
-                onResume: () {
-                  gameBloc.add(const GameResumedEvent());
-                  return true;
-                },
-                onReplay: () {
-                  gameBloc.add(const GameResetEvent());
-                  return true;
-                },
+              padding: const EdgeInsets.all(12),
+              child: ColoredBox(
+                color: Colors.red,
+                child: PauseButton(
+                  onPause: () {
+                    gameBloc.add(const GamePausedEvent());
+                    return true;
+                  },
+                  onResume: () {
+                    gameBloc.add(const GameResumedEvent());
+                    return true;
+                  },
+                  onReplay: () {
+                    gameBloc.add(const GameResetEvent());
+                    return true;
+                  },
+                ),
               ),
             ),
           ),

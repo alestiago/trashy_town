@@ -38,11 +38,71 @@ class PauseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedHoverBrightness(
-      child: GestureDetector(
-        onTap: () => _onPause(context),
-        child: Assets.images.pauseButton.image(width: 50, height: 50),
-      ),
+    return _ImageBuilder(
+      provider: Assets.images.paperBackgroundSquare.provider(),
+      builder: (paperBackground) {
+        return _ImageBuilder(
+          provider: Assets.images.pauseIcon.provider(),
+          builder: (pauseIcon) {
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: paperBackground,
+                  fit: BoxFit.fill,
+                ),
+              ),
+              child: AnimatedHoverBrightness(
+                child: GestureDetector(
+                  onTap: () => _onPause(context),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 18),
+                    child: Image(image: pauseIcon, width: 50, height: 50),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+class _ImageBuilder extends StatefulWidget {
+  const _ImageBuilder({
+    required this.provider,
+    required this.builder,
+  });
+
+  final ImageProvider provider;
+
+  final Widget Function(ImageProvider provider) builder;
+
+  @override
+  State<_ImageBuilder> createState() => __ImageBuilderState();
+}
+
+class __ImageBuilderState extends State<_ImageBuilder> {
+  late final _image = widget.provider;
+
+  late final Future<void> _cacheImage;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _cacheImage = precacheImage(_image, context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _cacheImage,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const SizedBox.shrink();
+        }
+        return widget.builder(_image);
+      },
     );
   }
 }

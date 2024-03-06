@@ -180,6 +180,10 @@ class $AssetsImagesGen {
   AssetGenImage get paperBall =>
       const AssetGenImage('assets/images/paper_ball.png');
 
+  /// File path: assets/images/pause-icon.png
+  AssetGenImage get pauseIcon =>
+      const AssetGenImage('assets/images/pause-icon.png');
+
   /// File path: assets/images/pause_button.png
   AssetGenImage get pauseButton =>
       const AssetGenImage('assets/images/pause_button.png');
@@ -382,6 +386,7 @@ class $AssetsImagesGen {
         paperBackgroundSquare,
         paperBallShadow,
         paperBall,
+        pauseIcon,
         pauseButton,
         plasticBottle1Shadow,
         plasticBottle1,

@@ -192,7 +192,7 @@ class _PausePageRouteBuilder<T> extends PageRouteBuilder<T> {
     super.settings,
   }) : super(
           opaque: false,
-          transitionDuration: const Duration(milliseconds: 500),
+          transitionDuration: const Duration(seconds: 1),
           pageBuilder: (context, animation, secondaryAnimation) =>
               builder(context),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -200,7 +200,7 @@ class _PausePageRouteBuilder<T> extends PageRouteBuilder<T> {
               color: const Color(0xff000000).withOpacity(0),
             );
             final end = BoxDecoration(
-              color: const Color(0xff000000).withOpacity(0.4),
+              color: const Color(0xff000000).withOpacity(0.5),
             );
 
             final decorationCurvedAnimation =
@@ -209,25 +209,19 @@ class _PausePageRouteBuilder<T> extends PageRouteBuilder<T> {
             final decorationAnimate =
                 decorationTween.animate(decorationCurvedAnimation);
 
-            final scaleCurvedAnimation =
-                CurvedAnimation(parent: animation, curve: Curves.easeIn);
-            final scaleTween = Tween<double>(begin: 0.5, end: 1);
-            final scaleAnimate = scaleTween.animate(scaleCurvedAnimation);
-
-            final opacityCurve =
-                CurvedAnimation(parent: animation, curve: Curves.linear);
-            final opacityTween = Tween<double>(begin: 0.2, end: 1);
-            final opacityAnimate = opacityTween.animate(opacityCurve);
+            final slideCurvedAnimation =
+                CurvedAnimation(parent: animation, curve: Curves.easeInOut);
+            final slideTween = Tween<Offset>(
+              begin: const Offset(-1, 0),
+              end: Offset.zero,
+            );
+            final slideAnimate = slideTween.animate(slideCurvedAnimation);
 
             return DecoratedBoxTransition(
               decoration: decorationAnimate,
-              child: ScaleTransition(
-                scale: scaleAnimate,
-                child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 100),
-                  opacity: opacityAnimate.value,
-                  child: child,
-                ),
+              child: SlideTransition(
+                position: slideAnimate,
+                child: child,
               ),
             );
           },

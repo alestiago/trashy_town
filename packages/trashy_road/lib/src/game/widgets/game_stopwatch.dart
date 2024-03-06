@@ -1,4 +1,5 @@
 import 'package:basura/basura.dart';
+import 'package:flame/components.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -132,11 +133,12 @@ class _ProgressBar extends StatelessWidget {
             );
             final starSize = Size.square(barSize.height + 20);
 
-            double alignStar(int seconds) {
-              final align = (1 - (seconds / completionsSeconds))
+            Alignment alignStar(int seconds) {
+              final horizontalAlign = (1 - (seconds / completionsSeconds))
                   .normalize(max: 1, min: 0, newMax: 1, newMin: -1);
-              final shift = (starSize.width / 2) / barSize.width;
-              return align + shift;
+              final horizontalShift = (starSize.width / 2) / barSize.width;
+
+              return Alignment(horizontalAlign + horizontalShift, 0);
             }
 
             return Row(
@@ -157,23 +159,26 @@ class _ProgressBar extends StatelessWidget {
                     children: [
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: FractionallySizedBox(
-                          alignment: Alignment.centerLeft,
-                          widthFactor: percentageLeft,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              border: Border.all(
-                                width: 4,
-                                strokeAlign: BorderSide.strokeAlignOutside,
+                        child: Transform.translate(
+                          // Eye-balled offset to align the bar with the stars.
+                          offset: const Offset(0, 1),
+                          child: FractionallySizedBox(
+                            alignment: Alignment.centerLeft,
+                            widthFactor: percentageLeft,
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                border: Border.all(
+                                  width: 4,
+                                  strokeAlign: BorderSide.strokeAlignOutside,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
                       Align(
-                        alignment:
-                            Alignment(alignStar(gameMap.ratingSteps.$1), 0),
+                        alignment: alignStar(gameMap.ratingSteps.$1),
                         child: SizedBox.fromSize(
                           size: starSize,
                           child: AnimatedStar(
@@ -182,8 +187,7 @@ class _ProgressBar extends StatelessWidget {
                         ),
                       ),
                       Align(
-                        alignment:
-                            Alignment(alignStar(gameMap.ratingSteps.$2), 0),
+                        alignment: alignStar(gameMap.ratingSteps.$2),
                         child: SizedBox.fromSize(
                           size: starSize,
                           child: AnimatedStar(
@@ -192,8 +196,7 @@ class _ProgressBar extends StatelessWidget {
                         ),
                       ),
                       Align(
-                        alignment:
-                            Alignment(alignStar(gameMap.ratingSteps.$3), 0),
+                        alignment: alignStar(gameMap.ratingSteps.$3),
                         child: SizedBox.fromSize(
                           size: starSize,
                           child: AnimatedStar(

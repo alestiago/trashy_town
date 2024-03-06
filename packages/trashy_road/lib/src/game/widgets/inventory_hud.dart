@@ -14,38 +14,44 @@ class InventoryHud extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _PaperBackground(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-        child: BlocSelector<GameBloc, GameState, List<TrashType>>(
-          selector: (state) {
-            return state.inventory.items;
-          },
-          builder: (context, trash) {
-            final filledTrash = List<TrashType?>.from(trash)
-              ..length = Inventory.size;
+    return PlayingHudTransition(
+      slideTween: Tween<Offset>(
+        begin: const Offset(0, 1.2),
+        end: Offset.zero,
+      ),
+      child: _PaperBackground(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          child: BlocSelector<GameBloc, GameState, List<TrashType>>(
+            selector: (state) {
+              return state.inventory.items;
+            },
+            builder: (context, trash) {
+              final filledTrash = List<TrashType?>.from(trash)
+                ..length = Inventory.size;
 
-            return LayoutBuilder(
-              builder: (context, constraints) {
-                final slotSize =
-                    ((constraints.maxWidth - 50) / filledTrash.length)
-                        .clamp(10.0, 50.0);
-                return Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    for (final type in filledTrash)
-                      Padding(
-                        padding: const EdgeInsets.all(4),
-                        child: SizedBox.square(
-                          dimension: slotSize,
-                          child: _InventorySlot.fromType(type),
+              return LayoutBuilder(
+                builder: (context, constraints) {
+                  final slotSize =
+                      ((constraints.maxWidth - 50) / filledTrash.length)
+                          .clamp(10.0, 50.0);
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      for (final type in filledTrash)
+                        Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: SizedBox.square(
+                            dimension: slotSize,
+                            child: _InventorySlot.fromType(type),
+                          ),
                         ),
-                      ),
-                  ],
-                );
-              },
-            );
-          },
+                    ],
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );

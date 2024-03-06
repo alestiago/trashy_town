@@ -82,12 +82,18 @@ class _GameStopwatchState extends State<GameStopwatch>
       ],
       child: DefaultTextStyle(
         style: style,
-        child: _PaperBackground(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 32),
-            child: _ProgressBar(
-              animation: _animation,
-              stopwatch: _stopwatch,
+        child: PlayingHudTransition(
+          slideTween: Tween<Offset>(
+            begin: const Offset(0, -1.2),
+            end: Offset.zero,
+          ),
+          child: _PaperBackground(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 32),
+              child: _ProgressBar(
+                animation: _animation,
+                stopwatch: _stopwatch,
+              ),
             ),
           ),
         ),

@@ -31,7 +31,7 @@ class _TrashyRoadGameWidgetState extends State<TrashyRoadGameWidget> {
     );
 
     TrashyRoadGame gameBuilder() {
-      return kDebugMode && true
+      return kDebugMode
           ? DebugTrashyRoadGame(
               gameBloc: gameBloc,
               images: loadingBloc.images,

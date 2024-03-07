@@ -97,7 +97,7 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
 
   // An Obstacle that is a building.
   //
-  // The building takes up a 2x2 tile space.
+  // The building takes up a 2x3 tile space.
   Obstacle._building2({required Vector2 position})
       : this._(
           position: position,
@@ -121,6 +121,19 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
           children: [_Building3SpriteGroup()],
         );
 
+  // An Obstacle that is a building.
+  //
+  // The building takes up a 3x3 tile space.
+  Obstacle._building4({required Vector2 position})
+      : this._(
+          position: position,
+          hitbox: RectangleHitbox(
+            position: Vector2(0.25, -0.5)..toGameSize(),
+            size: Vector2(1.5, 1.8)..toGameSize(),
+          ),
+          children: [_Building4SpriteGroup()],
+        );
+
   factory Obstacle.fromTiledObject(TiledObject tiledObject) {
     final type = tiledObject.type;
     final position = Vector2(tiledObject.x, tiledObject.y);
@@ -140,6 +153,8 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
         return Obstacle._building2(position: position);
       case 'building_3':
         return Obstacle._building3(position: position);
+      case 'building_4':
+        return Obstacle._building4(position: position);
       default:
         throw ArgumentError('Unknown obstacle type: $type');
     }
@@ -263,8 +278,8 @@ class _Building2SpriteGroup extends PositionedEntity {
               /// sprite.
               RectangleHitbox(
                 isSolid: true,
-                size: Vector2(1.2, 5.6)..toGameSize(),
-                position: Vector2(0.4, -0.1)..toGameSize(),
+                size: Vector2(1, 5.45)..toGameSize(),
+                position: Vector2(0.5, -0.3)..toGameSize(),
                 anchor: Anchor.bottomLeft,
               ),
             ),
@@ -298,8 +313,8 @@ class _Building3SpriteGroup extends PositionedEntity {
               /// sprite.
               RectangleHitbox(
                 isSolid: true,
-                size: Vector2(2.5, 8)..toGameSize(),
-                position: Vector2(0.3, -0.4)..toGameSize(),
+                size: Vector2(2.1, 8)..toGameSize(),
+                position: Vector2(0.5, -0.4)..toGameSize(),
                 anchor: Anchor.bottomLeft,
               ),
             ),
@@ -316,6 +331,41 @@ class _Building3SpriteGroup extends PositionedEntity {
               scale: Vector2.all(0.65),
               anchor: Anchor.bottomLeft,
               spritePath: Assets.images.building3.path,
+            ),
+          ],
+        );
+}
+
+class _Building4SpriteGroup extends PositionedEntity {
+  _Building4SpriteGroup()
+      : super(
+          // The `size`, `position` and `scale` have been eye-balled to fit with
+          // the tile size.
+          position: Vector2(-0.05, -0.1)..toGameSize(),
+          behaviors: [
+            PropagatingCollisionBehavior(
+              /// This hitbox is for determining if the player is behind the
+              /// sprite.
+              RectangleHitbox(
+                isSolid: true,
+                size: Vector2(1.1, 5.6)..toGameSize(),
+                position: Vector2(0.5, -0.7)..toGameSize(),
+                anchor: Anchor.bottomLeft,
+              ),
+            ),
+            HidingWhenPlayerBehind(),
+          ],
+          children: [
+            GameSpriteComponent.fromPath(
+              scale: Vector2.all(0.5),
+              position: Vector2(0, 0.12)..toGameSize(),
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.buildingShadow.path,
+            ),
+            GameSpriteComponent.fromPath(
+              scale: Vector2(0.35, 0.4),
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.building4.path,
             ),
           ],
         );

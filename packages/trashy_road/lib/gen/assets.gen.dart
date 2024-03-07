@@ -63,6 +63,10 @@ class $AssetsImagesGen {
   AssetGenImage get building3 =>
       const AssetGenImage('assets/images/building_3.png');
 
+  /// File path: assets/images/building_4.png
+  AssetGenImage get building4 =>
+      const AssetGenImage('assets/images/building_4.png');
+
   /// File path: assets/images/bus-driving.png
   AssetGenImage get busDriving =>
       const AssetGenImage('assets/images/bus-driving.png');
@@ -383,6 +387,7 @@ class $AssetsImagesGen {
         buildingShadow,
         building2,
         building3,
+        building4,
         busDriving,
         busLeftToRightShadow,
         busRightToLeftShadow,

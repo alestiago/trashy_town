@@ -83,7 +83,7 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
 
   // An Obstacle that is a bush.
   //
-  // The bush takes up 1x1 tile space and this variation is composed if four
+  // The bush takes up 1x1 tile space and this variation is composed of four
   // small bushes.
   Obstacle._bush2({required Vector2 position})
       : this._(
@@ -134,6 +134,19 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
           children: [_Building4SpriteGroup()],
         );
 
+  // An Obstacle that is a bench.
+  //
+  // The bench takes up 2x1 tile space
+  Obstacle._bench({required Vector2 position})
+      : this._(
+          position: position,
+          hitbox: RectangleHitbox(
+            position: Vector2(0, -0.1)..toGameSize(),
+            size: Vector2(1, 0.6)..toGameSize(),
+          ),
+          children: [_BenchSpriteGroup()],
+        );
+
   factory Obstacle.fromTiledObject(TiledObject tiledObject) {
     final type = tiledObject.type;
     final position = Vector2(tiledObject.x, tiledObject.y);
@@ -155,6 +168,8 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
         return Obstacle._building3(position: position);
       case 'building_4':
         return Obstacle._building4(position: position);
+      case 'bench':
+        return Obstacle._bench(position: position);
       default:
         throw ArgumentError('Unknown obstacle type: $type');
     }
@@ -366,6 +381,26 @@ class _Building4SpriteGroup extends PositionedEntity {
               scale: Vector2(0.35, 0.4),
               anchor: Anchor.bottomLeft,
               spritePath: Assets.images.building4.path,
+            ),
+          ],
+        );
+}
+
+class _BenchSpriteGroup extends PositionComponent {
+  _BenchSpriteGroup()
+      : super(
+          // The `size`, `position` and `scale` have been eye-balled to fit with
+          // the tile size.
+          position: Vector2(-0.13, -0.1)..toGameSize(),
+          scale: Vector2.all(0.38),
+          children: [
+            GameSpriteComponent.fromPath(
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.benchShadow.path,
+            ),
+            GameSpriteComponent.fromPath(
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.bench.path,
             ),
           ],
         );

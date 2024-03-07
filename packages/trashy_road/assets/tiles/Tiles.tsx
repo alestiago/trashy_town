@@ -50,6 +50,6 @@
   <image width="768" height="1024" source="../images/building_4.png"/>
  </tile>
  <tile id="19">
-  <image width="256" height="128" source="../images/bench.png"/>
+  <image width="128" height="64" source="../images/bench.png"/>
  </tile>
 </tileset>

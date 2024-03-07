@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <tileset firstgid="1" source="Tiles.tsx"/>
+ <object class="building_3" gid="15" width="384" height="649"/>
+</template>

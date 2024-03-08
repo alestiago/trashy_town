@@ -158,7 +158,7 @@ class _ProgressBar extends StatelessWidget {
                           offset: const Offset(0, 1),
                           child: FractionallySizedBox(
                             alignment: Alignment.centerLeft,
-                            widthFactor: percentageLeft,
+                            widthFactor: percentageLeft.clamp(0, 1),
                             child: DecoratedBox(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),

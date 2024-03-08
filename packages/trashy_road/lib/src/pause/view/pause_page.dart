@@ -83,8 +83,7 @@ class PausePage extends StatelessWidget {
       style: textStyle,
       child: Center(
         child: SizedBox.square(
-          dimension:
-              (screenSize.shortestSide * 0.5).clamp(300, double.infinity),
+          dimension: (screenSize.shortestSide * 0.5).clamp(300, 500),
           child: _PaperBackground(
             child: Padding(
               padding: const EdgeInsets.all(32),

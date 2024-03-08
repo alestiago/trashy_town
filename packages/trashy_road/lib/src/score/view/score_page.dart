@@ -1,5 +1,7 @@
 import 'package:basura/basura.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/game.dart';
@@ -69,26 +71,69 @@ class ScorePage extends StatelessWidget {
     final nextMap = gameMapsBloc.state.next(_identifier);
     final scoreRating = map.scoreRating;
 
-    return Center(
-      child: SizedBox.square(
-        dimension: (screenSize.shortestSide * 0.5).clamp(250, double.infinity),
-        child: _PaperBackground(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 50,
-                child: AnimatedStarRating(rating: scoreRating.value),
+    final basuraTheme = BasuraTheme.of(context);
+    final textStyle = basuraTheme.textTheme.cardHeading.copyWith(
+      letterSpacing: 0,
+      fontSize: 50,
+    );
+
+    final dimension =
+        (screenSize.shortestSide * 0.5).clamp(300, 500).toDouble();
+
+    return DefaultTextStyle(
+      style: textStyle,
+      child: Center(
+        child: SizedBox.square(
+          dimension: dimension,
+          child: _PaperBackground(
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    flex: 2,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Center(
+                          child: AutoSizeText('Nice!', style: textStyle),
+                        ),
+                        SizedBox(
+                          height: 80,
+                          child: AnimatedStarRating(rating: scoreRating.value),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  Flexible(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _ImageIcon(
+                          imagePath: Assets.images.replayIcon.path,
+                          onPressed: () => _onReplay(context),
+                        ),
+                        if (nextMap != null)
+                          _ImageIcon(
+                            imagePath: Assets.images.nextIcon.path,
+                            dimension: 80,
+                            onPressed: () =>
+                                _onNextMap(context, nextMap: nextMap),
+                          ),
+                        _ImageIcon(
+                          imagePath: Assets.images.menuIcon.path,
+                          onPressed: () => _onMenu(context),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              HoverableTextButton(text: 'Replay', onPressed: _onReplay),
-              HoverableTextButton(text: 'Menu', onPressed: _onMenu),
-              if (nextMap != null)
-                HoverableTextButton(
-                  text: 'Next',
-                  onPressed: (context) => _onNextMap(context, nextMap: nextMap),
-                ),
-            ],
+            ),
           ),
         ),
       ),
@@ -115,6 +160,39 @@ class _PaperBackground extends StatelessWidget {
         ),
       ),
       child: child,
+    );
+  }
+}
+
+class _ImageIcon extends StatelessWidget {
+  const _ImageIcon({
+    required this.imagePath,
+    this.onPressed,
+    this.dimension = 50,
+  });
+
+  final String imagePath;
+
+  final VoidCallback? onPressed;
+
+  final double dimension;
+
+  @override
+  Widget build(BuildContext context) {
+    final preloadCubit = context.read<PreloadCubit>();
+    final image = preloadCubit.imageProviderCache.fromCache(imagePath);
+
+    return AnimatedHoverBrightness(
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Image(
+          image: image,
+          width: dimension,
+          height: dimension,
+          filterQuality: FilterQuality.medium,
+          fit: BoxFit.contain,
+        ),
+      ),
     );
   }
 }

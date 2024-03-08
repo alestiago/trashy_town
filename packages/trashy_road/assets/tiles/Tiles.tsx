@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.9" tiledversion="1.10.2" name="Tiles" tilewidth="768" tileheight="1024" tilecount="17" columns="0">
+<tileset version="1.9" tiledversion="1.10.2" name="Tiles" tilewidth="768" tileheight="1024" tilecount="25" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
- <tile id="0">
-  <image width="128" height="64" source="../images/grass.png"/>
- </tile>
- <tile id="1">
-  <image width="128" height="64" source="../images/road.png"/>
- </tile>
  <tile id="2">
   <image width="128" height="128" source="../images/trash.png"/>
  </tile>
@@ -15,12 +9,6 @@
  </tile>
  <tile id="4">
   <image width="128" height="128" source="../images/barrel.png"/>
- </tile>
- <tile id="5">
-  <image width="128" height="64" source="../images/grass--road-east.png"/>
- </tile>
- <tile id="6">
-  <image width="128" height="64" source="../images/grass--road-southwest.png"/>
  </tile>
  <tile id="7">
   <image width="128" height="64" source="../images/grass-flowers.png"/>
@@ -50,6 +38,42 @@
   <image width="768" height="1024" source="../images/building_4.png"/>
  </tile>
  <tile id="19">
-  <image width="128" height="64" source="../images/bench.png"/>
+  <image width="512" height="256" source="../images/bench.png"/>
+ </tile>
+ <tile id="20">
+  <image width="128" height="64" source="../images/grass--dirt-west.png"/>
+ </tile>
+ <tile id="21">
+  <image width="128" height="64" source="../images/grass--dirt-north.png"/>
+ </tile>
+ <tile id="22">
+  <image width="128" height="64" source="../images/grass--dirt-northwest.png"/>
+ </tile>
+ <tile id="23">
+  <image width="128" height="64" source="../images/grass.png"/>
+ </tile>
+ <tile id="24">
+  <image width="128" height="64" source="../images/road.png"/>
+ </tile>
+ <tile id="25">
+  <image width="128" height="64" source="../images/pavement.png"/>
+ </tile>
+ <tile id="27">
+  <image width="128" height="64" source="../images/pavement--kirb-south.png"/>
+ </tile>
+ <tile id="28">
+  <image width="128" height="64" source="../images/pavement--kirb-south-west.png"/>
+ </tile>
+ <tile id="29">
+  <image width="128" height="64" source="../images/dirt.png"/>
+ </tile>
+ <tile id="30">
+  <image width="128" height="64" source="../images/pavement--kirb-north.png"/>
+ </tile>
+ <tile id="31">
+  <image width="128" height="64" source="../images/pavement--kirb-north-west.png"/>
+ </tile>
+ <tile id="32">
+  <image width="128" height="64" source="../images/pavement--kirb-west.png"/>
  </tile>
 </tileset>

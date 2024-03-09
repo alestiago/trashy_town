@@ -86,8 +86,9 @@ class _MovementInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Assets.images.display.tutorialMovement.image(
-      width: 250,
+      width: 300,
       filterQuality: FilterQuality.medium,
+      opacity: const AlwaysStoppedAnimation(0.5),
     );
   }
 }

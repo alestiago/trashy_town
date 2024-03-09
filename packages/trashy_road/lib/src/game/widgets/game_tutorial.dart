@@ -102,9 +102,10 @@ class _TrashCollectionInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ColoredBox(
-      color: Colors.red,
-      child: Text('Collect the trash.'),
+    return Assets.images.display.tutorialCollectTrash.image(
+      width: 300,
+      filterQuality: FilterQuality.medium,
+      opacity: const AlwaysStoppedAnimation(0.5),
     );
   }
 }
@@ -118,9 +119,10 @@ class _TrashDepositInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ColoredBox(
-      color: Colors.red,
-      child: Text('Deposit the trash.'),
+    return Assets.images.display.tutorialDepositTrash.image(
+      width: 300,
+      filterQuality: FilterQuality.medium,
+      opacity: const AlwaysStoppedAnimation(0.5),
     );
   }
 }

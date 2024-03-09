@@ -228,6 +228,14 @@ class $AssetsImagesDisplayGen {
   AssetGenImage get stopwatch =>
       const AssetGenImage('assets/images/display/stopwatch.png');
 
+  /// File path: assets/images/display/tutorial-collect-trash.gif
+  AssetGenImage get tutorialCollectTrash =>
+      const AssetGenImage('assets/images/display/tutorial-collect-trash.gif');
+
+  /// File path: assets/images/display/tutorial-deposit-trash.gif
+  AssetGenImage get tutorialDepositTrash =>
+      const AssetGenImage('assets/images/display/tutorial-deposit-trash.gif');
+
   /// File path: assets/images/display/tutorial-movement.gif
   AssetGenImage get tutorialMovement =>
       const AssetGenImage('assets/images/display/tutorial-movement.gif');
@@ -254,6 +262,8 @@ class $AssetsImagesDisplayGen {
         starFilled,
         starFilledGolden,
         stopwatch,
+        tutorialCollectTrash,
+        tutorialDepositTrash,
         tutorialMovement
       ];
 }

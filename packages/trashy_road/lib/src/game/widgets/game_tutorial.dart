@@ -60,6 +60,11 @@ class _GameTutorialState extends State<GameTutorial> {
           return true;
         },
         builder: (context, state) {
+          if (state.status != GameStatus.playing ||
+              state.status != GameStatus.ready) {
+            return const SizedBox.shrink();
+          }
+
           switch (_tutorialStatus) {
             case _TutorialStatus.movement:
               return const _MovementInformation();

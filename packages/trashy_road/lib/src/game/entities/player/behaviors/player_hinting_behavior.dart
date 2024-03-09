@@ -223,7 +223,8 @@ class _HintArrowSpriteComponent extends GameSpriteComponent
 
   /// Derives the [_HintArrowSpriteComponent] from a [Direction].
   factory _HintArrowSpriteComponent.fromDirection(
-      _HintArrowDirection direction) {
+    _HintArrowDirection direction,
+  ) {
     final position = _spritePathPositionMap[direction]!;
     return _HintArrowSpriteComponent._(
       direction: direction,
@@ -231,8 +232,8 @@ class _HintArrowSpriteComponent extends GameSpriteComponent
     )..position = position;
   }
 
-  /// Eye-balled map of the sprite path associated with the [_HintArrowDirection] to
-  /// their position.
+  /// Eye-balled map of the sprite path associated with the
+  /// [_HintArrowDirection] to their position.
   static final Map<_HintArrowDirection, Vector2> _spritePathPositionMap = {
     _HintArrowDirection.north: Vector2(-0.58, -2)..toGameSize(),
     _HintArrowDirection.south: Vector2(-0.58, -0.24)..toGameSize(),

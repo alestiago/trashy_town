@@ -228,6 +228,10 @@ class $AssetsImagesDisplayGen {
   AssetGenImage get stopwatch =>
       const AssetGenImage('assets/images/display/stopwatch.png');
 
+  /// File path: assets/images/display/tutorial-movement.gif
+  AssetGenImage get tutorialMovement =>
+      const AssetGenImage('assets/images/display/tutorial-movement.gif');
+
   /// List of all assets
   List<dynamic> get values => [
         logo,
@@ -249,7 +253,8 @@ class $AssetsImagesDisplayGen {
         starEmpty,
         starFilled,
         starFilledGolden,
-        stopwatch
+        stopwatch,
+        tutorialMovement
       ];
 }
 
@@ -271,6 +276,38 @@ class $AssetsImagesSpritesGen {
   /// File path: assets/images/sprites/apple_core_2.png
   AssetGenImage get appleCore2 =>
       const AssetGenImage('assets/images/sprites/apple_core_2.png');
+
+  /// File path: assets/images/sprites/arrow-east.png
+  AssetGenImage get arrowEast =>
+      const AssetGenImage('assets/images/sprites/arrow-east.png');
+
+  /// File path: assets/images/sprites/arrow-north-east.png
+  AssetGenImage get arrowNorthEast =>
+      const AssetGenImage('assets/images/sprites/arrow-north-east.png');
+
+  /// File path: assets/images/sprites/arrow-north-west.png
+  AssetGenImage get arrowNorthWest =>
+      const AssetGenImage('assets/images/sprites/arrow-north-west.png');
+
+  /// File path: assets/images/sprites/arrow-north.png
+  AssetGenImage get arrowNorth =>
+      const AssetGenImage('assets/images/sprites/arrow-north.png');
+
+  /// File path: assets/images/sprites/arrow-south-east.png
+  AssetGenImage get arrowSouthEast =>
+      const AssetGenImage('assets/images/sprites/arrow-south-east.png');
+
+  /// File path: assets/images/sprites/arrow-south-west.png
+  AssetGenImage get arrowSouthWest =>
+      const AssetGenImage('assets/images/sprites/arrow-south-west.png');
+
+  /// File path: assets/images/sprites/arrow-south.png
+  AssetGenImage get arrowSouth =>
+      const AssetGenImage('assets/images/sprites/arrow-south.png');
+
+  /// File path: assets/images/sprites/arrow-west.png
+  AssetGenImage get arrowWest =>
+      const AssetGenImage('assets/images/sprites/arrow-west.png');
 
   /// File path: assets/images/sprites/banana-shadow.png
   AssetGenImage get bananaShadow =>
@@ -569,6 +606,14 @@ class $AssetsImagesSpritesGen {
         appleCore1,
         appleCore2Shadow,
         appleCore2,
+        arrowEast,
+        arrowNorthEast,
+        arrowNorthWest,
+        arrowNorth,
+        arrowSouthEast,
+        arrowSouthWest,
+        arrowSouth,
+        arrowWest,
         bananaShadow,
         banana,
         benchShadow,
@@ -690,14 +735,10 @@ class Assets {
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsRiveGen rive = $AssetsRiveGen();
   static const $AssetsTilesGen tiles = $AssetsTilesGen();
-  static const String trashyRoadTiledProject =
-      'assets/trashy_road.tiled-project';
-  static const String trashyRoadTiledSession =
-      'assets/trashy_road.tiled-session';
+  static const String trashyRoad = 'assets/trashy_road.tiled-project';
 
   /// List of all assets
-  static List<String> get values =>
-      [trashyRoadTiledProject, trashyRoadTiledSession];
+  static List<String> get values => [trashyRoad];
 }
 
 class AssetGenImage {

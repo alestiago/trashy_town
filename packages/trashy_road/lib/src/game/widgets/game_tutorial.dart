@@ -76,7 +76,7 @@ class _GameTutorialState extends State<GameTutorial> {
 }
 
 /// {@template _MovementInformation}
-/// A widget that displays information about how to move the player.
+/// Displays information about how to move the player.
 /// {@endtemplate}
 class _MovementInformation extends StatelessWidget {
   /// {@macro _MovementInformation}
@@ -92,7 +92,7 @@ class _MovementInformation extends StatelessWidget {
 }
 
 /// {@template _TrashCollectionInformation}
-/// A widget that displays information about how to collect trash.
+/// Displays information about how to collect trash.
 /// {@endtemplate}
 class _TrashCollectionInformation extends StatelessWidget {
   /// {@macro _TrashCollectionInformation}
@@ -108,7 +108,7 @@ class _TrashCollectionInformation extends StatelessWidget {
 }
 
 /// {@template _TrashDepositInformation}
-/// A widget that displays information about how to deposit trash.
+/// Displays information about how to deposit trash.
 /// {@endtemplate}
 class _TrashDepositInformation extends StatelessWidget {
   /// {@macro _TrashDepositInformation}

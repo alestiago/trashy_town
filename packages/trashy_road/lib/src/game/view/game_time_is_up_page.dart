@@ -16,7 +16,7 @@ class GameTimeIsUpPage extends StatelessWidget {
   static const heroTag = 'game_time_is_up__stopwatch_icon';
 
   static Route<void> route() {
-    return _GameTimeIsUpPageRouteBuilder(
+    return GameTimeIsUpPageRouteBuilder(
       settings: const RouteSettings(name: identifier),
       builder: (context) => const GameTimeIsUpPage(),
     );
@@ -80,14 +80,14 @@ class __AnimatedStopwatchIconState extends State<_AnimatedStopwatchIcon>
   }
 }
 
-class _GameTimeIsUpPageRouteBuilder<T> extends PageRouteBuilder<T> {
-  _GameTimeIsUpPageRouteBuilder({
+class GameTimeIsUpPageRouteBuilder<T> extends PageRouteBuilder<T> {
+  GameTimeIsUpPageRouteBuilder({
     required WidgetBuilder builder,
     super.settings,
   }) : super(
           opaque: false,
-          reverseTransitionDuration: const Duration(seconds: 1),
-          transitionDuration: const Duration(seconds: 1),
+          reverseTransitionDuration: animationDuration,
+          transitionDuration: animationDuration,
           pageBuilder: (context, animation, secondaryAnimation) {
             return builder(context);
           },
@@ -111,4 +111,6 @@ class _GameTimeIsUpPageRouteBuilder<T> extends PageRouteBuilder<T> {
             );
           },
         );
+
+  static const animationDuration = Duration(seconds: 1);
 }

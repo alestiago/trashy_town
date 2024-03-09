@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:basura/basura.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
@@ -148,11 +150,18 @@ class _GameLostTimeIsUpListener extends BlocListener<GameBloc, GameState> {
               ..add(const GamePausedEvent());
             final navigator = Navigator.of(context)
               ..push(GameTimeIsUpPage.route());
-            Future<void>.delayed(const Duration(milliseconds: 500))
-                .then((_) async {
-              await Future<void>.delayed(const Duration(seconds: 3));
+
+            // TODO(alestiago): Refactor this to stop using microtasks and
+            // Future.delayed. Instead, consider other approaches to stagger
+            // the animations.
+            scheduleMicrotask(() async {
+              await Future<void>.delayed(
+                GameTimeIsUpPageRouteBuilder.animationDuration * 2,
+              );
               gameBloc.add(const GameResetEvent());
-              await Future<void>.delayed(const Duration(milliseconds: 500));
+              await Future<void>.delayed(
+                PlayingHudTransition.animationDuration ~/ 2,
+              );
               navigator.pop();
             });
           },

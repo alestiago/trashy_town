@@ -189,11 +189,11 @@ class _ProgressBar extends StatelessWidget {
                         ),
                       ),
                       Align(
-                        alignment: alignStar(gameMap.ratingSteps.$1),
+                        alignment: alignStar(gameMap.ratingSteps.$3),
                         child: SizedBox.fromSize(
                           size: starSize,
                           child: AnimatedStar(
-                            faded: gameMap.ratingSteps.$1 < seconds,
+                            faded: gameMap.ratingSteps.$3 < seconds,
                           ),
                         ),
                       ),
@@ -207,11 +207,11 @@ class _ProgressBar extends StatelessWidget {
                         ),
                       ),
                       Align(
-                        alignment: alignStar(gameMap.ratingSteps.$3),
+                        alignment: alignStar(gameMap.ratingSteps.$1),
                         child: SizedBox.fromSize(
                           size: starSize,
                           child: AnimatedStar(
-                            faded: gameMap.ratingSteps.$3 < seconds,
+                            faded: gameMap.ratingSteps.$1 < seconds,
                           ),
                         ),
                       ),

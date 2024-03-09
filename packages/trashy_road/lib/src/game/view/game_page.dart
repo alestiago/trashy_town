@@ -70,64 +70,56 @@ class _GameView extends StatelessWidget {
     final isTutorial =
         gameBloc.state.identifier == GameMapsState.tutorialIdentifier;
 
-    return _GameCompletionListener(
-      child: Stack(
-        children: [
-          const Positioned.fill(child: _GameBackground()),
-          const Align(child: TrashyRoadGameWidget()),
-          const Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.all(12),
-              child: InventoryHud(),
-            ),
-          ),
-          const Align(
-            alignment: Alignment.topCenter,
-            child: Padding(
-              padding: EdgeInsets.all(12),
-              child: TopHud(),
-            ),
-          ),
-          if (isTutorial)
+    return GameBackgroundMusicListener(
+      child: _GameCompletionListener(
+        child: Stack(
+          children: [
+            const Positioned.fill(child: _GameBackground()),
+            const Align(child: TrashyRoadGameWidget()),
             const Align(
-              alignment: Alignment(0, -0.6),
-              child: GameTutorial(),
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.all(12),
+                child: InventoryHud(),
+              ),
             ),
-        ],
+            const Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.all(12),
+                child: TopHud(),
+              ),
+            ),
+            if (isTutorial)
+              const Align(
+                alignment: Alignment(0, -0.6),
+                child: GameTutorial(),
+              ),
+          ],
+        ),
       ),
     );
   }
 }
 
-/// {@template _GameCompletionListener}
-/// Listens for when the game has completed and navigates accordingly.
-/// {@endtemplate}
-class _GameCompletionListener extends StatelessWidget {
-  /// {@macro _GameCompletionListener}
-  const _GameCompletionListener({this.child});
-
-  final Widget? child;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocListener<GameBloc, GameState>(
-      listenWhen: (previous, current) => current.status == GameStatus.completed,
-      listener: (context, state) {
-        context.read<GameMapsBloc>().add(
-              GameMapCompletedEvent(
-                identifier: state.identifier,
-                score: state.score,
-              ),
+class _GameCompletionListener extends BlocListener<GameBloc, GameState> {
+  _GameCompletionListener({super.child})
+      : super(
+          listenWhen: (previous, current) =>
+              current.status == GameStatus.completed,
+          listener: (context, state) {
+            context.read<GameMapsBloc>().add(
+                  GameMapCompletedEvent(
+                    identifier: state.identifier,
+                    score: state.score,
+                  ),
+                );
+            Navigator.push(
+              context,
+              ScorePage.route(identifier: state.identifier),
             );
-        Navigator.push(
-          context,
-          ScorePage.route(identifier: state.identifier),
+          },
         );
-      },
-      child: child,
-    );
-  }
 }
 
 class _GameBackground extends StatelessWidget {

@@ -228,6 +228,10 @@ class $AssetsImagesDisplayGen {
   AssetGenImage get stopwatch =>
       const AssetGenImage('assets/images/display/stopwatch.png');
 
+  /// File path: assets/images/display/tutorial-movement.gif
+  AssetGenImage get tutorialMovement =>
+      const AssetGenImage('assets/images/display/tutorial-movement.gif');
+
   /// List of all assets
   List<dynamic> get values => [
         logo,
@@ -249,7 +253,8 @@ class $AssetsImagesDisplayGen {
         starEmpty,
         starFilled,
         starFilledGolden,
-        stopwatch
+        stopwatch,
+        tutorialMovement
       ];
 }
 

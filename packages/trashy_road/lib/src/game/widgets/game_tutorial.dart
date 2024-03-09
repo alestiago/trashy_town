@@ -1,6 +1,7 @@
 import 'package:basura/basura.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 enum _TutorialStatus {
@@ -84,9 +85,9 @@ class _MovementInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ColoredBox(
-      color: Colors.red,
-      child: Text('Move the player.'),
+    return Assets.images.display.tutorialMovement.image(
+      width: 250,
+      filterQuality: FilterQuality.medium,
     );
   }
 }

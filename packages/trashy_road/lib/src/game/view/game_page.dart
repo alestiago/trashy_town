@@ -72,36 +72,53 @@ class _GameView extends StatelessWidget {
     final isTutorial =
         gameBloc.state.identifier == GameMapsState.tutorialIdentifier;
 
-    return MultiBlocListener(
-      listeners: [
-        _GameCompletionListener(),
-        _GameLostTimeIsUpListener(),
-        _GameLostRunnedOverListener(),
-      ],
-      child: Stack(
-        children: [
-          const Positioned.fill(child: _GameBackground()),
-          const Align(child: TrashyRoadGameWidget()),
-          const Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.all(12),
-              child: InventoryHud(),
-            ),
-          ),
-          const Align(
-            alignment: Alignment.topCenter,
-            child: Padding(
-              padding: EdgeInsets.all(12),
-              child: TopHud(),
-            ),
-          ),
-          if (isTutorial)
-            const Align(
-              alignment: Alignment(0, -0.6),
-              child: GameTutorial(),
-            ),
+    return GameBackgroundMusicListener(
+      child: MultiBlocListener(
+        listeners: [
+          _GameCompletionListener(),
+          _GameLostTimeIsUpListener(),
+          _GameLostRunnedOverListener(),
         ],
+        child: Stack(
+          children: [
+            const Positioned.fill(child: _GameBackground()),
+            const Align(child: TrashyRoadGameWidget()),
+            const Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.all(12),
+                child: InventoryHud(),
+              ),
+            ),
+            const Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.all(12),
+                child: TopHud(),
+              ),
+            ),
+            if (isTutorial)
+              const Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: EdgeInsets.all(12),
+                  child: InventoryHud(),
+                ),
+              ),
+            const Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.all(12),
+                child: TopHud(),
+              ),
+            ),
+            if (isTutorial)
+              const Align(
+                alignment: Alignment(0, -0.6),
+                child: GameTutorial(),
+              ),
+          ],
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 export 'animated_star.dart';
+export 'game_background_music_listener.dart';
 export 'game_stopwatch.dart';
 export 'game_tutorial.dart';
 export 'inventory_hud.dart';

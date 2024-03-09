@@ -102,18 +102,18 @@ class PausePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         _ImageIcon(
-                          imagePath: Assets.images.menuIcon.path,
+                          imagePath: Assets.images.display.menuIcon.path,
                           onPressed: () => _onMenu(context),
                         ),
                         spacing,
                         _ImageIcon(
-                          imagePath: Assets.images.playIcon.path,
+                          imagePath: Assets.images.display.playIcon.path,
                           dimension: 80,
                           onPressed: () => _onResume(context),
                         ),
                         spacing,
                         _ImageIcon(
-                          imagePath: Assets.images.replayIcon.path,
+                          imagePath: Assets.images.display.replayIcon.path,
                           onPressed: () => _onReplay(context),
                         ),
                       ],
@@ -138,7 +138,7 @@ class _PaperBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     final preloadCubit = context.read<PreloadCubit>();
     final image = preloadCubit.imageProviderCache
-        .fromCache(Assets.images.paperBackground.path);
+        .fromCache(Assets.images.display.paperBackground.path);
 
     return DecoratedBox(
       decoration: BoxDecoration(

@@ -151,8 +151,8 @@ class _PlayerSpriteComponent extends SpriteAnimationComponent
     await super.onLoad();
 
     final image = await game.images.fetchOrGenerate(
-      Assets.images.playerHop.path,
-      () => game.images.load(Assets.images.playerHop.path),
+      Assets.images.sprites.playerHop.path,
+      () => game.images.load(Assets.images.sprites.playerHop.path),
     );
 
     for (var i = 0; i < _animationDirectionOrder.length; i++) {
@@ -188,8 +188,8 @@ class _PlayerShadowSpriteComponent extends SpriteAnimationComponent
     await super.onLoad();
 
     final image = await game.images.fetchOrGenerate(
-      Assets.images.playerHopShadow.path,
-      () => game.images.load(Assets.images.playerHopShadow.path),
+      Assets.images.sprites.playerHopShadow.path,
+      () => game.images.load(Assets.images.sprites.playerHopShadow.path),
     );
 
     const frameCount = 7;

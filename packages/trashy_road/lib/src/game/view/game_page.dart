@@ -84,7 +84,7 @@ class _GameView extends StatelessWidget {
         children: [
           Positioned.fill(
             child: Image.asset(
-              Assets.images.grass.path,
+              Assets.images.sprites.grass.path,
               repeat: ImageRepeat.repeat,
               color: const Color.fromARGB(40, 0, 0, 0),
               colorBlendMode: BlendMode.darken,

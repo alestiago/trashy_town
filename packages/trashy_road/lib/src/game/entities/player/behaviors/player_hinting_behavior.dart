@@ -95,9 +95,9 @@ class PlayerHintingBehavior extends Behavior<Player> with HasGameReference {
     if (hasMoved) {
       // Heuristic to avoid searching for the closest trash every frame.
       _findClosestTrash();
+      _playerPositionCache.setFrom(parent.position);
     }
 
-    _playerPositionCache.setFrom(parent.position);
     final shouldHint =
         _lastHint > _hintInterval && _lastVisibleTrash > _hintShownInterval;
     if (shouldHint) {

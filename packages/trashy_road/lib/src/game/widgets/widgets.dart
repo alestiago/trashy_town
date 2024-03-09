@@ -1,5 +1,6 @@
 export 'animated_star.dart';
 export 'game_stopwatch.dart';
+export 'game_tutorial.dart';
 export 'inventory_hud.dart';
 export 'pause_button.dart';
 export 'playing_hud_transition.dart';

@@ -12,7 +12,6 @@ dependencies:
   basura:
     path: ../basura
   bloc: ^8.1.2
-  bloc_concurrency: ^0.2.4
   bloc_test: ^9.1.5
   clock: ^1.1.1
   collection: ^1.18.0

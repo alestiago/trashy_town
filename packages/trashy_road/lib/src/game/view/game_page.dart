@@ -73,7 +73,8 @@ class _GameView extends StatelessWidget {
     return MultiBlocListener(
       listeners: [
         _GameCompletionListener(),
-        _GameResetTimeIsUpListener(),
+        _GameLostTimeIsUpListener(),
+        _GameLostRunnedOverListener(),
       ],
       child: Stack(
         children: [
@@ -124,20 +125,33 @@ class _GameCompletionListener extends BlocListener<GameBloc, GameState> {
         );
 }
 
-class _GameResetTimeIsUpListener extends BlocListener<GameBloc, GameState> {
-  _GameResetTimeIsUpListener()
+class _GameLostRunnedOverListener extends BlocListener<GameBloc, GameState> {
+  _GameLostRunnedOverListener()
       : super(
           listenWhen: (previous, current) =>
-              current.status == GameStatus.resetting &&
-              current.resetReason == GameResetReason.timeIsUp,
+              current.status == GameStatus.lost &&
+              current.lostReason == GameLostReason.vehicleRunningOver,
+          listener: (context, state) {
+            context.read<GameBloc>().add(const GameResetEvent());
+          },
+        );
+}
+
+class _GameLostTimeIsUpListener extends BlocListener<GameBloc, GameState> {
+  _GameLostTimeIsUpListener()
+      : super(
+          listenWhen: (previous, current) =>
+              current.status == GameStatus.lost &&
+              current.lostReason == GameLostReason.timeIsUp,
           listener: (context, state) {
             final gameBloc = context.read<GameBloc>()
               ..add(const GamePausedEvent());
             final navigator = Navigator.of(context)
               ..push(GameTimeIsUpPage.route());
-            Future<void>.delayed(const Duration(seconds: 3)).then((_) async {
+            Future<void>.delayed(const Duration(milliseconds: 500))
+                .then((_) async {
               await Future<void>.delayed(const Duration(seconds: 3));
-              gameBloc.add(const GameResumedEvent());
+              gameBloc.add(const GameResetEvent());
               await Future<void>.delayed(const Duration(milliseconds: 500));
               navigator.pop();
             });

@@ -51,7 +51,7 @@ class _GameStopwatchState extends State<GameStopwatch>
     final timeIsUp = _stopwatch.elapsed.inSeconds >= completionSeconds;
 
     if (timeIsUp && gameBloc.state.status == GameStatus.playing) {
-      gameBloc.add(const GameResetEvent(reason: GameResetReason.timeIsUp));
+      gameBloc.add(const GameLostEvent(reason: GameLostReason.timeIsUp));
     }
   }
 
@@ -80,14 +80,15 @@ class _GameStopwatchState extends State<GameStopwatch>
                 current.status == GameStatus.completed;
             final hasPaused = previous.status == GameStatus.playing &&
                 current.status == GameStatus.paused;
+            final hasLost = current.status == GameStatus.lost;
 
-            return hasCompleted || hasPaused;
+            return hasCompleted || hasPaused || hasLost;
           },
           listener: (_, __) => _stop(),
         ),
         BlocListener<GameBloc, GameState>(
           listenWhen: (previous, current) {
-            return current.status == GameStatus.resetting;
+            return previous.status == GameStatus.resetting;
           },
           listener: (_, __) => _reset(),
         ),

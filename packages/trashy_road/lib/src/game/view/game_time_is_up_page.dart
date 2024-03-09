@@ -96,7 +96,7 @@ class _GameTimeIsUpPageRouteBuilder<T> extends PageRouteBuilder<T> {
               color: const Color(0xff000000).withOpacity(0),
             );
             final end = BoxDecoration(
-              color: const Color(0xff000000).withOpacity(0.3),
+              color: const Color(0xff000000).withOpacity(0.1),
             );
 
             final decorationCurvedAnimation =

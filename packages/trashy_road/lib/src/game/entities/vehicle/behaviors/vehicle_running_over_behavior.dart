@@ -11,6 +11,6 @@ class VehicleRunningOverBehavior extends CollisionBehavior<Player, Vehicle>
   @override
   void onCollisionStart(Set<Vector2> intersectionPoints, Player other) {
     super.onCollisionStart(intersectionPoints, other);
-    bloc.add(const GameResetEvent(reason: GameResetReason.vehicleRunningOver));
+    bloc.add(const GameLostEvent(reason: GameLostReason.vehicleRunningOver));
   }
 }

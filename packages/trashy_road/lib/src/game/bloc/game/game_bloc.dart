@@ -20,6 +20,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     on<GameInteractedEvent>(_onGameInteraction, transformer: sequential());
     on<GameCollectedTrashEvent>(_onCollectedTrash, transformer: sequential());
     on<GameDepositedTrashEvent>(_onDepositedTrash, transformer: sequential());
+    on<GameLostEvent>(_onGameLost, transformer: sequential());
     on<GameResetEvent>(_onGameReset, transformer: sequential());
     on<GamePausedEvent>(_onGamePaused, transformer: sequential());
     on<GameResumedEvent>(_onGameResumed, transformer: sequential());
@@ -29,10 +30,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     GameReadyEvent event,
     Emitter<GameState> emit,
   ) {
-    if (state.status == GameStatus.paused) {
-      return;
-    }
-
     emit(state.copyWith(status: GameStatus.ready));
   }
 
@@ -93,6 +90,18 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     );
   }
 
+  void _onGameLost(
+    GameLostEvent event,
+    Emitter<GameState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        status: GameStatus.lost,
+        lostReason: event.reason,
+      ),
+    );
+  }
+
   void _onGameReset(
     GameResetEvent event,
     Emitter<GameState> emit,
@@ -101,10 +110,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       GameState.initial(
         identifier: state.identifier,
         map: state.map,
-      ).copyWith(
-        status: GameStatus.resetting,
-        resetReason: event.reason,
-      ),
+      ).copyWith(status: GameStatus.resetting),
     );
   }
 

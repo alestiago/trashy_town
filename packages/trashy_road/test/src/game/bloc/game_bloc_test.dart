@@ -470,7 +470,7 @@ void main() {
         act: (bloc) => bloc
           ..add(const GameInteractedEvent())
           ..add(const GameCollectedTrashEvent(item: TrashType.plastic))
-          ..add(const GameResetEvent(reason: GameResetReason.user)),
+          ..add(const GameResetEvent()),
         expect: () => [
           GameState(
             identifier: identifier,
@@ -490,7 +490,6 @@ void main() {
             identifier: identifier,
             map: map,
             status: GameStatus.resetting,
-            resetReason: GameResetReason.user,
             inventory: Inventory.empty(),
           ),
         ],

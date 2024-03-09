@@ -5,5 +5,6 @@ export 'game_tutorial.dart';
 export 'inventory_hud.dart';
 export 'pause_button.dart';
 export 'playing_hud_transition.dart';
+export 'stopwatch_icon.dart';
 export 'top_hud.dart';
 export 'trashy_road_game_widget.dart';

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:basura/basura.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +73,12 @@ class _GameView extends StatelessWidget {
         gameBloc.state.identifier == GameMapsState.tutorialIdentifier;
 
     return GameBackgroundMusicListener(
-      child: _GameCompletionListener(
+      child: MultiBlocListener(
+        listeners: [
+          _GameCompletionListener(),
+          _GameLostTimeIsUpListener(),
+          _GameLostRunnedOverListener(),
+        ],
         child: Stack(
           children: [
             const Positioned.fill(child: _GameBackground()),
@@ -92,6 +99,21 @@ class _GameView extends StatelessWidget {
             ),
             if (isTutorial)
               const Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: EdgeInsets.all(12),
+                  child: InventoryHud(),
+                ),
+              ),
+            const Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.all(12),
+                child: TopHud(),
+              ),
+            ),
+            if (isTutorial)
+              const Align(
                 alignment: Alignment(0, -0.6),
                 child: GameTutorial(),
               ),
@@ -103,7 +125,7 @@ class _GameView extends StatelessWidget {
 }
 
 class _GameCompletionListener extends BlocListener<GameBloc, GameState> {
-  _GameCompletionListener({super.child})
+  _GameCompletionListener()
       : super(
           listenWhen: (previous, current) =>
               current.status == GameStatus.completed,
@@ -118,6 +140,47 @@ class _GameCompletionListener extends BlocListener<GameBloc, GameState> {
               context,
               ScorePage.route(identifier: state.identifier),
             );
+          },
+        );
+}
+
+class _GameLostRunnedOverListener extends BlocListener<GameBloc, GameState> {
+  _GameLostRunnedOverListener()
+      : super(
+          listenWhen: (previous, current) =>
+              current.status == GameStatus.lost &&
+              current.lostReason == GameLostReason.vehicleRunningOver,
+          listener: (context, state) {
+            context.read<GameBloc>().add(const GameResetEvent());
+          },
+        );
+}
+
+class _GameLostTimeIsUpListener extends BlocListener<GameBloc, GameState> {
+  _GameLostTimeIsUpListener()
+      : super(
+          listenWhen: (previous, current) =>
+              current.status == GameStatus.lost &&
+              current.lostReason == GameLostReason.timeIsUp,
+          listener: (context, state) {
+            final gameBloc = context.read<GameBloc>()
+              ..add(const GamePausedEvent());
+            final navigator = Navigator.of(context)
+              ..push(GameTimeIsUpPage.route());
+
+            // TODO(alestiago): Refactor this to stop using microtasks and
+            // Future.delayed. Instead, consider other approaches to stagger
+            // the animations.
+            scheduleMicrotask(() async {
+              await Future<void>.delayed(
+                GameTimeIsUpPageRouteBuilder.animationDuration * 2,
+              );
+              gameBloc.add(const GameResetEvent());
+              await Future<void>.delayed(
+                PlayingHudTransition.animationDuration ~/ 2,
+              );
+              navigator.pop();
+            });
           },
         );
 }

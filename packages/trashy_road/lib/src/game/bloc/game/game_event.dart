@@ -63,14 +63,25 @@ class GameDepositedTrashEvent extends GameEvent {
   List<Object?> get props => [item];
 }
 
-/// The game has been reset.
-class GameResetEvent extends GameEvent {
-  const GameResetEvent({required this.reason}) : super();
+/// {@template GameLostEvent}
+/// The game has been lost.
+/// {@endtemplate}
+class GameLostEvent extends GameEvent {
+  /// {@macro GameLostEvent}
+  const GameLostEvent({required this.reason}) : super();
 
-  final GameResetReason reason;
+  final GameLostReason reason;
 
   @override
   List<Object?> get props => [reason];
+}
+
+/// The game has been reset.
+class GameResetEvent extends GameEvent {
+  const GameResetEvent() : super();
+
+  @override
+  List<Object?> get props => [];
 }
 
 /// {@template GamePausedEvent}

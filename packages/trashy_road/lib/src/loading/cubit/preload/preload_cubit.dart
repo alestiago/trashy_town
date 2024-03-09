@@ -42,12 +42,12 @@ class PreloadCubit extends Cubit<PreloadState> {
         'images',
         () => imageProviderCache.loadAll(
           [
-            Assets.images.pauseIcon,
-            Assets.images.paperBackground,
-            Assets.images.replayIcon,
-            Assets.images.playIcon,
-            Assets.images.menuIcon,
-            Assets.images.nextIcon,
+            Assets.images.display.pauseIcon,
+            Assets.images.display.paperBackground,
+            Assets.images.display.replayIcon,
+            Assets.images.display.playIcon,
+            Assets.images.display.menuIcon,
+            Assets.images.display.nextIcon,
           ],
         ),
       ),

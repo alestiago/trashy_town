@@ -31,8 +31,8 @@ class GameMapsState extends Equatable {
   GameMapsState.initial()
       : maps = UnmodifiableMapView(
           {
-            'map1': GameMap._(
-              identifier: 'map1',
+            tutorialIdentifier: GameMap._(
+              identifier: tutorialIdentifier,
               displayName: '1',
               path: Assets.tiles.map1,
               score: -1,
@@ -49,6 +49,9 @@ class GameMapsState extends Equatable {
             ),
           },
         );
+
+  /// The identifier of the tutorial map.
+  static String tutorialIdentifier = 'map1';
 
   final GameMapsCollection maps;
 

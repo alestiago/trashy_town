@@ -98,6 +98,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         map: state.map,
       ).copyWith(
         status: GameStatus.resetting,
+        resetReason: event.reason,
       ),
     );
   }

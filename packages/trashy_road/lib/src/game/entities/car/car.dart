@@ -47,9 +47,9 @@ class _CarSpriteComponent extends GameSpriteAnimationComponent {
     required CarStyle style,
   }) {
     final spritePath = switch (style) {
-      CarStyle.blue => Assets.images.carBlueDriving.path,
-      CarStyle.red => Assets.images.carRedDriving.path,
-      CarStyle.yellow => Assets.images.carYellowDriving.path,
+      CarStyle.blue => Assets.images.sprites.carBlueDriving.path,
+      CarStyle.red => Assets.images.sprites.carRedDriving.path,
+      CarStyle.yellow => Assets.images.sprites.carYellowDriving.path,
     };
 
     return direction == RoadLaneDirection.leftToRight
@@ -99,7 +99,7 @@ class _CarShadowComponent extends GameSpriteComponent {
 
   _CarShadowComponent._rightToLeft()
       : this.fromPath(
-          spritePath: Assets.images.carRightToLeftShadow.path,
+          spritePath: Assets.images.sprites.carRightToLeftShadow.path,
           // The `position` has been eyeballed to match with the overall tile
           // map.
           position: Vector2(-0.25, -1.5)..toGameSize(),
@@ -107,7 +107,7 @@ class _CarShadowComponent extends GameSpriteComponent {
 
   _CarShadowComponent._leftToRight()
       : this.fromPath(
-          spritePath: Assets.images.carLeftToRightShadow.path,
+          spritePath: Assets.images.sprites.carLeftToRightShadow.path,
           // The `position` has been eyeballed to match with the overall tile
           // map.
           position: Vector2(-0.2, -1.5)..toGameSize(),

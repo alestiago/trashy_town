@@ -70,7 +70,7 @@ class _PaperBackground extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: Assets.images.paperBackgroundRectThin.provider(),
+          image: Assets.images.display.paperBackgroundRectThin.provider(),
           fit: BoxFit.fill,
         ),
       ),
@@ -97,14 +97,16 @@ class _InventorySlot extends StatelessWidget {
     }
   }
 
-  _InventorySlot.empty() : image = Assets.images.slotEmpty.image();
+  _InventorySlot.empty() : image = Assets.images.display.slotEmpty.image();
 
-  _InventorySlot.appleCore() : image = Assets.images.slotAppleCore.image();
+  _InventorySlot.appleCore()
+      : image = Assets.images.display.slotAppleCore.image();
 
-  _InventorySlot.paperBox() : image = Assets.images.slotPaperBox.image();
+  _InventorySlot.paperBox()
+      : image = Assets.images.display.slotPaperBox.image();
 
   _InventorySlot.plasticBottle()
-      : image = Assets.images.slotPlasticBottle.image();
+      : image = Assets.images.display.slotPlasticBottle.image();
 
   final Image image;
 

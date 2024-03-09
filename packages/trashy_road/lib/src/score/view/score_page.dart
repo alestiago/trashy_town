@@ -114,18 +114,18 @@ class ScorePage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         _ImageIcon(
-                          imagePath: Assets.images.replayIcon.path,
+                          imagePath: Assets.images.display.replayIcon.path,
                           onPressed: () => _onReplay(context),
                         ),
                         if (nextMap != null)
                           _ImageIcon(
-                            imagePath: Assets.images.nextIcon.path,
+                            imagePath: Assets.images.display.nextIcon.path,
                             dimension: 80,
                             onPressed: () =>
                                 _onNextMap(context, nextMap: nextMap),
                           ),
                         _ImageIcon(
-                          imagePath: Assets.images.menuIcon.path,
+                          imagePath: Assets.images.display.menuIcon.path,
                           onPressed: () => _onMenu(context),
                         ),
                       ],
@@ -150,7 +150,7 @@ class _PaperBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     final preloadCubit = context.read<PreloadCubit>();
     final image = preloadCubit.imageProviderCache
-        .fromCache(Assets.images.paperBackground.path);
+        .fromCache(Assets.images.display.paperBackground.path);
 
     return DecoratedBox(
       decoration: BoxDecoration(

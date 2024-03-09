@@ -40,7 +40,7 @@ class _MapsMenuView extends StatelessWidget {
         Positioned.fill(
           child: Image.asset(
             // TODO(alestiago): Use background render when available.
-            Assets.images.grass.path,
+            Assets.images.sprites.grass.path,
             repeat: ImageRepeat.repeat,
           ),
         ),

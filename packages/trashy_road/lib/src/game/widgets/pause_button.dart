@@ -27,7 +27,7 @@ class PauseButton extends StatelessWidget {
           return true;
         },
         onReplay: () {
-          gameBloc.add(const GameResetEvent());
+          gameBloc.add(const GameResetEvent(reason: GameResetReason.user));
           return true;
         },
       ),
@@ -39,7 +39,7 @@ class PauseButton extends StatelessWidget {
     return AnimatedHoverBrightness(
       child: GestureDetector(
         onTap: () => _onPause(context),
-        child: Assets.images.pauseIcon.image(width: 50, height: 50),
+        child: Assets.images.display.pauseIcon.image(width: 50, height: 50),
       ),
     );
   }

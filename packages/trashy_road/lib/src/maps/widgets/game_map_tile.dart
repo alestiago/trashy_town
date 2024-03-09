@@ -98,8 +98,9 @@ class _Stars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SvgGenImage star({required bool filled}) =>
-        filled ? Assets.images.starFilled : Assets.images.starEmpty;
+    SvgGenImage star({required bool filled}) => filled
+        ? Assets.images.display.starFilled
+        : Assets.images.display.starEmpty;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -132,7 +133,7 @@ class _PaperBackground extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: Assets.images.paperBackgroundSquare.provider(),
+          image: Assets.images.display.paperBackgroundSquare.provider(),
           fit: BoxFit.fill,
         ),
       ),
@@ -145,9 +146,9 @@ class _CrumbledPaper extends StatelessWidget {
   const _CrumbledPaper();
 
   static final _images = [
-    Assets.images.crumpledPaper1,
-    Assets.images.crumbledPaper2,
-    Assets.images.crumbledPaper3,
+    Assets.images.sprites.crumpledPaper1,
+    Assets.images.sprites.crumbledPaper2,
+    Assets.images.sprites.crumbledPaper3,
   ];
 
   static final _random = Random();

@@ -191,8 +191,8 @@ class _TrashCanShadowSpriteComponent extends SpriteAnimationComponent
     await super.onLoad();
 
     final image = await game.images.fetchOrGenerate(
-      Assets.images.trashCanOpeningShadow.path,
-      () => game.images.load(Assets.images.trashCanOpeningShadow.path),
+      Assets.images.sprites.trashCanOpeningShadow.path,
+      () => game.images.load(Assets.images.sprites.trashCanOpeningShadow.path),
     );
 
     animation = SpriteAnimation.fromFrameData(
@@ -217,19 +217,19 @@ class _TrashCanSpriteAnimationComponent extends SpriteAnimationComponent
     with HasGameReference, Openable {
   factory _TrashCanSpriteAnimationComponent._paper() {
     return _TrashCanSpriteAnimationComponent._(
-      animationPath: Assets.images.trashCanPaperOpening.path,
+      animationPath: Assets.images.sprites.trashCanPaperOpening.path,
     );
   }
 
   factory _TrashCanSpriteAnimationComponent._organic() {
     return _TrashCanSpriteAnimationComponent._(
-      animationPath: Assets.images.trashCanOrganicOpening.path,
+      animationPath: Assets.images.sprites.trashCanOrganicOpening.path,
     );
   }
 
   factory _TrashCanSpriteAnimationComponent._plastic() {
     return _TrashCanSpriteAnimationComponent._(
-      animationPath: Assets.images.trashCanPlasticOpening.path,
+      animationPath: Assets.images.sprites.trashCanPlasticOpening.path,
     );
   }
 
@@ -286,8 +286,9 @@ class _TrashCanParkShadowSpriteComponent extends SpriteAnimationComponent
     await super.onLoad();
 
     final image = await game.images.fetchOrGenerate(
-      Assets.images.trashParkCanOpeningShadow.path,
-      () => game.images.load(Assets.images.trashParkCanOpeningShadow.path),
+      Assets.images.sprites.trashParkCanOpeningShadow.path,
+      () => game.images
+          .load(Assets.images.sprites.trashParkCanOpeningShadow.path),
     );
 
     animation = SpriteAnimation.fromFrameData(
@@ -312,19 +313,19 @@ class _TrashCanParkSpriteAnimationComponent extends SpriteAnimationComponent
     with HasGameReference, Openable {
   factory _TrashCanParkSpriteAnimationComponent._paper() {
     return _TrashCanParkSpriteAnimationComponent._(
-      animationPath: Assets.images.trashParkCanPaperOpening.path,
+      animationPath: Assets.images.sprites.trashParkCanPaperOpening.path,
     );
   }
 
   factory _TrashCanParkSpriteAnimationComponent._organic() {
     return _TrashCanParkSpriteAnimationComponent._(
-      animationPath: Assets.images.trashParkCanOrganicOpening.path,
+      animationPath: Assets.images.sprites.trashParkCanOrganicOpening.path,
     );
   }
 
   factory _TrashCanParkSpriteAnimationComponent._plastic() {
     return _TrashCanParkSpriteAnimationComponent._(
-      animationPath: Assets.images.trashParkCanPlasticOpening.path,
+      animationPath: Assets.images.sprites.trashParkCanPlasticOpening.path,
     );
   }
 

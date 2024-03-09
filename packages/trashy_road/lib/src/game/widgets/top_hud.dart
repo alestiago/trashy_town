@@ -46,7 +46,7 @@ class _PaperBackground extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: Assets.images.paperBackgroundRectThin.provider(),
+          image: Assets.images.display.paperBackgroundRectThin.provider(),
           fit: BoxFit.fill,
         ),
       ),

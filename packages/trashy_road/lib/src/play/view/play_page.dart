@@ -48,7 +48,7 @@ class PlayPage extends StatelessWidget {
               child: AspectRatio(
                 aspectRatio: 776 / 458,
                 child: Image.asset(
-                  Assets.images.logo.path,
+                  Assets.images.display.logo.path,
                   fit: BoxFit.contain,
                   alignment: Alignment.topCenter,
                 ),
@@ -65,7 +65,7 @@ class PlayPage extends StatelessWidget {
                     : 0,
               ),
               child: Image.asset(
-                Assets.images.playBackgroundHouses.path,
+                Assets.images.display.playBackgroundHouses.path,
                 fit: BoxFit.cover,
               ),
             ),

@@ -65,10 +65,12 @@ class GameDepositedTrashEvent extends GameEvent {
 
 /// The game has been reset.
 class GameResetEvent extends GameEvent {
-  const GameResetEvent() : super();
+  const GameResetEvent({required this.reason}) : super();
+
+  final GameResetReason reason;
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [reason];
 }
 
 /// {@template GamePausedEvent}

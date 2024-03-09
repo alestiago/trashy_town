@@ -2,12 +2,21 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
+import 'package:flame/extensions.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 class PlayerHintingBehavior extends Behavior<Player> with HasGameReference {
+  /// The minimum time between hints.
+  static const _hintInterval = 5.0;
+
+  /// The amount of time that has to elapse without the closest [Trash] being
+  /// visible to show a hint.
+  static const _hintShownInterval = 4.0;
+
   /// The [Trash] entities in the game.
   ///
   /// These are cached during the [onLoad] method.
@@ -18,44 +27,37 @@ class PlayerHintingBehavior extends Behavior<Player> with HasGameReference {
   /// `null` if there are no [Trash] entities in the game.
   late Trash? _closestTrash;
 
+  /// The time since the last hint was shown.
+  var _lastHint = 0.0;
+
+  /// The time since the last trash was visible.
+  var _lastVisibleTrash = 0.0;
+
+  /// Whether the closest [Trash] is visible.
+  bool _isTrashVisible = true;
+
   final _distanceACache = Vector2.zero();
   final _distanceBCache = Vector2.zero();
   final _playerPositionCache = Vector2.zero();
   final _snappedPlayerPositionCache = Vector2.zero();
   final _snappedTrashPositionCache = Vector2.zero();
-  final _directionOriginCache = Vector2(0, -1);
-
-  final _arrow = _ArrowSpriteComponent.fromDirection(
-    _ArrowDirection.northWest,
-  );
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
 
-    _trash = game.descendants().whereType<Trash>().toSet();
+    _playerPositionCache.setFrom(parent.position);
+
+    final world = ancestors().whereType<TrashyRoadWorld>().first;
+    _trash = world.descendants().whereType<Trash>().toSet();
     for (final trash in _trash) {
       unawaited(trash.removed.then((_) => _trash.remove(trash)));
     }
-
-    for (final direction in _ArrowDirection.values) {
-      add(_ArrowSpriteComponent.fromDirection(direction));
-    }
-
-    _playerPositionCache.setFrom(parent.position);
-    parent.add(_arrow);
+    _findClosestTrash();
   }
 
-  @override
-  void update(double dt) {
-    super.update(dt);
-
-    final hasMoved = _playerPositionCache.distanceTo(parent.position) > 1;
-    if (!hasMoved) {
-      return;
-    }
-    _playerPositionCache.setFrom(parent.position);
-
+  void _findClosestTrash() {
+    // TODO(alestiago): Consinder ordering to improve performance.
     _closestTrash = _trash.reduce((trash, anotherTrash) {
       _distanceACache
         ..setFrom(trash.position)
@@ -69,18 +71,51 @@ class PlayerHintingBehavior extends Behavior<Player> with HasGameReference {
           : anotherTrash;
     });
 
-    _snappedPlayerPositionCache
-      ..setFrom(parent.position)
-      ..snap();
-    _snappedTrashPositionCache
-      ..setFrom(_closestTrash!.position)
-      ..snap();
+    _isTrashVisible = game.camera.viewfinder
+        // ignore: invalid_use_of_protected_member
+        .computeVisibleRect()
+        .containsPoint(_closestTrash!.position);
+  }
 
-    final direction = _ArrowDirection.getDirection(
-      _snappedPlayerPositionCache,
-      _snappedTrashPositionCache,
-    );
-    _arrow.updateDirection(direction);
+  @override
+  void update(double dt) {
+    super.update(dt);
+
+    if (_trash.isEmpty) {
+      // If there is no trash, no hint is needed and thus, the behavior can be
+      // removed.
+      removeFromParent();
+      return;
+    }
+
+    _lastVisibleTrash = _isTrashVisible ? 0 : _lastVisibleTrash + dt;
+    _lastHint += dt;
+
+    final hasMoved = _playerPositionCache.distanceTo(parent.position) > 1;
+    if (hasMoved) {
+      // Heuristic to avoid searching for the closest trash every frame.
+      _findClosestTrash();
+    }
+
+    _playerPositionCache.setFrom(parent.position);
+    final shouldHint =
+        _lastHint > _hintInterval && _lastVisibleTrash > _hintShownInterval;
+    if (shouldHint) {
+      _lastHint = 0;
+
+      _snappedPlayerPositionCache
+        ..setFrom(parent.position)
+        ..snap();
+      _snappedTrashPositionCache
+        ..setFrom(_closestTrash!.position)
+        ..snap();
+
+      final direction = _ArrowDirection.getDirection(
+        _snappedPlayerPositionCache,
+        _snappedTrashPositionCache,
+      );
+      parent.add(_ArrowSpriteComponent.fromDirection(direction));
+    }
   }
 }
 
@@ -106,6 +141,20 @@ enum _ArrowDirection {
       _ArrowDirection.northWest => Assets.images.sprites.arrowNorthWest.path,
     };
     return spritePath;
+  }
+
+  /// The destination of the direction.
+  Vector2 destination() {
+    return switch (this) {
+      _ArrowDirection.north => Vector2(0, -1),
+      _ArrowDirection.northEast => Vector2(1, -1),
+      _ArrowDirection.east => Vector2(1, 0),
+      _ArrowDirection.southEast => Vector2(1, 1),
+      _ArrowDirection.south => Vector2(0, 1),
+      _ArrowDirection.southWest => Vector2(-1, 1),
+      _ArrowDirection.west => Vector2(-1, 0),
+      _ArrowDirection.northWest => Vector2(-1, -1),
+    };
   }
 
   static _ArrowDirection getDirection(Vector2 a, Vector2 b) {
@@ -171,13 +220,23 @@ class _ArrowSpriteComponent extends GameSpriteComponent with HasGameReference {
 
   _ArrowDirection direction;
 
-  Future<void> updateDirection(_ArrowDirection newDirection) async {
-    if (newDirection == direction) {
-      return;
-    }
-    direction = newDirection;
+  @override
+  FutureOr<void> onLoad() async {
+    await super.onLoad();
 
-    final newSpritePath = newDirection.spritePath;
-    sprite = await Sprite.load(newSpritePath, images: game.images);
+    final effectController = EffectController(
+      duration: 1,
+    );
+
+    await addAll([
+      MoveEffect.by(
+        direction.destination()..scale(4),
+        effectController,
+      ),
+      RemoveEffect(
+        delay: effectController.duration!,
+      ),
+      OpacityEffect.fadeOut(effectController),
+    ]);
   }
 }

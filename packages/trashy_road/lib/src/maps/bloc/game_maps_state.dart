@@ -36,7 +36,7 @@ class GameMapsState extends Equatable {
               displayName: '1',
               path: Assets.tiles.map1,
               score: -1,
-              ratingSteps: (1, 2, 3),
+              ratingSteps: (15, 20, 30),
               locked: false,
             ),
             'map2': GameMap._(
@@ -158,7 +158,7 @@ class GameMap extends Equatable {
   final String path;
 
   /// The maximum amount of time the player has to complete the map.
-  int get completionSeconds => ratingSteps.$3 + 1;
+  int get completionSeconds => ratingSteps.$3 + 15;
 
   GameMap copyWith({
     String? identifier,

@@ -21,7 +21,9 @@ class DroppingBehavior extends Behavior with HasGameReference<TrashyRoadGame> {
 
     final random = game.random;
     final duration = minDuration + random.nextDouble() * 0.5;
-    parent.add(_DropEffect(drop: drop, duration: duration));
+    parent.children.whereType<PositionComponent>().forEach((element) {
+      element.add(_DropEffect(drop: drop, duration: duration));
+    });
   }
 }
 

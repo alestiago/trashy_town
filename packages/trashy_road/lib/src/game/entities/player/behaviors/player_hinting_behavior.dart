@@ -9,6 +9,12 @@ import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
+/// {@template PlayerHintingBehavior}
+/// Shows a hint to the player to guide them to the closest [Trash].
+///
+/// The hint is shown when the closest [Trash] is not visible for a while and a
+/// certain amount of time has passed since the last hint was shown.
+/// {@endtemplate}
 class PlayerHintingBehavior extends Behavior<Player> with HasGameReference {
   /// The minimum time between hints.
   static const _hintInterval = 5.0;
@@ -19,22 +25,34 @@ class PlayerHintingBehavior extends Behavior<Player> with HasGameReference {
 
   /// The [Trash] entities in the game.
   ///
-  /// These are cached during the [onLoad] method.
+  /// Initialy determined during the [onLoad] method. [Trash] entities are
+  /// removed from this set when they are removed from the game.
+  ///
+  /// If new [Trash] entities are added to the game, they are not accounted for.
+  ///
+  /// When empty, the behavior is removed from the [Player], since there is no
+  /// need to show hints when there is no trash.
   late Set<Trash> _trash;
 
   /// The closest [Trash] to the [Player].
   ///
-  /// `null` if there are no [Trash] entities in the game.
+  /// Initialy determined during the [onLoad] method.
+  ///
+  /// `null` if there are no [Trash] entities in the game. When so, the behavior
+  /// is removed from the [Player], since there is no need to show hints when
+  /// there is no trash.
   late Trash? _closestTrash;
+
+  /// Whether the closest [Trash] is visible.
+  ///
+  /// Initialy determined during the [onLoad] method.
+  late bool _isTrashVisible;
 
   /// The time since the last hint was shown.
   var _lastHint = 0.0;
 
   /// The time since the last trash was visible.
   var _lastVisibleTrash = 0.0;
-
-  /// Whether the closest [Trash] is visible.
-  bool _isTrashVisible = true;
 
   final _distanceACache = Vector2.zero();
   final _distanceBCache = Vector2.zero();
@@ -81,7 +99,7 @@ class PlayerHintingBehavior extends Behavior<Player> with HasGameReference {
   void update(double dt) {
     super.update(dt);
 
-    if (_trash.isEmpty) {
+    if (_trash.isEmpty || _closestTrash == null) {
       // If there is no trash, no hint is needed and thus, the behavior can be
       // removed.
       removeFromParent();
@@ -110,16 +128,17 @@ class PlayerHintingBehavior extends Behavior<Player> with HasGameReference {
         ..setFrom(_closestTrash!.position)
         ..snap();
 
-      final direction = _ArrowDirection.getDirection(
+      final direction = _HintArrowDirection.fromVector2(
         _snappedPlayerPositionCache,
         _snappedTrashPositionCache,
       );
-      parent.add(_ArrowSpriteComponent.fromDirection(direction));
+      parent.add(_HintArrowSpriteComponent.fromDirection(direction));
     }
   }
 }
 
-enum _ArrowDirection {
+/// The directions the [_HintArrowSpriteComponent] can point to.
+enum _HintArrowDirection {
   north,
   northEast,
   east,
@@ -129,35 +148,8 @@ enum _ArrowDirection {
   west,
   northWest;
 
-  String get spritePath {
-    final spritePath = switch (this) {
-      _ArrowDirection.north => Assets.images.sprites.arrowNorth.path,
-      _ArrowDirection.northEast => Assets.images.sprites.arrowNorthEast.path,
-      _ArrowDirection.east => Assets.images.sprites.arrowEast.path,
-      _ArrowDirection.southEast => Assets.images.sprites.arrowSouthEast.path,
-      _ArrowDirection.south => Assets.images.sprites.arrowSouth.path,
-      _ArrowDirection.southWest => Assets.images.sprites.arrowSouthWest.path,
-      _ArrowDirection.west => Assets.images.sprites.arrowWest.path,
-      _ArrowDirection.northWest => Assets.images.sprites.arrowNorthWest.path,
-    };
-    return spritePath;
-  }
-
-  /// The destination of the direction.
-  Vector2 destination() {
-    return switch (this) {
-      _ArrowDirection.north => Vector2(0, -1),
-      _ArrowDirection.northEast => Vector2(1, -1),
-      _ArrowDirection.east => Vector2(1, 0),
-      _ArrowDirection.southEast => Vector2(1, 1),
-      _ArrowDirection.south => Vector2(0, 1),
-      _ArrowDirection.southWest => Vector2(-1, 1),
-      _ArrowDirection.west => Vector2(-1, 0),
-      _ArrowDirection.northWest => Vector2(-1, -1),
-    };
-  }
-
-  static _ArrowDirection getDirection(Vector2 a, Vector2 b) {
+  /// Derives the [_HintArrowDirection] from two [Vector2] points.
+  static _HintArrowDirection fromVector2(Vector2 a, Vector2 b) {
     final angle = math.atan2(a.y - b.y, a.x - b.x);
     var degrees = angle * (180 / math.pi);
 
@@ -168,27 +160,60 @@ enum _ArrowDirection {
 
     // Determine direction based on degrees
     if (degrees >= 22.5 && degrees < 67.5) {
-      return _ArrowDirection.northWest;
+      return _HintArrowDirection.northWest;
     } else if (degrees >= 67.5 && degrees < 112.5) {
-      return _ArrowDirection.north;
+      return _HintArrowDirection.north;
     } else if (degrees >= 112.5 && degrees < 157.5) {
-      return _ArrowDirection.northEast;
+      return _HintArrowDirection.northEast;
     } else if (degrees >= 157.5 && degrees < 202.5) {
-      return _ArrowDirection.east;
+      return _HintArrowDirection.east;
     } else if (degrees >= 202.5 && degrees < 247.5) {
-      return _ArrowDirection.southEast;
+      return _HintArrowDirection.southEast;
     } else if (degrees >= 247.5 && degrees < 292.5) {
-      return _ArrowDirection.south;
+      return _HintArrowDirection.south;
     } else if (degrees >= 292.5 && degrees < 337.5) {
-      return _ArrowDirection.southWest;
+      return _HintArrowDirection.southWest;
     } else {
-      return _ArrowDirection.west;
+      return _HintArrowDirection.west;
     }
+  }
+
+  String get spritePath {
+    final spritePath = switch (this) {
+      _HintArrowDirection.north => Assets.images.sprites.arrowNorth.path,
+      _HintArrowDirection.northEast =>
+        Assets.images.sprites.arrowNorthEast.path,
+      _HintArrowDirection.east => Assets.images.sprites.arrowEast.path,
+      _HintArrowDirection.southEast =>
+        Assets.images.sprites.arrowSouthEast.path,
+      _HintArrowDirection.south => Assets.images.sprites.arrowSouth.path,
+      _HintArrowDirection.southWest =>
+        Assets.images.sprites.arrowSouthWest.path,
+      _HintArrowDirection.west => Assets.images.sprites.arrowWest.path,
+      _HintArrowDirection.northWest =>
+        Assets.images.sprites.arrowNorthWest.path,
+    };
+    return spritePath;
+  }
+
+  /// The destination of the direction.
+  Vector2 destination() {
+    return switch (this) {
+      _HintArrowDirection.north => Vector2(0, -1),
+      _HintArrowDirection.northEast => Vector2(1, -1),
+      _HintArrowDirection.east => Vector2(1, 0),
+      _HintArrowDirection.southEast => Vector2(1, 1),
+      _HintArrowDirection.south => Vector2(0, 1),
+      _HintArrowDirection.southWest => Vector2(-1, 1),
+      _HintArrowDirection.west => Vector2(-1, 0),
+      _HintArrowDirection.northWest => Vector2(-1, -1),
+    };
   }
 }
 
-class _ArrowSpriteComponent extends GameSpriteComponent with HasGameReference {
-  _ArrowSpriteComponent._({
+class _HintArrowSpriteComponent extends GameSpriteComponent
+    with HasGameReference {
+  _HintArrowSpriteComponent._({
     required this.direction,
     required super.spritePath,
   }) : super.fromPath(
@@ -196,29 +221,30 @@ class _ArrowSpriteComponent extends GameSpriteComponent with HasGameReference {
           scale: Vector2.all(0.5),
         );
 
-  /// Derives the [_ArrowSpriteComponent] from a [Direction].
-  factory _ArrowSpriteComponent.fromDirection(_ArrowDirection direction) {
+  /// Derives the [_HintArrowSpriteComponent] from a [Direction].
+  factory _HintArrowSpriteComponent.fromDirection(
+      _HintArrowDirection direction) {
     final position = _spritePathPositionMap[direction]!;
-    return _ArrowSpriteComponent._(
+    return _HintArrowSpriteComponent._(
       direction: direction,
       spritePath: direction.spritePath,
     )..position = position;
   }
 
-  /// Eye-balled map of the sprite path associated with the [_ArrowDirection] to
+  /// Eye-balled map of the sprite path associated with the [_HintArrowDirection] to
   /// their position.
-  static final Map<_ArrowDirection, Vector2> _spritePathPositionMap = {
-    _ArrowDirection.north: Vector2(-0.58, -2)..toGameSize(),
-    _ArrowDirection.south: Vector2(-0.58, -0.24)..toGameSize(),
-    _ArrowDirection.east: Vector2(0, -1.1)..toGameSize(),
-    _ArrowDirection.west: Vector2(-1.16, -1.1)..toGameSize(),
-    _ArrowDirection.northEast: Vector2(0, -2)..toGameSize(),
-    _ArrowDirection.northWest: Vector2(-1.16, -2)..toGameSize(),
-    _ArrowDirection.southWest: Vector2(-1.16, -0.24)..toGameSize(),
-    _ArrowDirection.southEast: Vector2(0, -0.24)..toGameSize(),
+  static final Map<_HintArrowDirection, Vector2> _spritePathPositionMap = {
+    _HintArrowDirection.north: Vector2(-0.58, -2)..toGameSize(),
+    _HintArrowDirection.south: Vector2(-0.58, -0.24)..toGameSize(),
+    _HintArrowDirection.east: Vector2(0, -1.1)..toGameSize(),
+    _HintArrowDirection.west: Vector2(-1.16, -1.1)..toGameSize(),
+    _HintArrowDirection.northEast: Vector2(0, -2)..toGameSize(),
+    _HintArrowDirection.northWest: Vector2(-1.16, -2)..toGameSize(),
+    _HintArrowDirection.southWest: Vector2(-1.16, -0.24)..toGameSize(),
+    _HintArrowDirection.southEast: Vector2(0, -0.24)..toGameSize(),
   };
 
-  _ArrowDirection direction;
+  _HintArrowDirection direction;
 
   @override
   FutureOr<void> onLoad() async {

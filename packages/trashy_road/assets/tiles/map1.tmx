@@ -112,12 +112,8 @@
     </object>
   </objectgroup>
   <objectgroup id="2" name="TrashLayer">
-    <object id="188" template="trash_organic.tx" name="organic" class="trash" gid="3" x="1408" y="640" width="128" height="64">
-      <properties>
-        <property name="type" value="organic"/>
-      </properties>
-    </object>
-    <object id="255" template="trash_plastic.tx" name="plastic" class="trash" gid="35" x="1280" y="1408" width="128" height="64">
+  
+    <object id="255" template="trash_plastic.tx" name="plastic" class="trash" gid="35" x="1100" y="1408" width="128" height="64">
       <properties>
         <property name="type" value="plastic"/>
       </properties>

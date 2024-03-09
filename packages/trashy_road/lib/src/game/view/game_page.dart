@@ -70,7 +70,11 @@ class _GameView extends StatelessWidget {
     final isTutorial =
         gameBloc.state.identifier == GameMapsState.tutorialIdentifier;
 
-    return _GameCompletionListener(
+    return MultiBlocListener(
+      listeners: [
+        _GameCompletionListener(),
+        _GameResetTimeIsUpListener(),
+      ],
       child: Stack(
         children: [
           const Positioned.fill(child: _GameBackground()),
@@ -100,34 +104,45 @@ class _GameView extends StatelessWidget {
   }
 }
 
-/// {@template _GameCompletionListener}
-/// Listens for when the game has completed and navigates accordingly.
-/// {@endtemplate}
-class _GameCompletionListener extends StatelessWidget {
-  /// {@macro _GameCompletionListener}
-  const _GameCompletionListener({this.child});
-
-  final Widget? child;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocListener<GameBloc, GameState>(
-      listenWhen: (previous, current) => current.status == GameStatus.completed,
-      listener: (context, state) {
-        context.read<GameMapsBloc>().add(
-              GameMapCompletedEvent(
-                identifier: state.identifier,
-                score: state.score,
-              ),
+class _GameCompletionListener extends BlocListener<GameBloc, GameState> {
+  _GameCompletionListener()
+      : super(
+          listenWhen: (previous, current) =>
+              current.status == GameStatus.completed,
+          listener: (context, state) {
+            context.read<GameMapsBloc>().add(
+                  GameMapCompletedEvent(
+                    identifier: state.identifier,
+                    score: state.score,
+                  ),
+                );
+            Navigator.push(
+              context,
+              ScorePage.route(identifier: state.identifier),
             );
-        Navigator.push(
-          context,
-          ScorePage.route(identifier: state.identifier),
+          },
         );
-      },
-      child: child,
-    );
-  }
+}
+
+class _GameResetTimeIsUpListener extends BlocListener<GameBloc, GameState> {
+  _GameResetTimeIsUpListener()
+      : super(
+          listenWhen: (previous, current) =>
+              current.status == GameStatus.resetting &&
+              current.resetReason == GameResetReason.timeIsUp,
+          listener: (context, state) {
+            final gameBloc = context.read<GameBloc>()
+              ..add(const GamePausedEvent());
+            final navigator = Navigator.of(context)
+              ..push(GameTimeIsUpPage.route());
+            Future<void>.delayed(const Duration(seconds: 3)).then((_) async {
+              await Future<void>.delayed(const Duration(seconds: 3));
+              gameBloc.add(const GameResumedEvent());
+              await Future<void>.delayed(const Duration(milliseconds: 500));
+              navigator.pop();
+            });
+          },
+        );
 }
 
 class _GameBackground extends StatelessWidget {

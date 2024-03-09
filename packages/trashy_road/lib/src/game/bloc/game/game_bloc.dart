@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:bloc/bloc.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:clock/clock.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
@@ -15,19 +16,23 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     required String identifier,
     required TiledMap map,
   }) : super(GameState.initial(identifier: identifier, map: map)) {
-    on<GameReadyEvent>(_onGameReady);
-    on<GameInteractedEvent>(_onGameInteraction);
-    on<GameCollectedTrashEvent>(_onCollectedTrash);
-    on<GameDepositedTrashEvent>(_onDepositedTrash);
-    on<GameResetEvent>(_onGameReset);
-    on<GamePausedEvent>(_onGamePaused);
-    on<GameResumedEvent>(_onGameResumed);
+    on<GameReadyEvent>(_onGameReady, transformer: sequential());
+    on<GameInteractedEvent>(_onGameInteraction, transformer: sequential());
+    on<GameCollectedTrashEvent>(_onCollectedTrash, transformer: sequential());
+    on<GameDepositedTrashEvent>(_onDepositedTrash, transformer: sequential());
+    on<GameResetEvent>(_onGameReset, transformer: sequential());
+    on<GamePausedEvent>(_onGamePaused, transformer: sequential());
+    on<GameResumedEvent>(_onGameResumed, transformer: sequential());
   }
 
   void _onGameReady(
     GameReadyEvent event,
     Emitter<GameState> emit,
   ) {
+    if (state.status == GameStatus.paused) {
+      return;
+    }
+
     emit(state.copyWith(status: GameStatus.ready));
   }
 

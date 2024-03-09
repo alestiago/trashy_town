@@ -1,9 +1,6 @@
 import 'package:basura/basura.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/maps/maps.dart';
 
@@ -53,7 +50,7 @@ class _GameStopwatchState extends State<GameStopwatch>
     final completionSeconds = map.completionSeconds;
     final timeIsUp = _stopwatch.elapsed.inSeconds >= completionSeconds;
 
-    if (timeIsUp) {
+    if (timeIsUp && gameBloc.state.status == GameStatus.playing) {
       gameBloc.add(const GameResetEvent(reason: GameResetReason.timeIsUp));
     }
   }
@@ -157,7 +154,10 @@ class _ProgressBar extends StatelessWidget {
                   size: starSize,
                   child: Transform.rotate(
                     angle: stopwatchRotationTween.evaluate(_animation),
-                    child: const _StopwatchIcon(),
+                    child: const Hero(
+                      tag: GameTimeIsUpPage.heroTag,
+                      child: StopwatchIcon(),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -234,17 +234,5 @@ extension on double {
     required double newMax,
   }) {
     return ((this - min) / (max - min)) * (newMax - newMin) + newMin;
-  }
-}
-
-class _StopwatchIcon extends StatelessWidget {
-  const _StopwatchIcon();
-
-  @override
-  Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: Assets.images.display.stopwatch.image(),
-    );
   }
 }

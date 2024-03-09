@@ -187,11 +187,11 @@ class _Tree1SpriteGroup extends PositionComponent {
           children: [
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.tree1Shadow.path,
+              spritePath: Assets.images.sprites.tree1Shadow.path,
             ),
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.tree1.path,
+              spritePath: Assets.images.sprites.tree1.path,
             ),
           ],
         );
@@ -208,11 +208,11 @@ class _Tree2SpriteGroup extends PositionComponent {
           children: [
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.tree2Shadow.path,
+              spritePath: Assets.images.sprites.tree2Shadow.path,
             ),
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.tree2.path,
+              spritePath: Assets.images.sprites.tree2.path,
             ),
           ],
         );
@@ -229,11 +229,11 @@ class _FireHydrantSpriteGroup extends PositionComponent {
           children: [
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.fireHydrantShadow.path,
+              spritePath: Assets.images.sprites.fireHydrantShadow.path,
             ),
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.fireHydrant.path,
+              spritePath: Assets.images.sprites.fireHydrant.path,
             ),
           ],
         );
@@ -250,11 +250,11 @@ class _Bush1SpriteGroup extends PositionComponent {
           children: [
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.bush1Shadow.path,
+              spritePath: Assets.images.sprites.bush1Shadow.path,
             ),
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.bush1.path,
+              spritePath: Assets.images.sprites.bush1.path,
             ),
           ],
         );
@@ -271,11 +271,11 @@ class _Bush2SpriteGroup extends PositionComponent {
           children: [
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.bush2Shadow.path,
+              spritePath: Assets.images.sprites.bush2Shadow.path,
             ),
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.bush2.path,
+              spritePath: Assets.images.sprites.bush2.path,
             ),
           ],
         );
@@ -305,12 +305,12 @@ class _Building2SpriteGroup extends PositionedEntity {
               scale: Vector2(0.5, 0.65),
               position: Vector2(0, 0)..toGameSize(),
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.buildingShadow.path,
+              spritePath: Assets.images.sprites.buildingShadow.path,
             ),
             GameSpriteComponent.fromPath(
               scale: Vector2.all(0.5),
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.building2.path,
+              spritePath: Assets.images.sprites.building2.path,
             ),
           ],
         );
@@ -340,12 +340,12 @@ class _Building3SpriteGroup extends PositionedEntity {
               scale: Vector2.all(0.8),
               position: Vector2(-0.05, 0.12)..toGameSize(),
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.buildingShadow.path,
+              spritePath: Assets.images.sprites.buildingShadow.path,
             ),
             GameSpriteComponent.fromPath(
               scale: Vector2.all(0.65),
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.building3.path,
+              spritePath: Assets.images.sprites.building3.path,
             ),
           ],
         );
@@ -375,12 +375,12 @@ class _Building4SpriteGroup extends PositionedEntity {
               scale: Vector2.all(0.5),
               position: Vector2(0, 0.12)..toGameSize(),
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.buildingShadow.path,
+              spritePath: Assets.images.sprites.buildingShadow.path,
             ),
             GameSpriteComponent.fromPath(
               scale: Vector2(0.35, 0.4),
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.building4.path,
+              spritePath: Assets.images.sprites.building4.path,
             ),
           ],
         );
@@ -396,11 +396,11 @@ class _BenchSpriteGroup extends PositionComponent {
           children: [
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.benchShadow.path,
+              spritePath: Assets.images.sprites.benchShadow.path,
             ),
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.bench.path,
+              spritePath: Assets.images.sprites.bench.path,
             ),
           ],
         );

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
  <tileset firstgid="1" source="Tiles.tsx"/>
- <object name="organic" class="trash" gid="3" width="128" height="128">
+ <object name="organic" class="trash" gid="3" width="128" height="64">
   <properties>
    <property name="type" value="organic"/>
   </properties>

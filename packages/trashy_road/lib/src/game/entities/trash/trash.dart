@@ -283,32 +283,32 @@ class _PlasticSpriteGroup extends PositionComponent
 
   /// {@macro _PlasticStyle.one}
   factory _PlasticSpriteGroup._styleOne() => _PlasticSpriteGroup._(
-        spritePath: Assets.images.plasticBottle1.path,
-        shadowPath: Assets.images.plasticBottle1Shadow.path,
+        spritePath: Assets.images.sprites.plasticBottle1.path,
+        shadowPath: Assets.images.sprites.plasticBottle1Shadow.path,
       );
 
   /// {@macro _PlasticBo_PlasticStylettleStyle.two}
   factory _PlasticSpriteGroup._styleTwo() => _PlasticSpriteGroup._(
-        spritePath: Assets.images.plasticBottle2.path,
-        shadowPath: Assets.images.plasticBottle2Shadow.path,
+        spritePath: Assets.images.sprites.plasticBottle2.path,
+        shadowPath: Assets.images.sprites.plasticBottle2Shadow.path,
       );
 
   /// {@macro _PlasticStyle.coldTakeAwayCup}
   factory _PlasticSpriteGroup._coldTakeAwayCup() => _PlasticSpriteGroup._(
-        spritePath: Assets.images.takeawayCupCold.path,
-        shadowPath: Assets.images.takeawayCupColdShadow.path,
+        spritePath: Assets.images.sprites.takeawayCupCold.path,
+        shadowPath: Assets.images.sprites.takeawayCupColdShadow.path,
       );
 
   /// {@macro _PlasticStyle.straw}
   factory _PlasticSpriteGroup._straw() => _PlasticSpriteGroup._(
-        spritePath: Assets.images.plasticStraw.path,
-        shadowPath: Assets.images.plasticStrawShadow.path,
+        spritePath: Assets.images.sprites.plasticStraw.path,
+        shadowPath: Assets.images.sprites.plasticStrawShadow.path,
       );
 
   /// {@macro _PlasticStyle.canHolder}
   factory _PlasticSpriteGroup._canHolder() => _PlasticSpriteGroup._(
-        spritePath: Assets.images.canHolder.path,
-        shadowPath: Assets.images.canHolderShadow.path,
+        spritePath: Assets.images.sprites.canHolder.path,
+        shadowPath: Assets.images.sprites.canHolderShadow.path,
       );
 }
 
@@ -356,26 +356,26 @@ class _OrganicSpriteGroup extends PositionComponent
 
   /// {@macro _OrganicStyle.one}
   factory _OrganicSpriteGroup._styleOne() => _OrganicSpriteGroup._(
-        spritePath: Assets.images.appleCore1.path,
-        shadowPath: Assets.images.appleCore1Shadow.path,
+        spritePath: Assets.images.sprites.appleCore1.path,
+        shadowPath: Assets.images.sprites.appleCore1Shadow.path,
       );
 
   /// {@macro _OrganicStyle.two}
   factory _OrganicSpriteGroup._styleTwo() => _OrganicSpriteGroup._(
-        spritePath: Assets.images.appleCore2.path,
-        shadowPath: Assets.images.appleCore2Shadow.path,
+        spritePath: Assets.images.sprites.appleCore2.path,
+        shadowPath: Assets.images.sprites.appleCore2Shadow.path,
       );
 
   /// {@macro _OrganicStyle.banana}
   factory _OrganicSpriteGroup._banana() => _OrganicSpriteGroup._(
-        spritePath: Assets.images.banana.path,
-        shadowPath: Assets.images.bananaShadow.path,
+        spritePath: Assets.images.sprites.banana.path,
+        shadowPath: Assets.images.sprites.bananaShadow.path,
       );
 
   /// {@macro _OrganicStyle.sandwich}
   factory _OrganicSpriteGroup._sandwich() => _OrganicSpriteGroup._(
-        spritePath: Assets.images.sandwich.path,
-        shadowPath: Assets.images.sandwichShadow.path,
+        spritePath: Assets.images.sprites.sandwich.path,
+        shadowPath: Assets.images.sprites.sandwichShadow.path,
       );
 }
 
@@ -423,25 +423,25 @@ class _PaperSpriteGroup extends PositionComponent
 
   /// {@macro _PaperStyle.one}
   factory _PaperSpriteGroup._styleOne() => _PaperSpriteGroup._(
-        spritePath: Assets.images.paper1.path,
-        shadowPath: Assets.images.paper1Shadow.path,
+        spritePath: Assets.images.sprites.paper1.path,
+        shadowPath: Assets.images.sprites.paper1Shadow.path,
       );
 
   /// {@macro _PaperStyle.two}
   factory _PaperSpriteGroup._styleTwo() => _PaperSpriteGroup._(
-        spritePath: Assets.images.paper2.path,
-        shadowPath: Assets.images.paper2Shadow.path,
+        spritePath: Assets.images.sprites.paper2.path,
+        shadowPath: Assets.images.sprites.paper2Shadow.path,
       );
 
   /// {@macro _PaperStyle.hotTakeAwayCup}
   factory _PaperSpriteGroup._hotTakeAwayCup() => _PaperSpriteGroup._(
-        spritePath: Assets.images.takeawayCupHot.path,
-        shadowPath: Assets.images.takeawayCupHotShadow.path,
+        spritePath: Assets.images.sprites.takeawayCupHot.path,
+        shadowPath: Assets.images.sprites.takeawayCupHotShadow.path,
       );
 
   /// {@macro _PaperStyle.hotTakeAwayCup}
   factory _PaperSpriteGroup._paperBall() => _PaperSpriteGroup._(
-        spritePath: Assets.images.paperBall.path,
-        shadowPath: Assets.images.paperBallShadow.path,
+        spritePath: Assets.images.sprites.paperBall.path,
+        shadowPath: Assets.images.sprites.paperBallShadow.path,
       );
 }

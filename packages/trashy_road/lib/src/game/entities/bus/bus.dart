@@ -62,7 +62,7 @@ class _BusSpriteComponent extends GameSpriteAnimationComponent {
 
   _BusSpriteComponent._rightToLeft()
       : this._(
-          spritePath: Assets.images.busDriving.path,
+          spritePath: Assets.images.sprites.busDriving.path,
           // The `position` has been eyeballed to match with the overall tile
           // map.
           position: Vector2(-0.3, -2.2)..toGameSize(),
@@ -70,7 +70,7 @@ class _BusSpriteComponent extends GameSpriteAnimationComponent {
 
   factory _BusSpriteComponent._leftToRight() {
     return _BusSpriteComponent._(
-      spritePath: Assets.images.busDriving.path,
+      spritePath: Assets.images.sprites.busDriving.path,
       // The `position` has been eyeballed to match with the overall tile map.
       position: Vector2(1.7, -2.2)..toGameSize(),
     )..flipHorizontally();
@@ -88,7 +88,7 @@ class _BusShadowComponent extends GameSpriteComponent {
 
   _BusShadowComponent._rightToLeft()
       : this.fromPath(
-          spritePath: Assets.images.busRightToLeftShadow.path,
+          spritePath: Assets.images.sprites.busRightToLeftShadow.path,
           // The `position` has been eyeballed to match with the overall tile
           // map.
           position: Vector2(-0.3, -2.2)..toGameSize(),
@@ -96,7 +96,7 @@ class _BusShadowComponent extends GameSpriteComponent {
 
   _BusShadowComponent._leftToRight()
       : this.fromPath(
-          spritePath: Assets.images.busLeftToRightShadow.path,
+          spritePath: Assets.images.sprites.busLeftToRightShadow.path,
           // The `position` has been eyeballed to match with the overall tile
           // map.
           position: Vector2(0, -2.2)..toGameSize(),

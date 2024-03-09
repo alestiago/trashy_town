@@ -66,30 +66,14 @@ class _GameView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<GameBloc, GameState>(
-      listenWhen: (previous, current) => current.status == GameStatus.completed,
-      listener: (context, state) {
-        context.read<GameMapsBloc>().add(
-              GameMapCompletedEvent(
-                identifier: state.identifier,
-                score: state.score,
-              ),
-            );
-        Navigator.push(
-          context,
-          ScorePage.route(identifier: state.identifier),
-        );
-      },
+    final gameBloc = context.read<GameBloc>();
+    final isTutorial =
+        gameBloc.state.identifier == GameMapsState.tutorialIdentifier;
+
+    return _GameCompletionListener(
       child: Stack(
         children: [
-          Positioned.fill(
-            child: Image.asset(
-              Assets.images.sprites.grass.path,
-              repeat: ImageRepeat.repeat,
-              color: const Color.fromARGB(40, 0, 0, 0),
-              colorBlendMode: BlendMode.darken,
-            ),
-          ),
+          const Positioned.fill(child: _GameBackground()),
           const Align(child: TrashyRoadGameWidget()),
           const Align(
             alignment: Alignment.bottomCenter,
@@ -105,8 +89,57 @@ class _GameView extends StatelessWidget {
               child: TopHud(),
             ),
           ),
+          if (isTutorial)
+            const Align(
+              alignment: Alignment(0, -0.6),
+              child: GameTutorial(),
+            ),
         ],
       ),
+    );
+  }
+}
+
+/// {@template _GameCompletionListener}
+/// Listens for when the game has completed and navigates accordingly.
+/// {@endtemplate}
+class _GameCompletionListener extends StatelessWidget {
+  /// {@macro _GameCompletionListener}
+  const _GameCompletionListener({this.child});
+
+  final Widget? child;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<GameBloc, GameState>(
+      listenWhen: (previous, current) => current.status == GameStatus.completed,
+      listener: (context, state) {
+        context.read<GameMapsBloc>().add(
+              GameMapCompletedEvent(
+                identifier: state.identifier,
+                score: state.score,
+              ),
+            );
+        Navigator.push(
+          context,
+          ScorePage.route(identifier: state.identifier),
+        );
+      },
+      child: child,
+    );
+  }
+}
+
+class _GameBackground extends StatelessWidget {
+  const _GameBackground();
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      Assets.images.sprites.grass.path,
+      repeat: ImageRepeat.repeat,
+      color: const Color.fromARGB(40, 0, 0, 0),
+      colorBlendMode: BlendMode.darken,
     );
   }
 }

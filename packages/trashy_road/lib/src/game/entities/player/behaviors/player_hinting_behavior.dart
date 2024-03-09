@@ -12,8 +12,9 @@ import 'package:trashy_road/src/game/game.dart';
 /// {@template PlayerHintingBehavior}
 /// Shows a hint to the player to guide them to the closest [Trash].
 ///
-/// The hint is shown when the closest [Trash] is not visible for a while and a
-/// certain amount of time has passed since the last hint was shown.
+/// The hint is shown when the closest [Trash] is not visible for a while
+/// ([_hintDelay]) and a certain amount of time ([_hintInterval]) has passed
+/// since the last hint was shown.
 /// {@endtemplate}
 class PlayerHintingBehavior extends Behavior<Player> with HasGameReference {
   /// The minimum time between hints.
@@ -21,7 +22,7 @@ class PlayerHintingBehavior extends Behavior<Player> with HasGameReference {
 
   /// The amount of time that has to elapse without the closest [Trash] being
   /// visible to show a hint.
-  static const _hintShownInterval = 4.0;
+  static const _hintDelay = 4.0;
 
   /// The [Trash] entities in the game.
   ///
@@ -117,7 +118,7 @@ class PlayerHintingBehavior extends Behavior<Player> with HasGameReference {
     }
 
     final shouldHint =
-        _lastHint > _hintInterval && _lastVisibleTrash > _hintShownInterval;
+        _lastHint > _hintInterval && _lastVisibleTrash > _hintDelay;
     if (shouldHint) {
       _lastHint = 0;
 

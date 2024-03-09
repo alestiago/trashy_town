@@ -27,7 +27,7 @@ class PauseButton extends StatelessWidget {
           return true;
         },
         onReplay: () {
-          gameBloc.add(const GameResetEvent());
+          gameBloc.add(const GameResetEvent(reason: GameResetReason.user));
           return true;
         },
       ),

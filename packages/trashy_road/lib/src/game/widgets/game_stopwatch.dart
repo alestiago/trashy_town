@@ -26,7 +26,7 @@ class _GameStopwatchState extends State<GameStopwatch>
   late final _animation = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 1),
-  );
+  )..addListener(_onTick);
 
   void _stop() {
     _animation.stop();
@@ -41,6 +41,21 @@ class _GameStopwatchState extends State<GameStopwatch>
   void _reset() {
     _animation.reset();
     _stopwatch.reset();
+  }
+
+  void _onTick() {
+    if (!mounted) return;
+
+    final gameBloc = context.read<GameBloc>();
+    final mapsBloc = context.read<GameMapsBloc>();
+    final map = mapsBloc.state.maps[gameBloc.state.identifier]!;
+
+    final completionSeconds = map.completionSeconds;
+    final timeIsUp = _stopwatch.elapsed.inSeconds >= completionSeconds;
+
+    if (timeIsUp) {
+      gameBloc.add(const GameResetEvent(reason: GameResetReason.timeIsUp));
+    }
   }
 
   @override
@@ -156,7 +171,8 @@ class _ProgressBar extends StatelessWidget {
                         child: Transform.translate(
                           // Eye-balled offset to align the bar with the stars.
                           offset: const Offset(0, 1),
-                          child: FractionallySizedBox(
+                          child: AnimatedFractionallySizedBox(
+                            duration: const Duration(milliseconds: 500),
                             alignment: Alignment.centerLeft,
                             widthFactor: percentageLeft.clamp(0, 1),
                             child: DecoratedBox(

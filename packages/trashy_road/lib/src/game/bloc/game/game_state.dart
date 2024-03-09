@@ -29,6 +29,20 @@ enum GameStatus {
   completed,
 }
 
+/// {@template GameResetReason}
+/// The reason why the game was reset.
+/// {@endtemplate}
+enum GameResetReason {
+  /// The game was reset because the user requested it.
+  user,
+
+  /// The game was reset because the time ran out.
+  timeIsUp,
+
+  /// The game was reset because the player hit a vehicle.
+  vehicleRunningOver,
+}
+
 /// {@template GameState}
 /// Represents the state of a game.
 ///
@@ -48,6 +62,7 @@ class GameState extends Equatable {
     this.startedAt,
     this.pausedAt,
     this.score = -1,
+    this.resetReason,
   }) :
         // TODO(alestiago): Remove magic string.
         _initialTrash =
@@ -109,6 +124,15 @@ class GameState extends Equatable {
   /// based on the amount of time that the player took to complete the game.
   final int score;
 
+  /// The reason why the game was reset.
+  ///
+  /// Is `null` if the game has not been reset.
+  ///
+  /// The reset reason is persisted until the game is reset again. For example,
+  /// if the game was reset because the time ran out, the reset reason will be
+  /// [GameResetReason.timeIsUp] until the game is reset again.
+  final GameResetReason? resetReason;
+
   GameState copyWith({
     GameStatus? status,
     Inventory? inventory,
@@ -117,6 +141,7 @@ class GameState extends Equatable {
     DateTime? Function()? pausedAt,
     Duration? pausedDuration,
     int? score,
+    GameResetReason? resetReason,
   }) {
     return GameState(
       identifier: identifier,
@@ -128,6 +153,7 @@ class GameState extends Equatable {
       pausedDuration: pausedDuration ?? this.pausedDuration,
       pausedAt: pausedAt != null ? pausedAt() : this.pausedAt,
       score: score ?? this.score,
+      resetReason: resetReason ?? this.resetReason,
     );
   }
 
@@ -141,6 +167,7 @@ class GameState extends Equatable {
         pausedDuration,
         pausedAt,
         score,
+        resetReason,
       ];
 }
 

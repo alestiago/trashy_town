@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:basura/basura.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +72,12 @@ class _GameView extends StatelessWidget {
     final isTutorial =
         gameBloc.state.identifier == GameMapsState.tutorialIdentifier;
 
-    return _GameCompletionListener(
+    return MultiBlocListener(
+      listeners: [
+        _GameCompletionListener(),
+        _GameLostTimeIsUpListener(),
+        _GameLostRunnedOverListener(),
+      ],
       child: Stack(
         children: [
           const Positioned.fill(child: _GameBackground()),
@@ -100,34 +107,65 @@ class _GameView extends StatelessWidget {
   }
 }
 
-/// {@template _GameCompletionListener}
-/// Listens for when the game has completed and navigates accordingly.
-/// {@endtemplate}
-class _GameCompletionListener extends StatelessWidget {
-  /// {@macro _GameCompletionListener}
-  const _GameCompletionListener({this.child});
-
-  final Widget? child;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocListener<GameBloc, GameState>(
-      listenWhen: (previous, current) => current.status == GameStatus.completed,
-      listener: (context, state) {
-        context.read<GameMapsBloc>().add(
-              GameMapCompletedEvent(
-                identifier: state.identifier,
-                score: state.score,
-              ),
+class _GameCompletionListener extends BlocListener<GameBloc, GameState> {
+  _GameCompletionListener()
+      : super(
+          listenWhen: (previous, current) =>
+              current.status == GameStatus.completed,
+          listener: (context, state) {
+            context.read<GameMapsBloc>().add(
+                  GameMapCompletedEvent(
+                    identifier: state.identifier,
+                    score: state.score,
+                  ),
+                );
+            Navigator.push(
+              context,
+              ScorePage.route(identifier: state.identifier),
             );
-        Navigator.push(
-          context,
-          ScorePage.route(identifier: state.identifier),
+          },
         );
-      },
-      child: child,
-    );
-  }
+}
+
+class _GameLostRunnedOverListener extends BlocListener<GameBloc, GameState> {
+  _GameLostRunnedOverListener()
+      : super(
+          listenWhen: (previous, current) =>
+              current.status == GameStatus.lost &&
+              current.lostReason == GameLostReason.vehicleRunningOver,
+          listener: (context, state) {
+            context.read<GameBloc>().add(const GameResetEvent());
+          },
+        );
+}
+
+class _GameLostTimeIsUpListener extends BlocListener<GameBloc, GameState> {
+  _GameLostTimeIsUpListener()
+      : super(
+          listenWhen: (previous, current) =>
+              current.status == GameStatus.lost &&
+              current.lostReason == GameLostReason.timeIsUp,
+          listener: (context, state) {
+            final gameBloc = context.read<GameBloc>()
+              ..add(const GamePausedEvent());
+            final navigator = Navigator.of(context)
+              ..push(GameTimeIsUpPage.route());
+
+            // TODO(alestiago): Refactor this to stop using microtasks and
+            // Future.delayed. Instead, consider other approaches to stagger
+            // the animations.
+            scheduleMicrotask(() async {
+              await Future<void>.delayed(
+                GameTimeIsUpPageRouteBuilder.animationDuration * 2,
+              );
+              gameBloc.add(const GameResetEvent());
+              await Future<void>.delayed(
+                PlayingHudTransition.animationDuration ~/ 2,
+              );
+              navigator.pop();
+            });
+          },
+        );
 }
 
 class _GameBackground extends StatelessWidget {

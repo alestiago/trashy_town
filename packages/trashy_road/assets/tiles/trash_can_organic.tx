@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
  <tileset firstgid="1" source="Tiles.tsx"/>
- <object name="trash_can_organic_city" class="trash_can" gid="4" width="128" height="128">
+ <object name="trash_can_organic_city" class="trash_can" gid="36" width="128" height="128">
   <properties>
    <property name="type" value="organic"/>
    <property name="variant" value="city"/>

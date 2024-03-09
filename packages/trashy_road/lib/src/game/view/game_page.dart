@@ -136,7 +136,7 @@ class _GameBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      Assets.images.grass.path,
+      Assets.images.sprites.grass.path,
       repeat: ImageRepeat.repeat,
       color: const Color.fromARGB(40, 0, 0, 0),
       colorBlendMode: BlendMode.darken,

@@ -228,7 +228,7 @@ class _StopwatchIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 1,
-      child: Assets.images.stopwatch.image(),
+      child: Assets.images.display.stopwatch.image(),
     );
   }
 }

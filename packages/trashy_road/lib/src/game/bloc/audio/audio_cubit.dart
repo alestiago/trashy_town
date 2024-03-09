@@ -9,23 +9,23 @@ part 'audio_state.dart';
 class AudioCubit extends Cubit<AudioState> {
   AudioCubit({required AudioCache audioCache})
       : effectPlayer = AudioPlayer()..audioCache = audioCache,
-        bgm = Bgm(audioCache: audioCache),
+        backgroundMusic = Bgm(audioCache: audioCache),
         super(const AudioState());
 
   @visibleForTesting
   AudioCubit.test({
     required this.effectPlayer,
-    required this.bgm,
+    required this.backgroundMusic,
     double volume = 1.0,
   }) : super(AudioState(volume: volume));
 
   final AudioPlayer effectPlayer;
 
-  final Bgm bgm;
+  final Bgm backgroundMusic;
 
   Future<void> _changeVolume(double volume) async {
     await effectPlayer.setVolume(volume);
-    await bgm.audioPlayer.setVolume(volume);
+    await backgroundMusic.audioPlayer.setVolume(volume);
     if (!isClosed) {
       emit(state.copyWith(volume: volume));
     }
@@ -41,7 +41,7 @@ class AudioCubit extends Cubit<AudioState> {
   @override
   Future<void> close() {
     effectPlayer.dispose();
-    bgm.dispose();
+    backgroundMusic.dispose();
     return super.close();
   }
 }

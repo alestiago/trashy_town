@@ -15,11 +15,14 @@ import 'package:rive/rive.dart';
 class $AssetsAudioGen {
   const $AssetsAudioGen();
 
+  /// File path: assets/audio/background_music.mp3
+  String get backgroundMusic => 'assets/audio/background_music.mp3';
+
   /// File path: assets/audio/plastic_bottle.mp3
   String get plasticBottle => 'assets/audio/plastic_bottle.mp3';
 
   /// List of all assets
-  List<String> get values => [plasticBottle];
+  List<String> get values => [backgroundMusic, plasticBottle];
 }
 
 class $AssetsImagesGen {

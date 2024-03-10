@@ -35,14 +35,14 @@ class _TrashyRoadGameWidgetState extends State<TrashyRoadGameWidget> {
           ? DebugTrashyRoadGame(
               gameBloc: gameBloc,
               images: loadingBloc.images,
-              effectPlayer: audioBloc.effectPlayer,
+              audioBloc: audioBloc,
               resolution: resolution,
               random: _random,
             )
           : TrashyRoadGame(
               gameBloc: gameBloc,
               images: loadingBloc.images,
-              effectPlayer: audioBloc.effectPlayer,
+              audioBloc: audioBloc,
               resolution: resolution,
               random: _random,
             );

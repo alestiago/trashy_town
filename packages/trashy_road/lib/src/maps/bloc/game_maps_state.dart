@@ -125,12 +125,13 @@ class GameMap extends Equatable {
     required this.displayName,
     required this.score,
     required this.ratingSteps,
-    required this.locked,
+    required bool locked,
     required this.path,
-  }) : scoreRating = ScoreRating.fromSteps(
+  })  : scoreRating = ScoreRating.fromSteps(
           score: score,
           steps: ratingSteps,
-        );
+        ),
+        _locked = locked;
 
   /// The identifier of the map.
   final String identifier;
@@ -149,10 +150,14 @@ class GameMap extends Equatable {
   /// {@macro ScoreRating}
   final ScoreRating scoreRating;
 
+  final bool _locked;
+
   /// Whether the map is locked and cannot be played.
   ///
   /// A locked map is usually a map that is not yet available to the player.
-  final bool locked;
+  bool get locked {
+    return !(Uri.base.queryParameters['admin'] == 'true') && _locked;
+  }
 
   /// The path to the map file.
   final String path;

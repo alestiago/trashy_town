@@ -58,7 +58,10 @@ class TrashCanDepositingBehavior extends Behavior<TrashCan>
   ///
   /// Does nothing if the [TrashCan] cannot deposit some trash.
   void deposit() {
-    if (!_canDeposit()) return;
+    if (!_canDeposit()) {
+      game.audioBloc.playEffect(GameSoundEffects.wrongBin);
+      return;
+    }
 
     game.audioBloc.playEffect(
       _depositSoundEffects.elementAt(

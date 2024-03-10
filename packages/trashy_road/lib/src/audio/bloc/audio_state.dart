@@ -16,20 +16,26 @@ class GameAudioData {
   const GameAudioData._({
     required AssetSource source,
     required double volume,
+    Duration? duration,
   })  : _source = source,
-        _volume = volume;
+        _volume = volume,
+        _duration = duration;
 
   GameAudioData.fromPath(
     String path, {
     required double volume,
+    Duration? duration,
   }) : this._(
           source: AssetSource(path),
           volume: volume,
+          duration: duration,
         );
 
   final AssetSource _source;
 
   final double _volume;
+
+  final Duration? _duration;
 }
 
 abstract class GameBackgroundMusic {
@@ -88,5 +94,11 @@ abstract class GameSoundEffects {
   static final ratingStars3 = GameAudioData.fromPath(
     Assets.audio.ratingStars3,
     volume: 0.25,
+  );
+
+  static final wrongBin = GameAudioData.fromPath(
+    Assets.audio.wrongBin,
+    volume: 0.25,
+    duration: const Duration(seconds: 1),
   );
 }

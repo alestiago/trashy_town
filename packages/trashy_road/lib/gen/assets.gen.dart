@@ -48,6 +48,9 @@ class $AssetsAudioGen {
   /// File path: assets/audio/rating_stars3.mp3
   String get ratingStars3 => 'assets/audio/rating_stars3.mp3';
 
+  /// File path: assets/audio/wrong_bin.mp3
+  String get wrongBin => 'assets/audio/wrong_bin.mp3';
+
   /// List of all assets
   List<String> get values => [
         backgroundMusic,
@@ -60,7 +63,8 @@ class $AssetsAudioGen {
         plasticBottle,
         ratingStars1,
         ratingStars2,
-        ratingStars3
+        ratingStars3,
+        wrongBin
       ];
 }
 

@@ -97,11 +97,7 @@ class _EmptyInventorySlot extends StatelessWidget {
 }
 
 class _InventorySlot extends StatelessWidget {
-  const _InventorySlot({
-    required this.imagePath,
-  });
-
-  factory _InventorySlot.fromType(TrashType? type) {
+  factory _InventorySlot.fromType(TrashType type) {
     switch (type) {
       case TrashType.organic:
         return _InventorySlot.appleCore();
@@ -109,21 +105,38 @@ class _InventorySlot extends StatelessWidget {
         return _InventorySlot.paperBox();
       case TrashType.plastic:
         return _InventorySlot.plasticBottle();
-      case null:
-        return _InventorySlot.empty();
     }
   }
 
-  _InventorySlot.empty() : imagePath = Assets.images.display.slotEmpty.path;
-
   _InventorySlot.appleCore()
-      : imagePath = Assets.images.display.slotAppleCore.path;
+      : imagePath = Assets.images.display.slotAppleCore.path,
+        spriteAnimationData = SpriteAnimationData.sequenced(
+          amount: 23,
+          stepTime: 1 / 32,
+          amountPerRow: 6,
+          textureSize: Vector2.all(458),
+          loop: false,
+        );
 
   _InventorySlot.paperBox()
-      : imagePath = Assets.images.display.slotPaperBox.path;
+      : imagePath = Assets.images.display.slotPaperBox.path,
+        spriteAnimationData = SpriteAnimationData.sequenced(
+          amount: 21,
+          stepTime: 1 / 32,
+          amountPerRow: 6,
+          textureSize: Vector2.all(458),
+          loop: false,
+        );
 
   _InventorySlot.plasticBottle()
-      : imagePath = Assets.images.display.slotPlasticBottle.path;
+      : imagePath = Assets.images.display.slotPlasticBottle.path,
+        spriteAnimationData = SpriteAnimationData.sequenced(
+          amount: 21,
+          stepTime: 1 / 32,
+          amountPerRow: 6,
+          textureSize: Vector2.all(458),
+          loop: false,
+        );
 
   final String imagePath;
 
@@ -131,20 +144,14 @@ class _InventorySlot extends StatelessWidget {
   ///
   /// This is derived from the sprite sheet image characterstics. Hence, if the
   /// sprite sheet is updated, this data should be updated as well.
-  static final _spriteAnimationData = SpriteAnimationData.sequenced(
-    amount: 23,
-    stepTime: 1 / 32,
-    amountPerRow: 6,
-    textureSize: Vector2.all(458),
-    loop: false,
-  );
+  final SpriteAnimationData spriteAnimationData;
 
   @override
   Widget build(BuildContext context) {
     Flame.images.prefix = '';
     return SpriteAnimationWidget.asset(
       path: imagePath,
-      data: _spriteAnimationData,
+      data: spriteAnimationData,
     );
   }
 }

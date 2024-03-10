@@ -249,12 +249,11 @@ class _HintArrowSpriteComponent extends GameSpriteComponent {
   _HintArrowDirection direction;
 
   @override
-  FutureOr<void> onLoad() {
-    super.onLoad();
+  FutureOr<void> onLoad() async {
+    await super.onLoad();
 
-    game.audioBloc.playEffect(
-      Assets.audio.hintingArrow,
-      volume: 0.3,
+    unawaited(
+      game.audioBloc.playEffect(Assets.audio.hintingArrow, volume: 0.3),
     );
 
     final moveEffectController = EffectController(duration: 1);
@@ -268,7 +267,7 @@ class _HintArrowSpriteComponent extends GameSpriteComponent {
       curve: Curves.easeInCubic,
     );
 
-    addAll([
+    await addAll([
       OpacityEffect.to(0, EffectController(duration: 0)),
       OpacityEffect.fadeIn(fadeInEffectController),
       MoveEffect.by(

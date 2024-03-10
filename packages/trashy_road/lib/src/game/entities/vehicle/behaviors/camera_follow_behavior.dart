@@ -44,8 +44,8 @@ class CameraFollowBehavior extends Component with HasGameReference {
 
   final _deltaCache = Vector2.zero();
 
-  /// The amount of distance that there should be between the target and the
-  /// bottom of the screen.
+  /// The amount of distance that the player should be away from the center of
+  /// the screen.
   static final _verticalAdjustment = GameSettings.gridDimensions.y * 4;
 
   @override

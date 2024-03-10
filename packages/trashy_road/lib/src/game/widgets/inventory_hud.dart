@@ -96,7 +96,9 @@ class _InventorySlotState extends State<_InventorySlot> {
         return state.inventory.items[widget.index];
       },
       builder: (context, type) {
-        print('type: $type, previous: $_previousType');
+        print('previousType: $_previousType');
+        print('type: $type');
+
         final child = Padding(
           padding: const EdgeInsets.all(4),
           child: SizedBox.square(
@@ -108,7 +110,7 @@ class _InventorySlotState extends State<_InventorySlot> {
                   Positioned.fill(
                     child: _FilledInventorySlot.fromType(
                       type ?? _previousType!,
-                      animate: _previousType == null,
+                      animate: _previousType == null || type == null,
                       reverse: _previousType != null && type != _previousType,
                     ),
                   ),
@@ -206,6 +208,16 @@ class _FilledInventorySlotState extends State<_FilledInventorySlot> {
   late bool _completed = !widget.animate;
 
   @override
+  void didUpdateWidget(covariant _FilledInventorySlot oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    final changeDirection = widget.reversed != oldWidget.reversed;
+    if (widget.animate && changeDirection) {
+      _completed = false;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (!_completed) {
       var spriteAnimationData = widget.spriteSheetData.toSpriteAnimationData();
@@ -222,34 +234,22 @@ class _FilledInventorySlotState extends State<_FilledInventorySlot> {
         },
       );
     }
-    final lastFrameOffset =
-        widget.spriteSheetData.getOffset(widget.spriteSheetData.frames - 1);
 
-    print('@@asset');
-    return SpriteWidget.asset(
-      path: widget.spriteSheetData.asset,
-      srcPosition: Vector2(lastFrameOffset.dx, lastFrameOffset.dy),
-      srcSize: Vector2(
-        widget.spriteSheetData.size.width,
-        widget.spriteSheetData.size.height,
-      ),
-    );
+    if (_completed && !widget.reversed) {
+      final lastFrameOffset =
+          widget.spriteSheetData.getOffset(widget.spriteSheetData.frames - 1);
 
-    // if (_completed && !widget.reversed) {
-    //   final lastFrameOffset =
-    //       widget.spriteSheetData.getOffset(widget.spriteSheetData.frames);
+      return SpriteWidget.asset(
+        path: widget.spriteSheetData.asset,
+        srcPosition: Vector2(lastFrameOffset.dx, lastFrameOffset.dy),
+        srcSize: Vector2(
+          widget.spriteSheetData.size.width,
+          widget.spriteSheetData.size.height,
+        ),
+      );
+    }
 
-    //   return SpriteWidget.asset(
-    //     path: widget.spriteSheetData.asset,
-    //     srcPosition: Vector2(lastFrameOffset.dx, lastFrameOffset.dy),
-    //     srcSize: Vector2(
-    //       widget.spriteSheetData.size.width,
-    //       widget.spriteSheetData.size.height,
-    //     ),
-    //   );
-    // }
-
-    // return const SizedBox.shrink();
+    return const SizedBox.shrink();
   }
 }
 
@@ -305,6 +305,9 @@ class _SpriteSheetData {
 extension on SpriteAnimationData {
   /// Reverses the animation.
   SpriteAnimationData reverse() {
-    return SpriteAnimationData(frames.reversed.toList());
+    return SpriteAnimationData(
+      frames.reversed.toList(),
+      loop: loop,
+    );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 // ignore: implementation_imports
@@ -148,66 +150,41 @@ class _FilledInventorySlot extends StatefulWidget {
     bool animate = true,
     bool reverse = false,
   }) {
-    switch (type) {
-      case TrashType.organic:
-        return _FilledInventorySlot.appleCore(
-          animate: animate,
-          reverse: reverse,
-        );
-      case TrashType.paper:
-        return _FilledInventorySlot.paperBox(
-          animate: animate,
-          reverse: reverse,
-        );
-      case TrashType.plastic:
-        return _FilledInventorySlot.plasticBottle(
-          animate: animate,
-          reverse: reverse,
-        );
-    }
+    final spriteSheetData = _spriteSheetsData[type]!;
+    return _FilledInventorySlot._(
+      spriteSheetData: spriteSheetData,
+      animate: animate,
+      reversed: reverse,
+    );
   }
 
-  _FilledInventorySlot.appleCore({
-    required bool animate,
-    required bool reverse,
-  }) : this._(
-          animate: animate,
-          reversed: reverse,
-          spriteSheetData: _SpriteSheetData(
-            asset: Assets.images.display.slotAppleCore.path,
-            frames: 23,
-            amountPerRow: 6,
-            size: const Size.square(458),
-          ),
-        );
-
-  _FilledInventorySlot.paperBox({
-    required bool animate,
-    required bool reverse,
-  }) : this._(
-          animate: animate,
-          reversed: reverse,
-          spriteSheetData: _SpriteSheetData(
-            asset: Assets.images.display.slotPaperBox.path,
-            frames: 21,
-            amountPerRow: 6,
-            size: const Size.square(458),
-          ),
-        );
-
-  _FilledInventorySlot.plasticBottle({
-    required bool animate,
-    required bool reverse,
-  }) : this._(
-          animate: animate,
-          reversed: reverse,
-          spriteSheetData: _SpriteSheetData(
-            asset: Assets.images.display.slotPlasticBottle.path,
-            frames: 21,
-            amountPerRow: 6,
-            size: const Size.square(458),
-          ),
-        );
+  /// The sprite sheet data for each trash type.
+  ///
+  /// The [_SpriteSheetData] is derived from the actual sprite sheet image
+  /// characterstics. Hence, if the sprite sheet is updated, this data should be
+  /// updated as well.
+  static final _spriteSheetsData = UnmodifiableMapView(
+    <TrashType, _SpriteSheetData>{
+      TrashType.organic: _SpriteSheetData(
+        asset: Assets.images.display.slotAppleCore.path,
+        frames: 23,
+        amountPerRow: 6,
+        size: const Size.square(458),
+      ),
+      TrashType.paper: _SpriteSheetData(
+        asset: Assets.images.display.slotPaperBox.path,
+        frames: 21,
+        amountPerRow: 6,
+        size: const Size.square(458),
+      ),
+      TrashType.plastic: _SpriteSheetData(
+        asset: Assets.images.display.slotPlasticBottle.path,
+        frames: 21,
+        amountPerRow: 6,
+        size: const Size.square(458),
+      ),
+    },
+  );
 
   /// The data of the sprite sheet being used.
   ///

@@ -209,8 +209,8 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
     final world = ancestors().whereType<TrashyRoadWorld>().first;
     final mapEdges = world.descendants().whereType<MapEdge>().toSet();
 
-    final isInMapEdge =
-        mapEdges.any((element) => element.isPointInside(position));
+    final isInMapEdge = mapEdges
+        .any((element) => element.isPointInside(position + hitbox.position));
 
     if (!isInMapEdge) {
       add(

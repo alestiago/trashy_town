@@ -111,7 +111,6 @@ class _InventorySlotState extends State<_InventorySlot> {
                 ),
                 if (type != null)
                   Positioned.fill(
-                    // key: ValueKey('${_InventorySlotState}_${widget.index}'),
                     child: _FilledInventorySlot.fromType(
                       type,
                       animate: _previousType == null,

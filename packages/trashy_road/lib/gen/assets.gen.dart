@@ -18,11 +18,14 @@ class $AssetsAudioGen {
   /// File path: assets/audio/background_music.mp3
   String get backgroundMusic => 'assets/audio/background_music.mp3';
 
+  /// File path: assets/audio/hinting_arrow.mp3
+  String get hintingArrow => 'assets/audio/hinting_arrow.mp3';
+
   /// File path: assets/audio/plastic_bottle.mp3
   String get plasticBottle => 'assets/audio/plastic_bottle.mp3';
 
   /// List of all assets
-  List<String> get values => [backgroundMusic, plasticBottle];
+  List<String> get values => [backgroundMusic, hintingArrow, plasticBottle];
 }
 
 class $AssetsImagesGen {
@@ -776,14 +779,10 @@ class Assets {
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsRiveGen rive = $AssetsRiveGen();
   static const $AssetsTilesGen tiles = $AssetsTilesGen();
-  static const String trashyRoadTiledProject =
-      'assets/trashy_road.tiled-project';
-  static const String trashyRoadTiledSession =
-      'assets/trashy_road.tiled-session';
+  static const String trashyRoad = 'assets/trashy_road.tiled-project';
 
   /// List of all assets
-  static List<String> get values =>
-      [trashyRoadTiledProject, trashyRoadTiledSession];
+  static List<String> get values => [trashyRoad];
 }
 
 class AssetGenImage {

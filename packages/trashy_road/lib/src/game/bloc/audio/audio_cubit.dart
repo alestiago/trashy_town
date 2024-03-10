@@ -32,7 +32,10 @@ class AudioCubit extends Cubit<AudioState> {
   /// Plays an effect sound.
   ///
   /// If there are no players available, this method will do nothing.
-  Future<void> playEffect(String path) async {
+  Future<void> playEffect(
+    String path, {
+    double volume = 0.5,
+  }) async {
     final player = _effectPlayers.where(
       (player) => player.state != PlayerState.playing,
     );
@@ -42,7 +45,10 @@ class AudioCubit extends Cubit<AudioState> {
     }
 
     final source = AssetSource(path);
-    await player.first.play(source);
+    await player.first.play(
+      source,
+      volume: volume,
+    );
   }
 
   Future<void> toggleVolume() async {

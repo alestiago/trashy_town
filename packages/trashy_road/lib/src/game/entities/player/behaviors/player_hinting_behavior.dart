@@ -213,8 +213,7 @@ enum _HintArrowDirection {
   }
 }
 
-class _HintArrowSpriteComponent extends GameSpriteComponent
-    with HasGameReference {
+class _HintArrowSpriteComponent extends GameSpriteComponent {
   _HintArrowSpriteComponent._({
     required this.direction,
     required super.spritePath,
@@ -252,6 +251,10 @@ class _HintArrowSpriteComponent extends GameSpriteComponent
   @override
   FutureOr<void> onLoad() async {
     await super.onLoad();
+
+    unawaited(
+      game.audioBloc.playEffect(Assets.audio.hintingArrow, volume: 0.3),
+    );
 
     final moveEffectController = EffectController(duration: 1);
 

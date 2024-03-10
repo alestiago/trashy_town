@@ -66,6 +66,9 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/building_4.tx
   String get building4 => 'assets/tiles/building_4.tx';
 
+  /// File path: assets/tiles/bus_stop.tx
+  String get busStop => 'assets/tiles/bus_stop.tx';
+
   /// File path: assets/tiles/bush_1.tx
   String get bush1 => 'assets/tiles/bush_1.tx';
 
@@ -130,6 +133,7 @@ class $AssetsTilesGen {
         building2,
         building3,
         building4,
+        busStop,
         bush1,
         bush2,
         fireHydrant,
@@ -369,6 +373,14 @@ class $AssetsImagesSpritesGen {
   /// File path: assets/images/sprites/bus_right_to_left-shadow.png
   AssetGenImage get busRightToLeftShadow =>
       const AssetGenImage('assets/images/sprites/bus_right_to_left-shadow.png');
+
+  /// File path: assets/images/sprites/bus_stop-shadow.png
+  AssetGenImage get busStopShadow =>
+      const AssetGenImage('assets/images/sprites/bus_stop-shadow.png');
+
+  /// File path: assets/images/sprites/bus_stop.png
+  AssetGenImage get busStop =>
+      const AssetGenImage('assets/images/sprites/bus_stop.png');
 
   /// File path: assets/images/sprites/bush_1-shadow.png
   AssetGenImage get bush1Shadow =>
@@ -650,6 +662,8 @@ class $AssetsImagesSpritesGen {
         busDriving,
         busLeftToRightShadow,
         busRightToLeftShadow,
+        busStopShadow,
+        busStop,
         bush1Shadow,
         bush1,
         bush2Shadow,

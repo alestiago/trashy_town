@@ -160,6 +160,19 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
           children: [_LampPostSpriteGroup()],
         );
 
+  // An Obstacle that is a bus stop.
+  //
+  // The lamp post takes up 1x2 tile space
+  Obstacle._busStop({required Vector2 position})
+      : this._(
+          position: position,
+          hitbox: RectangleHitbox(
+            position: Vector2(0.2, -0.1)..toGameSize(),
+            size: Vector2(0.6, 0.6)..toGameSize(),
+          ),
+          children: [_BusStopSpriteGroup()],
+        );
+
   factory Obstacle.fromTiledObject(TiledObject tiledObject) {
     final type = tiledObject.type;
     final position = Vector2(tiledObject.x, tiledObject.y);
@@ -185,6 +198,8 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
         return Obstacle._bench(position: position);
       case 'lamp_post':
         return Obstacle._lampPost(position: position);
+      case 'bus_stop':
+        return Obstacle._busStop(position: position);
       default:
         throw ArgumentError('Unknown obstacle type: $type');
     }
@@ -436,6 +451,26 @@ class _LampPostSpriteGroup extends PositionComponent {
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
               spritePath: Assets.images.sprites.lampPost.path,
+            ),
+          ],
+        );
+}
+
+class _BusStopSpriteGroup extends PositionComponent {
+  _BusStopSpriteGroup()
+      : super(
+          // The `size`, `position` and `scale` have been eye-balled to fit with
+          // the tile size.
+          position: Vector2(0.3, -0.1)..toGameSize(),
+          scale: Vector2.all(0.6),
+          children: [
+            GameSpriteComponent.fromPath(
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.sprites.busStopShadow.path,
+            ),
+            GameSpriteComponent.fromPath(
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.sprites.busStop.path,
             ),
           ],
         );

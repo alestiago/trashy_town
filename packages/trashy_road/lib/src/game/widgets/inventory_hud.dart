@@ -2,7 +2,8 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 // ignore: implementation_imports
 import 'package:flame/src/widgets/animation_widget.dart';
-import 'package:flutter/material.dart';
+// ignore: implementation_imports
+import 'package:flame/src/widgets/sprite_widget.dart';
 import 'package:flutter/widgets.dart' hide Image;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/gen/gen.dart';
@@ -25,35 +26,22 @@ class InventoryHud extends StatelessWidget {
       child: _PaperBackground(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 32),
-          child: BlocSelector<GameBloc, GameState, List<TrashType>>(
-            selector: (state) {
-              return state.inventory.items;
-            },
-            builder: (context, trash) {
-              final filledTrash = List<TrashType?>.from(trash)
-                ..length = Inventory.size;
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final slotSize = Size.square(
+                ((constraints.maxWidth - 50) / Inventory.size)
+                    .clamp(10.0, 50.0),
+              );
 
-              return LayoutBuilder(
-                builder: (context, constraints) {
-                  final slotSize =
-                      ((constraints.maxWidth - 50) / filledTrash.length)
-                          .clamp(10.0, 50.0);
-                  return Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      for (final type in filledTrash)
-                        Padding(
-                          padding: const EdgeInsets.all(4),
-                          child: SizedBox.square(
-                            dimension: slotSize,
-                            child: type == null
-                                ? const _EmptyInventorySlot()
-                                : _InventorySlot.fromType(type),
-                          ),
-                        ),
-                    ],
-                  );
-                },
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                children: List.generate(
+                  Inventory.size,
+                  (index) => SizedBox.fromSize(
+                    size: slotSize,
+                    child: _InventorySlot(index: index),
+                  ),
+                ),
               );
             },
           ),
@@ -84,74 +72,262 @@ class _PaperBackground extends StatelessWidget {
   }
 }
 
+class _InventorySlot extends StatefulWidget {
+  const _InventorySlot({required this.index});
+
+  final int index;
+
+  @override
+  State<_InventorySlot> createState() => _InventorySlotState();
+}
+
+class _InventorySlotState extends State<_InventorySlot> {
+  TrashType? _previousType;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocSelector<GameBloc, GameState, TrashType?>(
+      selector: (state) {
+        if (state.inventory.items.length <= widget.index) {
+          return null;
+        }
+        return state.inventory.items[widget.index];
+      },
+      builder: (context, type) {
+        print('type: $type, previous: $_previousType');
+        final child = Padding(
+          padding: const EdgeInsets.all(4),
+          child: SizedBox.square(
+            dimension: 50,
+            child: Stack(
+              children: [
+                const Positioned.fill(child: _EmptyInventorySlot()),
+                if (type != null || _previousType != null)
+                  Positioned.fill(
+                    child: _FilledInventorySlot.fromType(
+                      type ?? _previousType!,
+                      animate: _previousType == null,
+                      reverse: _previousType != null && type != _previousType,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        );
+
+        _previousType = type;
+        return child;
+      },
+    );
+  }
+}
+
 class _EmptyInventorySlot extends StatelessWidget {
   const _EmptyInventorySlot();
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: Colors.red,
-      child: const SizedBox.square(dimension: 50),
+    return const ColoredBox(
+      color: Color(0xffff0000),
+      child: SizedBox.square(dimension: 50),
     );
   }
 }
 
-class _InventorySlot extends StatelessWidget {
-  factory _InventorySlot.fromType(TrashType type) {
+class _FilledInventorySlot extends StatefulWidget {
+  _FilledInventorySlot._({
+    required this.spriteSheetData,
+    required this.animate,
+    required this.reversed,
+  }) {
+    Flame.images.prefix = '';
+  }
+
+  factory _FilledInventorySlot.fromType(
+    TrashType type, {
+    bool animate = true,
+    bool reverse = false,
+  }) {
     switch (type) {
       case TrashType.organic:
-        return _InventorySlot.appleCore();
+        return _FilledInventorySlot.appleCore(
+          animate: animate,
+          reverse: reverse,
+        );
       case TrashType.paper:
-        return _InventorySlot.paperBox();
+        return _FilledInventorySlot.paperBox(
+          animate: animate,
+          reverse: reverse,
+        );
       case TrashType.plastic:
-        return _InventorySlot.plasticBottle();
+        return _FilledInventorySlot.plasticBottle(
+          animate: animate,
+          reverse: reverse,
+        );
     }
   }
 
-  _InventorySlot.appleCore()
-      : imagePath = Assets.images.display.slotAppleCore.path,
-        spriteAnimationData = SpriteAnimationData.sequenced(
-          amount: 23,
-          stepTime: 1 / 32,
-          amountPerRow: 6,
-          textureSize: Vector2.all(458),
-          loop: false,
+  _FilledInventorySlot.appleCore({
+    required bool animate,
+    required bool reverse,
+  }) : this._(
+          animate: animate,
+          reversed: reverse,
+          spriteSheetData: _SpriteSheetData(
+            asset: Assets.images.display.slotAppleCore.path,
+            frames: 23,
+            amountPerRow: 6,
+            size: const Size.square(458),
+          ),
         );
 
-  _InventorySlot.paperBox()
-      : imagePath = Assets.images.display.slotPaperBox.path,
-        spriteAnimationData = SpriteAnimationData.sequenced(
-          amount: 21,
-          stepTime: 1 / 32,
-          amountPerRow: 6,
-          textureSize: Vector2.all(458),
-          loop: false,
+  _FilledInventorySlot.paperBox({
+    required bool animate,
+    required bool reverse,
+  }) : this._(
+          animate: animate,
+          reversed: reverse,
+          spriteSheetData: _SpriteSheetData(
+            asset: Assets.images.display.slotPaperBox.path,
+            frames: 21,
+            amountPerRow: 6,
+            size: const Size.square(458),
+          ),
         );
 
-  _InventorySlot.plasticBottle()
-      : imagePath = Assets.images.display.slotPlasticBottle.path,
-        spriteAnimationData = SpriteAnimationData.sequenced(
-          amount: 21,
-          stepTime: 1 / 32,
-          amountPerRow: 6,
-          textureSize: Vector2.all(458),
-          loop: false,
+  _FilledInventorySlot.plasticBottle({
+    required bool animate,
+    required bool reverse,
+  }) : this._(
+          animate: animate,
+          reversed: reverse,
+          spriteSheetData: _SpriteSheetData(
+            asset: Assets.images.display.slotPlasticBottle.path,
+            frames: 21,
+            amountPerRow: 6,
+            size: const Size.square(458),
+          ),
         );
-
-  final String imagePath;
 
   /// The data of the sprite sheet being used.
   ///
   /// This is derived from the sprite sheet image characterstics. Hence, if the
   /// sprite sheet is updated, this data should be updated as well.
-  final SpriteAnimationData spriteAnimationData;
+  final _SpriteSheetData spriteSheetData;
+
+  /// Whether the sprite should animate or not.
+  final bool animate;
+
+  /// Whether the animation should play in reverse.
+  final bool reversed;
+
+  @override
+  State<_FilledInventorySlot> createState() => _FilledInventorySlotState();
+}
+
+class _FilledInventorySlotState extends State<_FilledInventorySlot> {
+  late bool _completed = !widget.animate;
 
   @override
   Widget build(BuildContext context) {
-    Flame.images.prefix = '';
-    return SpriteAnimationWidget.asset(
-      path: imagePath,
-      data: spriteAnimationData,
+    if (!_completed) {
+      var spriteAnimationData = widget.spriteSheetData.toSpriteAnimationData();
+      if (widget.reversed) {
+        spriteAnimationData = spriteAnimationData.reverse();
+      }
+
+      return SpriteAnimationWidget.asset(
+        path: widget.spriteSheetData.asset,
+        data: spriteAnimationData,
+        onComplete: () {
+          if (_completed) return;
+          setState(() => _completed = true);
+        },
+      );
+    }
+    final lastFrameOffset =
+        widget.spriteSheetData.getOffset(widget.spriteSheetData.frames - 1);
+
+    print('@@asset');
+    return SpriteWidget.asset(
+      path: widget.spriteSheetData.asset,
+      srcPosition: Vector2(lastFrameOffset.dx, lastFrameOffset.dy),
+      srcSize: Vector2(
+        widget.spriteSheetData.size.width,
+        widget.spriteSheetData.size.height,
+      ),
     );
+
+    // if (_completed && !widget.reversed) {
+    //   final lastFrameOffset =
+    //       widget.spriteSheetData.getOffset(widget.spriteSheetData.frames);
+
+    //   return SpriteWidget.asset(
+    //     path: widget.spriteSheetData.asset,
+    //     srcPosition: Vector2(lastFrameOffset.dx, lastFrameOffset.dy),
+    //     srcSize: Vector2(
+    //       widget.spriteSheetData.size.width,
+    //       widget.spriteSheetData.size.height,
+    //     ),
+    //   );
+    // }
+
+    // return const SizedBox.shrink();
+  }
+}
+
+/// {@template SpriteSheetData}
+/// Object which contains meta data for a collection of sprites.
+/// {@endtemplate}
+class _SpriteSheetData {
+  /// {@macro SpriteSheetData}
+  const _SpriteSheetData({
+    required this.asset,
+    required this.size,
+    required this.frames,
+    required this.amountPerRow,
+  });
+
+  /// The sprite sheet asset name.
+  final String asset;
+
+  /// The size an individual sprite within the sprite sheet, the texture size.
+  final Size size;
+
+  /// The number of frames within the sprite sheet.
+  final int frames;
+
+  /// The number of frames per row within the sprite sheet.
+  final int amountPerRow;
+
+  /// Number of seconds per frame.
+  ///
+  /// Defaults to 1 / 32.
+  static const double stepTime = 1 / 32;
+
+  SpriteAnimationData toSpriteAnimationData() {
+    return SpriteAnimationData.sequenced(
+      amount: frames,
+      stepTime: stepTime,
+      amountPerRow: amountPerRow,
+      textureSize: Vector2(size.width, size.height),
+      loop: false,
+    );
+  }
+
+  Offset getOffset(int index) {
+    final row = index ~/ amountPerRow;
+    final column = index % amountPerRow;
+    return Offset(
+      column * size.width,
+      row * size.height,
+    );
+  }
+}
+
+extension on SpriteAnimationData {
+  /// Reverses the animation.
+  SpriteAnimationData reverse() {
+    return SpriteAnimationData(frames.reversed.toList());
   }
 }

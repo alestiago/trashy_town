@@ -15,7 +15,7 @@ class TrashCanDepositingBehavior extends Behavior<TrashCan>
         FlameBlocReader<GameBloc, GameState>,
         HasGameReference<TrashyRoadGame> {
   /// The maximum amount of trash that the [TrashCan] can hold.
-  static const int _maximumCapacity = 3;
+  static const int _maximumCapacity = 999;
 
   /// The sound effects that are played when trash is deposited into the
   /// [TrashCan].
@@ -40,9 +40,6 @@ class TrashCanDepositingBehavior extends Behavior<TrashCan>
       !parent.hasBehavior<TrashCanDepositingBehavior>(),
       'The parent can only have a single $TrashCanDepositingBehavior.',
     );
-
-    parent.add(_TrashCapacityTextComponent().._updateText(_capacity));
-    parent.children.register<_TrashCapacityTextComponent>();
   }
 
   /// Whether the [TrashCan] can deposit some of the [Player]'s trash.
@@ -71,31 +68,6 @@ class TrashCanDepositingBehavior extends Behavior<TrashCan>
 
     _capacity++;
     bloc.add(GameDepositedTrashEvent(item: parent.trashType));
-
-    parent.children
-        .query<_TrashCapacityTextComponent>()
-        .first
-        ._updateText(_capacity);
-
     parent.open();
-  }
-
-  @override
-  void onRemove() {
-    parent.children
-        .query<_TrashCapacityTextComponent>()
-        .first
-        .removeFromParent();
-    super.onRemove();
-  }
-}
-
-/// Displays the current capacity of the [TrashCan].
-class _TrashCapacityTextComponent extends TextComponent
-    with ParentIsA<TrashCan> {
-  _TrashCapacityTextComponent();
-
-  void _updateText(int capacity) {
-    text = '$capacity/${TrashCanDepositingBehavior._maximumCapacity}';
   }
 }

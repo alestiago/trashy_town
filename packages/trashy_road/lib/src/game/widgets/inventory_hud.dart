@@ -74,17 +74,10 @@ class _PaperBackground extends StatelessWidget {
   }
 }
 
-class _InventorySlot extends StatefulWidget {
+class _InventorySlot extends StatelessWidget {
   const _InventorySlot({required this.index});
 
   final int index;
-
-  @override
-  State<_InventorySlot> createState() => _InventorySlotState();
-}
-
-class _InventorySlotState extends State<_InventorySlot> {
-  TrashType? _previousType;
 
   @override
   Widget build(BuildContext context) {
@@ -94,13 +87,13 @@ class _InventorySlotState extends State<_InventorySlot> {
         dimension: 50,
         child: BlocSelector<GameBloc, GameState, TrashType?>(
           selector: (state) {
-            if (state.inventory.items.length <= widget.index) {
+            if (state.inventory.items.length <= index) {
               return null;
             }
-            return state.inventory.items[widget.index];
+            return state.inventory.items[index];
           },
           builder: (context, type) {
-            final child = Stack(
+            return Stack(
               children: [
                 Positioned.fill(
                   child: AnimatedOpacity(
@@ -111,16 +104,10 @@ class _InventorySlotState extends State<_InventorySlot> {
                 ),
                 if (type != null)
                   Positioned.fill(
-                    child: _FilledInventorySlot.fromType(
-                      type,
-                      animate: _previousType == null,
-                    ),
+                    child: _FilledInventorySlot.fromType(type),
                   ),
               ],
             );
-
-            _previousType = type;
-            return child;
           },
         ),
       ),
@@ -132,20 +119,15 @@ class _FilledInventorySlot extends StatefulWidget {
   _FilledInventorySlot._({
     required this.type,
     required this.spriteSheetData,
-    required this.animate,
   }) {
     Flame.images.prefix = '';
   }
 
-  factory _FilledInventorySlot.fromType(
-    TrashType type, {
-    bool animate = true,
-  }) {
+  factory _FilledInventorySlot.fromType(TrashType type) {
     final spriteSheetData = _spriteSheetsData[type]!;
     return _FilledInventorySlot._(
       type: type,
       spriteSheetData: spriteSheetData,
-      animate: animate,
     );
   }
 
@@ -185,9 +167,6 @@ class _FilledInventorySlot extends StatefulWidget {
   /// sprite sheet is updated, this data should be updated as well.
   final _SpriteSheetData spriteSheetData;
 
-  /// Whether the sprite should animate or not.
-  final bool animate;
-
   @override
   State<_FilledInventorySlot> createState() => _FilledInventorySlotState();
 }
@@ -195,7 +174,8 @@ class _FilledInventorySlot extends StatefulWidget {
 class _FilledInventorySlotState extends State<_FilledInventorySlot> {
   Future<SpriteAnimation>? _animationFuture;
   SpriteAnimationTicker? _animationTicker;
-  late bool _completed = widget.animate;
+  bool _animate = true;
+  late bool _completed = _animate;
 
   @override
   void initState() {
@@ -225,6 +205,8 @@ class _FilledInventorySlotState extends State<_FilledInventorySlot> {
     if (changedSpriteData) {
       _updateSpriteAnimation();
     }
+
+    _animate = false;
   }
 
   void _onFrame(int index) {
@@ -251,7 +233,7 @@ class _FilledInventorySlotState extends State<_FilledInventorySlot> {
         final animationTicker =
             _animationTicker = animation.createTicker()..onFrame = _onFrame;
 
-        if (!widget.animate) {
+        if (!_animate) {
           animationTicker
             ..setToLast()
             ..paused = true;
@@ -259,7 +241,7 @@ class _FilledInventorySlotState extends State<_FilledInventorySlot> {
 
         return InternalSpriteAnimationWidget(
           animation: animation,
-          playing: widget.animate,
+          playing: _animate,
           animationTicker: animationTicker,
         );
       },

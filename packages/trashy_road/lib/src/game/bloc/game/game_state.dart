@@ -61,7 +61,7 @@ class GameState extends Equatable {
     this.pausedDuration = Duration.zero,
     this.startedAt,
     this.pausedAt,
-    this.score = -1,
+    this.score,
     this.lostReason,
   }) :
         // TODO(alestiago): Remove magic string.

@@ -1,11 +1,11 @@
 import 'dart:collection';
 
+import 'package:equatable/equatable.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
-// ignore: implementation_imports
-import 'package:flame/src/widgets/animation_widget.dart';
-// ignore: implementation_imports
-import 'package:flame/src/widgets/sprite_widget.dart';
+import 'package:flame/sprite.dart';
+import 'package:flame/widgets.dart';
+
 import 'package:flutter/widgets.dart' hide Image;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/gen/gen.dart';
@@ -88,61 +88,52 @@ class _InventorySlotState extends State<_InventorySlot> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<GameBloc, GameState, TrashType?>(
-      selector: (state) {
-        if (state.inventory.items.length <= widget.index) {
-          return null;
-        }
-        return state.inventory.items[widget.index];
-      },
-      builder: (context, type) {
-        print('previousType: $_previousType');
-        print('type: $type');
-
-        final child = Padding(
-          padding: const EdgeInsets.all(4),
-          child: SizedBox.square(
-            dimension: 50,
-            child: Stack(
+    return Padding(
+      padding: const EdgeInsets.all(4),
+      child: SizedBox.square(
+        dimension: 50,
+        child: BlocSelector<GameBloc, GameState, TrashType?>(
+          selector: (state) {
+            if (state.inventory.items.length <= widget.index) {
+              return null;
+            }
+            return state.inventory.items[widget.index];
+          },
+          builder: (context, type) {
+            final child = Stack(
               children: [
-                const Positioned.fill(child: _EmptyInventorySlot()),
-                if (type != null || _previousType != null)
+                Positioned.fill(
+                  child: AnimatedOpacity(
+                    duration: const Duration(milliseconds: 500),
+                    opacity: type == null ? 1 : 0.1,
+                    child: Assets.images.display.slotEmpty.image(),
+                  ),
+                ),
+                if (type != null)
                   Positioned.fill(
+                    // key: ValueKey('${_InventorySlotState}_${widget.index}'),
                     child: _FilledInventorySlot.fromType(
-                      type ?? _previousType!,
-                      animate: _previousType == null || type == null,
-                      reverse: _previousType != null && type != _previousType,
+                      type,
+                      animate: _previousType == null,
                     ),
                   ),
               ],
-            ),
-          ),
-        );
+            );
 
-        _previousType = type;
-        return child;
-      },
-    );
-  }
-}
-
-class _EmptyInventorySlot extends StatelessWidget {
-  const _EmptyInventorySlot();
-
-  @override
-  Widget build(BuildContext context) {
-    return const ColoredBox(
-      color: Color(0xffff0000),
-      child: SizedBox.square(dimension: 50),
+            _previousType = type;
+            return child;
+          },
+        ),
+      ),
     );
   }
 }
 
 class _FilledInventorySlot extends StatefulWidget {
   _FilledInventorySlot._({
+    required this.type,
     required this.spriteSheetData,
     required this.animate,
-    required this.reversed,
   }) {
     Flame.images.prefix = '';
   }
@@ -150,13 +141,12 @@ class _FilledInventorySlot extends StatefulWidget {
   factory _FilledInventorySlot.fromType(
     TrashType type, {
     bool animate = true,
-    bool reverse = false,
   }) {
     final spriteSheetData = _spriteSheetsData[type]!;
     return _FilledInventorySlot._(
+      type: type,
       spriteSheetData: spriteSheetData,
       animate: animate,
-      reversed: reverse,
     );
   }
 
@@ -188,6 +178,8 @@ class _FilledInventorySlot extends StatefulWidget {
     },
   );
 
+  final TrashType type;
+
   /// The data of the sprite sheet being used.
   ///
   /// This is derived from the sprite sheet image characterstics. Hence, if the
@@ -197,66 +189,89 @@ class _FilledInventorySlot extends StatefulWidget {
   /// Whether the sprite should animate or not.
   final bool animate;
 
-  /// Whether the animation should play in reverse.
-  final bool reversed;
-
   @override
   State<_FilledInventorySlot> createState() => _FilledInventorySlotState();
 }
 
 class _FilledInventorySlotState extends State<_FilledInventorySlot> {
-  late bool _completed = !widget.animate;
+  Future<SpriteAnimation>? _animationFuture;
+  SpriteAnimationTicker? _animationTicker;
+  late bool _completed = widget.animate;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (_animationFuture == null) {
+      _updateSpriteAnimation();
+    }
+  }
+
+  void _updateSpriteAnimation() {
+    final spriteAnimationData = _FilledInventorySlot
+        ._spriteSheetsData[widget.type]!
+        .toSpriteAnimationData();
+    _animationFuture = SpriteAnimation.load(
+      widget.spriteSheetData.asset,
+      spriteAnimationData,
+    );
+    _animationTicker = null;
+  }
 
   @override
   void didUpdateWidget(covariant _FilledInventorySlot oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    final changeDirection = widget.reversed != oldWidget.reversed;
-    if (widget.animate && changeDirection) {
-      _completed = false;
+    final changedSpriteData = oldWidget.type != widget.type;
+    if (changedSpriteData) {
+      _updateSpriteAnimation();
+    }
+  }
+
+  void _onFrame(int index) {
+    final isLastFrame = index == widget.spriteSheetData.frames - 1;
+    if (isLastFrame && !_completed) {
+      _animationTicker!.paused = true;
+      setState(() {
+        if (_completed) return;
+        _completed = true;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!_completed) {
-      var spriteAnimationData = widget.spriteSheetData.toSpriteAnimationData();
-      if (widget.reversed) {
-        spriteAnimationData = spriteAnimationData.reverse();
-      }
+    return FutureBuilder<SpriteAnimation>(
+      future: _animationFuture,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const SizedBox.shrink();
+        }
 
-      return SpriteAnimationWidget.asset(
-        path: widget.spriteSheetData.asset,
-        data: spriteAnimationData,
-        onComplete: () {
-          if (_completed) return;
-          setState(() => _completed = true);
-        },
-      );
-    }
+        final animation = snapshot.data!;
+        final animationTicker =
+            _animationTicker = animation.createTicker()..onFrame = _onFrame;
 
-    if (_completed && !widget.reversed) {
-      final lastFrameOffset =
-          widget.spriteSheetData.getOffset(widget.spriteSheetData.frames - 1);
+        if (!widget.animate) {
+          animationTicker
+            ..setToLast()
+            ..paused = true;
+        }
 
-      return SpriteWidget.asset(
-        path: widget.spriteSheetData.asset,
-        srcPosition: Vector2(lastFrameOffset.dx, lastFrameOffset.dy),
-        srcSize: Vector2(
-          widget.spriteSheetData.size.width,
-          widget.spriteSheetData.size.height,
-        ),
-      );
-    }
-
-    return const SizedBox.shrink();
+        return InternalSpriteAnimationWidget(
+          animation: animation,
+          playing: widget.animate,
+          animationTicker: animationTicker,
+        );
+      },
+    );
   }
 }
 
 /// {@template SpriteSheetData}
 /// Object which contains meta data for a collection of sprites.
 /// {@endtemplate}
-class _SpriteSheetData {
+class _SpriteSheetData extends Equatable {
   /// {@macro SpriteSheetData}
   const _SpriteSheetData({
     required this.asset,
@@ -300,14 +315,12 @@ class _SpriteSheetData {
       row * size.height,
     );
   }
-}
 
-extension on SpriteAnimationData {
-  /// Reverses the animation.
-  SpriteAnimationData reverse() {
-    return SpriteAnimationData(
-      frames.reversed.toList(),
-      loop: loop,
-    );
-  }
+  @override
+  List<Object?> get props => [
+        asset,
+        size,
+        frames,
+        amountPerRow,
+      ];
 }

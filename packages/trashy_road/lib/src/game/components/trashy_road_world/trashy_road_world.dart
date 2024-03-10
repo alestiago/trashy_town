@@ -20,6 +20,10 @@ enum _TiledLayer {
 
 class TrashyRoadWorld extends Component {
   TrashyRoadWorld.create({required this.tiled}) {
+    final borderLayer =
+        tiled.tileMap.getObjectGroup(_TiledLayer.borderLayer.name);
+    tiled.addAll(borderLayer.objects.map(MapEdge.fromTiledObject));
+
     final trashLayer =
         tiled.tileMap.getObjectGroup(_TiledLayer.trashLayer.name);
     tiled.addAll(trashLayer.objects.map(Trash.fromTiledObject));
@@ -40,10 +44,6 @@ class TrashyRoadWorld extends Component {
     final obstaclesLayer =
         tiled.tileMap.getObjectGroup(_TiledLayer.obstacles.name);
     tiled.addAll(obstaclesLayer.objects.map(Obstacle.fromTiledObject));
-
-    final borderLayer =
-        tiled.tileMap.getObjectGroup(_TiledLayer.borderLayer.name);
-    tiled.addAll(borderLayer.objects.map(MapEdge.fromTiledObject));
 
     bounds = MapBounds.fromLTWH(
       tiled.topLeftPosition.x,

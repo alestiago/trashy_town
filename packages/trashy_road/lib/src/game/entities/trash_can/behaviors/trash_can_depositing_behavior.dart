@@ -1,14 +1,33 @@
 import 'dart:async';
+import 'dart:collection';
+import 'dart:math' as math;
 
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_bloc/flame_bloc.dart';
+import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
+final _random = math.Random(0);
+
 class TrashCanDepositingBehavior extends Behavior<TrashCan>
-    with FlameBlocReader<GameBloc, GameState> {
+    with
+        FlameBlocReader<GameBloc, GameState>,
+        HasGameReference<TrashyRoadGame> {
   /// The maximum amount of trash that the [TrashCan] can hold.
   static const int _maximumCapacity = 3;
+
+  /// The sound effects that are played when trash is deposited into the
+  /// [TrashCan].
+  ///
+  /// The sound effect is chosen randomly when trash is deposited.
+  static final _depositSoundEffects = UnmodifiableSetView({
+    Assets.audio.depositTrash1,
+    Assets.audio.depositTrash2,
+    Assets.audio.depositTrash3,
+    Assets.audio.depositTrash4,
+    Assets.audio.depositTrash5,
+  });
 
   /// The current amount of trash that the [TrashCan] holds.
   int _capacity = 0;
@@ -43,6 +62,13 @@ class TrashCanDepositingBehavior extends Behavior<TrashCan>
   /// Does nothing if the [TrashCan] cannot deposit some trash.
   void deposit() {
     if (!_canDeposit()) return;
+
+    game.audioBloc.playEffect(
+      _depositSoundEffects.elementAt(
+        _random.nextInt(_depositSoundEffects.length),
+      ),
+      volume: 0.3,
+    );
 
     _capacity++;
     bloc.add(GameDepositedTrashEvent(item: parent.trashType));

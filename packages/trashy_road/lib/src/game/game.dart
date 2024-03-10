@@ -6,11 +6,13 @@ import 'package:flame/cache.dart';
 import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
+import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
 import 'package:trashy_road/game_settings.dart';
+import 'package:trashy_road/src/game/entities/vehicle/behaviors/camera_follow_behavior.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 export 'bloc/bloc.dart';
@@ -89,7 +91,16 @@ class TrashyRoadGame extends FlameGame
     _player = trashyRoadWorld.tiled.children.whereType<Player>().first;
     _player.children.register<PlayerDragMovingBehavior>();
 
-    camera.follow(_player);
+    camera.viewfinder.add(
+      CameraFollowBehavior(target: _player, viewport: camera.viewport),
+    );
+
+    camera.setBounds(
+      Rectangle.fromPoints(
+        trashyRoadWorld.bounds.topLeft,
+        trashyRoadWorld.bounds.bottomRight,
+      ),
+    );
   }
 
   @override

@@ -57,8 +57,10 @@ class _AnimatedStarRatingState extends State<AnimatedStarRating>
   }
 
   void _playSoundEffect() {
+    if (widget._rating == 0) return;
+
     final soundEffect = switch (widget._rating) {
-      1 => GameSoundEffects.ratingStars2,
+      1 => GameSoundEffects.ratingStars1,
       2 => GameSoundEffects.ratingStars2,
       3 => GameSoundEffects.ratingStars3,
       _ => GameSoundEffects.ratingStars3,

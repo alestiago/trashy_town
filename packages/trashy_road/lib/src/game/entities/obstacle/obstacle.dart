@@ -24,29 +24,6 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex, HasGameRef {
     zIndex = position.y.floor();
   }
 
-  final RectangleHitbox hitbox;
-
-  @override
-  Future<void> onLoad() async {
-    await super.onLoad();
-
-    final world = ancestors().whereType<TrashyRoadWorld>().first;
-    final mapEdges = world.descendants().whereType<MapEdge>().toSet();
-
-    final isInMapEdge =
-        mapEdges.any((element) => element.isPointInside(position));
-
-    if (!isInMapEdge) {
-      add(
-        PropagatingCollisionBehavior(
-          hitbox
-            ..isSolid = true
-            ..anchor = Anchor.bottomLeft,
-        ),
-      );
-    }
-  }
-
   // An Obstacle that is a tree with a single large ball of leaves.
   //
   // The tree takes up 1x1 tile space.
@@ -220,6 +197,29 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex, HasGameRef {
         return Obstacle._busStop(position: position);
       default:
         throw ArgumentError('Unknown obstacle type: $type');
+    }
+  }
+
+  final RectangleHitbox hitbox;
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+
+    final world = ancestors().whereType<TrashyRoadWorld>().first;
+    final mapEdges = world.descendants().whereType<MapEdge>().toSet();
+
+    final isInMapEdge =
+        mapEdges.any((element) => element.isPointInside(position));
+
+    if (!isInMapEdge) {
+      add(
+        PropagatingCollisionBehavior(
+          hitbox
+            ..isSolid = true
+            ..anchor = Anchor.bottomLeft,
+        ),
+      );
     }
   }
 }

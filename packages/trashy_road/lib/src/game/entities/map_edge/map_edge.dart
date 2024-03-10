@@ -38,7 +38,7 @@ class MapEdge extends PositionedEntity with Untraversable {
       ),
       RectangleComponent(size: size)
         ..setColor(
-          const Color.fromARGB(5, 0, 0, 0),
+          const Color.fromARGB(20, 0, 0, 0),
         ),
     ]);
   }

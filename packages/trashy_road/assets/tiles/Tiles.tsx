@@ -32,7 +32,7 @@
   <image width="512" height="768" source="../images/sprites/building_2.png"/>
  </tile>
  <tile id="18">
-  <image width="768" height="1024" source="../images/sprites/building_4.png"/>
+  <image width="256" height="384" source="../images/sprites/building_4.png"/>
  </tile>
  <tile id="19">
   <image width="512" height="256" source="../images/sprites/bench.png"/>

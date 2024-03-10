@@ -35,49 +35,50 @@ class _MapsMenuView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned.fill(
-          child: Image.asset(
-            // TODO(alestiago): Use background render when available.
-            Assets.images.sprites.grass.path,
-            repeat: ImageRepeat.repeat,
-          ),
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xff5F97C4),
+            Color(0xff64A5CC),
+          ],
         ),
-        BlocSelector<GameMapsBloc, GameMapsState, GameMapsCollection>(
-          selector: (state) => state.maps,
-          builder: (context, maps) {
-            final mapsValues = maps.values.toList();
-            final screenSize = MediaQuery.sizeOf(context);
+      ),
+      child: BlocSelector<GameMapsBloc, GameMapsState, GameMapsCollection>(
+        selector: (state) => state.maps,
+        builder: (context, maps) {
+          final mapsValues = maps.values.toList();
+          final screenSize = MediaQuery.sizeOf(context);
 
-            const mainCrossAxisExtent = 150.0;
-            const mainAxisSpacing = 20.0;
+          const mainCrossAxisExtent = 150.0;
+          const mainAxisSpacing = 20.0;
 
-            final padding = EdgeInsets.symmetric(
-              vertical: mainAxisSpacing * 3,
-              horizontal: screenSize.width * 0.1,
-            );
+          final padding = EdgeInsets.symmetric(
+            vertical: mainAxisSpacing * 3,
+            horizontal: screenSize.width * 0.1,
+          );
 
-            return Center(
-              child: SizedBox(
-                width: mainCrossAxisExtent * 5 + padding.horizontal,
-                child: GridView.builder(
-                  padding: padding,
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: mainCrossAxisExtent,
-                    crossAxisSpacing: 50,
-                    mainAxisSpacing: mainAxisSpacing,
-                  ),
-                  itemCount: mapsValues.length,
-                  itemBuilder: (context, index) {
-                    return GameMapTile(map: mapsValues[index]);
-                  },
+          return Center(
+            child: SizedBox(
+              width: mainCrossAxisExtent * 5 + padding.horizontal,
+              child: GridView.builder(
+                padding: padding,
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: mainCrossAxisExtent,
+                  crossAxisSpacing: 50,
+                  mainAxisSpacing: mainAxisSpacing,
                 ),
+                itemCount: mapsValues.length,
+                itemBuilder: (context, index) {
+                  return GameMapTile(map: mapsValues[index]);
+                },
               ),
-            );
-          },
-        ),
-      ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

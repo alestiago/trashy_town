@@ -74,7 +74,10 @@ class _LoadingInternal extends StatelessWidget {
               style: textStyle,
               child: Text(
                 loadingMessage,
-                style: textStyle.copyWith(fontSize: 24),
+                style: textStyle.copyWith(
+                  fontSize: 24,
+                  color: BasuraColors.white,
+                ),
               ),
             ),
           ],

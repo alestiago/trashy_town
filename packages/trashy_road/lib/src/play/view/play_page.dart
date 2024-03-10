@@ -35,6 +35,12 @@ class PlayPage extends StatelessWidget {
       ),
       child: Stack(
         children: [
+          Positioned.fill(
+            bottom: null,
+            child: Assets.images.display.playBackgroundSky.image(
+              fit: BoxFit.none,
+            ),
+          ),
           Align(
             alignment: const Alignment(0, -0.85),
             child: SizedBox.square(
@@ -58,8 +64,7 @@ class PlayPage extends StatelessWidget {
                     ? (size.width - size.height) / ((1920 / 732) * 2)
                     : 0,
               ),
-              child: Image.asset(
-                Assets.images.display.playBackgroundHouses.path,
+              child: Assets.images.display.playBackgroundHouses.image(
                 fit: BoxFit.cover,
               ),
             ),

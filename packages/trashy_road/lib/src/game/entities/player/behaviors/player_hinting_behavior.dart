@@ -5,6 +5,7 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/animation.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/gen.dart';
@@ -17,7 +18,8 @@ import 'package:trashy_road/src/game/game.dart';
 /// ([_hintDelay]) and a certain amount of time ([_hintInterval]) has passed
 /// since the last hint was shown.
 /// {@endtemplate}
-class PlayerHintingBehavior extends Behavior<Player> with HasGameReference {
+class PlayerHintingBehavior extends Behavior<Player>
+    with HasGameReference, FlameBlocReader<GameBloc, GameState> {
   /// The minimum time between hints.
   static const _hintInterval = 5.0;
 
@@ -100,6 +102,9 @@ class PlayerHintingBehavior extends Behavior<Player> with HasGameReference {
   @override
   void update(double dt) {
     super.update(dt);
+    if (bloc.state.status != GameStatus.playing) {
+      return;
+    }
 
     if (_trash.isEmpty || _closestTrash == null) {
       // If there is no trash, no hint is needed and thus, the behavior can be

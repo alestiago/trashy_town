@@ -19,7 +19,7 @@ class GameBackgroundMusicListener extends StatelessWidget {
     if (audioBloc.backgroundMusic.isPlaying) return;
     audioBloc.backgroundMusic.play(
       Assets.audio.backgroundMusic,
-      volume: 0.25,
+      volume: 0.2,
     );
   }
 

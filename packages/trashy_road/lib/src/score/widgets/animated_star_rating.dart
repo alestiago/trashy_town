@@ -60,8 +60,8 @@ class _AnimatedStarRatingState extends State<AnimatedStarRating>
     final soundEffect = switch (widget._rating) {
       1 => GameSoundEffects.ratingStars2,
       2 => GameSoundEffects.ratingStars2,
-      3 => GameSoundEffects.ratingStars2,
-      _ => GameSoundEffects.ratingStars2,
+      3 => GameSoundEffects.ratingStars3,
+      _ => GameSoundEffects.ratingStars3,
     };
     context.read<AudioCubit>().playEffect(soundEffect);
   }

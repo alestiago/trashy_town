@@ -100,7 +100,7 @@ class _GameView extends StatelessWidget {
             if (isTutorial)
               const Align(
                 alignment: Alignment(0, -0.6),
-                child: GameTutorial(),
+                child: TutorialHud(),
               ),
           ],
         ),

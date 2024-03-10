@@ -10,6 +10,8 @@ import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/audio/audio.dart';
 import 'package:trashy_road/src/game/game.dart';
 
+export 'behaviors/behaviors.dart';
+
 /// The different types of [Trash].
 enum TrashType {
   plastic._('plastic'),
@@ -49,6 +51,7 @@ class Trash extends PositionedEntity
               drop: Vector2(0, -45),
               minDuration: 0.1,
             ),
+            TrashShakingBehavior(),
             PropagatingCollisionBehavior(
               RectangleHitbox(
                 isSolid: true,
@@ -114,16 +117,15 @@ class Trash extends PositionedEntity
     }
   }
 
-  @override
-  void removeFromParent() {
+  /// Collects the trash.
+  void collect() {
     game.audioBloc.playEffect(GameSoundEffects.plasticTrash);
-
     findBehavior<PropagatingCollisionBehavior>()
         .children
         .whereType<RectangleHitbox>()
         .first
         .collisionType = CollisionType.inactive;
-    super.removeFromParent();
+    removeFromParent();
   }
 
   final TrashType trashType;

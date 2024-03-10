@@ -1,3 +1,4 @@
+import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_bloc/flame_bloc.dart';
@@ -18,6 +19,7 @@ class PlayerCollectingTrashBehavior extends CollisionBehavior<Trash, Player>
     }
 
     bloc.add(GameCollectedTrashEvent(item: other.trashType));
-    other.removeFromParent();
+
+    other.collect();
   }
 }

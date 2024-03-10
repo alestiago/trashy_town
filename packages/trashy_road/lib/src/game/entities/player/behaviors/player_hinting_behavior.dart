@@ -5,6 +5,7 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
+import 'package:flutter/animation.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/game.dart';
@@ -252,19 +253,30 @@ class _HintArrowSpriteComponent extends GameSpriteComponent
   FutureOr<void> onLoad() async {
     await super.onLoad();
 
-    final effectController = EffectController(
-      duration: 1,
+    final moveEffectController = EffectController(duration: 1);
+
+    final fadeInEffectController = EffectController(
+      duration: 0.2,
+    );
+    final fadeOutEffectController = EffectController(
+      duration: 0.6,
+      startDelay: fadeInEffectController.duration!,
+      curve: Curves.easeInCubic,
     );
 
     await addAll([
+      OpacityEffect.to(0, EffectController(duration: 0)),
+      OpacityEffect.fadeIn(fadeInEffectController),
       MoveEffect.by(
-        direction.destination()..scale(4),
-        effectController,
+        direction.destination()..scale(200),
+        moveEffectController,
       ),
       RemoveEffect(
-        delay: effectController.duration!,
+        delay: moveEffectController.duration!,
       ),
-      OpacityEffect.fadeOut(effectController),
+      OpacityEffect.fadeOut(
+        fadeOutEffectController,
+      ),
     ]);
   }
 }

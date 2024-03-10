@@ -9,6 +9,9 @@ class PlayingHudTransition extends StatefulWidget {
     super.key,
   });
 
+  /// The time the transition should take.
+  static const animationDuration = Duration(seconds: 1);
+
   final Widget child;
 
   final Tween<Offset> slideTween;
@@ -20,7 +23,7 @@ class PlayingHudTransition extends StatefulWidget {
 class _PlayingHudTransitionState extends State<PlayingHudTransition>
     with SingleTickerProviderStateMixin {
   late final _controller = AnimationController(
-    duration: const Duration(seconds: 1),
+    duration: PlayingHudTransition.animationDuration,
     vsync: this,
   );
 

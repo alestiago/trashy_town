@@ -26,9 +26,12 @@ class Player extends PositionedEntity with ZIndex {
             PlayerCollectingTrashBehavior(),
             PlayerDepositingTrashBehavior(),
             PlayerObstacleBehavior(),
+            PlayerHintingBehavior(),
             PausingBehavior<Player>(
-              selector: (player) =>
-                  player.findBehaviors<PlayerKeyboardMovingBehavior>(),
+              selector: (player) => {
+                ...player.findBehaviors<PlayerKeyboardMovingBehavior>(),
+                ...player.findBehaviors<PlayerHintingBehavior>(),
+              },
             ),
           ],
           children: [

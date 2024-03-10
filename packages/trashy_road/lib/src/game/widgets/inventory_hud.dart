@@ -1,6 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flame/flame.dart';
+import 'package:flame/game.dart';
+// ignore: implementation_imports
+import 'package:flame/src/widgets/animation_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/widgets.dart' hide Image;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/game.dart';
@@ -43,7 +46,9 @@ class InventoryHud extends StatelessWidget {
                           padding: const EdgeInsets.all(4),
                           child: SizedBox.square(
                             dimension: slotSize,
-                            child: _InventorySlot.fromType(type),
+                            child: type == null
+                                ? const _EmptyInventorySlot()
+                                : _InventorySlot.fromType(type),
                           ),
                         ),
                     ],
@@ -79,9 +84,21 @@ class _PaperBackground extends StatelessWidget {
   }
 }
 
+class _EmptyInventorySlot extends StatelessWidget {
+  const _EmptyInventorySlot();
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: Colors.red,
+      child: const SizedBox.square(dimension: 50),
+    );
+  }
+}
+
 class _InventorySlot extends StatelessWidget {
   const _InventorySlot({
-    required this.image,
+    required this.imagePath,
   });
 
   factory _InventorySlot.fromType(TrashType? type) {
@@ -97,24 +114,37 @@ class _InventorySlot extends StatelessWidget {
     }
   }
 
-  _InventorySlot.empty() : image = Assets.images.display.slotEmpty.image();
+  _InventorySlot.empty() : imagePath = Assets.images.display.slotEmpty.path;
 
   _InventorySlot.appleCore()
-      : image = Assets.images.display.slotAppleCore.image();
+      : imagePath = Assets.images.display.slotAppleCore.path;
 
   _InventorySlot.paperBox()
-      : image = Assets.images.display.slotPaperBox.image();
+      : imagePath = Assets.images.display.slotPaperBox.path;
 
   _InventorySlot.plasticBottle()
-      : image = Assets.images.display.slotPlasticBottle.image();
+      : imagePath = Assets.images.display.slotPlasticBottle.path;
 
-  final Image image;
+  final String imagePath;
+
+  /// The data of the sprite sheet being used.
+  ///
+  /// This is derived from the sprite sheet image characterstics. Hence, if the
+  /// sprite sheet is updated, this data should be updated as well.
+  static final _spriteAnimationData = SpriteAnimationData.sequenced(
+    amount: 23,
+    stepTime: 1 / 32,
+    amountPerRow: 6,
+    textureSize: Vector2.all(458),
+    loop: false,
+  );
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: image,
+    Flame.images.prefix = '';
+    return SpriteAnimationWidget.asset(
+      path: imagePath,
+      data: _spriteAnimationData,
     );
   }
 }

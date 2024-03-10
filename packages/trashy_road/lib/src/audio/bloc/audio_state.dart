@@ -16,10 +16,9 @@ class GameAudioData {
   const GameAudioData._({
     required AssetSource source,
     required double volume,
-    Duration? duration,
+    this.duration,
   })  : _source = source,
-        _volume = volume,
-        _duration = duration;
+        _volume = volume;
 
   GameAudioData.fromPath(
     String path, {
@@ -35,7 +34,7 @@ class GameAudioData {
 
   final double _volume;
 
-  final Duration? _duration;
+  final Duration? duration;
 }
 
 abstract class GameBackgroundMusic {

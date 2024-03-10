@@ -44,20 +44,11 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => GameBloc(
-            identifier: _identifier,
-            map: _map,
-          ),
-        ),
-        BlocProvider(
-          create: (context) => AudioCubit(
-            audioCache: context.read<PreloadCubit>().audio,
-          ),
-        ),
-      ],
+    return BlocProvider(
+      create: (context) => GameBloc(
+        identifier: _identifier,
+        map: _map,
+      ),
       child: const _GameView(),
     );
   }

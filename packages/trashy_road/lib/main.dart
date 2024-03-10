@@ -3,6 +3,7 @@ import 'package:basura/basura.dart';
 import 'package:flame/cache.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trashy_road/src/audio/audio.dart';
 import 'package:trashy_road/src/loading/loading.dart';
 import 'package:trashy_road/src/maps/maps.dart';
 
@@ -30,6 +31,11 @@ class _MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => GameMapsBloc(),
+        ),
+        BlocProvider(
+          create: (context) => AudioCubit(
+            audioCache: context.read<PreloadCubit>().audio,
+          ),
         ),
       ],
       child: BasuraTheme(

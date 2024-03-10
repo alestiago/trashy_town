@@ -131,17 +131,17 @@ class Trash extends PositionedEntity
 
 /// The different styles of plastic bottles.
 enum PlasticStyle {
-  /// {@template _PlasticStyle.one}
+  /// {@template _PlasticStyle.plasticBottleOne}
   /// A crushed plastic bottle that is laying on the ground with its lid facing
   /// east.
   /// {@endtemplate}
-  one,
+  plasticBottleOne,
 
-  /// {@template _PlasticStyle.two}
+  /// {@template _PlasticStyle.plasticBottleTwo}
   /// A crushed plastic bottle that is laying on the ground with its lid facing
   /// south-east.
   /// {@endtemplate}
-  two,
+  plasticBottleTwo,
 
   /// {@template _PlasticStyle.coldTakeAwayCup}
   /// A takeaway cup with a straw.
@@ -241,11 +241,11 @@ class _PlasticSpriteGroup extends PositionComponent
   _PlasticSpriteGroup._({
     required String spritePath,
     required String shadowPath,
+    super.scale,
   }) : super(
           // The `position` and `scale` have been eyeballed to match with the
           // appearance of the map.
           position: Vector2(0.5, 1.4)..toGameSize(),
-          scale: Vector2.all(0.8),
           anchor: Anchor.center,
           children: [
             GameSpriteComponent.fromPath(
@@ -264,10 +264,10 @@ class _PlasticSpriteGroup extends PositionComponent
     PlasticStyle style,
   ) {
     switch (style) {
-      case PlasticStyle.one:
-        return _PlasticSpriteGroup._styleOne();
-      case PlasticStyle.two:
-        return _PlasticSpriteGroup._styleTwo();
+      case PlasticStyle.plasticBottleOne:
+        return _PlasticSpriteGroup._plasticBottleOne();
+      case PlasticStyle.plasticBottleTwo:
+        return _PlasticSpriteGroup._plasticBottleTwo();
       case PlasticStyle.coldTakeAwayCup:
         return _PlasticSpriteGroup._coldTakeAwayCup();
       case PlasticStyle.straw:
@@ -277,34 +277,39 @@ class _PlasticSpriteGroup extends PositionComponent
     }
   }
 
-  /// {@macro _PlasticStyle.one}
-  factory _PlasticSpriteGroup._styleOne() => _PlasticSpriteGroup._(
+  /// {@macro _PlasticStyle.plasticBottleOne}
+  factory _PlasticSpriteGroup._plasticBottleOne() => _PlasticSpriteGroup._(
         spritePath: Assets.images.sprites.plasticBottle1.path,
         shadowPath: Assets.images.sprites.plasticBottle1Shadow.path,
+        scale: Vector2.all(0.5),
       );
 
-  /// {@macro _PlasticBo_PlasticStylettleStyle.two}
-  factory _PlasticSpriteGroup._styleTwo() => _PlasticSpriteGroup._(
+  /// {@macro _PlasticBo_PlasticStylettleStyle.plasticBottleTwo}
+  factory _PlasticSpriteGroup._plasticBottleTwo() => _PlasticSpriteGroup._(
         spritePath: Assets.images.sprites.plasticBottle2.path,
         shadowPath: Assets.images.sprites.plasticBottle2Shadow.path,
+        scale: Vector2.all(0.5),
       );
 
   /// {@macro _PlasticStyle.coldTakeAwayCup}
   factory _PlasticSpriteGroup._coldTakeAwayCup() => _PlasticSpriteGroup._(
         spritePath: Assets.images.sprites.takeawayCupCold.path,
         shadowPath: Assets.images.sprites.takeawayCupColdShadow.path,
+        scale: Vector2.all(0.8),
       );
 
   /// {@macro _PlasticStyle.straw}
   factory _PlasticSpriteGroup._straw() => _PlasticSpriteGroup._(
         spritePath: Assets.images.sprites.plasticStraw.path,
         shadowPath: Assets.images.sprites.plasticStrawShadow.path,
+        scale: Vector2.all(0.8),
       );
 
   /// {@macro _PlasticStyle.canHolder}
   factory _PlasticSpriteGroup._canHolder() => _PlasticSpriteGroup._(
         spritePath: Assets.images.sprites.canHolder.path,
         shadowPath: Assets.images.sprites.canHolderShadow.path,
+        scale: Vector2.all(0.8),
       );
 }
 

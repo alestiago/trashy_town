@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:meta/meta.dart';
 import 'package:tiled/tiled.dart';
@@ -116,11 +115,7 @@ class Trash extends PositionedEntity
 
   @override
   void removeFromParent() {
-    // TODO(alestiago): Play a sound according to what type of trash it is.
-    game.effectPlayer.play(AssetSource(Assets.audio.plasticBottle));
-
-    // TODO(alestiago): Consider whether or not to add the scale effect to the
-    // trash again.
+    game.audioBloc.playEffect(Assets.audio.plasticBottle);
 
     findBehavior<PropagatingCollisionBehavior>()
         .children

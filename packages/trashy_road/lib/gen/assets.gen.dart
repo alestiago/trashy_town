@@ -18,6 +18,21 @@ class $AssetsAudioGen {
   /// File path: assets/audio/background_music.mp3
   String get backgroundMusic => 'assets/audio/background_music.mp3';
 
+  /// File path: assets/audio/deposit_trash_1.wav
+  String get depositTrash1 => 'assets/audio/deposit_trash_1.wav';
+
+  /// File path: assets/audio/deposit_trash_2.wav
+  String get depositTrash2 => 'assets/audio/deposit_trash_2.wav';
+
+  /// File path: assets/audio/deposit_trash_3.wav
+  String get depositTrash3 => 'assets/audio/deposit_trash_3.wav';
+
+  /// File path: assets/audio/deposit_trash_4.wav
+  String get depositTrash4 => 'assets/audio/deposit_trash_4.wav';
+
+  /// File path: assets/audio/deposit_trash_5.wav
+  String get depositTrash5 => 'assets/audio/deposit_trash_5.wav';
+
   /// File path: assets/audio/hinting_arrow.mp3
   String get hintingArrow => 'assets/audio/hinting_arrow.mp3';
 
@@ -25,7 +40,16 @@ class $AssetsAudioGen {
   String get plasticBottle => 'assets/audio/plastic_bottle.mp3';
 
   /// List of all assets
-  List<String> get values => [backgroundMusic, hintingArrow, plasticBottle];
+  List<String> get values => [
+        backgroundMusic,
+        depositTrash1,
+        depositTrash2,
+        depositTrash3,
+        depositTrash4,
+        depositTrash5,
+        hintingArrow,
+        plasticBottle
+      ];
 }
 
 class $AssetsImagesGen {

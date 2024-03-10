@@ -58,14 +58,12 @@ class BasuraThemeData extends Equatable {
   /// {@macro BasuraThemeData}
   const BasuraThemeData({
     required this.textTheme,
-    required this.glossyButtonTheme,
   });
 
   /// A light theme for the Basura design system.
   factory BasuraThemeData.light() {
     return BasuraThemeData(
       textTheme: BasuraTextThemeData.light(),
-      glossyButtonTheme: BasuraGlossyButtonTheme.light(),
     );
   }
 
@@ -73,7 +71,6 @@ class BasuraThemeData extends Equatable {
   final BasuraTextThemeData textTheme;
 
   /// {@macro BasuraGlossyButtonTheme}
-  final BasuraGlossyButtonTheme glossyButtonTheme;
 
   @override
   List<Object?> get props => [textTheme];

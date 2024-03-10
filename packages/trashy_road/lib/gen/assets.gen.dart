@@ -75,6 +75,9 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/fire_hydrant.tx
   String get fireHydrant => 'assets/tiles/fire_hydrant.tx';
 
+  /// File path: assets/tiles/lamp_post.tx
+  String get lampPost => 'assets/tiles/lamp_post.tx';
+
   /// File path: assets/tiles/map1.tmx
   String get map1 => 'assets/tiles/map1.tmx';
 
@@ -130,6 +133,7 @@ class $AssetsTilesGen {
         bush1,
         bush2,
         fireHydrant,
+        lampPost,
         map1,
         map2,
         roadLane,
@@ -457,6 +461,14 @@ class $AssetsImagesSpritesGen {
   AssetGenImage get grass =>
       const AssetGenImage('assets/images/sprites/grass.png');
 
+  /// File path: assets/images/sprites/lamp_post-shadow.png
+  AssetGenImage get lampPostShadow =>
+      const AssetGenImage('assets/images/sprites/lamp_post-shadow.png');
+
+  /// File path: assets/images/sprites/lamp_post.png
+  AssetGenImage get lampPost =>
+      const AssetGenImage('assets/images/sprites/lamp_post.png');
+
   /// File path: assets/images/sprites/paper_1-shadow.png
   AssetGenImage get paper1Shadow =>
       const AssetGenImage('assets/images/sprites/paper_1-shadow.png');
@@ -661,6 +673,8 @@ class $AssetsImagesSpritesGen {
         grassDirtWest,
         grassFlowers,
         grass,
+        lampPostShadow,
+        lampPost,
         paper1Shadow,
         paper1,
         paper2Shadow,
@@ -748,10 +762,14 @@ class Assets {
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsRiveGen rive = $AssetsRiveGen();
   static const $AssetsTilesGen tiles = $AssetsTilesGen();
-  static const String trashyRoad = 'assets/trashy_road.tiled-project';
+  static const String trashyRoadTiledProject =
+      'assets/trashy_road.tiled-project';
+  static const String trashyRoadTiledSession =
+      'assets/trashy_road.tiled-session';
 
   /// List of all assets
-  static List<String> get values => [trashyRoad];
+  static List<String> get values =>
+      [trashyRoadTiledProject, trashyRoadTiledSession];
 }
 
 class AssetGenImage {

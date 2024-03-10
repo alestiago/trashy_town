@@ -18,18 +18,18 @@ enum _TutorialStatus {
   completed,
 }
 
-/// {@template GameTutorial}
+/// {@template TutorialHud}
 /// Displays tutorial information based on the current game state.
 /// {@endtemplate}
-class GameTutorial extends StatefulWidget {
-  /// {@macro GameTutorial}
-  const GameTutorial({super.key});
+class TutorialHud extends StatefulWidget {
+  /// {@macro TutorialHud}
+  const TutorialHud({super.key});
 
   @override
-  State<GameTutorial> createState() => _GameTutorialState();
+  State<TutorialHud> createState() => _TutorialHudState();
 }
 
-class _GameTutorialState extends State<GameTutorial> {
+class _TutorialHudState extends State<TutorialHud> {
   _TutorialStatus _tutorialStatus = _TutorialStatus.movement;
 
   @override

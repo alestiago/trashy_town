@@ -35,7 +35,7 @@ class GameMapsState extends Equatable {
               identifier: tutorialIdentifier,
               displayName: '1',
               path: Assets.tiles.map1,
-              score: -1,
+              score: null,
               ratingSteps: (15, 20, 30),
               locked: false,
             ),
@@ -43,7 +43,7 @@ class GameMapsState extends Equatable {
               identifier: 'map2',
               displayName: '2',
               path: Assets.tiles.map2,
-              score: -1,
+              score: null,
               ratingSteps: (25, 50, 100),
               locked: true,
             ),
@@ -96,9 +96,10 @@ enum ScoreRating {
 
   /// Creates a [ScoreRating] from the given [RatingSteps] and [score].
   factory ScoreRating.fromSteps({
-    required int score,
+    required int? score,
     required RatingSteps steps,
   }) {
+    if (score == null) return none;
     if (score < 0) return none;
     if (score <= steps.$1) return gold;
     if (score <= steps.$2) return silver;
@@ -141,8 +142,8 @@ class GameMap extends Equatable {
 
   /// The score the player has achieved on this map.
   ///
-  /// A score of -1 means the map has not been played yet.
-  final int score;
+  /// A score of `null` means the map has not been played yet.
+  final int? score;
 
   /// {@macro RatingSteps}
   final RatingSteps ratingSteps;

@@ -52,6 +52,14 @@ class GameMapsState extends Equatable {
               ratingSteps: (25, 50, 100),
               locked: true,
             ),
+            'map3': GameMap._(
+              identifier: 'map3',
+              displayName: '3',
+              path: Assets.tiles.map5,
+              score: null,
+              ratingSteps: (25, 50, 100),
+              locked: true,
+            ),
           },
         );
 

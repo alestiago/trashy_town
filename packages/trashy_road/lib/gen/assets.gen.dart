@@ -154,6 +154,9 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/map2.tmx
   String get map2 => 'assets/tiles/map2.tmx';
 
+  /// File path: assets/tiles/map5.tmx
+  String get map5 => 'assets/tiles/map5.tmx';
+
   /// File path: assets/tiles/road_lane.tx
   String get roadLane => 'assets/tiles/road_lane.tx';
 
@@ -207,6 +210,7 @@ class $AssetsTilesGen {
         lampPost,
         map1,
         map2,
+        map5,
         roadLane,
         spawn,
         trashCanOrganic,

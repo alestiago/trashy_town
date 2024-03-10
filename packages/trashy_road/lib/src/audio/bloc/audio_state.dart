@@ -32,6 +32,13 @@ class GameAudioData {
   final double _volume;
 }
 
+abstract class GameBackgroundMusic {
+  static final gameBackground = GameAudioData.fromPath(
+    Assets.audio.backgroundMusic,
+    volume: 0.2,
+  );
+}
+
 abstract class GameSoundEffects {
   static final depositTrash1 = GameAudioData.fromPath(
     Assets.audio.depositTrash1,

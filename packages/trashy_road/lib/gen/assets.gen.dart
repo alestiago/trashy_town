@@ -66,6 +66,9 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/building_4.tx
   String get building4 => 'assets/tiles/building_4.tx';
 
+  /// File path: assets/tiles/bus_stop.tx
+  String get busStop => 'assets/tiles/bus_stop.tx';
+
   /// File path: assets/tiles/bush_1.tx
   String get bush1 => 'assets/tiles/bush_1.tx';
 
@@ -74,6 +77,9 @@ class $AssetsTilesGen {
 
   /// File path: assets/tiles/fire_hydrant.tx
   String get fireHydrant => 'assets/tiles/fire_hydrant.tx';
+
+  /// File path: assets/tiles/lamp_post.tx
+  String get lampPost => 'assets/tiles/lamp_post.tx';
 
   /// File path: assets/tiles/map1.tmx
   String get map1 => 'assets/tiles/map1.tmx';
@@ -127,9 +133,11 @@ class $AssetsTilesGen {
         building2,
         building3,
         building4,
+        busStop,
         bush1,
         bush2,
         fireHydrant,
+        lampPost,
         map1,
         map2,
         roadLane,
@@ -366,6 +374,14 @@ class $AssetsImagesSpritesGen {
   AssetGenImage get busRightToLeftShadow =>
       const AssetGenImage('assets/images/sprites/bus_right_to_left-shadow.png');
 
+  /// File path: assets/images/sprites/bus_stop-shadow.png
+  AssetGenImage get busStopShadow =>
+      const AssetGenImage('assets/images/sprites/bus_stop-shadow.png');
+
+  /// File path: assets/images/sprites/bus_stop.png
+  AssetGenImage get busStop =>
+      const AssetGenImage('assets/images/sprites/bus_stop.png');
+
   /// File path: assets/images/sprites/bush_1-shadow.png
   AssetGenImage get bush1Shadow =>
       const AssetGenImage('assets/images/sprites/bush_1-shadow.png');
@@ -456,6 +472,14 @@ class $AssetsImagesSpritesGen {
   /// File path: assets/images/sprites/grass.png
   AssetGenImage get grass =>
       const AssetGenImage('assets/images/sprites/grass.png');
+
+  /// File path: assets/images/sprites/lamp_post-shadow.png
+  AssetGenImage get lampPostShadow =>
+      const AssetGenImage('assets/images/sprites/lamp_post-shadow.png');
+
+  /// File path: assets/images/sprites/lamp_post.png
+  AssetGenImage get lampPost =>
+      const AssetGenImage('assets/images/sprites/lamp_post.png');
 
   /// File path: assets/images/sprites/paper_1-shadow.png
   AssetGenImage get paper1Shadow =>
@@ -638,6 +662,8 @@ class $AssetsImagesSpritesGen {
         busDriving,
         busLeftToRightShadow,
         busRightToLeftShadow,
+        busStopShadow,
+        busStop,
         bush1Shadow,
         bush1,
         bush2Shadow,
@@ -661,6 +687,8 @@ class $AssetsImagesSpritesGen {
         grassDirtWest,
         grassFlowers,
         grass,
+        lampPostShadow,
+        lampPost,
         paper1Shadow,
         paper1,
         paper2Shadow,
@@ -748,10 +776,14 @@ class Assets {
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsRiveGen rive = $AssetsRiveGen();
   static const $AssetsTilesGen tiles = $AssetsTilesGen();
-  static const String trashyRoad = 'assets/trashy_road.tiled-project';
+  static const String trashyRoadTiledProject =
+      'assets/trashy_road.tiled-project';
+  static const String trashyRoadTiledSession =
+      'assets/trashy_road.tiled-session';
 
   /// List of all assets
-  static List<String> get values => [trashyRoad];
+  static List<String> get values =>
+      [trashyRoadTiledProject, trashyRoadTiledSession];
 }
 
 class AssetGenImage {

@@ -99,21 +99,6 @@ class _GameView extends StatelessWidget {
             ),
             if (isTutorial)
               const Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: EdgeInsets.all(12),
-                  child: InventoryHud(),
-                ),
-              ),
-            const Align(
-              alignment: Alignment.topCenter,
-              child: Padding(
-                padding: EdgeInsets.all(12),
-                child: TopHud(),
-              ),
-            ),
-            if (isTutorial)
-              const Align(
                 alignment: Alignment(0, -0.6),
                 child: GameTutorial(),
               ),

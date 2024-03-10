@@ -106,15 +106,29 @@ class _GameCompletionListener extends BlocListener<GameBloc, GameState> {
           listenWhen: (previous, current) =>
               current.status == GameStatus.completed,
           listener: (context, state) {
+            assert(
+              state.score != null,
+              'The game is completed, but the score is null.',
+            );
+            final gameMapsBloc = context.read<GameMapsBloc>();
+            final gameMap = gameMapsBloc.state.maps[state.identifier];
+            final scoreRating = ScoreRating.fromSteps(
+              score: state.score,
+              steps: gameMap!.ratingSteps,
+            );
+
             context.read<GameMapsBloc>().add(
                   GameMapCompletedEvent(
                     identifier: state.identifier,
-                    score: state.score,
+                    score: state.score!,
                   ),
                 );
             Navigator.push(
               context,
-              ScorePage.route(identifier: state.identifier),
+              ScorePage.route(
+                identifier: state.identifier,
+                scoreRating: scoreRating,
+              ),
             );
           },
         );

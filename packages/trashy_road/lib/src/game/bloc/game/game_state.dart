@@ -79,7 +79,7 @@ class GameState extends Equatable {
           inventory: Inventory.empty(),
           pausedDuration: Duration.zero,
           collectedTrash: 0,
-          score: -1,
+          score: null,
         );
 
   /// {@macro GameStatus}
@@ -118,11 +118,11 @@ class GameState extends Equatable {
 
   /// The final score of the game.
   ///
-  /// If the game has not been completed, the score is `-1`.
+  /// If the game has not been completed, the score is `null`.
   ///
   /// The larger the score, the worse the player did. The score is calculated
   /// based on the amount of time that the player took to complete the game.
-  final int score;
+  final int? score;
 
   /// The reason why the game was loas.
   ///

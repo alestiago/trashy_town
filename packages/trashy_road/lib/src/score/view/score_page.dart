@@ -11,17 +11,25 @@ import 'package:trashy_road/src/score/score.dart';
 
 class ScorePage extends StatelessWidget {
   const ScorePage({
+    required ScoreRating scoreRating,
     required String identifier,
     super.key,
-  }) : _identifier = identifier;
+  })  : _identifier = identifier,
+        _scoreRating = scoreRating;
 
   final String _identifier;
 
+  final ScoreRating _scoreRating;
+
   static Route<void> route({
     required String identifier,
+    required ScoreRating scoreRating,
   }) {
     return _ScorePageRouteBuilder<void>(
-      builder: (_) => ScorePage(identifier: identifier),
+      builder: (_) => ScorePage(
+        identifier: identifier,
+        scoreRating: scoreRating,
+      ),
     );
   }
 
@@ -66,10 +74,7 @@ class ScorePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
     final gameMapsBloc = context.read<GameMapsBloc>();
-
-    final map = gameMapsBloc.state.maps[_identifier]!;
     final nextMap = gameMapsBloc.state.next(_identifier);
-    final scoreRating = map.scoreRating;
 
     final basuraTheme = BasuraTheme.of(context);
     final textStyle = basuraTheme.textTheme.cardHeading.copyWith(
@@ -102,7 +107,7 @@ class ScorePage extends StatelessWidget {
                         ),
                         SizedBox(
                           height: 80,
-                          child: AnimatedStarRating(rating: scoreRating.value),
+                          child: AnimatedStarRating(rating: _scoreRating.value),
                         ),
                       ],
                     ),

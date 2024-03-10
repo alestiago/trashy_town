@@ -6,10 +6,10 @@ import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
-class Obstacle extends PositionedEntity with Untraversable, ZIndex {
+class Obstacle extends PositionedEntity with Untraversable, ZIndex, HasGameRef {
   Obstacle._({
     required Vector2 super.position,
-    required RectangleHitbox hitbox,
+    required this.hitbox,
     super.children,
   }) : super(
           anchor: Anchor.bottomLeft,
@@ -19,14 +19,32 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
               drop: Vector2(0, -50),
               minDuration: 0.15,
             ),
-            PropagatingCollisionBehavior(
-              hitbox
-                ..isSolid = true
-                ..anchor = Anchor.bottomLeft,
-            ),
           ],
         ) {
     zIndex = position.y.floor();
+  }
+
+  final RectangleHitbox hitbox;
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+
+    final world = ancestors().whereType<TrashyRoadWorld>().first;
+    final mapEdges = world.descendants().whereType<MapEdge>().toSet();
+
+    final isInMapEdge =
+        mapEdges.any((element) => element.isPointInside(position));
+
+    if (!isInMapEdge) {
+      add(
+        PropagatingCollisionBehavior(
+          hitbox
+            ..isSolid = true
+            ..anchor = Anchor.bottomLeft,
+        ),
+      );
+    }
   }
 
   // An Obstacle that is a tree with a single large ball of leaves.

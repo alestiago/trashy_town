@@ -67,4 +67,9 @@ abstract class GameSoundEffects {
     Assets.audio.plasticBottle,
     volume: 0.25,
   );
+
+  static final ratingStars2 = GameAudioData.fromPath(
+    Assets.audio.ratingStars2,
+    volume: 0.25,
+  );
 }

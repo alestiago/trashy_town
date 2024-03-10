@@ -9,6 +9,7 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/animation.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/gen.dart';
+import 'package:trashy_road/src/audio/audio.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 /// {@template PlayerHintingBehavior}

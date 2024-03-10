@@ -10,6 +10,7 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
 import 'package:trashy_road/game_settings.dart';
+import 'package:trashy_road/src/audio/audio.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 export 'bloc/bloc.dart';

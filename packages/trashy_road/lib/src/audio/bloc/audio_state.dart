@@ -12,13 +12,12 @@ class AudioState extends Equatable {
   List<Object> get props => [volume];
 }
 
-class GameAudioData {
+class GameAudioData extends Equatable {
   const GameAudioData._({
-    required AssetSource source,
-    required double volume,
+    required this.source,
+    required this.volume,
     this.duration,
-  })  : _source = source,
-        _volume = volume;
+  });
 
   GameAudioData.fromPath(
     String path, {
@@ -30,11 +29,14 @@ class GameAudioData {
           duration: duration,
         );
 
-  final AssetSource _source;
+  final AssetSource source;
 
-  final double _volume;
+  final double volume;
 
   final Duration? duration;
+
+  @override
+  List<Object?> get props => [source, volume, duration];
 }
 
 abstract class GameBackgroundMusic {
@@ -47,57 +49,73 @@ abstract class GameBackgroundMusic {
 abstract class GameSoundEffects {
   static final depositTrash1 = GameAudioData.fromPath(
     Assets.audio.depositTrash1,
-    volume: 0.25,
+    volume: 0.35,
   );
 
   static final depositTrash2 = GameAudioData.fromPath(
     Assets.audio.depositTrash2,
-    volume: 0.25,
+    volume: 0.35,
   );
 
   static final depositTrash3 = GameAudioData.fromPath(
     Assets.audio.depositTrash3,
-    volume: 0.25,
+    volume: 0.35,
   );
 
   static final depositTrash4 = GameAudioData.fromPath(
     Assets.audio.depositTrash4,
-    volume: 0.25,
+    volume: 0.35,
   );
 
   static final depositTrash5 = GameAudioData.fromPath(
     Assets.audio.depositTrash5,
-    volume: 0.25,
+    volume: 0.35,
   );
 
   static final hintingArrow = GameAudioData.fromPath(
     Assets.audio.hintingArrow,
-    volume: 0.3,
+    volume: 0.4,
   );
 
-  static final plasticTrash = GameAudioData.fromPath(
-    Assets.audio.plasticBottle,
-    volume: 0.25,
+  static final trashCollected = GameAudioData.fromPath(
+    Assets.audio.trashCollected,
+    volume: 0.55,
+  );
+
+  static final ratingStars0 = GameAudioData.fromPath(
+    Assets.audio.ratingStars0,
+    volume: 0.35,
   );
 
   static final ratingStars1 = GameAudioData.fromPath(
     Assets.audio.ratingStars1,
-    volume: 0.25,
+    volume: 0.35,
   );
 
   static final ratingStars2 = GameAudioData.fromPath(
     Assets.audio.ratingStars2,
-    volume: 0.25,
+    volume: 0.35,
   );
 
   static final ratingStars3 = GameAudioData.fromPath(
     Assets.audio.ratingStars3,
-    volume: 0.25,
+    volume: 0.35,
   );
 
   static final wrongBin = GameAudioData.fromPath(
     Assets.audio.wrongBin,
-    volume: 0.25,
+    volume: 0.35,
     duration: const Duration(seconds: 1),
+  );
+
+  static final steps = GameAudioData.fromPath(
+    Assets.audio.steps,
+    volume: 0.12,
+    duration: const Duration(milliseconds: 820),
+  );
+
+  static final runningTime = GameAudioData.fromPath(
+    Assets.audio.runningTime,
+    volume: 0.3,
   );
 }

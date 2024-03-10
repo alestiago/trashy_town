@@ -102,14 +102,15 @@ class PlayerHintingBehavior extends Behavior<Player>
   @override
   void update(double dt) {
     super.update(dt);
-    if (bloc.state.status != GameStatus.playing) {
-      return;
-    }
 
     if (_trash.isEmpty || _closestTrash == null) {
       // If there is no trash, no hint is needed and thus, the behavior can be
       // removed.
       removeFromParent();
+      return;
+    }
+
+    if (bloc.state.status != GameStatus.playing) {
       return;
     }
 

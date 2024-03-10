@@ -10,18 +10,18 @@ class AudioCubit extends Cubit<AudioState> {
   AudioCubit({required AudioCache audioCache})
       : _effectPlayers =
             List.generate(5, (index) => AudioPlayer()..audioCache = audioCache),
-        backgroundMusic = Bgm(audioCache: audioCache),
+        _backgroundMusic = Bgm(audioCache: audioCache),
         super(const AudioState());
 
   final List<AudioPlayer> _effectPlayers;
 
-  final Bgm backgroundMusic;
+  final Bgm _backgroundMusic;
 
   Future<void> _changeVolume(double volume) async {
     await Future.wait(
       [
         ..._effectPlayers.map((player) => player.setVolume(volume)),
-        backgroundMusic.audioPlayer.setVolume(volume),
+        _backgroundMusic.audioPlayer.setVolume(volume),
       ],
     );
 
@@ -48,6 +48,23 @@ class AudioCubit extends Cubit<AudioState> {
     );
   }
 
+  Future<void> playBackgroundMusic(GameAudioData audioData) async {
+    if (_backgroundMusic.isPlaying) {
+      await _backgroundMusic.stop();
+    }
+
+    await _backgroundMusic.play(
+      audioData._source.path,
+      volume: audioData._volume,
+    );
+  }
+
+  Future<void> pauseBackgroundMusic() async {
+    if (_backgroundMusic.isPlaying) {
+      await _backgroundMusic.pause();
+    }
+  }
+
   Future<void> toggleVolume() async {
     if (state.volume == 0) {
       return _changeVolume(1);
@@ -60,7 +77,7 @@ class AudioCubit extends Cubit<AudioState> {
     for (final player in _effectPlayers) {
       player.dispose();
     }
-    backgroundMusic.dispose();
+    _backgroundMusic.dispose();
     return super.close();
   }
 }

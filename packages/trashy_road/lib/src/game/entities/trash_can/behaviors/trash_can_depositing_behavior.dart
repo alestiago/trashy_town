@@ -5,7 +5,6 @@ import 'dart:math' as math;
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 final _random = math.Random(0);
@@ -22,11 +21,11 @@ class TrashCanDepositingBehavior extends Behavior<TrashCan>
   ///
   /// The sound effect is chosen randomly when trash is deposited.
   static final _depositSoundEffects = UnmodifiableSetView({
-    Assets.audio.depositTrash1,
-    Assets.audio.depositTrash2,
-    Assets.audio.depositTrash3,
-    Assets.audio.depositTrash4,
-    Assets.audio.depositTrash5,
+    GameSoundEffects.depositTrash1,
+    GameSoundEffects.depositTrash2,
+    GameSoundEffects.depositTrash3,
+    GameSoundEffects.depositTrash4,
+    GameSoundEffects.depositTrash5,
   });
 
   /// The current amount of trash that the [TrashCan] holds.
@@ -67,7 +66,6 @@ class TrashCanDepositingBehavior extends Behavior<TrashCan>
       _depositSoundEffects.elementAt(
         _random.nextInt(_depositSoundEffects.length),
       ),
-      volume: 0.3,
     );
 
     _capacity++;

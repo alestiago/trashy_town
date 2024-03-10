@@ -259,7 +259,7 @@ class _HintArrowSpriteComponent extends GameSpriteComponent {
     await super.onLoad();
 
     unawaited(
-      game.audioBloc.playEffect(Assets.audio.hintingArrow, volume: 0.3),
+      game.audioBloc.playEffect(GameSoundEffects.hintingArrow),
     );
 
     final moveEffectController = EffectController(duration: 1);

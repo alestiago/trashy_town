@@ -115,7 +115,7 @@ class Trash extends PositionedEntity
 
   @override
   void removeFromParent() {
-    game.audioBloc.playEffect(Assets.audio.plasticBottle);
+    game.audioBloc.playEffect(GameSoundEffects.plasticTrash);
 
     findBehavior<PropagatingCollisionBehavior>()
         .children

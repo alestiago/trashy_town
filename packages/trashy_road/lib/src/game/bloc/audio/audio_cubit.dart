@@ -2,6 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flame_audio/bgm.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trashy_road/gen/assets.gen.dart';
 
 part 'audio_state.dart';
 
@@ -32,10 +33,7 @@ class AudioCubit extends Cubit<AudioState> {
   /// Plays an effect sound.
   ///
   /// If there are no players available, this method will do nothing.
-  Future<void> playEffect(
-    String path, {
-    double volume = 0.5,
-  }) async {
+  Future<void> playEffect(GameAudioData audioData) async {
     final player = _effectPlayers.where(
       (player) => player.state != PlayerState.playing,
     );
@@ -44,10 +42,9 @@ class AudioCubit extends Cubit<AudioState> {
       return;
     }
 
-    final source = AssetSource(path);
     await player.first.play(
-      source,
-      volume: volume,
+      audioData._source,
+      volume: audioData._volume,
     );
   }
 

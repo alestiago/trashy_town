@@ -22,7 +22,6 @@ dependencies:
   flame_behaviors: ^1.1.0
   flame_bloc: ^1.11.0
   flame_noise: ^0.3.0
-  flame_tiled: ^1.19.0
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.3

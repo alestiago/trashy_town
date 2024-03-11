@@ -8,7 +8,6 @@ import 'package:flame/events.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/src/audio/audio.dart';
@@ -80,12 +79,7 @@ class TrashyRoadGame extends FlameGame
       tiledMap.width.toDouble() * GameSettings.gridDimensions.x,
       tiledMap.height.toDouble() * GameSettings.gridDimensions.y,
     );
-    // final renderableTiledMap = await RenderableTiledMap.fromTiledMap(
-    //   tiledMap,
-    //   GameSettings.gridDimensions,
-    //   images: images,
-    // );
-    // final tiled = TiledComponent(renderableTiledMap);
+
     final trashyRoadWorld = TrashyRoadWorld(tileMap: tiledMap);
     final blocProvider = FlameBlocProvider<GameBloc, GameState>(
       create: () => _gameBloc,
@@ -98,10 +92,14 @@ class TrashyRoadGame extends FlameGame
 
     await world.add(blocProvider);
 
-    // print('££ trashyRoadWorld: ${trashyRoadWorld.children.toList()}');
-    // _player = trashyRoadWorld.children.whereType<Player>().first;
-    // camera.follow(_player);
-    // _updateBounds();
+    // TODO(alestiago): Refactor this and properly await loading.
+    unawaited(
+      trashyRoadWorld.loaded.then((_) {
+        _player = trashyRoadWorld.children.whereType<Player>().first;
+        camera.follow(_player);
+        _updateBounds();
+      }),
+    );
   }
 
   void _updateBounds() {
@@ -154,38 +152,5 @@ class TrashyRoadGame extends FlameGame
   void update(double dt) {
     super.update(dt);
     camera.update(dt);
-  }
-}
-
-extension on TiledMap {
-  void transformTileImagePaths() {
-    for (final tileset in tilesets) {
-      for (final tile in tileset.tiles) {
-        final tileImage = tile.image;
-        if (tileImage == null) continue;
-        final newTileImage = tileImage.copyWith(
-          source: tileImage.source?.replaceFirst('..', 'assets'),
-        );
-        tile.image = newTileImage;
-      }
-    }
-  }
-}
-
-extension on TiledImage {
-  TiledImage copyWith({
-    String? source,
-    String? format,
-    int? width,
-    int? height,
-    String? trans,
-  }) {
-    return TiledImage(
-      source: source ?? this.source,
-      format: format ?? this.format,
-      width: width ?? this.width,
-      height: height ?? this.height,
-      trans: trans ?? this.trans,
-    );
   }
 }

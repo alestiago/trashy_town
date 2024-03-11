@@ -94,7 +94,7 @@ abstract class AppLocalizations {
   /// Shown to congratulate the player in the Score Page.
   ///
   /// In en, this message translates to:
-  /// **'great'**
+  /// **'Great'**
   String get great;
 }
 

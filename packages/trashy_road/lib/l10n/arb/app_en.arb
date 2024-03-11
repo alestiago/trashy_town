@@ -1,6 +1,6 @@
 {
     "@@locale": "en",
-    "great": "great",
+    "great": "Great",
     "@great": {
         "description": "Shown to congratulate the player in the Score Page."
     }

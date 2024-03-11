@@ -37,7 +37,7 @@ class GameAudioData extends Equatable {
 abstract class GameBackgroundMusic {
   static final gameBackground = GameAudioData.fromPath(
     Assets.audio.backgroundMusic,
-    volume: 0.2,
+    volume: 0.18,
   );
 }
 

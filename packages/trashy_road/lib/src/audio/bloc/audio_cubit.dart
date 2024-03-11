@@ -114,11 +114,22 @@ class AudioCubit extends Cubit<AudioState> {
   }
 
   Future<void> playBackgroundMusic(GameAudioData audioData) async {
-    // TODO(alestiago): Temporarily disabled the background music.
+    if (_backgroundMusic.audioPlayer.state == PlayerState.playing) return;
+
+    if (_backgroundMusic.audioPlayer.state == PlayerState.paused) {
+      await _backgroundMusic.resume();
+    } else {
+      await _backgroundMusic.play(
+        audioData.source.path,
+        volume: audioData.volume,
+      );
+    }
   }
 
   Future<void> pauseBackgroundMusic() async {
-    // TODO(alestiago): Temporarily disabled the background music.
+    if (_backgroundMusic.audioPlayer.state == PlayerState.playing) {
+      await _backgroundMusic.pause();
+    }
   }
 
   Future<void> toggleVolume() async {

@@ -294,6 +294,14 @@ class $AssetsImagesDisplayGen {
   SvgGenImage get starEmpty =>
       const SvgGenImage('assets/images/display/star_empty.svg');
 
+  /// File path: assets/images/display/star_empty_1.png
+  AssetGenImage get starEmpty1 =>
+      const AssetGenImage('assets/images/display/star_empty_1.png');
+
+  /// File path: assets/images/display/star_empty_2.png
+  AssetGenImage get starEmpty2 =>
+      const AssetGenImage('assets/images/display/star_empty_2.png');
+
   /// File path: assets/images/display/star_filled.svg
   SvgGenImage get starFilled =>
       const SvgGenImage('assets/images/display/star_filled.svg');
@@ -301,6 +309,14 @@ class $AssetsImagesDisplayGen {
   /// File path: assets/images/display/star_filled_golden.svg
   SvgGenImage get starFilledGolden =>
       const SvgGenImage('assets/images/display/star_filled_golden.svg');
+
+  /// File path: assets/images/display/star_filled_golden_1.png
+  AssetGenImage get starFilledGolden1 =>
+      const AssetGenImage('assets/images/display/star_filled_golden_1.png');
+
+  /// File path: assets/images/display/star_filled_golden_2.png
+  AssetGenImage get starFilledGolden2 =>
+      const AssetGenImage('assets/images/display/star_filled_golden_2.png');
 
   /// File path: assets/images/display/stopwatch.png
   AssetGenImage get stopwatch =>
@@ -337,8 +353,12 @@ class $AssetsImagesDisplayGen {
         slotPaperBox,
         slotPlasticBottle,
         starEmpty,
+        starEmpty1,
+        starEmpty2,
         starFilled,
         starFilledGolden,
+        starFilledGolden1,
+        starFilledGolden2,
         stopwatch,
         tutorialCollectTrash,
         tutorialDepositTrash,
@@ -818,10 +838,14 @@ class Assets {
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsRiveGen rive = $AssetsRiveGen();
   static const $AssetsTilesGen tiles = $AssetsTilesGen();
-  static const String trashyRoad = 'assets/trashy_road.tiled-project';
+  static const String trashyRoadTiledProject =
+      'assets/trashy_road.tiled-project';
+  static const String trashyRoadTiledSession =
+      'assets/trashy_road.tiled-session';
 
   /// List of all assets
-  static List<String> get values => [trashyRoad];
+  static List<String> get values =>
+      [trashyRoadTiledProject, trashyRoadTiledSession];
 }
 
 class AssetGenImage {

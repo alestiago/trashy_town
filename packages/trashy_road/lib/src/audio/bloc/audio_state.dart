@@ -84,17 +84,17 @@ abstract class GameSoundEffects {
 
   static final ratingStars1 = GameAudioData.fromPath(
     Assets.audio.ratingStars1,
-    volume: 0.35,
+    volume: 0.45,
   );
 
   static final ratingStars2 = GameAudioData.fromPath(
     Assets.audio.ratingStars2,
-    volume: 0.35,
+    volume: 0.45,
   );
 
   static final ratingStars3 = GameAudioData.fromPath(
     Assets.audio.ratingStars3,
-    volume: 0.35,
+    volume: 0.45,
   );
 
   static final wrongBin = GameAudioData.fromPath(
@@ -104,11 +104,21 @@ abstract class GameSoundEffects {
 
   static final step1 = GameAudioData.fromPath(
     Assets.audio.step1,
-    volume: 0.35,
+    volume: 0.2,
   );
 
   static final runningTime = GameAudioData.fromPath(
     Assets.audio.runningTime,
     volume: 0.3,
+  );
+
+  static final gameOver = GameAudioData.fromPath(
+    Assets.audio.gameOver,
+    volume: 0.3,
+  );
+
+  static final stagePass = GameAudioData.fromPath(
+    Assets.audio.stagePass,
+    volume: 0.2,
   );
 }

@@ -25,6 +25,8 @@ class AudioCubit extends Cubit<AudioState> {
     GameSoundEffects.ratingStars2: AudioPlayer()..audioCache = _audioCache,
     GameSoundEffects.ratingStars3: AudioPlayer()..audioCache = _audioCache,
     GameSoundEffects.runningTime: AudioPlayer()..audioCache = _audioCache,
+    GameSoundEffects.gameOver: AudioPlayer()..audioCache = _audioCache,
+    GameSoundEffects.stagePass: AudioPlayer()..audioCache = _audioCache,
   };
 
   late final Map<GameAudioData, Future<AudioPool>> _pools = {

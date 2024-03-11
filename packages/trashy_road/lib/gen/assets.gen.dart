@@ -36,6 +36,9 @@ class $AssetsAudioGen {
   /// File path: assets/audio/deposit_trash_5.wav
   String get depositTrash5 => 'assets/audio/deposit_trash_5.wav';
 
+  /// File path: assets/audio/game_over.mp3
+  String get gameOver => 'assets/audio/game_over.mp3';
+
   /// File path: assets/audio/hinting_arrow.mp3
   String get hintingArrow => 'assets/audio/hinting_arrow.mp3';
 
@@ -56,6 +59,9 @@ class $AssetsAudioGen {
 
   /// File path: assets/audio/running_time.mp3
   String get runningTime => 'assets/audio/running_time.mp3';
+
+  /// File path: assets/audio/stage_pass.mp3
+  String get stagePass => 'assets/audio/stage_pass.mp3';
 
   /// File path: assets/audio/step1.mp3
   String get step1 => 'assets/audio/step1.mp3';
@@ -78,6 +84,7 @@ class $AssetsAudioGen {
         depositTrash3,
         depositTrash4,
         depositTrash5,
+        gameOver,
         hintingArrow,
         plasticBottle,
         ratingStars0,
@@ -85,6 +92,7 @@ class $AssetsAudioGen {
         ratingStars2,
         ratingStars3,
         runningTime,
+        stagePass,
         step1,
         steps,
         trashCollected,

@@ -94,13 +94,13 @@ abstract class AppLocalizations {
   /// Shown to congratulate the player in the Score Page.
   ///
   /// In en, this message translates to:
-  /// **'Great'**
+  /// **'Great!'**
   String get great;
 
   /// Shown to congratulate the player in the Score Page.
   ///
   /// In en, this message translates to:
-  /// **'Nice'**
+  /// **'Nice!'**
   String get nice;
 
   /// Shown to congratulate the player in the Score Page.

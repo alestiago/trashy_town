@@ -1,10 +1,10 @@
 {
     "@@locale": "en",
-    "great": "Great",
+    "great": "Great!",
     "@great": {
         "description": "Shown to congratulate the player in the Score Page."
     },
-    "nice": "Nice",
+    "nice": "Nice!",
     "@nice": {
         "description": "Shown to congratulate the player in the Score Page."
     },

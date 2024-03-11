@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
  <tileset firstgid="1" source="Tiles.tsx"/>
- <object class="building_4" gid="19" width="256" height="384"/>
+ <object class="post_box" gid="49" width="128" height="128"/>
 </template>

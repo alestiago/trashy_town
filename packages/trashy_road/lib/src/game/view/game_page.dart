@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:tiled/tiled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tiled/tiled.dart';
 import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/loading/loading.dart';

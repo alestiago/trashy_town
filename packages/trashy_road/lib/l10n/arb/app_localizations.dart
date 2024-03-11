@@ -103,13 +103,13 @@ abstract class AppLocalizations {
   /// **'Nice'**
   String get nice;
 
-  /// No description provided for @okay.
+  /// Shown to congratulate the player in the Score Page.
   ///
   /// In en, this message translates to:
   /// **'Okay'**
   String get okay;
 
-  /// No description provided for @ohh.
+  /// Shown to congratulate the player in the Score Page.
   ///
   /// In en, this message translates to:
   /// **'Ohh'**

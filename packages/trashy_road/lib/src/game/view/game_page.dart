@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flame_tiled/flame_tiled.dart';
+import 'package:tiled/tiled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/gen/gen.dart';

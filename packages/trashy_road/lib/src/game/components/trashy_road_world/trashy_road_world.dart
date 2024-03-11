@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flame_tiled/flame_tiled.dart';
+import 'package:tiled/tiled.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 /// The different layers in the Tiled map.

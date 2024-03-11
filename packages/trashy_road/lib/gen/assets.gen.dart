@@ -167,6 +167,9 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/post_box.tx
   String get postBox => 'assets/tiles/post_box.tx';
 
+  /// File path: assets/tiles/map6.tmx
+  String get map6 => 'assets/tiles/map6.tmx';
+
   /// File path: assets/tiles/road_lane.tx
   String get roadLane => 'assets/tiles/road_lane.tx';
 

@@ -106,6 +106,7 @@ class TrashyRoadGame extends FlameGame
     // * [Flame Docs](https://docs.flame-engine.org/latest/flame/camera_component.html#camera-controls)
     // * [Flame Dart API Docs](https://pub.dev/documentation/flame/latest/camera/CameraComponent/setBounds.html)
     // * [Slack Conversation](https://stackoverflow.com/a/77167193)
+    // * [Example](https://github.com/flame-engine/flame/blob/faf2df4b8c68015a1bfbdd96f93c950cb14963ef/examples/lib/stories/camera_and_viewport/follow_component_example.dart#L41)
     //
     // Notes:
     // - camera.viewport.size may change when the game is resized, depending on

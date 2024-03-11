@@ -89,10 +89,7 @@ class TrashyRoadGame extends FlameGame
     world.add(blocProvider);
 
     _player = trashyRoadWorld.tiled.children.whereType<Player>().first;
-
-    await camera.viewfinder.add(
-      CameraFollowBehavior(target: _player, viewport: camera.viewport),
-    );
+    camera.follow(_player);
     _setBounds();
   }
 

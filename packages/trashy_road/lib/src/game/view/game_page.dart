@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:basura/basura.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

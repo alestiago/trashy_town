@@ -55,7 +55,7 @@ class TrashyRoadGame extends FlameGame
 
   late final Player _player;
 
-  TrashyRoadWorld? _trashyRoadWorld;
+  MapBounds? bounds;
 
   @override
   Color backgroundColor() {
@@ -73,37 +73,39 @@ class TrashyRoadGame extends FlameGame
   FutureOr<void> onLoad() async {
     await super.onLoad();
 
-    final tiledMap = _gameBloc.state.map..transformTileImagePaths();
-    final renderableTiledMap = await RenderableTiledMap.fromTiledMap(
-      tiledMap,
-      GameSettings.gridDimensions,
-      images: images,
+    final tiledMap = _gameBloc.state.map;
+    bounds = MapBounds.fromLTWH(
+      0,
+      0,
+      tiledMap.width.toDouble() * GameSettings.gridDimensions.x,
+      tiledMap.height.toDouble() * GameSettings.gridDimensions.y,
     );
-    // final tiled = TiledComponent(renderableTiledMap);
-    // final trashyRoadWorld =
-    //     _trashyRoadWorld = await TrashyRoadWorld.create(tiled: tiled);
-    // children.register<TrashyRoadWorld>();
-
-    // final blocProvider = FlameBlocProvider<GameBloc, GameState>(
-    //   create: () => _gameBloc,
-    //   children: [
-    //     ZCanvasComponent(
-    //       children: [
-    //         trashyRoadWorld,
-    //       ],
-    //     ),
-    //   ],
+    // final renderableTiledMap = await RenderableTiledMap.fromTiledMap(
+    //   tiledMap,
+    //   GameSettings.gridDimensions,
+    //   images: images,
     // );
+    // final tiled = TiledComponent(renderableTiledMap);
+    final trashyRoadWorld = TrashyRoadWorld(tileMap: tiledMap);
+    final blocProvider = FlameBlocProvider<GameBloc, GameState>(
+      create: () => _gameBloc,
+      children: [
+        ZCanvasComponent(
+          children: [trashyRoadWorld],
+        ),
+      ],
+    );
 
-    // world.add(blocProvider);
+    await world.add(blocProvider);
 
-    // _player = trashyRoadWorld.tiled.children.whereType<Player>().first;
+    // print('££ trashyRoadWorld: ${trashyRoadWorld.children.toList()}');
+    // _player = trashyRoadWorld.children.whereType<Player>().first;
     // camera.follow(_player);
     // _updateBounds();
   }
 
   void _updateBounds() {
-    final worldBounds = _trashyRoadWorld?.bounds;
+    final worldBounds = bounds;
     if (worldBounds == null) return;
 
     final viewportHalf = camera.viewport.size / 2;

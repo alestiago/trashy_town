@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:basura/basura.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tiled/tiled.dart';
@@ -11,7 +12,7 @@ import 'package:trashy_road/src/score/score.dart';
 
 class GamePage extends StatelessWidget {
   const GamePage({
-    required String identifier,
+    required GameMapIdentifier identifier,
     required TiledMap map,
     super.key,
   })  : _map = map,
@@ -21,27 +22,20 @@ class GamePage extends StatelessWidget {
   static String identifier = 'maps_menu';
 
   static Route<void> route({
-    required String identifier,
+    required GameMapIdentifier identifier,
     required TiledMap tiledMap,
   }) {
-    return PageRouteBuilder(
-      pageBuilder: (context, _, __) => GamePage(
+    return BasuraBlackEaseInOut<void>(
+      settings: RouteSettings(name: identifier.name),
+      builder: (_) => GamePage(
         identifier: identifier,
         map: tiledMap,
       ),
     );
-
-    // return BasuraBlackEaseInOut<void>(
-    //   settings: RouteSettings(name: identifier),
-    //   builder: (_) => GamePage(
-    //     identifier: identifier,
-    //     map: tiledMap,
-    //   ),
-    // );
   }
 
   /// The identifier of the game.
-  final String _identifier;
+  final GameMapIdentifier _identifier;
 
   /// The map to play.
   ///
@@ -66,8 +60,7 @@ class _GameView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gameBloc = context.read<GameBloc>();
-    final isTutorial =
-        gameBloc.state.identifier == GameMapsState.tutorialIdentifier;
+    final isTutorial = gameBloc.state.identifier == GameMapIdentifier.tutorial;
 
     return GameBackgroundMusicListener(
       child: MultiBlocListener(

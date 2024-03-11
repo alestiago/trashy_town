@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:tiled/tiled.dart';
 import 'package:trashy_road/src/game/game.dart';
+import 'package:trashy_road/src/maps/maps.dart';
 
 class _MockTiledMap extends Mock implements TiledMap {}
 
@@ -37,7 +38,7 @@ void main() {
     late TiledMap map;
     late _MockObjectGroup trashLayer;
 
-    const identifier = 'identifier';
+    const identifier = GameMapIdentifier.tutorial;
 
     setUp(() {
       map = _MockTiledMap();

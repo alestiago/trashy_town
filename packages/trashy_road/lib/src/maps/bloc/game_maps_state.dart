@@ -4,7 +4,7 @@ part of 'game_maps_bloc.dart';
 ///
 /// Where the key is the identifier of the map and the value is the
 /// [GameMap] itself.
-typedef GameMapsCollection = UnmodifiableMapView<String, GameMap>;
+typedef GameMapsCollection = UnmodifiableMapView<GameMapIdentifier, GameMap>;
 
 /// {@template RatingSteps}
 /// The steps that dictate the rating of the map score.
@@ -23,24 +23,29 @@ typedef GameMapsCollection = UnmodifiableMapView<String, GameMap>;
 /// {@endtemplate}
 typedef RatingSteps = (int, int, int);
 
+enum GameMapIdentifier {
+  tutorial,
+  map2;
+}
+
 class GameMapsState extends Equatable {
   GameMapsState({
-    required Map<String, GameMap> maps,
+    required GameMapsCollection maps,
   }) : maps = GameMapsCollection(maps);
 
   GameMapsState.initial()
       : maps = UnmodifiableMapView(
           {
-            tutorialIdentifier: GameMap._(
-              identifier: tutorialIdentifier,
+            GameMapIdentifier.tutorial: GameMap._(
+              identifier: GameMapIdentifier.tutorial,
               displayName: '1',
               path: Assets.tiles.map1,
               score: null,
               ratingSteps: (15, 20, 30),
               locked: false,
             ),
-            'map2': GameMap._(
-              identifier: 'map2',
+            GameMapIdentifier.map2: GameMap._(
+              identifier: GameMapIdentifier.map2,
               displayName: '2',
               path: Assets.tiles.map2,
               score: null,
@@ -50,15 +55,12 @@ class GameMapsState extends Equatable {
           },
         );
 
-  /// The identifier of the tutorial map.
-  static String tutorialIdentifier = 'map1';
-
   final GameMapsCollection maps;
 
   /// Returns the next map in the collection.
   ///
   /// If there are no more maps, it will return `null`.
-  GameMap? next(String identifier) {
+  GameMap? next(GameMapIdentifier identifier) {
     final mapsList = maps.keys.toList();
     final currentIndex = mapsList.indexOf(identifier);
     final nextIndex = currentIndex + 1;
@@ -70,9 +72,9 @@ class GameMapsState extends Equatable {
   }
 
   GameMapsState copyWith({
-    Map<String, GameMap>? maps,
+    Map<GameMapIdentifier, GameMap>? maps,
   }) {
-    return GameMapsState(maps: maps ?? this.maps);
+    return GameMapsState(maps: UnmodifiableMapView(maps ?? this.maps));
   }
 
   @override
@@ -135,7 +137,7 @@ class GameMap extends Equatable {
         _locked = locked;
 
   /// The identifier of the map.
-  final String identifier;
+  final GameMapIdentifier identifier;
 
   /// The display name of the map.
   final String displayName;
@@ -167,7 +169,7 @@ class GameMap extends Equatable {
   int get completionSeconds => ratingSteps.$3 + 15;
 
   GameMap copyWith({
-    String? identifier,
+    GameMapIdentifier? identifier,
     String? displayName,
     int? score,
     RatingSteps? ratingSteps,

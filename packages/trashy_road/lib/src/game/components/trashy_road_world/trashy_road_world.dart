@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:collection';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
@@ -7,6 +6,7 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:tiled/tiled.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/game.dart';
+import 'package:trashy_road/src/maps/maps.dart';
 
 /// The different layers in the Tiled map.
 enum _TiledLayer {
@@ -68,22 +68,15 @@ class _TiledFloor extends Component
         FlameBlocReader<GameBloc, GameState> {
   late final Sprite _sprite;
 
-  static final Map<String, String> _floorImages = UnmodifiableMapView({
-    'map1': Assets.images.maps.map1.path,
-    'map2': Assets.images.maps.map2.path,
-  });
-
   @override
   Future<void> onLoad() async {
     await super.onLoad();
 
     final mapIdentifier = bloc.state.identifier;
-    assert(
-      _floorImages.containsKey(mapIdentifier),
-      'No floor image found for map identifier "$mapIdentifier"',
+    _sprite = await Sprite.load(
+      mapIdentifier.floorAssetPath,
+      images: game.images,
     );
-    final mapPath = _floorImages[mapIdentifier]!;
-    _sprite = await Sprite.load(mapPath, images: game.images);
   }
 
   @override
@@ -104,4 +97,11 @@ extension on TiledMap {
     }
     return objectGroup;
   }
+}
+
+extension on GameMapIdentifier {
+  String get floorAssetPath => switch (this) {
+        GameMapIdentifier.tutorial => Assets.images.maps.map1.path,
+        GameMapIdentifier.map2 => Assets.images.maps.map2.path,
+      };
 }

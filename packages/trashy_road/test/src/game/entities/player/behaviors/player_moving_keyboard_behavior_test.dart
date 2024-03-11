@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:tiled/tiled.dart';
 import 'package:trashy_road/src/game/game.dart';
+import 'package:trashy_road/src/maps/maps.dart';
 
 class _MockTiledMap extends Mock implements TiledMap {}
 
@@ -70,7 +71,7 @@ void main() {
       when(() => map.layerByName('TrashLayer')).thenReturn(objectGroup);
 
       gameBloc = GameBloc(
-        identifier: 'identifier',
+        identifier: GameMapIdentifier.tutorial,
         map: map,
       );
       game = _TestGame(gameBloc: gameBloc);

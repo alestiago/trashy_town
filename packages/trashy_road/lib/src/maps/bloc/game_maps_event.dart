@@ -16,7 +16,7 @@ class GameMapCompletedEvent extends GameMapsEvent {
   });
 
   /// The identifier of the map that was completed.
-  final String identifier;
+  final GameMapIdentifier identifier;
 
   /// The score achieved on the map.
   final int score;

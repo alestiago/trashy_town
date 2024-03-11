@@ -70,7 +70,7 @@ class GameState extends Equatable {
 
   /// The initial state of the game.
   GameState.initial({
-    required String identifier,
+    required GameMapIdentifier identifier,
     required TiledMap map,
   }) : this(
           identifier: identifier,
@@ -86,7 +86,7 @@ class GameState extends Equatable {
   final GameStatus status;
 
   /// The identifier of the level being played.
-  final String identifier;
+  final GameMapIdentifier identifier;
 
   /// The map that the game is being played on.
   final TiledMap map;

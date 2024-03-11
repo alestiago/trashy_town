@@ -30,9 +30,10 @@ class InventoryHud extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 32),
           child: LayoutBuilder(
             builder: (context, constraints) {
+              const dimension = 58.5;
               final slotSize = Size.square(
-                ((constraints.maxWidth - 50) / Inventory.size)
-                    .clamp(10.0, 50.0),
+                ((constraints.maxWidth - dimension) / Inventory.size)
+                    .clamp(10.0, dimension),
               );
 
               return Row(
@@ -41,7 +42,13 @@ class InventoryHud extends StatelessWidget {
                   Inventory.size,
                   (index) => SizedBox.fromSize(
                     size: slotSize,
-                    child: _InventorySlot(index: index),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4),
+                      child: SizedBox.square(
+                        dimension: dimension,
+                        child: _InventorySlot(index: index),
+                      ),
+                    ),
                   ),
                 ),
               );
@@ -81,36 +88,30 @@ class _InventorySlot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4),
-      child: SizedBox.square(
-        dimension: 50,
-        child: BlocSelector<GameBloc, GameState, TrashType?>(
-          selector: (state) {
-            if (state.inventory.items.length <= index) {
-              return null;
-            }
-            return state.inventory.items[index];
-          },
-          builder: (context, type) {
-            return Stack(
-              children: [
-                Positioned.fill(
-                  child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 500),
-                    opacity: type == null ? 1 : 0.1,
-                    child: Assets.images.display.slotEmpty.image(),
-                  ),
-                ),
-                if (type != null)
-                  Positioned.fill(
-                    child: _FilledInventorySlot.fromType(type),
-                  ),
-              ],
-            );
-          },
-        ),
-      ),
+    return BlocSelector<GameBloc, GameState, TrashType?>(
+      selector: (state) {
+        if (state.inventory.items.length <= index) {
+          return null;
+        }
+        return state.inventory.items[index];
+      },
+      builder: (context, type) {
+        return Stack(
+          children: [
+            Positioned.fill(
+              child: AnimatedOpacity(
+                duration: const Duration(milliseconds: 500),
+                opacity: type == null ? 1 : 0.1,
+                child: Assets.images.display.slotEmpty.image(),
+              ),
+            ),
+            if (type != null)
+              Positioned.fill(
+                child: _FilledInventorySlot.fromType(type),
+              ),
+          ],
+        );
+      },
     );
   }
 }

@@ -73,9 +73,11 @@ class TrashyRoadGame extends FlameGame
   FutureOr<void> onLoad() async {
     await super.onLoad();
 
+    final tiledMap = _gameBloc.state.map..transformTileImagePaths();
     final renderableTiledMap = await RenderableTiledMap.fromTiledMap(
-      _gameBloc.state.map,
+      tiledMap,
       GameSettings.gridDimensions,
+      images: images,
     );
     final tiled = TiledComponent(renderableTiledMap);
     final trashyRoadWorld =
@@ -150,5 +152,38 @@ class TrashyRoadGame extends FlameGame
   void update(double dt) {
     super.update(dt);
     camera.update(dt);
+  }
+}
+
+extension on TiledMap {
+  void transformTileImagePaths() {
+    for (final tileset in tilesets) {
+      for (final tile in tileset.tiles) {
+        final tileImage = tile.image;
+        if (tileImage == null) continue;
+        final newTileImage = tileImage.copyWith(
+          source: tileImage.source?.replaceFirst('..', 'assets'),
+        );
+        tile.image = newTileImage;
+      }
+    }
+  }
+}
+
+extension on TiledImage {
+  TiledImage copyWith({
+    String? source,
+    String? format,
+    int? width,
+    int? height,
+    String? trans,
+  }) {
+    return TiledImage(
+      source: source ?? this.source,
+      format: format ?? this.format,
+      width: width ?? this.width,
+      height: height ?? this.height,
+      trans: trans ?? this.trans,
+    );
   }
 }

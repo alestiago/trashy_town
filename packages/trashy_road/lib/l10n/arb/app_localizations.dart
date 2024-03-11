@@ -96,6 +96,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Great'**
   String get great;
+
+  /// Shown to congratulate the player in the Score Page.
+  ///
+  /// In en, this message translates to:
+  /// **'Nice'**
+  String get nice;
+
+  /// No description provided for @okay.
+  ///
+  /// In en, this message translates to:
+  /// **'Okay'**
+  String get okay;
+
+  /// No description provided for @ohh.
+  ///
+  /// In en, this message translates to:
+  /// **'Ohh'**
+  String get ohh;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

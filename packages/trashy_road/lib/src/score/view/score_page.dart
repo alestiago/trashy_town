@@ -75,6 +75,13 @@ class ScorePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
+    final title = switch (_scoreRating) {
+      ScoreRating.gold => l10n.great,
+      ScoreRating.silver => l10n.nice,
+      ScoreRating.bronze => l10n.okay,
+      ScoreRating.none => l10n.ohh,
+    };
+
     final screenSize = MediaQuery.sizeOf(context);
     final gameMapsBloc = context.read<GameMapsBloc>();
     final nextMap = gameMapsBloc.state.next(_identifier);
@@ -106,7 +113,7 @@ class ScorePage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Center(
-                          child: AutoSizeText(l10n.great, style: textStyle),
+                          child: AutoSizeText(title, style: textStyle),
                         ),
                         SizedBox(
                           height: 80,

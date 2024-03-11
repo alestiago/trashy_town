@@ -6,4 +6,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get great => 'Great';
+
+  @override
+  String get nice => 'Nice';
+
+  @override
+  String get okay => 'Okay';
+
+  @override
+  String get ohh => 'Ohh';
 }

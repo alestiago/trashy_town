@@ -81,6 +81,36 @@ class AudioCubit extends Cubit<AudioState> {
     }
   }
 
+  Future<void> pauseEffect(GameAudioData audioData) async {
+    final hasPlayer = _players.containsKey(audioData);
+    if (hasPlayer) {
+      final player = _players[audioData]!;
+      if (player.state == PlayerState.playing) {
+        await player.pause();
+      }
+    }
+  }
+
+  Future<void> resumeEffect(GameAudioData audioData) async {
+    final hasPlayer = _players.containsKey(audioData);
+    if (hasPlayer) {
+      final player = _players[audioData]!;
+      if (player.state == PlayerState.paused) {
+        await player.resume();
+      }
+    }
+  }
+
+  Future<void> stopEffect(GameAudioData audioData) async {
+    final hasPlayer = _players.containsKey(audioData);
+    if (hasPlayer) {
+      final player = _players[audioData]!;
+      if (player.state == PlayerState.playing) {
+        await player.stop();
+      }
+    }
+  }
+
   Future<void> playBackgroundMusic(GameAudioData audioData) async {
     // TODO(alestiago): Temporarily disabled the background music.
   }

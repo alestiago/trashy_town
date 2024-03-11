@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
+import 'package:trashy_road/l10n/l10n.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/loading/loading.dart';
 import 'package:trashy_road/src/maps/maps.dart';
@@ -72,6 +73,8 @@ class ScorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     final screenSize = MediaQuery.sizeOf(context);
     final gameMapsBloc = context.read<GameMapsBloc>();
     final nextMap = gameMapsBloc.state.next(_identifier);
@@ -103,7 +106,7 @@ class ScorePage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Center(
-                          child: AutoSizeText('Nice!', style: textStyle),
+                          child: AutoSizeText(l10n.great, style: textStyle),
                         ),
                         SizedBox(
                           height: 80,

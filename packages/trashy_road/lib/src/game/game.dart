@@ -106,6 +106,13 @@ class TrashyRoadGame extends FlameGame
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
     camera.viewfinder.zoom = (size.x / resolution.width) + 0.2;
+
+    final isPortrait = size.y > size.x;
+    if (isPortrait) {
+      // Increase the zoom on those mobile devices with a portrait aspect ratio
+      // to make the game look better, rather than too zoomed out.
+      camera.viewfinder.zoom += 0.4;
+    }
   }
 
   @override

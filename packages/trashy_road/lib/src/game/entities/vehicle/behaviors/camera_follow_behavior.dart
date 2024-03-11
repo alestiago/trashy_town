@@ -46,7 +46,7 @@ class CameraFollowBehavior extends Component with HasGameReference {
 
   /// The amount of distance that the player should be away from the center of
   /// the screen.
-  static final _verticalAdjustment = GameSettings.gridDimensions.y * 4;
+  static final _verticalAdjustment = GameSettings.gridDimensions.y * 3;
 
   @override
   void update(double dt) {

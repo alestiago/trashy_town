@@ -74,12 +74,12 @@ class TrashyRoadGame extends FlameGame
     await super.onLoad();
 
     final tiledMap = _gameBloc.state.map..transformTileImagePaths();
-    final renderableTiledMap = await RenderableTiledMap.fromTiledMap(
-      tiledMap,
-      GameSettings.gridDimensions,
-      images: images,
-    );
-    final tiled = TiledComponent(renderableTiledMap);
+    // final renderableTiledMap = await RenderableTiledMap.fromTiledMap(
+    //   tiledMap,
+    //   GameSettings.gridDimensions,
+    //   images: images,
+    // );
+    // final tiled = TiledComponent(renderableTiledMap);
     // final trashyRoadWorld =
     //     _trashyRoadWorld = await TrashyRoadWorld.create(tiled: tiled);
     // children.register<TrashyRoadWorld>();

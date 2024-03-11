@@ -45,6 +45,14 @@ void main() {
           expect(rating, ScoreRating.none);
         },
       );
+
+      test(
+        '''returns ScoreRating.none when score is null''',
+        () {
+          final rating = ScoreRating.fromSteps(score: null, steps: (1, 2, 3));
+          expect(rating, ScoreRating.none);
+        },
+      );
     });
   });
 }

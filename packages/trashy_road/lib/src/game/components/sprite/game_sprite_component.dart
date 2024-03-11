@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:trashy_road/src/game/game.dart';
 
-class GameSpriteComponent extends SpriteComponent with HasGameRef {
+class GameSpriteComponent extends SpriteComponent
+    with HasGameReference<TrashyRoadGame> {
   GameSpriteComponent.fromPath({
     required String spritePath,
     super.position,

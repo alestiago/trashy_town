@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trashy_road/gen/assets.gen.dart';
+import 'package:trashy_road/src/audio/audio.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 /// {@template GameBackgroundMusicListener}
@@ -15,17 +15,13 @@ class GameBackgroundMusicListener extends StatelessWidget {
   final Widget child;
 
   void _playBackgroundMusic(BuildContext context) {
-    final audioBloc = context.read<AudioCubit>();
-    if (audioBloc.backgroundMusic.isPlaying) return;
-    audioBloc.backgroundMusic.play(
-      Assets.audio.backgroundMusic,
-      volume: 0.25,
-    );
+    context
+        .read<AudioCubit>()
+        .playBackgroundMusic(GameBackgroundMusic.gameBackground);
   }
 
   void _pauseBackgroundMusic(BuildContext context) {
-    final audioBloc = context.read<AudioCubit>();
-    audioBloc.backgroundMusic.pause();
+    context.read<AudioCubit>().pauseBackgroundMusic();
   }
 
   @override
@@ -61,5 +57,5 @@ bool _shouldPlayBackgroundMusic(GameState previous, GameState current) {
 }
 
 bool _shouldPauseBackgroundMusic(GameState previous, GameState current) {
-  return current.status == GameStatus.paused;
+  return !_shouldPlayBackgroundMusic(previous, current);
 }

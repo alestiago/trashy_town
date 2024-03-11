@@ -12,7 +12,7 @@ class DebugTrashyRoadGame extends TrashyRoadGame {
   /// {@macro DebugTrashyRoadGame}
   DebugTrashyRoadGame({
     required super.gameBloc,
-    required super.effectPlayer,
+    required super.audioBloc,
     required super.random,
     required super.resolution,
     super.images,

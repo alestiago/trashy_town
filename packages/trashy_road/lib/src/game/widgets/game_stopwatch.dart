@@ -1,6 +1,7 @@
 import 'package:basura/basura.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trashy_road/src/audio/audio.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/maps/maps.dart';
 
@@ -20,6 +21,9 @@ class _GameStopwatchState extends State<GameStopwatch>
     with SingleTickerProviderStateMixin {
   final _stopwatch = Stopwatch();
 
+  bool _countingDown = false;
+  bool _timeIsUp = false;
+
   late final _animation = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 1),
@@ -28,16 +32,29 @@ class _GameStopwatchState extends State<GameStopwatch>
   void _stop() {
     _animation.stop();
     _stopwatch.stop();
+
+    if (mounted && !_timeIsUp) {
+      context.read<AudioCubit>().pauseEffect(GameSoundEffects.runningTime);
+    }
   }
 
   void _start() {
     _animation.repeat(reverse: true);
     _stopwatch.start();
+
+    if (mounted && _countingDown) {
+      context.read<AudioCubit>().resumeEffect(GameSoundEffects.runningTime);
+    }
   }
 
   void _reset() {
     _animation.reset();
     _stopwatch.reset();
+    _countingDown = false;
+
+    if (mounted) {
+      context.read<AudioCubit>().stopEffect(GameSoundEffects.runningTime);
+    }
   }
 
   void _onTick() {
@@ -48,9 +65,16 @@ class _GameStopwatchState extends State<GameStopwatch>
     final map = mapsBloc.state.maps[gameBloc.state.identifier]!;
 
     final completionSeconds = map.completionSeconds;
-    final timeIsUp = _stopwatch.elapsed.inSeconds >= completionSeconds;
 
-    if (timeIsUp && gameBloc.state.status == GameStatus.playing) {
+    final timeLeft = (completionSeconds * Duration.millisecondsPerSecond) -
+        _stopwatch.elapsed.inMilliseconds;
+    if (timeLeft < 10100 && !_countingDown) {
+      _countingDown = true;
+      context.read<AudioCubit>().playEffect(GameSoundEffects.runningTime);
+    }
+
+    _timeIsUp = _stopwatch.elapsed.inSeconds >= completionSeconds;
+    if (_timeIsUp && gameBloc.state.status == GameStatus.playing) {
       gameBloc.add(const GameLostEvent(reason: GameLostReason.timeIsUp));
     }
   }

@@ -3,6 +3,8 @@ import 'package:basura/basura.dart';
 import 'package:flame/cache.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trashy_road/l10n/l10n.dart';
+import 'package:trashy_road/src/audio/audio.dart';
 import 'package:trashy_road/src/loading/loading.dart';
 import 'package:trashy_road/src/maps/maps.dart';
 
@@ -31,12 +33,19 @@ class _MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => GameMapsBloc(),
         ),
+        BlocProvider(
+          create: (context) => AudioCubit(
+            audioCache: context.read<PreloadCubit>().audio,
+          ),
+        ),
       ],
       child: BasuraTheme(
         data: BasuraThemeData.light(),
         child: MaterialApp(
-          title: 'Flutter Demo',
+          title: 'Trashy Town',
           debugShowCheckedModeBanner: false,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,

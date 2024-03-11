@@ -34,7 +34,7 @@ class AnimatedProgressBar extends StatelessWidget {
   Widget build(BuildContext context) {
     // Outer bar
     return ClipRRect(
-      borderRadius: BorderRadius.circular(2),
+      borderRadius: BorderRadius.circular(15),
       child: SizedBox(
         height: 16,
         width: 200,
@@ -52,7 +52,7 @@ class AnimatedProgressBar extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   widthFactor: progress,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(1),
+                    borderRadius: BorderRadius.circular(15),
                     child: ColoredBox(
                       color: foregroundColor,
                     ),

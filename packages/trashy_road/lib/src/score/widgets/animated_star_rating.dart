@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rive/rive.dart';
 import 'package:trashy_road/gen/gen.dart';
+import 'package:trashy_road/src/audio/audio.dart';
 
 /// An animated star rating.
 ///
@@ -50,6 +52,19 @@ class _AnimatedStarRatingState extends State<AnimatedStarRating>
 
     _animation.addListener(_onAnimationChanged);
     _animationController.forward(from: 0);
+
+    if (mounted) _playSoundEffect();
+  }
+
+  void _playSoundEffect() {
+    final soundEffect = switch (widget._rating) {
+      0 => GameSoundEffects.ratingStars0,
+      1 => GameSoundEffects.ratingStars1,
+      2 => GameSoundEffects.ratingStars2,
+      3 => GameSoundEffects.ratingStars3,
+      _ => GameSoundEffects.ratingStars3,
+    };
+    context.read<AudioCubit>().playEffect(soundEffect);
   }
 
   void _onAnimationChanged() {

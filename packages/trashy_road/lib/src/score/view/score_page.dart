@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
+import 'package:trashy_road/l10n/l10n.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/loading/loading.dart';
 import 'package:trashy_road/src/maps/maps.dart';
@@ -11,17 +12,25 @@ import 'package:trashy_road/src/score/score.dart';
 
 class ScorePage extends StatelessWidget {
   const ScorePage({
+    required ScoreRating scoreRating,
     required String identifier,
     super.key,
-  }) : _identifier = identifier;
+  })  : _identifier = identifier,
+        _scoreRating = scoreRating;
 
   final String _identifier;
 
+  final ScoreRating _scoreRating;
+
   static Route<void> route({
     required String identifier,
+    required ScoreRating scoreRating,
   }) {
     return _ScorePageRouteBuilder<void>(
-      builder: (_) => ScorePage(identifier: identifier),
+      builder: (_) => ScorePage(
+        identifier: identifier,
+        scoreRating: scoreRating,
+      ),
     );
   }
 
@@ -64,12 +73,18 @@ class ScorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    final title = switch (_scoreRating) {
+      ScoreRating.gold => l10n.great,
+      ScoreRating.silver => l10n.nice,
+      ScoreRating.bronze => l10n.okay,
+      ScoreRating.none => l10n.ohh,
+    };
+
     final screenSize = MediaQuery.sizeOf(context);
     final gameMapsBloc = context.read<GameMapsBloc>();
-
-    final map = gameMapsBloc.state.maps[_identifier]!;
     final nextMap = gameMapsBloc.state.next(_identifier);
-    final scoreRating = map.scoreRating;
 
     final basuraTheme = BasuraTheme.of(context);
     final textStyle = basuraTheme.textTheme.cardHeading.copyWith(
@@ -98,11 +113,11 @@ class ScorePage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Center(
-                          child: AutoSizeText('Nice!', style: textStyle),
+                          child: AutoSizeText(title, style: textStyle),
                         ),
                         SizedBox(
                           height: 80,
-                          child: AnimatedStarRating(rating: scoreRating.value),
+                          child: AnimatedStarRating(rating: _scoreRating.value),
                         ),
                       ],
                     ),

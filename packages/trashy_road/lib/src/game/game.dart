@@ -1,16 +1,17 @@
 import 'dart:async';
 import 'dart:math' hide Rectangle;
 
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flame/cache.dart';
 import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
+import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
 import 'package:trashy_road/game_settings.dart';
+import 'package:trashy_road/src/audio/audio.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 export 'bloc/bloc.dart';
@@ -29,7 +30,7 @@ class TrashyRoadGame extends FlameGame
         DragCallbacks {
   TrashyRoadGame({
     required GameBloc gameBloc,
-    required this.effectPlayer,
+    required this.audioBloc,
     required this.random,
     required this.resolution,
     Images? images,
@@ -47,18 +48,25 @@ class TrashyRoadGame extends FlameGame
   /// {@macro GameBloc}
   final GameBloc _gameBloc;
 
-  /// Can play one audio at a time.
-  ///
-  /// Usually used to play very short sound effects.
-  final AudioPlayer effectPlayer;
+  /// {@macro AudioCubit}
+  final AudioCubit audioBloc;
 
   final Random random;
 
   late final Player _player;
 
+  TrashyRoadWorld? _trashyRoadWorld;
+
   @override
   Color backgroundColor() {
     return Colors.transparent;
+  }
+
+  @override
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
+    _updateBounds();
+    _updateZoom();
   }
 
   @override
@@ -70,7 +78,8 @@ class TrashyRoadGame extends FlameGame
       GameSettings.gridDimensions,
     );
     final tiled = TiledComponent(renderableTiledMap);
-    final trashyRoadWorld = TrashyRoadWorld.create(tiled: tiled);
+    final trashyRoadWorld =
+        _trashyRoadWorld = TrashyRoadWorld.create(tiled: tiled);
     children.register<TrashyRoadWorld>();
 
     final blocProvider = FlameBlocProvider<GameBloc, GameState>(
@@ -87,15 +96,33 @@ class TrashyRoadGame extends FlameGame
     world.add(blocProvider);
 
     _player = trashyRoadWorld.tiled.children.whereType<Player>().first;
-    _player.children.register<PlayerDragMovingBehavior>();
-
     camera.follow(_player);
+    _updateBounds();
   }
 
-  @override
-  void onGameResize(Vector2 size) {
-    super.onGameResize(size);
+  void _updateBounds() {
+    final worldBounds = _trashyRoadWorld?.bounds;
+    if (worldBounds == null) return;
+
+    final viewportHalf = camera.viewport.size / 2;
+
+    final cameraBounds = Rectangle.fromPoints(
+      worldBounds.topLeft + viewportHalf,
+      worldBounds.bottomRight - viewportHalf,
+    );
+    camera.setBounds(cameraBounds);
+  }
+
+  void _updateZoom() {
+    final size = camera.viewport.size;
     camera.viewfinder.zoom = (size.x / resolution.width) + 0.2;
+
+    final isPortrait = size.y > size.x;
+    if (isPortrait) {
+      // Increase the zoom on those mobile devices with a portrait aspect ratio
+      // to make the game look better, rather than too zoomed out.
+      camera.viewfinder.zoom += 0.4;
+    }
   }
 
   @override

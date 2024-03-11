@@ -28,8 +28,8 @@ class AudioCubit extends Cubit<AudioState> {
   };
 
   late final Map<GameAudioData, Future<AudioPool>> _pools = {
-    GameSoundEffects.steps: AudioPool.create(
-      source: GameSoundEffects.steps.source,
+    GameSoundEffects.step1: AudioPool.create(
+      source: GameSoundEffects.step1.source,
       maxPlayers: 6,
       audioCache: _audioCache,
     ),

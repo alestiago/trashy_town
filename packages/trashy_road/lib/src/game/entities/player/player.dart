@@ -19,7 +19,7 @@ class Player extends PositionedEntity with ZIndex {
             PropagatingCollisionBehavior(
               RectangleHitbox(
                 isSolid: true,
-                size: Vector2(0.5, 0.8)..toGameSize(),
+                size: Vector2(0.3, 0.6)..toGameSize(),
                 anchor: Anchor.center,
               ),
             ),

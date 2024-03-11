@@ -655,6 +655,14 @@ class $AssetsImagesSpritesGen {
   AssetGenImage get playerHop =>
       const AssetGenImage('assets/images/sprites/player_hop.png');
 
+  /// File path: assets/images/sprites/post_box-shadow.png
+  AssetGenImage get postBoxShadow =>
+      const AssetGenImage('assets/images/sprites/post_box-shadow.png');
+
+  /// File path: assets/images/sprites/post_box.png
+  AssetGenImage get postBox =>
+      const AssetGenImage('assets/images/sprites/post_box.png');
+
   /// File path: assets/images/sprites/road.png
   AssetGenImage get road =>
       const AssetGenImage('assets/images/sprites/road.png');
@@ -803,6 +811,8 @@ class $AssetsImagesSpritesGen {
         plasticStraw,
         playerHopShadow,
         playerHop,
+        postBoxShadow,
+        postBox,
         road,
         sandwichShadow,
         sandwich,

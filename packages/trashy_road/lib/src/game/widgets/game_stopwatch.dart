@@ -21,7 +21,8 @@ class _GameStopwatchState extends State<GameStopwatch>
     with SingleTickerProviderStateMixin {
   final _stopwatch = Stopwatch();
 
-  bool _playingRunningOutSoundEffect = false;
+  bool _countingDown = false;
+  bool _timeIsUp = false;
 
   late final _animation = AnimationController(
     vsync: this,
@@ -31,48 +32,50 @@ class _GameStopwatchState extends State<GameStopwatch>
   void _stop() {
     _animation.stop();
     _stopwatch.stop();
+
+    if (mounted && !_timeIsUp) {
+      context.read<AudioCubit>().pauseEffect(GameSoundEffects.runningTime);
+    }
   }
 
   void _start() {
     _animation.repeat(reverse: true);
     _stopwatch.start();
+
+    if (mounted && _countingDown) {
+      context.read<AudioCubit>().resumeEffect(GameSoundEffects.runningTime);
+    }
   }
 
   void _reset() {
     _animation.reset();
     _stopwatch.reset();
-    _playingRunningOutSoundEffect = false;
+    _countingDown = false;
+
+    if (mounted) {
+      context.read<AudioCubit>().stopEffect(GameSoundEffects.runningTime);
+    }
   }
 
   void _onTick() {
     if (!mounted) return;
-    _playRunningOutSoundEffect();
 
     final gameBloc = context.read<GameBloc>();
     final mapsBloc = context.read<GameMapsBloc>();
     final map = mapsBloc.state.maps[gameBloc.state.identifier]!;
 
-    final completionSeconds = map.completionSeconds;
-    final timeIsUp = _stopwatch.elapsed.inSeconds >= completionSeconds;
-
-    if (timeIsUp && gameBloc.state.status == GameStatus.playing) {
-      gameBloc.add(const GameLostEvent(reason: GameLostReason.timeIsUp));
-    }
-  }
-
-  void _playRunningOutSoundEffect() {
-    if (_playingRunningOutSoundEffect) return;
-
-    final gameBloc = context.read<GameBloc>();
-    final mapsBloc = context.read<GameMapsBloc>();
-    final map = mapsBloc.state.maps[gameBloc.state.identifier]!;
     final completionSeconds = map.completionSeconds;
 
     final timeLeft = (completionSeconds * Duration.millisecondsPerSecond) -
         _stopwatch.elapsed.inMilliseconds;
-    if (timeLeft < 10100) {
+    if (timeLeft < 10100 && !_countingDown) {
+      _countingDown = true;
       context.read<AudioCubit>().playEffect(GameSoundEffects.runningTime);
-      _playingRunningOutSoundEffect = true;
+    }
+
+    _timeIsUp = _stopwatch.elapsed.inSeconds >= completionSeconds;
+    if (_timeIsUp && gameBloc.state.status == GameStatus.playing) {
+      gameBloc.add(const GameLostEvent(reason: GameLostReason.timeIsUp));
     }
   }
 

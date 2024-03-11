@@ -96,11 +96,21 @@ class _Stars extends StatelessWidget {
 
   final int value;
 
+  static final _random = Random();
+  static final _filledIimages = [
+    Assets.images.display.starFilledGolden1,
+    Assets.images.display.starFilledGolden2,
+  ];
+  static final _emptyIimages = [
+    Assets.images.display.starEmpty1,
+    Assets.images.display.starEmpty2,
+  ];
+
   @override
   Widget build(BuildContext context) {
-    SvgGenImage star({required bool filled}) => filled
-        ? Assets.images.display.starFilled
-        : Assets.images.display.starEmpty;
+    AssetGenImage star({required bool filled}) => filled
+        ? _filledIimages[_random.nextInt(_filledIimages.length)]
+        : _emptyIimages[_random.nextInt(_emptyIimages.length)];
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -110,12 +120,12 @@ class _Stars extends StatelessWidget {
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            star(filled: value >= 1).svg(width: starWidth),
+            star(filled: value >= 1).image(width: starWidth),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: star(filled: value >= 2).svg(width: starWidth),
+              child: star(filled: value >= 2).image(width: starWidth),
             ),
-            star(filled: value >= 3).svg(width: starWidth),
+            star(filled: value >= 3).image(width: starWidth),
           ],
         );
       },

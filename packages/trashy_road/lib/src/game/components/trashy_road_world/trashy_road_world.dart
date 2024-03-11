@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:tiled/tiled.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
+import 'package:trashy_road/src/game/bloc/bloc.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 /// The different layers in the Tiled map.
@@ -60,17 +63,27 @@ class TrashyRoadWorld extends PositionComponent {
   }
 }
 
-class _TiledFloor extends Component with HasGameReference<TrashyRoadGame> {
+class _TiledFloor extends Component
+    with
+        HasGameReference<TrashyRoadGame>,
+        FlameBlocReader<GameBloc, GameState> {
   late final Sprite _sprite;
 
+  static final Map<String, String> _floorImages = UnmodifiableMapView({
+    'map1': Assets.images.maps.map1.path,
+  });
+
   @override
-  FutureOr<void> onLoad() async {
+  Future<void> onLoad() async {
     await super.onLoad();
 
-    _sprite = await Sprite.load(
-      Assets.images.maps.map1.path,
-      images: game.images,
+    final mapIdentifier = bloc.state.identifier;
+    assert(
+      _floorImages.containsKey(mapIdentifier),
+      'No floor image found for map identifier "$mapIdentifier"',
     );
+    final mapPath = _floorImages[mapIdentifier]!;
+    _sprite = await Sprite.load(mapPath, images: game.images);
   }
 
   @override

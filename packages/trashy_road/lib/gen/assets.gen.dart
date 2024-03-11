@@ -270,6 +270,10 @@ class $AssetsImagesDisplayGen {
   AssetGenImage get playIcon =>
       const AssetGenImage('assets/images/display/play-icon.png');
 
+  /// File path: assets/images/display/player-still.png
+  AssetGenImage get playerStill =>
+      const AssetGenImage('assets/images/display/player-still.png');
+
   /// File path: assets/images/display/replay-icon.png
   AssetGenImage get replayIcon =>
       const AssetGenImage('assets/images/display/replay-icon.png');
@@ -331,6 +335,7 @@ class $AssetsImagesDisplayGen {
         playBackgroundHouses,
         playBackgroundSky,
         playIcon,
+        playerStill,
         replayIcon,
         slotAppleCore,
         slotEmpty,

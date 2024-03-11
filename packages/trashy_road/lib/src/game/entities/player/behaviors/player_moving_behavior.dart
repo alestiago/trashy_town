@@ -4,13 +4,17 @@ import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:trashy_road/game_settings.dart';
+import 'package:trashy_road/src/audio/audio.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 enum Direction { up, down, left, right }
 
 /// A behavior that allows the player to move around the game.
 final class PlayerMovingBehavior extends Behavior<Player>
-    with FlameBlocReader<GameBloc, GameState>, ParentIsA<Player> {
+    with
+        FlameBlocReader<GameBloc, GameState>,
+        ParentIsA<Player>,
+        HasGameReference<TrashyRoadGame> {
   /// The delay between player moves.
   static const moveDelay = Duration(milliseconds: 200);
 
@@ -62,6 +66,8 @@ final class PlayerMovingBehavior extends Behavior<Player>
       _isMoving = false;
       parent.position.setFrom(_targetPosition);
       _previousPosition.setFrom(_targetPosition);
+
+      game.audioBloc.playEffect(GameSoundEffects.steps);
     }
   }
 

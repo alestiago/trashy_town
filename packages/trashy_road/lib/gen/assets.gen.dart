@@ -18,6 +18,9 @@ class $AssetsAudioGen {
   /// File path: assets/audio/background_music.mp3
   String get backgroundMusic => 'assets/audio/background_music.mp3';
 
+  /// File path: assets/audio/bounce_back.mp3
+  String get bounceBack => 'assets/audio/bounce_back.mp3';
+
   /// File path: assets/audio/deposit_trash_1.wav
   String get depositTrash1 => 'assets/audio/deposit_trash_1.wav';
 
@@ -39,6 +42,9 @@ class $AssetsAudioGen {
   /// File path: assets/audio/plastic_bottle.mp3
   String get plasticBottle => 'assets/audio/plastic_bottle.mp3';
 
+  /// File path: assets/audio/rating_stars0.mp3
+  String get ratingStars0 => 'assets/audio/rating_stars0.mp3';
+
   /// File path: assets/audio/rating_stars1.mp3
   String get ratingStars1 => 'assets/audio/rating_stars1.mp3';
 
@@ -48,12 +54,22 @@ class $AssetsAudioGen {
   /// File path: assets/audio/rating_stars3.mp3
   String get ratingStars3 => 'assets/audio/rating_stars3.mp3';
 
+  /// File path: assets/audio/running_time.mp3
+  String get runningTime => 'assets/audio/running_time.mp3';
+
+  /// File path: assets/audio/steps.mp3
+  String get steps => 'assets/audio/steps.mp3';
+
+  /// File path: assets/audio/trash_collected.mp3
+  String get trashCollected => 'assets/audio/trash_collected.mp3';
+
   /// File path: assets/audio/wrong_bin.mp3
   String get wrongBin => 'assets/audio/wrong_bin.mp3';
 
   /// List of all assets
   List<String> get values => [
         backgroundMusic,
+        bounceBack,
         depositTrash1,
         depositTrash2,
         depositTrash3,
@@ -61,9 +77,13 @@ class $AssetsAudioGen {
         depositTrash5,
         hintingArrow,
         plasticBottle,
+        ratingStars0,
         ratingStars1,
         ratingStars2,
         ratingStars3,
+        runningTime,
+        steps,
+        trashCollected,
         wrongBin
       ];
 }

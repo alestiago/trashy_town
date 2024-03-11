@@ -1,6 +1,7 @@
 import 'package:basura/basura.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:trashy_road/src/audio/audio.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/maps/maps.dart';
 
@@ -20,6 +21,8 @@ class _GameStopwatchState extends State<GameStopwatch>
     with SingleTickerProviderStateMixin {
   final _stopwatch = Stopwatch();
 
+  bool _playingRunningOutSoundEffect = false;
+
   late final _animation = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 1),
@@ -38,10 +41,12 @@ class _GameStopwatchState extends State<GameStopwatch>
   void _reset() {
     _animation.reset();
     _stopwatch.reset();
+    _playingRunningOutSoundEffect = false;
   }
 
   void _onTick() {
     if (!mounted) return;
+    _playRunningOutSoundEffect();
 
     final gameBloc = context.read<GameBloc>();
     final mapsBloc = context.read<GameMapsBloc>();
@@ -52,6 +57,22 @@ class _GameStopwatchState extends State<GameStopwatch>
 
     if (timeIsUp && gameBloc.state.status == GameStatus.playing) {
       gameBloc.add(const GameLostEvent(reason: GameLostReason.timeIsUp));
+    }
+  }
+
+  void _playRunningOutSoundEffect() {
+    if (_playingRunningOutSoundEffect) return;
+
+    final gameBloc = context.read<GameBloc>();
+    final mapsBloc = context.read<GameMapsBloc>();
+    final map = mapsBloc.state.maps[gameBloc.state.identifier]!;
+    final completionSeconds = map.completionSeconds;
+
+    final timeLeft = (completionSeconds * Duration.millisecondsPerSecond) -
+        _stopwatch.elapsed.inMilliseconds;
+    if (timeLeft < 10100) {
+      context.read<AudioCubit>().playEffect(GameSoundEffects.runningTime);
+      _playingRunningOutSoundEffect = true;
     }
   }
 

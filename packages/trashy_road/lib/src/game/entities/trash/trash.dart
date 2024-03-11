@@ -119,7 +119,7 @@ class Trash extends PositionedEntity
 
   /// Collects the trash.
   void collect() {
-    game.audioBloc.playEffect(GameSoundEffects.plasticTrash);
+    game.audioBloc.playEffect(GameSoundEffects.trashCollected);
     findBehavior<PropagatingCollisionBehavior>()
         .children
         .whereType<RectangleHitbox>()

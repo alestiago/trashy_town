@@ -57,8 +57,8 @@ class $AssetsAudioGen {
   /// File path: assets/audio/running_time.mp3
   String get runningTime => 'assets/audio/running_time.mp3';
 
-  /// File path: assets/audio/steps.mp3
-  String get steps => 'assets/audio/steps.mp3';
+  /// File path: assets/audio/step1.mp3
+  String get step1 => 'assets/audio/step1.mp3';
 
   /// File path: assets/audio/trash_collected.mp3
   String get trashCollected => 'assets/audio/trash_collected.mp3';
@@ -82,7 +82,7 @@ class $AssetsAudioGen {
         ratingStars2,
         ratingStars3,
         runningTime,
-        steps,
+        step1,
         trashCollected,
         wrongBin
       ];

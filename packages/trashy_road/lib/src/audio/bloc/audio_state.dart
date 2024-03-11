@@ -16,27 +16,22 @@ class GameAudioData extends Equatable {
   const GameAudioData._({
     required this.source,
     required this.volume,
-    this.duration,
   });
 
   GameAudioData.fromPath(
     String path, {
     required double volume,
-    Duration? duration,
   }) : this._(
           source: AssetSource(path),
           volume: volume,
-          duration: duration,
         );
 
   final AssetSource source;
 
   final double volume;
 
-  final Duration? duration;
-
   @override
-  List<Object?> get props => [source, volume, duration];
+  List<Object?> get props => [source, volume];
 }
 
 abstract class GameBackgroundMusic {
@@ -105,13 +100,11 @@ abstract class GameSoundEffects {
   static final wrongBin = GameAudioData.fromPath(
     Assets.audio.wrongBin,
     volume: 0.35,
-    duration: const Duration(seconds: 1),
   );
 
-  static final steps = GameAudioData.fromPath(
-    Assets.audio.steps,
-    volume: 0.12,
-    duration: const Duration(milliseconds: 820),
+  static final step1 = GameAudioData.fromPath(
+    Assets.audio.step1,
+    volume: 0.35,
   );
 
   static final runningTime = GameAudioData.fromPath(

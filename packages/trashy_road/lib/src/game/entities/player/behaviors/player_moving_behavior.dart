@@ -67,7 +67,7 @@ final class PlayerMovingBehavior extends Behavior<Player>
       parent.position.setFrom(_targetPosition);
       _previousPosition.setFrom(_targetPosition);
 
-      game.audioBloc.playEffect(GameSoundEffects.steps);
+      game.audioBloc.playEffect(GameSoundEffects.step1);
     }
   }
 

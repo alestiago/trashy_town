@@ -80,26 +80,26 @@ class TrashyRoadGame extends FlameGame
       images: images,
     );
     final tiled = TiledComponent(renderableTiledMap);
-    final trashyRoadWorld =
-        _trashyRoadWorld = await TrashyRoadWorld.create(tiled: tiled);
-    children.register<TrashyRoadWorld>();
+    // final trashyRoadWorld =
+    //     _trashyRoadWorld = await TrashyRoadWorld.create(tiled: tiled);
+    // children.register<TrashyRoadWorld>();
 
-    final blocProvider = FlameBlocProvider<GameBloc, GameState>(
-      create: () => _gameBloc,
-      children: [
-        ZCanvasComponent(
-          children: [
-            trashyRoadWorld,
-          ],
-        ),
-      ],
-    );
+    // final blocProvider = FlameBlocProvider<GameBloc, GameState>(
+    //   create: () => _gameBloc,
+    //   children: [
+    //     ZCanvasComponent(
+    //       children: [
+    //         trashyRoadWorld,
+    //       ],
+    //     ),
+    //   ],
+    // );
 
-    world.add(blocProvider);
+    // world.add(blocProvider);
 
-    _player = trashyRoadWorld.tiled.children.whereType<Player>().first;
-    camera.follow(_player);
-    _updateBounds();
+    // _player = trashyRoadWorld.tiled.children.whereType<Player>().first;
+    // camera.follow(_player);
+    // _updateBounds();
   }
 
   void _updateBounds() {

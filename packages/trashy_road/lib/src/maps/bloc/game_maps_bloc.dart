@@ -25,7 +25,7 @@ class GameMapsBloc extends Bloc<GameMapsEvent, GameMapsState> {
     Map<String, GameMap>? newMaps;
     final currentMap = state.maps[event.identifier]!;
 
-    final firstTimeCompleted = currentMap.score == -1;
+    final firstTimeCompleted = currentMap.score == null;
     if (firstTimeCompleted) {
       final nextMap = state.next(currentMap.identifier);
 
@@ -37,7 +37,7 @@ class GameMapsBloc extends Bloc<GameMapsEvent, GameMapsState> {
       }
     }
 
-    if (currentMap.score < event.score) {
+    if (firstTimeCompleted || (currentMap.score! > event.score)) {
       newMaps ??= Map.from(state.maps);
       final updatedMap = currentMap.copyWith(score: event.score);
       newMaps[event.identifier] = updatedMap;

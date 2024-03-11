@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math' hide Rectangle;
 
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flame/cache.dart';
 import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
@@ -12,6 +11,7 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
 import 'package:trashy_road/game_settings.dart';
+import 'package:trashy_road/src/audio/audio.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 export 'bloc/bloc.dart';
@@ -30,7 +30,7 @@ class TrashyRoadGame extends FlameGame
         DragCallbacks {
   TrashyRoadGame({
     required GameBloc gameBloc,
-    required this.effectPlayer,
+    required this.audioBloc,
     required this.random,
     required this.resolution,
     Images? images,
@@ -48,10 +48,8 @@ class TrashyRoadGame extends FlameGame
   /// {@macro GameBloc}
   final GameBloc _gameBloc;
 
-  /// Can play one audio at a time.
-  ///
-  /// Usually used to play very short sound effects.
-  final AudioPlayer effectPlayer;
+  /// {@macro AudioCubit}
+  final AudioCubit audioBloc;
 
   final Random random;
 

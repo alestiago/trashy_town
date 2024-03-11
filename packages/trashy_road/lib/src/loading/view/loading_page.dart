@@ -1,5 +1,6 @@
 import 'package:basura/basura.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/src/loading/loading.dart';
 import 'package:trashy_road/src/play/play.dart';
@@ -27,8 +28,18 @@ class _LoadingPageState extends State<LoadingPage> {
       listenWhen: (prevState, state) =>
           !prevState.isComplete && state.isComplete,
       listener: (context, state) => _onPreloadComplete(context),
-      child: const Scaffold(
-        body: Center(
+      child: const DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xff5F97C4),
+              Color(0xff64A5CC),
+            ],
+          ),
+        ),
+        child: Center(
           child: _LoadingInternal(),
         ),
       ),
@@ -41,7 +52,8 @@ class _LoadingInternal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primaryTextTheme = Theme.of(context).primaryTextTheme;
+    final basuraTheme = BasuraTheme.of(context);
+    final textStyle = basuraTheme.textTheme.button;
 
     return BlocBuilder<PreloadCubit, PreloadState>(
       builder: (context, state) {
@@ -51,18 +63,21 @@ class _LoadingInternal extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: 12),
               child: AnimatedProgressBar(
                 progress: state.progress,
-                backgroundColor: BasuraColors.deepGreen,
-                foregroundColor: BasuraColors.white,
+                backgroundColor: BasuraColors.white,
+                foregroundColor: BasuraColors.black,
               ),
             ),
-            Text(
-              loadingMessage,
-              style: primaryTextTheme.bodySmall!.copyWith(
-                color: BasuraColors.lightGreen,
-                fontWeight: FontWeight.w900,
+            DefaultTextStyle(
+              style: textStyle,
+              child: Text(
+                loadingMessage,
+                style: textStyle.copyWith(
+                  fontSize: 24,
+                  color: BasuraColors.white,
+                ),
               ),
             ),
           ],

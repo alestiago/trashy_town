@@ -18,11 +18,74 @@ class $AssetsAudioGen {
   /// File path: assets/audio/background_music.mp3
   String get backgroundMusic => 'assets/audio/background_music.mp3';
 
+  /// File path: assets/audio/bounce_back.mp3
+  String get bounceBack => 'assets/audio/bounce_back.mp3';
+
+  /// File path: assets/audio/deposit_trash_1.wav
+  String get depositTrash1 => 'assets/audio/deposit_trash_1.wav';
+
+  /// File path: assets/audio/deposit_trash_2.wav
+  String get depositTrash2 => 'assets/audio/deposit_trash_2.wav';
+
+  /// File path: assets/audio/deposit_trash_3.wav
+  String get depositTrash3 => 'assets/audio/deposit_trash_3.wav';
+
+  /// File path: assets/audio/deposit_trash_4.wav
+  String get depositTrash4 => 'assets/audio/deposit_trash_4.wav';
+
+  /// File path: assets/audio/deposit_trash_5.wav
+  String get depositTrash5 => 'assets/audio/deposit_trash_5.wav';
+
+  /// File path: assets/audio/hinting_arrow.mp3
+  String get hintingArrow => 'assets/audio/hinting_arrow.mp3';
+
   /// File path: assets/audio/plastic_bottle.mp3
   String get plasticBottle => 'assets/audio/plastic_bottle.mp3';
 
+  /// File path: assets/audio/rating_stars0.mp3
+  String get ratingStars0 => 'assets/audio/rating_stars0.mp3';
+
+  /// File path: assets/audio/rating_stars1.mp3
+  String get ratingStars1 => 'assets/audio/rating_stars1.mp3';
+
+  /// File path: assets/audio/rating_stars2.mp3
+  String get ratingStars2 => 'assets/audio/rating_stars2.mp3';
+
+  /// File path: assets/audio/rating_stars3.mp3
+  String get ratingStars3 => 'assets/audio/rating_stars3.mp3';
+
+  /// File path: assets/audio/running_time.mp3
+  String get runningTime => 'assets/audio/running_time.mp3';
+
+  /// File path: assets/audio/step1.mp3
+  String get step1 => 'assets/audio/step1.mp3';
+
+  /// File path: assets/audio/trash_collected.mp3
+  String get trashCollected => 'assets/audio/trash_collected.mp3';
+
+  /// File path: assets/audio/wrong_bin.mp3
+  String get wrongBin => 'assets/audio/wrong_bin.mp3';
+
   /// List of all assets
-  List<String> get values => [backgroundMusic, plasticBottle];
+  List<String> get values => [
+        backgroundMusic,
+        bounceBack,
+        depositTrash1,
+        depositTrash2,
+        depositTrash3,
+        depositTrash4,
+        depositTrash5,
+        hintingArrow,
+        plasticBottle,
+        ratingStars0,
+        ratingStars1,
+        ratingStars2,
+        ratingStars3,
+        runningTime,
+        step1,
+        trashCollected,
+        wrongBin
+      ];
 }
 
 class $AssetsImagesGen {
@@ -776,14 +839,10 @@ class Assets {
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsRiveGen rive = $AssetsRiveGen();
   static const $AssetsTilesGen tiles = $AssetsTilesGen();
-  static const String trashyRoadTiledProject =
-      'assets/trashy_road.tiled-project';
-  static const String trashyRoadTiledSession =
-      'assets/trashy_road.tiled-session';
+  static const String trashyRoad = 'assets/trashy_road.tiled-project';
 
   /// List of all assets
-  static List<String> get values =>
-      [trashyRoadTiledProject, trashyRoadTiledSession];
+  static List<String> get values => [trashyRoad];
 }
 
 class AssetGenImage {

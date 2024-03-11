@@ -44,20 +44,11 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => GameBloc(
-            identifier: _identifier,
-            map: _map,
-          ),
-        ),
-        BlocProvider(
-          create: (context) => AudioCubit(
-            audioCache: context.read<PreloadCubit>().audio,
-          ),
-        ),
-      ],
+    return BlocProvider(
+      create: (context) => GameBloc(
+        identifier: _identifier,
+        map: _map,
+      ),
       child: const _GameView(),
     );
   }
@@ -100,7 +91,7 @@ class _GameView extends StatelessWidget {
             if (isTutorial)
               const Align(
                 alignment: Alignment(0, -0.6),
-                child: GameTutorial(),
+                child: TutorialHud(),
               ),
           ],
         ),
@@ -115,15 +106,29 @@ class _GameCompletionListener extends BlocListener<GameBloc, GameState> {
           listenWhen: (previous, current) =>
               current.status == GameStatus.completed,
           listener: (context, state) {
+            assert(
+              state.score != null,
+              'The game is completed, but the score is null.',
+            );
+            final gameMapsBloc = context.read<GameMapsBloc>();
+            final gameMap = gameMapsBloc.state.maps[state.identifier];
+            final scoreRating = ScoreRating.fromSteps(
+              score: state.score,
+              steps: gameMap!.ratingSteps,
+            );
+
             context.read<GameMapsBloc>().add(
                   GameMapCompletedEvent(
                     identifier: state.identifier,
-                    score: state.score,
+                    score: state.score!,
                   ),
                 );
             Navigator.push(
               context,
-              ScorePage.route(identifier: state.identifier),
+              ScorePage.route(
+                identifier: state.identifier,
+                scoreRating: scoreRating,
+              ),
             );
           },
         );

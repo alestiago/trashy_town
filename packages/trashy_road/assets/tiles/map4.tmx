@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.9" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="18" height="24" tilewidth="128" tileheight="64" infinite="0" nextlayerid="8" nextobjectid="194">
  <tileset firstgid="1" source="Tiles.tsx"/>
- <layer id="1" name="Background" width="18" height="24" visible="0" locked="1">
+ <layer id="1" name="Background" width="18" height="24" locked="1">
   <data encoding="csv">
 24,24,24,24,24,24,8,24,24,24,24,24,8,24,24,24,24,8,
 24,24,24,24,24,24,24,24,8,24,24,24,24,24,24,24,24,24,
@@ -29,13 +29,13 @@
 24,24,24,8,24,8,24,24,8,24,24,24,8,24,24,24,24,24
 </data>
  </layer>
- <objectgroup id="3" name="Border" visible="0" locked="1">
+ <objectgroup id="3" name="Border" locked="1">
   <object id="1" x="0" y="0" width="2304" height="256"/>
   <object id="2" x="0" y="1280" width="2304" height="256"/>
   <object id="3" x="1792" y="256" width="512" height="1024"/>
   <object id="4" x="0" y="256" width="512" height="1024"/>
  </objectgroup>
- <objectgroup id="7" name="CoreItemsLayer" visible="0" locked="1">
+ <objectgroup id="7" name="CoreItemsLayer" locked="1">
   <object id="9" template="trash_can_park_organic.tx" name="trash_can_organic_park" class="trash_can" gid="38" x="1408" y="1216" width="128" height="128">
    <properties>
     <property name="type" value="organic"/>
@@ -75,7 +75,6 @@
   <object id="29" template="tree_1.tx" class="tree_1" gid="10" x="1280" y="320" width="100" height="100"/>
   <object id="30" template="tree_1.tx" class="tree_1" gid="10" x="640" y="1024" width="100" height="100"/>
   <object id="31" template="tree_1.tx" class="tree_1" gid="10" x="768" y="1280" width="100" height="100"/>
-  <object id="32" template="tree_1.tx" class="tree_1" gid="10" x="1664" y="1216" width="100" height="100"/>
   <object id="33" template="tree_2.tx" class="tree_2" gid="13" x="1664" y="1280" width="100" height="100"/>
   <object id="34" template="tree_1.tx" class="tree_1" gid="10" x="640" y="320" width="100" height="100"/>
   <object id="35" template="tree_1.tx" class="tree_1" gid="10" x="512" y="256" width="100" height="100"/>
@@ -195,7 +194,7 @@
   <object id="178" template="lamp_post.tx" class="lamp_post" gid="41" x="1408" y="384" width="128" height="128"/>
   <object id="179" template="lamp_post.tx" class="lamp_post" gid="41" x="640" y="384" width="128" height="128"/>
  </objectgroup>
- <objectgroup id="5" name="RoadLayer" visible="0">
+ <objectgroup id="5" name="RoadLayer">
   <object id="189" template="road_lane.tx" name="road_lane" class="road_lane" x="2304" y="448">
    <properties>
     <property name="leftToRight" type="bool" value="false"/>
@@ -229,7 +228,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="6" name="TrashLayer" visible="0" locked="1">
+ <objectgroup id="6" name="TrashLayer" locked="1">
   <object id="180" template="trash_plastic.tx" name="plastic" class="trash" gid="35" x="896" y="1216" width="128" height="64">
    <properties>
     <property name="type" value="plastic"/>

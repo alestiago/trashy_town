@@ -26,8 +26,8 @@ typedef RatingSteps = (int, int, int);
 enum GameMapIdentifier {
   tutorial,
   map2,
-  map5,
-  map6;
+  map3,
+  map4;
 }
 
 class GameMapsState extends Equatable {
@@ -54,18 +54,18 @@ class GameMapsState extends Equatable {
               ratingSteps: (25, 50, 100),
               locked: true,
             ),
-            GameMapIdentifier.map5: GameMap._(
-              identifier: GameMapIdentifier.map5,
+            GameMapIdentifier.map3: GameMap._(
+              identifier: GameMapIdentifier.map3,
               displayName: '3',
-              path: Assets.tiles.map5,
+              path: Assets.tiles.map3,
               score: null,
               ratingSteps: (25, 50, 100),
               locked: true,
             ),
-            GameMapIdentifier.map6: GameMap._(
-              identifier: GameMapIdentifier.map6,
+            GameMapIdentifier.map4: GameMap._(
+              identifier: GameMapIdentifier.map4,
               displayName: '4',
-              path: Assets.tiles.map6,
+              path: Assets.tiles.map4,
               score: null,
               ratingSteps: (25, 50, 100),
               locked: true,

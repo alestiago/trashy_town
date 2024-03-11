@@ -56,8 +56,8 @@ class PreloadCubit extends Cubit<PreloadState> {
         items: [
           Assets.tiles.map1,
           Assets.tiles.map2,
-          Assets.tiles.map5,
-          Assets.tiles.map6,
+          Assets.tiles.map3,
+          Assets.tiles.map4,
         ],
         start: tiled.loadAll,
       ),

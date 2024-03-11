@@ -36,7 +36,6 @@ class PlayPage extends StatelessWidget {
       child: Stack(
         children: [
           Positioned.fill(
-            bottom: null,
             child: Assets.images.display.playBackgroundSky.image(
               fit: BoxFit.none,
             ),

@@ -25,6 +25,8 @@ class AudioCubit extends Cubit<AudioState> {
     GameSoundEffects.ratingStars2: AudioPlayer()..audioCache = _audioCache,
     GameSoundEffects.ratingStars3: AudioPlayer()..audioCache = _audioCache,
     GameSoundEffects.runningTime: AudioPlayer()..audioCache = _audioCache,
+    GameSoundEffects.gameOver: AudioPlayer()..audioCache = _audioCache,
+    GameSoundEffects.stagePass: AudioPlayer()..audioCache = _audioCache,
   };
 
   late final Map<GameAudioData, Future<AudioPool>> _pools = {
@@ -112,11 +114,22 @@ class AudioCubit extends Cubit<AudioState> {
   }
 
   Future<void> playBackgroundMusic(GameAudioData audioData) async {
-    // TODO(alestiago): Temporarily disabled the background music.
+    if (_backgroundMusic.audioPlayer.state == PlayerState.playing) return;
+
+    if (_backgroundMusic.audioPlayer.state == PlayerState.paused) {
+      await _backgroundMusic.resume();
+    } else {
+      await _backgroundMusic.play(
+        audioData.source.path,
+        volume: audioData.volume,
+      );
+    }
   }
 
   Future<void> pauseBackgroundMusic() async {
-    // TODO(alestiago): Temporarily disabled the background music.
+    if (_backgroundMusic.audioPlayer.state == PlayerState.playing) {
+      await _backgroundMusic.pause();
+    }
   }
 
   Future<void> toggleVolume() async {

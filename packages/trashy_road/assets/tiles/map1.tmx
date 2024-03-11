@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="16" height="32" tilewidth="128" tileheight="64" infinite="0" nextlayerid="9" nextobjectid="312">
+<map version="1.9" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="16" height="32" tilewidth="128" tileheight="64" infinite="0" nextlayerid="9" nextobjectid="330">
  <tileset firstgid="1" source="Tiles.tsx"/>
  <layer id="1" name="Background" width="16" height="32">
   <data encoding="csv">
@@ -126,7 +126,8 @@
   <object id="303" template="tree_1.tx" class="tree_1" gid="10" x="1152" y="1920" width="100" height="100"/>
   <object id="304" template="tree_1.tx" class="tree_1" gid="10" x="640" y="1920" width="100" height="100"/>
   <object id="308" template="lamp_post.tx" class="lamp_post" gid="41" x="1280" y="1600" width="128" height="128"/>
-  <object id="311" template="bus_stop.tx" class="bus_stop" gid="42" x="768" y="1088" width="128" height="128"/>
+  <object id="311" template="bus_stop.tx" class="bus_stop" gid="42" x="1152" y="704" width="128" height="128"/>
+  <object id="329" template="post_box.tx" class="post_box" x="1152" y="576"/>
  </objectgroup>
  <objectgroup id="6" name="RoadLayer">
   <object id="190" template="road_lane.tx" name="road_lane" class="road_lane" x="64" y="752">

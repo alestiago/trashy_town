@@ -64,6 +64,16 @@ class PlayPage extends StatelessWidget {
               ),
             ),
           ),
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: SizedBox.fromSize(
+              size: const Size(236, 277),
+              child: Image.asset(
+                Assets.images.display.playerStill.path,
+                fit: BoxFit.none,
+              ),
+            ),
+          ),
           const Align(
             alignment: Alignment(0, 0.2),
             child: SizedBox(

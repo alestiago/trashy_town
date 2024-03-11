@@ -36,6 +36,9 @@ class $AssetsAudioGen {
   /// File path: assets/audio/deposit_trash_5.wav
   String get depositTrash5 => 'assets/audio/deposit_trash_5.wav';
 
+  /// File path: assets/audio/game_over.mp3
+  String get gameOver => 'assets/audio/game_over.mp3';
+
   /// File path: assets/audio/hinting_arrow.mp3
   String get hintingArrow => 'assets/audio/hinting_arrow.mp3';
 
@@ -56,6 +59,9 @@ class $AssetsAudioGen {
 
   /// File path: assets/audio/running_time.mp3
   String get runningTime => 'assets/audio/running_time.mp3';
+
+  /// File path: assets/audio/stage_pass.mp3
+  String get stagePass => 'assets/audio/stage_pass.mp3';
 
   /// File path: assets/audio/step1.mp3
   String get step1 => 'assets/audio/step1.mp3';
@@ -78,6 +84,7 @@ class $AssetsAudioGen {
         depositTrash3,
         depositTrash4,
         depositTrash5,
+        gameOver,
         hintingArrow,
         plasticBottle,
         ratingStars0,
@@ -85,6 +92,7 @@ class $AssetsAudioGen {
         ratingStars2,
         ratingStars3,
         runningTime,
+        stagePass,
         step1,
         steps,
         trashCollected,
@@ -154,6 +162,12 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/map2.tmx
   String get map2 => 'assets/tiles/map2.tmx';
 
+  /// File path: assets/tiles/map3.tmx
+  String get map3 => 'assets/tiles/map3.tmx';
+
+  /// File path: assets/tiles/map4.tmx
+  String get map4 => 'assets/tiles/map4.tmx';
+
   /// File path: assets/tiles/road_lane.tx
   String get roadLane => 'assets/tiles/road_lane.tx';
 
@@ -207,6 +221,8 @@ class $AssetsTilesGen {
         lampPost,
         map1,
         map2,
+        map3,
+        map4,
         roadLane,
         spawn,
         trashCanOrganic,
@@ -269,6 +285,10 @@ class $AssetsImagesDisplayGen {
   /// File path: assets/images/display/play-icon.png
   AssetGenImage get playIcon =>
       const AssetGenImage('assets/images/display/play-icon.png');
+
+  /// File path: assets/images/display/player-still.png
+  AssetGenImage get playerStill =>
+      const AssetGenImage('assets/images/display/player-still.png');
 
   /// File path: assets/images/display/replay-icon.png
   AssetGenImage get replayIcon =>
@@ -347,6 +367,7 @@ class $AssetsImagesDisplayGen {
         playBackgroundHouses,
         playBackgroundSky,
         playIcon,
+        playerStill,
         replayIcon,
         slotAppleCore,
         slotEmpty,
@@ -375,8 +396,14 @@ class $AssetsImagesMapsGen {
   /// File path: assets/images/maps/map2.png
   AssetGenImage get map2 => const AssetGenImage('assets/images/maps/map2.png');
 
+  /// File path: assets/images/maps/map3.png
+  AssetGenImage get map3 => const AssetGenImage('assets/images/maps/map3.png');
+
+  /// File path: assets/images/maps/map4.png
+  AssetGenImage get map4 => const AssetGenImage('assets/images/maps/map4.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [map1, map2];
+  List<AssetGenImage> get values => [map1, map2, map3, map4];
 }
 
 class $AssetsImagesSpritesGen {
@@ -661,6 +688,14 @@ class $AssetsImagesSpritesGen {
   AssetGenImage get playerHop =>
       const AssetGenImage('assets/images/sprites/player_hop.png');
 
+  /// File path: assets/images/sprites/post_box-shadow.png
+  AssetGenImage get postBoxShadow =>
+      const AssetGenImage('assets/images/sprites/post_box-shadow.png');
+
+  /// File path: assets/images/sprites/post_box.png
+  AssetGenImage get postBox =>
+      const AssetGenImage('assets/images/sprites/post_box.png');
+
   /// File path: assets/images/sprites/road.png
   AssetGenImage get road =>
       const AssetGenImage('assets/images/sprites/road.png');
@@ -809,6 +844,8 @@ class $AssetsImagesSpritesGen {
         plasticStraw,
         playerHopShadow,
         playerHop,
+        postBoxShadow,
+        postBox,
         road,
         sandwichShadow,
         sandwich,

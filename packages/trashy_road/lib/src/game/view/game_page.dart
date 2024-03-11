@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tiled/tiled.dart';
 import 'package:trashy_road/gen/gen.dart';
+import 'package:trashy_road/src/audio/audio.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/loading/loading.dart';
 import 'package:trashy_road/src/maps/maps.dart';
@@ -109,6 +110,8 @@ class _GameCompletionListener extends BlocListener<GameBloc, GameState> {
               state.score != null,
               'The game is completed, but the score is null.',
             );
+            context.read<AudioCubit>().playEffect(GameSoundEffects.stagePass);
+
             final gameMapsBloc = context.read<GameMapsBloc>();
             final gameMap = gameMapsBloc.state.maps[state.identifier];
             final scoreRating = ScoreRating.fromSteps(
@@ -140,6 +143,7 @@ class _GameLostRunnedOverListener extends BlocListener<GameBloc, GameState> {
               current.status == GameStatus.lost &&
               current.lostReason == GameLostReason.vehicleRunningOver,
           listener: (context, state) {
+            context.read<AudioCubit>().playEffect(GameSoundEffects.gameOver);
             context.read<GameBloc>().add(const GameResetEvent());
           },
         );

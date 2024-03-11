@@ -86,23 +86,68 @@ class TrashyRoadGame extends FlameGame
     world.add(blocProvider);
 
     _player = trashyRoadWorld.tiled.children.whereType<Player>().first;
-    _player.children.register<PlayerDragMovingBehavior>();
 
-    camera.viewfinder.add(
+    // [camera.follow] centers the target, whereas our [CameraFollowBehavior]
+    // will keep the player slightly off-center towards the bottom of the
+    // screen.
+    await camera.viewfinder.add(
       CameraFollowBehavior(target: _player, viewport: camera.viewport),
     );
 
-    camera.setBounds(
-      Rectangle.fromPoints(
-        trashyRoadWorld.bounds.topLeft,
-        trashyRoadWorld.bounds.bottomRight,
-      ),
+    // TODO(OlliePugh/alestiago): Need to figure out how to set the bounds
+    // so that is works on all screen sizes.
+    //
+    // There are multiple things we can look into:
+    // - [camera.setBounds]
+    // - [ViewportAwareBoundsBehavior]
+    // - [BoundedPositionBehavior]
+    //
+    // See also:
+    // * [Flame Docs](https://docs.flame-engine.org/latest/flame/camera_component.html#camera-controls)
+    // * [Flame Dart API Docs](https://pub.dev/documentation/flame/latest/camera/CameraComponent/setBounds.html)
+    // * [Slack Conversation](https://stackoverflow.com/a/77167193)
+    //
+    // Notes:
+    // - camera.viewport.size may change when the game is resized, depending on
+    // the type of viewport used.
+    // - the default camera viewport is [MaxViewport]
+    final bounds = Rectangle.fromPoints(
+      // [trashyRoadWorld.bounds] is correctly computed.
+      trashyRoadWorld.bounds.topLeft,
+      trashyRoadWorld.bounds.bottomRight,
     );
+
+    camera.setBounds(
+      bounds,
+      considerViewport: true,
+    );
+
+    // NOTE: camera.viewport.size changes when the game is resized.
+
+    // Random attempts:
+    // camera.setBounds(
+    //   Rectangle.fromCenter(
+    //     center: Vector2.zero(),
+    //     size: (trashyRoadWorld.bounds.bottomRight / 2) -
+    //         (camera.viewport.size / 2),
+    //   ),
+    // );
+    // await camera.viewfinder.add(
+    //   BoundedPositionBehavior(
+    //     bounds: bounds,
+    //     target: _player,
+    //   ),
+    // );
+    // camera.setBounds(
+    //   bounds,
+    //   // considerViewport: true,
+    // );
   }
 
   @override
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
+
     camera.viewfinder.zoom = (size.x / resolution.width) + 0.2;
 
     final isPortrait = size.y > size.x;

@@ -71,6 +71,7 @@ class _TiledFloor extends Component
 
   static final Map<String, String> _floorImages = UnmodifiableMapView({
     'map1': Assets.images.maps.map1.path,
+    'map2': Assets.images.maps.map2.path,
   });
 
   @override

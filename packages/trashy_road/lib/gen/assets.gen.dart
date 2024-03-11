@@ -352,8 +352,11 @@ class $AssetsImagesMapsGen {
   /// File path: assets/images/maps/map1.png
   AssetGenImage get map1 => const AssetGenImage('assets/images/maps/map1.png');
 
+  /// File path: assets/images/maps/map2.png
+  AssetGenImage get map2 => const AssetGenImage('assets/images/maps/map2.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [map1];
+  List<AssetGenImage> get values => [map1, map2];
 }
 
 class $AssetsImagesSpritesGen {

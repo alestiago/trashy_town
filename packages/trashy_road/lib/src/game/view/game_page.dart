@@ -1,9 +1,8 @@
 import 'dart:async';
 
-import 'package:basura/basura.dart';
-import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tiled/tiled.dart';
 import 'package:trashy_road/gen/gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/loading/loading.dart';
@@ -25,13 +24,20 @@ class GamePage extends StatelessWidget {
     required String identifier,
     required TiledMap tiledMap,
   }) {
-    return BasuraBlackEaseInOut<void>(
-      settings: RouteSettings(name: identifier),
-      builder: (_) => GamePage(
+    return PageRouteBuilder(
+      pageBuilder: (context, _, __) => GamePage(
         identifier: identifier,
         map: tiledMap,
       ),
     );
+
+    // return BasuraBlackEaseInOut<void>(
+    //   settings: RouteSettings(name: identifier),
+    //   builder: (_) => GamePage(
+    //     identifier: identifier,
+    //     map: tiledMap,
+    //   ),
+    // );
   }
 
   /// The identifier of the game.

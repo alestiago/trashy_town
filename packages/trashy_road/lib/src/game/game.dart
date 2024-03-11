@@ -8,7 +8,6 @@ import 'package:flame/events.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
-import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/src/audio/audio.dart';
@@ -55,7 +54,7 @@ class TrashyRoadGame extends FlameGame
 
   late final Player _player;
 
-  TrashyRoadWorld? _trashyRoadWorld;
+  MapBounds? bounds;
 
   @override
   Color backgroundColor() {
@@ -73,37 +72,38 @@ class TrashyRoadGame extends FlameGame
   FutureOr<void> onLoad() async {
     await super.onLoad();
 
-    final tiledMap = _gameBloc.state.map..transformTileImagePaths();
-    final renderableTiledMap = await RenderableTiledMap.fromTiledMap(
-      tiledMap,
-      GameSettings.gridDimensions,
-      images: images,
+    final tiledMap = _gameBloc.state.map;
+    bounds = MapBounds.fromLTWH(
+      0,
+      0,
+      tiledMap.width.toDouble() * GameSettings.gridDimensions.x,
+      tiledMap.height.toDouble() * GameSettings.gridDimensions.y,
     );
-    final tiled = TiledComponent(renderableTiledMap);
-    final trashyRoadWorld =
-        _trashyRoadWorld = TrashyRoadWorld.create(tiled: tiled);
-    children.register<TrashyRoadWorld>();
 
+    final trashyRoadWorld = TrashyRoadWorld(tileMap: tiledMap);
     final blocProvider = FlameBlocProvider<GameBloc, GameState>(
       create: () => _gameBloc,
       children: [
         ZCanvasComponent(
-          children: [
-            trashyRoadWorld,
-          ],
+          children: [trashyRoadWorld],
         ),
       ],
     );
 
-    world.add(blocProvider);
+    await world.add(blocProvider);
 
-    _player = trashyRoadWorld.tiled.children.whereType<Player>().first;
-    camera.follow(_player);
-    _updateBounds();
+    // TODO(alestiago): Refactor this and properly await loading.
+    unawaited(
+      trashyRoadWorld.loaded.then((_) {
+        _player = trashyRoadWorld.children.whereType<Player>().first;
+        camera.follow(_player);
+        _updateBounds();
+      }),
+    );
   }
 
   void _updateBounds() {
-    final worldBounds = _trashyRoadWorld?.bounds;
+    final worldBounds = bounds;
     if (worldBounds == null) return;
 
     final viewportHalf = camera.viewport.size / 2;
@@ -152,38 +152,5 @@ class TrashyRoadGame extends FlameGame
   void update(double dt) {
     super.update(dt);
     camera.update(dt);
-  }
-}
-
-extension on TiledMap {
-  void transformTileImagePaths() {
-    for (final tileset in tilesets) {
-      for (final tile in tileset.tiles) {
-        final tileImage = tile.image;
-        if (tileImage == null) continue;
-        final newTileImage = tileImage.copyWith(
-          source: tileImage.source?.replaceFirst('..', 'assets'),
-        );
-        tile.image = newTileImage;
-      }
-    }
-  }
-}
-
-extension on TiledImage {
-  TiledImage copyWith({
-    String? source,
-    String? format,
-    int? width,
-    int? height,
-    String? trans,
-  }) {
-    return TiledImage(
-      source: source ?? this.source,
-      format: format ?? this.format,
-      width: width ?? this.width,
-      height: height ?? this.height,
-      trans: trans ?? this.trans,
-    );
   }
 }

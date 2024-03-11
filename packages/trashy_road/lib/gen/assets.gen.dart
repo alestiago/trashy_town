@@ -60,6 +60,9 @@ class $AssetsAudioGen {
   /// File path: assets/audio/step1.mp3
   String get step1 => 'assets/audio/step1.mp3';
 
+  /// File path: assets/audio/steps.mp3
+  String get steps => 'assets/audio/steps.mp3';
+
   /// File path: assets/audio/trash_collected.mp3
   String get trashCollected => 'assets/audio/trash_collected.mp3';
 
@@ -83,6 +86,7 @@ class $AssetsAudioGen {
         ratingStars3,
         runningTime,
         step1,
+        steps,
         trashCollected,
         wrongBin
       ];
@@ -92,8 +96,8 @@ class $AssetsImagesGen {
   const $AssetsImagesGen();
 
   $AssetsImagesDisplayGen get display => const $AssetsImagesDisplayGen();
+  $AssetsImagesMapsGen get maps => const $AssetsImagesMapsGen();
   $AssetsImagesSpritesGen get sprites => const $AssetsImagesSpritesGen();
-  $AssetsImagesTiledGen get tiled => const $AssetsImagesTiledGen();
 }
 
 class $AssetsRiveGen {
@@ -340,6 +344,19 @@ class $AssetsImagesDisplayGen {
         tutorialDepositTrash,
         tutorialMovement
       ];
+}
+
+class $AssetsImagesMapsGen {
+  const $AssetsImagesMapsGen();
+
+  /// File path: assets/images/maps/map1.png
+  AssetGenImage get map1 => const AssetGenImage('assets/images/maps/map1.png');
+
+  /// File path: assets/images/maps/map2.png
+  AssetGenImage get map2 => const AssetGenImage('assets/images/maps/map2.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [map1, map2];
 }
 
 class $AssetsImagesSpritesGen {
@@ -791,44 +808,6 @@ class $AssetsImagesSpritesGen {
         tree1,
         tree2Shadow,
         tree2
-      ];
-}
-
-class $AssetsImagesTiledGen {
-  const $AssetsImagesTiledGen();
-
-  /// File path: assets/images/tiled/organic_park_trash_can.png
-  AssetGenImage get organicParkTrashCan =>
-      const AssetGenImage('assets/images/tiled/organic_park_trash_can.png');
-
-  /// File path: assets/images/tiled/organic_trash_can.png
-  AssetGenImage get organicTrashCan =>
-      const AssetGenImage('assets/images/tiled/organic_trash_can.png');
-
-  /// File path: assets/images/tiled/paper_park_trash_can.png
-  AssetGenImage get paperParkTrashCan =>
-      const AssetGenImage('assets/images/tiled/paper_park_trash_can.png');
-
-  /// File path: assets/images/tiled/paper_trash_can.png
-  AssetGenImage get paperTrashCan =>
-      const AssetGenImage('assets/images/tiled/paper_trash_can.png');
-
-  /// File path: assets/images/tiled/plastic_park_trash_can.png
-  AssetGenImage get plasticParkTrashCan =>
-      const AssetGenImage('assets/images/tiled/plastic_park_trash_can.png');
-
-  /// File path: assets/images/tiled/plastic_trash_can.png
-  AssetGenImage get plasticTrashCan =>
-      const AssetGenImage('assets/images/tiled/plastic_trash_can.png');
-
-  /// List of all assets
-  List<AssetGenImage> get values => [
-        organicParkTrashCan,
-        organicTrashCan,
-        paperParkTrashCan,
-        paperTrashCan,
-        plasticParkTrashCan,
-        plasticTrashCan
       ];
 }
 

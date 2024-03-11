@@ -31,7 +31,7 @@ class VehicleSpawningBehavior extends Behavior<RoadLane>
     final world = ancestors().whereType<TrashyRoadWorld>().first;
 
     for (var i = 0; i < parent.traffic; i++) {
-      var startPosition = (i / parent.traffic) * world.tiled.size.x;
+      var startPosition = (i / parent.traffic) * world.size.x;
 
       startPosition *= _minTrafficVariation +
           (game.random.nextDouble() * (1 - _minTrafficVariation));
@@ -48,8 +48,8 @@ class VehicleSpawningBehavior extends Behavior<RoadLane>
 
   @override
   void update(double dt) {
-    final world = ancestors().whereType<TrashyRoadWorld>().first;
-    final bounds = world.bounds;
+    final bounds = game.bounds;
+    if (bounds == null) return;
 
     final vehicles = parent.children.whereType<Vehicle>();
     for (final vehicle in vehicles) {

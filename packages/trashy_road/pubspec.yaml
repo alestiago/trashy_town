@@ -57,7 +57,6 @@ flutter:
     - assets/audio/
     - assets/rive/
     - assets/tiles/
+    - assets/images/maps/
     - assets/images/display/
     - assets/images/sprites/
-    # tiled required beacuse flame_tiled loads these (even though we don't use them directly).
-    - assets/images/tiled/

@@ -15,7 +15,7 @@ class DebugTrashyRoadGame extends TrashyRoadGame {
     required super.audioBloc,
     required super.random,
     required super.resolution,
-    super.images,
+    required super.images,
   }) {
     debugMode = true;
   }

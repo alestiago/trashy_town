@@ -33,14 +33,14 @@ class TrashyRoadGame extends FlameGame
     required this.audioBloc,
     required this.random,
     required this.resolution,
-    Images? images,
+    required Images images,
   })  : _gameBloc = gameBloc,
         super(
           camera: CameraComponent(
             viewfinder: Viewfinder(),
           ),
         ) {
-    if (images != null) this.images = images;
+    this.images = images;
   }
 
   final Size resolution;

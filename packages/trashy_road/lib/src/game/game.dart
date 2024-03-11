@@ -55,6 +55,8 @@ class TrashyRoadGame extends FlameGame
 
   late final Player _player;
 
+  TrashyRoadWorld? _trashyRoadWorld;
+
   @override
   Color backgroundColor() {
     return Colors.transparent;
@@ -69,7 +71,8 @@ class TrashyRoadGame extends FlameGame
       GameSettings.gridDimensions,
     );
     final tiled = TiledComponent(renderableTiledMap);
-    final trashyRoadWorld = TrashyRoadWorld.create(tiled: tiled);
+    final trashyRoadWorld =
+        _trashyRoadWorld = TrashyRoadWorld.create(tiled: tiled);
     children.register<TrashyRoadWorld>();
 
     final blocProvider = FlameBlocProvider<GameBloc, GameState>(
@@ -87,67 +90,29 @@ class TrashyRoadGame extends FlameGame
 
     _player = trashyRoadWorld.tiled.children.whereType<Player>().first;
 
-    // [camera.follow] centers the target, whereas our [CameraFollowBehavior]
-    // will keep the player slightly off-center towards the bottom of the
-    // screen.
     await camera.viewfinder.add(
       CameraFollowBehavior(target: _player, viewport: camera.viewport),
     );
+    _setBounds();
+  }
 
-    // TODO(OlliePugh/alestiago): Need to figure out how to set the bounds
-    // so that is works on all screen sizes.
-    //
-    // There are multiple things we can look into:
-    // - [camera.setBounds]
-    // - [ViewportAwareBoundsBehavior]
-    // - [BoundedPositionBehavior]
-    //
-    // See also:
-    // * [Flame Docs](https://docs.flame-engine.org/latest/flame/camera_component.html#camera-controls)
-    // * [Flame Dart API Docs](https://pub.dev/documentation/flame/latest/camera/CameraComponent/setBounds.html)
-    // * [Slack Conversation](https://stackoverflow.com/a/77167193)
-    // * [Example](https://github.com/flame-engine/flame/blob/faf2df4b8c68015a1bfbdd96f93c950cb14963ef/examples/lib/stories/camera_and_viewport/follow_component_example.dart#L41)
-    //
-    // Notes:
-    // - camera.viewport.size may change when the game is resized, depending on
-    // the type of viewport used.
-    // - the default camera viewport is [MaxViewport]
-    final bounds = Rectangle.fromPoints(
-      // [trashyRoadWorld.bounds] is correctly computed.
-      trashyRoadWorld.bounds.topLeft,
-      trashyRoadWorld.bounds.bottomRight,
+  void _setBounds() {
+    final worldBounds = _trashyRoadWorld?.bounds;
+    if (worldBounds == null) return;
+
+    final viewportHalf = camera.viewport.size / 2;
+
+    final cameraBounds = Rectangle.fromPoints(
+      worldBounds.topLeft + viewportHalf,
+      worldBounds.bottomRight - viewportHalf,
     );
-
-    camera.setBounds(
-      bounds,
-      considerViewport: true,
-    );
-
-    // NOTE: camera.viewport.size changes when the game is resized.
-
-    // Random attempts:
-    // camera.setBounds(
-    //   Rectangle.fromCenter(
-    //     center: Vector2.zero(),
-    //     size: (trashyRoadWorld.bounds.bottomRight / 2) -
-    //         (camera.viewport.size / 2),
-    //   ),
-    // );
-    // await camera.viewfinder.add(
-    //   BoundedPositionBehavior(
-    //     bounds: bounds,
-    //     target: _player,
-    //   ),
-    // );
-    // camera.setBounds(
-    //   bounds,
-    //   // considerViewport: true,
-    // );
+    camera.setBounds(cameraBounds);
   }
 
   @override
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
+    _setBounds();
 
     camera.viewfinder.zoom = (size.x / resolution.width) + 0.2;
 

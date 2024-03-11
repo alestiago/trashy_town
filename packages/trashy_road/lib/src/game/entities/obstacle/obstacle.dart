@@ -31,8 +31,8 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
       : this._(
           position: position,
           hitbox: RectangleHitbox(
-            position: Vector2(0.1, 0)..toGameSize(),
-            size: Vector2(0.8, 0.8)..toGameSize(),
+            position: Vector2(0.25, -0.15)..toGameSize(),
+            size: Vector2(0.5, 0.7)..toGameSize(),
           ),
           children: [_Tree1SpriteGroup()],
         );
@@ -44,8 +44,8 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
       : this._(
           position: position,
           hitbox: RectangleHitbox(
-            position: Vector2(0.1, 0)..toGameSize(),
-            size: Vector2(0.8, 0.8)..toGameSize(),
+            position: Vector2(0.25, -0.15)..toGameSize(),
+            size: Vector2(0.5, 0.7)..toGameSize(),
           ),
           children: [_Tree2SpriteGroup()],
         );
@@ -70,8 +70,8 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
       : this._(
           position: position,
           hitbox: RectangleHitbox(
-            position: Vector2(0.1, 0)..toGameSize(),
-            size: Vector2(0.8, 0.8)..toGameSize(),
+            position: Vector2(0.25, -0.15)..toGameSize(),
+            size: Vector2(0.5, 0.7)..toGameSize(),
           ),
           children: [_Bush1SpriteGroup()],
         );
@@ -84,8 +84,8 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
       : this._(
           position: position,
           hitbox: RectangleHitbox(
-            position: Vector2(0.1, 0)..toGameSize(),
-            size: Vector2(0.8, 0.8)..toGameSize(),
+            position: Vector2(0.25, -0.15)..toGameSize(),
+            size: Vector2(0.5, 0.7)..toGameSize(),
           ),
           children: [_Bush2SpriteGroup()],
         );

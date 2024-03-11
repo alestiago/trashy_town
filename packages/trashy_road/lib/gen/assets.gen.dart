@@ -157,6 +157,9 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/map5.tmx
   String get map5 => 'assets/tiles/map5.tmx';
 
+  /// File path: assets/tiles/map6.tmx
+  String get map6 => 'assets/tiles/map6.tmx';
+
   /// File path: assets/tiles/road_lane.tx
   String get roadLane => 'assets/tiles/road_lane.tx';
 
@@ -211,6 +214,7 @@ class $AssetsTilesGen {
         map1,
         map2,
         map5,
+        map6,
         roadLane,
         spawn,
         trashCanOrganic,
@@ -359,8 +363,14 @@ class $AssetsImagesMapsGen {
   /// File path: assets/images/maps/map2.png
   AssetGenImage get map2 => const AssetGenImage('assets/images/maps/map2.png');
 
+  /// File path: assets/images/maps/map5.png
+  AssetGenImage get map5 => const AssetGenImage('assets/images/maps/map5.png');
+
+  /// File path: assets/images/maps/map6.png
+  AssetGenImage get map6 => const AssetGenImage('assets/images/maps/map6.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [map1, map2];
+  List<AssetGenImage> get values => [map1, map2, map5, map6];
 }
 
 class $AssetsImagesSpritesGen {

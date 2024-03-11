@@ -53,7 +53,12 @@ class PreloadCubit extends Cubit<PreloadState> {
       ),
       ...PreloadPhase.sliced(
         name: 'maps',
-        items: [Assets.tiles.map1, Assets.tiles.map2, Assets.tiles.map5],
+        items: [
+          Assets.tiles.map1,
+          Assets.tiles.map2,
+          Assets.tiles.map5,
+          Assets.tiles.map6,
+        ],
         start: tiled.loadAll,
       ),
     ];

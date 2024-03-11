@@ -20,7 +20,7 @@ import 'package:trashy_road/src/game/game.dart';
 /// * [Untraversable], which marks a component as untraversable.
 /// * [PlayerObstacleBehavior], which makes the player unable to traverse
 ///  through an [Untraversable] component.
-class MapEdge extends PositionedEntity with Untraversable {
+class MapEdge extends PositionedEntity with Untraversable, ZIndex {
   /// Derives a [MapEdge] from a [TiledObject].
   factory MapEdge.fromTiledObject(TiledObject tiledObject) {
     return MapEdge._(
@@ -42,6 +42,9 @@ class MapEdge extends PositionedEntity with Untraversable {
         ),
     ]);
   }
+
+  @override
+  int get zIndex => 100000;
 
   /// Whether the given [position] is inside the [MapEdge].
   bool isPointInside(Vector2 position) {

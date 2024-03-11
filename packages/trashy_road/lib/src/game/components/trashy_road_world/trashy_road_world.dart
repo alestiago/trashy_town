@@ -103,5 +103,7 @@ extension on GameMapIdentifier {
   String get floorAssetPath => switch (this) {
         GameMapIdentifier.tutorial => Assets.images.maps.map1.path,
         GameMapIdentifier.map2 => Assets.images.maps.map2.path,
+        GameMapIdentifier.map5 => Assets.images.maps.map5.path,
+        GameMapIdentifier.map6 => Assets.images.maps.map6.path,
       };
 }

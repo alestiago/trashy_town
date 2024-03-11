@@ -19,38 +19,41 @@ enum _TiledLayer {
 }
 
 class TrashyRoadWorld extends Component {
-  TrashyRoadWorld.create({required this.tiled}) {
+  TrashyRoadWorld._(this.tiled, this.bounds);
+
+  static Future<TrashyRoadWorld> create({required TiledComponent tiled}) async {
     final borderLayer =
         tiled.tileMap.getObjectGroup(_TiledLayer.borderLayer.name);
-    tiled.addAll(borderLayer.objects.map(MapEdge.fromTiledObject));
+    await tiled.addAll(borderLayer.objects.map(MapEdge.fromTiledObject));
 
     final trashLayer =
         tiled.tileMap.getObjectGroup(_TiledLayer.trashLayer.name);
-    tiled.addAll(trashLayer.objects.map(Trash.fromTiledObject));
+    await tiled.addAll(trashLayer.objects.map(Trash.fromTiledObject));
 
     final coreItemsLayer =
         tiled.tileMap.getObjectGroup(_TiledLayer.coreItemsLayer.name);
     final playerObjects =
         coreItemsLayer.objects.where((object) => object.type == 'player');
-    tiled.addAll(playerObjects.map(Player.fromTiledObject));
+    await tiled.addAll(playerObjects.map(Player.fromTiledObject));
     final trashCanObjects =
         coreItemsLayer.objects.where((object) => object.type == 'trash_can');
-    tiled.addAll(trashCanObjects.map(TrashCan.fromTiledObject));
+    await tiled.addAll(trashCanObjects.map(TrashCan.fromTiledObject));
 
     final roadLaneLayer =
         tiled.tileMap.getObjectGroup(_TiledLayer.roadLayer.name);
-    tiled.addAll(roadLaneLayer.objects.map(RoadLane.fromTiledObject));
+    await tiled.addAll(roadLaneLayer.objects.map(RoadLane.fromTiledObject));
 
     final obstaclesLayer =
         tiled.tileMap.getObjectGroup(_TiledLayer.obstacles.name);
-    tiled.addAll(obstaclesLayer.objects.map(Obstacle.fromTiledObject));
+    await tiled.addAll(obstaclesLayer.objects.map(Obstacle.fromTiledObject));
 
-    bounds = MapBounds.fromLTWH(
+    final bounds = MapBounds.fromLTWH(
       tiled.topLeftPosition.x,
       tiled.topLeftPosition.y,
       tiled.width,
       tiled.height,
     );
+    return TrashyRoadWorld._(tiled, bounds);
   }
 
   final TiledComponent tiled;

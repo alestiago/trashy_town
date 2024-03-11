@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:tiled/tiled.dart';
+import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 /// The different layers in the Tiled map.
@@ -52,7 +54,28 @@ class TrashyRoadWorld extends PositionComponent {
     final obstaclesLayer = tileMap.getObjectGroup(_TiledLayer.obstacles.name);
     await addAll(obstaclesLayer.objects.map(Obstacle.fromTiledObject));
 
+    await add(_TiledFloor());
+
     size = Vector2(tileMap.width.toDouble(), tileMap.height.toDouble());
+  }
+}
+
+class _TiledFloor extends Component with HasGameReference<TrashyRoadGame> {
+  late final Sprite _sprite;
+
+  @override
+  FutureOr<void> onLoad() async {
+    await super.onLoad();
+
+    _sprite = await Sprite.load(
+      Assets.images.maps.map1.path,
+      images: game.images,
+    );
+  }
+
+  @override
+  void render(Canvas canvas) {
+    _sprite.render(canvas);
   }
 }
 

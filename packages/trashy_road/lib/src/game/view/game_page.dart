@@ -25,13 +25,20 @@ class GamePage extends StatelessWidget {
     required String identifier,
     required TiledMap tiledMap,
   }) {
-    return BasuraBlackEaseInOut<void>(
-      settings: RouteSettings(name: identifier),
-      builder: (_) => GamePage(
+    return PageRouteBuilder(
+      pageBuilder: (context, _, __) => GamePage(
         identifier: identifier,
         map: tiledMap,
       ),
     );
+
+    // return BasuraBlackEaseInOut<void>(
+    //   settings: RouteSettings(name: identifier),
+    //   builder: (_) => GamePage(
+    //     identifier: identifier,
+    //     map: tiledMap,
+    //   ),
+    // );
   }
 
   /// The identifier of the game.

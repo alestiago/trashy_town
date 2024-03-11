@@ -66,9 +66,6 @@ class $AssetsAudioGen {
   /// File path: assets/audio/step1.mp3
   String get step1 => 'assets/audio/step1.mp3';
 
-  /// File path: assets/audio/steps.mp3
-  String get steps => 'assets/audio/steps.mp3';
-
   /// File path: assets/audio/trash_collected.mp3
   String get trashCollected => 'assets/audio/trash_collected.mp3';
 
@@ -94,7 +91,6 @@ class $AssetsAudioGen {
         runningTime,
         stagePass,
         step1,
-        steps,
         trashCollected,
         wrongBin
       ];
@@ -168,6 +164,9 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/map4.tmx
   String get map4 => 'assets/tiles/map4.tmx';
 
+  /// File path: assets/tiles/post_box.tx
+  String get postBox => 'assets/tiles/post_box.tx';
+
   /// File path: assets/tiles/road_lane.tx
   String get roadLane => 'assets/tiles/road_lane.tx';
 
@@ -223,6 +222,7 @@ class $AssetsTilesGen {
         map2,
         map3,
         map4,
+        postBox,
         roadLane,
         spawn,
         trashCanOrganic,
@@ -875,14 +875,10 @@ class Assets {
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsRiveGen rive = $AssetsRiveGen();
   static const $AssetsTilesGen tiles = $AssetsTilesGen();
-  static const String trashyRoadTiledProject =
-      'assets/trashy_road.tiled-project';
-  static const String trashyRoadTiledSession =
-      'assets/trashy_road.tiled-session';
+  static const String trashyRoad = 'assets/trashy_road.tiled-project';
 
   /// List of all assets
-  static List<String> get values =>
-      [trashyRoadTiledProject, trashyRoadTiledSession];
+  static List<String> get values => [trashyRoad];
 }
 
 class AssetGenImage {

@@ -63,6 +63,13 @@ class TrashyRoadGame extends FlameGame
   }
 
   @override
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
+    _updateBounds();
+    _updateZoom();
+  }
+
+  @override
   FutureOr<void> onLoad() async {
     await super.onLoad();
 
@@ -90,10 +97,10 @@ class TrashyRoadGame extends FlameGame
 
     _player = trashyRoadWorld.tiled.children.whereType<Player>().first;
     camera.follow(_player);
-    _setBounds();
+    _updateBounds();
   }
 
-  void _setBounds() {
+  void _updateBounds() {
     final worldBounds = _trashyRoadWorld?.bounds;
     if (worldBounds == null) return;
 
@@ -106,11 +113,8 @@ class TrashyRoadGame extends FlameGame
     camera.setBounds(cameraBounds);
   }
 
-  @override
-  void onGameResize(Vector2 size) {
-    super.onGameResize(size);
-    _setBounds();
-
+  void _updateZoom() {
+    final size = camera.viewport.size;
     camera.viewfinder.zoom = (size.x / resolution.width) + 0.2;
 
     final isPortrait = size.y > size.x;

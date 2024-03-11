@@ -22,7 +22,7 @@ class GameMapsBloc extends Bloc<GameMapsEvent, GameMapsState> {
       'The map with identifier `${event.identifier}` does not exist.',
     );
 
-    Map<String, GameMap>? newMaps;
+    Map<GameMapIdentifier, GameMap>? newMaps;
     final currentMap = state.maps[event.identifier]!;
 
     final firstTimeCompleted = currentMap.score == null;

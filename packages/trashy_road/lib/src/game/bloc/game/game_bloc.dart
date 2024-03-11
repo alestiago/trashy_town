@@ -6,13 +6,14 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:tiled/tiled.dart';
 import 'package:trashy_road/src/game/game.dart';
+import 'package:trashy_road/src/maps/maps.dart';
 
 part 'game_event.dart';
 part 'game_state.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
   GameBloc({
-    required String identifier,
+    required GameMapIdentifier identifier,
     required TiledMap map,
   }) : super(GameState.initial(identifier: identifier, map: map)) {
     on<GameReadyEvent>(_onGameReady);

@@ -13,17 +13,17 @@ import 'package:trashy_road/src/score/score.dart';
 class ScorePage extends StatelessWidget {
   const ScorePage({
     required ScoreRating scoreRating,
-    required String identifier,
+    required GameMapIdentifier identifier,
     super.key,
   })  : _identifier = identifier,
         _scoreRating = scoreRating;
 
-  final String _identifier;
+  final GameMapIdentifier _identifier;
 
   final ScoreRating _scoreRating;
 
   static Route<void> route({
-    required String identifier,
+    required GameMapIdentifier identifier,
     required ScoreRating scoreRating,
   }) {
     return _ScorePageRouteBuilder<void>(

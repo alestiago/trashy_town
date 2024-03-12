@@ -98,7 +98,7 @@ class Player extends PositionedEntity with ZIndex {
 }
 
 class _PlayerSpriteComponent extends SpriteAnimationComponent
-    with HasGameReference {
+    with HasGameReference, ParentIsA<Player> {
   _PlayerSpriteComponent()
       : super(
           position: Vector2(-0.4, -2.5)..toGameSize(),
@@ -129,6 +129,9 @@ class _PlayerSpriteComponent extends SpriteAnimationComponent
 
   Direction _previousDirection = Direction.up;
 
+  /// The amount of frames in the player shadow sprite sheet.
+  static const _frameCount = 7;
+
   Future<SpriteAnimation> _createAnimation(AssetGenImage image) async {
     final spriteSheet = await game.images.load(image.path);
     const frameCount = 7;
@@ -137,8 +140,8 @@ class _PlayerSpriteComponent extends SpriteAnimationComponent
       spriteSheet,
       SpriteAnimationData.sequenced(
         amount: frameCount,
-        stepTime:
-            (PlayerMovingBehavior.moveDelay.inMilliseconds / 1000) / frameCount,
+        stepTime: (PlayerMovingBehavior.baseMoveTime.inMilliseconds / 1000) /
+            frameCount,
         textureSize: Vector2.all(256),
         loop: false,
       ),
@@ -164,18 +167,28 @@ class _PlayerSpriteComponent extends SpriteAnimationComponent
   void hop(Direction direction) {
     animationTicker!.reset();
     animation = _animations[_previousDirection]![direction];
+    animation!.stepTime = parent.children
+            .whereType<PlayerMovingBehavior>()
+            .first
+            .moveDelay
+            .inMilliseconds /
+        1000 /
+        _frameCount;
     _previousDirection = direction;
     playing = true;
   }
 }
 
 class _PlayerShadowSpriteComponent extends SpriteAnimationComponent
-    with HasGameReference {
+    with HasGameReference, ParentIsA<Player> {
   _PlayerShadowSpriteComponent()
       : super(
           position: Vector2(-0.4, -2.5)..toGameSize(),
           scale: Vector2.all(1.8),
         );
+
+  /// The amount of frames in the player shadow sprite sheet.
+  static const _frameCount = 7;
 
   @override
   Future<void> onLoad() async {
@@ -186,16 +199,14 @@ class _PlayerShadowSpriteComponent extends SpriteAnimationComponent
       () => game.images.load(Assets.images.sprites.playerHopShadow.path),
     );
 
-    const frameCount = 7;
-
     animation = SpriteAnimation.fromFrameData(
       image,
       SpriteAnimationData.sequenced(
-        amount: frameCount,
+        amount: _frameCount,
         amountPerRow: 3,
         textureSize: Vector2.all(128),
-        stepTime:
-            (PlayerMovingBehavior.moveDelay.inMilliseconds / 1000) / frameCount,
+        stepTime: (PlayerMovingBehavior.baseMoveTime.inMilliseconds / 1000) /
+            _frameCount,
         loop: false,
       ),
     );
@@ -207,6 +218,13 @@ class _PlayerShadowSpriteComponent extends SpriteAnimationComponent
   }
 
   void hop() {
+    animation!.stepTime = parent.children
+            .whereType<PlayerMovingBehavior>()
+            .first
+            .moveDelay
+            .inMilliseconds /
+        1000 /
+        _frameCount;
     playing = true;
   }
 }

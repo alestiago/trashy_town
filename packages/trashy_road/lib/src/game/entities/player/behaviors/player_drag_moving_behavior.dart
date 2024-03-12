@@ -14,8 +14,6 @@ import 'package:trashy_road/src/game/game.dart';
 /// This behavior is meant to be used in conjunction with
 /// [PlayerMovingBehavior].
 class PlayerDragMovingBehavior extends Behavior<Player> {
-  static const _swipeThreshold = 50;
-
   late final PlayerMovingBehavior _playerMovingBehavior;
 
   Offset _startPosition = Offset.zero;
@@ -46,7 +44,7 @@ class PlayerDragMovingBehavior extends Behavior<Player> {
     final isVertical = verticalDelta.abs() > horizontalDelta.abs();
 
     if (isVertical) {
-      final isUpwardsSwipe = verticalDelta < -_swipeThreshold;
+      final isUpwardsSwipe = verticalDelta < 0;
 
       if (isUpwardsSwipe) {
         _playerMovingBehavior.move(Direction.up);
@@ -54,7 +52,7 @@ class PlayerDragMovingBehavior extends Behavior<Player> {
         _playerMovingBehavior.move(Direction.down);
       }
     } else {
-      final isRightSwipe = horizontalDelta > _swipeThreshold;
+      final isRightSwipe = horizontalDelta > 0;
 
       if (isRightSwipe) {
         _playerMovingBehavior.move(Direction.right);

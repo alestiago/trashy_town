@@ -19,7 +19,7 @@ class PlayerDragMovingBehavior extends Behavior<Player> {
 
   final Vector2 _swipeDeltaPosition = Vector2.zero();
 
-  static const _swipeThreshold = 100;
+  static const _swipeThreshold = 50;
 
   late final PlayerMovingBehavior _playerMovingBehavior;
 

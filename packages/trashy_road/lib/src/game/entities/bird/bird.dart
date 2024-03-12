@@ -8,7 +8,7 @@ import 'package:trashy_road/src/game/game.dart';
 export 'behaviors/behaviors.dart';
 
 class Bird extends PositionedEntity with ZIndex {
-  Bird._({required this.isFlyingRight})
+  Bird._({required this.isFlyingRight, required this.speed})
       : super(
           scale: Vector2.all(0.5),
           behaviors: [
@@ -33,8 +33,9 @@ class Bird extends PositionedEntity with ZIndex {
 
   factory Bird.randomize() {
     final isFlyingRight = random.nextBool();
+    final speed = minSpeed + random.nextDouble() * (maxSpeed - minSpeed);
 
-    return Bird._(isFlyingRight: isFlyingRight);
+    return Bird._(isFlyingRight: isFlyingRight, speed: speed);
   }
 
   static List<Bird> randomAmount() {
@@ -48,8 +49,14 @@ class Bird extends PositionedEntity with ZIndex {
   /// The maximum amount of birds that are loaded into a map.
   static const maxAmountOfBirds = 5;
 
+  static const maxSpeed = 3.0;
+  static const minSpeed = 1.0;
+
   /// Whether the bird is flying right.
   final bool isFlyingRight;
+
+  /// Speed Multiplier
+  final double speed;
 
   @override
   int get zIndex => 100000;

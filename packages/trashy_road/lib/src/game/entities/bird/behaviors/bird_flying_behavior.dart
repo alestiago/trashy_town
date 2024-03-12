@@ -5,13 +5,13 @@ import 'package:trashy_road/src/game/game.dart';
 class BirdFlyingBehavior extends Behavior<Bird>
     with HasGameReference<TrashyRoadGame> {
   /// The speed multiplier for the bird.
-  static const birdSpeedMultiplier = 80;
+  static const birdSpeedMultiplier = 30;
 
   @override
   void update(double dt) {
     super.update(dt);
 
-    final distanceCovered = birdSpeedMultiplier * dt;
+    final distanceCovered = birdSpeedMultiplier * dt * parent.speed;
 
     final direction = parent.isFlyingRight ? 1 : -1;
     parent.position.x += distanceCovered * direction;

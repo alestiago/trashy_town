@@ -36,4 +36,4 @@ If instead, you wish to contribute refer to the [CONTRIBUTING](CONTRIBUTING.md).
 
 ---
 
-🕊️ Special thanks to Dario Santiago, David Rodriguez, Adrian Santiago, Sam Inchley and Marta Quintana.
+🕊️ Special thanks to Darío Santiago, David Rodríguez, Adrián Santiago, Sam Inchley and Marta Quintana.

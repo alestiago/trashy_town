@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:tiled/tiled.dart';
 import 'package:trashy_road/game_settings.dart';
@@ -36,7 +37,7 @@ enum TrashType {
 /// Trash is usually scattered around the road and the player has to pick it up
 /// to keep the map clean.
 class Trash extends PositionedEntity
-    with HasGameReference<TrashyRoadGame>, ZIndex {
+    with HasGameReference<TrashyRoadGame>, ZIndex, Untraversable {
   Trash._({
     required Vector2 position,
     required this.trashType,
@@ -62,6 +63,7 @@ class Trash extends PositionedEntity
           ],
         ) {
     zIndex = position.y.floor();
+    untraversable = false;
   }
 
   Trash._plastic({
@@ -120,13 +122,21 @@ class Trash extends PositionedEntity
   /// Collects the trash.
   void collect() {
     game.audioBloc.playEffect(GameSoundEffects.trashCollected);
-    findBehavior<PropagatingCollisionBehavior>()
-        .children
-        .whereType<RectangleHitbox>()
-        .first
-        .collisionType = CollisionType.inactive;
     removeFromParent();
   }
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    add(
+      FlameBlocListener<GameBloc, GameState>(
+        onNewState: _toggleTraversable,
+      ),
+    );
+  }
+
+  void _toggleTraversable(GameState state) =>
+      untraversable = state.inventory.items.length == Inventory.size;
 
   final TrashType trashType;
 }

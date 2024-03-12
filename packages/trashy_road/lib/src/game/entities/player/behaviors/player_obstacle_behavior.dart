@@ -11,6 +11,8 @@ class PlayerObstacleBehavior extends CollisionBehavior<Untraversable, Player> {
     Untraversable other,
   ) {
     super.onCollisionStart(intersectionPoints, other);
-    parent.findBehavior<PlayerMovingBehavior>().bounceBack();
+    if (other.untraversable) {
+      parent.findBehavior<PlayerMovingBehavior>().bounceBack();
+    }
   }
 }

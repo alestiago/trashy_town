@@ -105,5 +105,12 @@ extension on GameMapIdentifier {
         GameMapIdentifier.map2 => Assets.images.maps.map2.path,
         GameMapIdentifier.map3 => Assets.images.maps.map3.path,
         GameMapIdentifier.map4 => Assets.images.maps.map4.path,
+        GameMapIdentifier.map5 => Assets.images.maps.map5.path,
+        GameMapIdentifier.map6 => Assets.images.maps.map6.path,
+        GameMapIdentifier.map7 => Assets.images.maps.map7.path,
+        GameMapIdentifier.map8 => Assets.images.maps.map8.path,
+        GameMapIdentifier.map9 => Assets.images.maps.map9.path,
+        GameMapIdentifier.map10 => Assets.images.maps.map10.path,
+        GameMapIdentifier.map11 => Assets.images.maps.map11.path,
       };
 }

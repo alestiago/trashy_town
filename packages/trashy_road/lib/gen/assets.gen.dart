@@ -155,6 +155,12 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/map1.tmx
   String get map1 => 'assets/tiles/map1.tmx';
 
+  /// File path: assets/tiles/map10.tmx
+  String get map10 => 'assets/tiles/map10.tmx';
+
+  /// File path: assets/tiles/map11.tmx
+  String get map11 => 'assets/tiles/map11.tmx';
+
   /// File path: assets/tiles/map2.tmx
   String get map2 => 'assets/tiles/map2.tmx';
 
@@ -163,6 +169,21 @@ class $AssetsTilesGen {
 
   /// File path: assets/tiles/map4.tmx
   String get map4 => 'assets/tiles/map4.tmx';
+
+  /// File path: assets/tiles/map5.tmx
+  String get map5 => 'assets/tiles/map5.tmx';
+
+  /// File path: assets/tiles/map6.tmx
+  String get map6 => 'assets/tiles/map6.tmx';
+
+  /// File path: assets/tiles/map7.tmx
+  String get map7 => 'assets/tiles/map7.tmx';
+
+  /// File path: assets/tiles/map8.tmx
+  String get map8 => 'assets/tiles/map8.tmx';
+
+  /// File path: assets/tiles/map9.tmx
+  String get map9 => 'assets/tiles/map9.tmx';
 
   /// File path: assets/tiles/post_box.tx
   String get postBox => 'assets/tiles/post_box.tx';
@@ -219,9 +240,16 @@ class $AssetsTilesGen {
         fireHydrant,
         lampPost,
         map1,
+        map10,
+        map11,
         map2,
         map3,
         map4,
+        map5,
+        map6,
+        map7,
+        map8,
+        map9,
         postBox,
         roadLane,
         spawn,
@@ -310,10 +338,6 @@ class $AssetsImagesDisplayGen {
   AssetGenImage get slotPlasticBottle =>
       const AssetGenImage('assets/images/display/slot_plastic_bottle.png');
 
-  /// File path: assets/images/display/star_empty.svg
-  SvgGenImage get starEmpty =>
-      const SvgGenImage('assets/images/display/star_empty.svg');
-
   /// File path: assets/images/display/star_empty_1.png
   AssetGenImage get starEmpty1 =>
       const AssetGenImage('assets/images/display/star_empty_1.png');
@@ -321,10 +345,6 @@ class $AssetsImagesDisplayGen {
   /// File path: assets/images/display/star_empty_2.png
   AssetGenImage get starEmpty2 =>
       const AssetGenImage('assets/images/display/star_empty_2.png');
-
-  /// File path: assets/images/display/star_filled.svg
-  SvgGenImage get starFilled =>
-      const SvgGenImage('assets/images/display/star_filled.svg');
 
   /// File path: assets/images/display/star_filled_golden.svg
   SvgGenImage get starFilledGolden =>
@@ -373,10 +393,8 @@ class $AssetsImagesDisplayGen {
         slotEmpty,
         slotPaperBox,
         slotPlasticBottle,
-        starEmpty,
         starEmpty1,
         starEmpty2,
-        starFilled,
         starFilledGolden,
         starFilledGolden1,
         starFilledGolden2,
@@ -393,6 +411,14 @@ class $AssetsImagesMapsGen {
   /// File path: assets/images/maps/map1.png
   AssetGenImage get map1 => const AssetGenImage('assets/images/maps/map1.png');
 
+  /// File path: assets/images/maps/map10.png
+  AssetGenImage get map10 =>
+      const AssetGenImage('assets/images/maps/map10.png');
+
+  /// File path: assets/images/maps/map11.png
+  AssetGenImage get map11 =>
+      const AssetGenImage('assets/images/maps/map11.png');
+
   /// File path: assets/images/maps/map2.png
   AssetGenImage get map2 => const AssetGenImage('assets/images/maps/map2.png');
 
@@ -402,8 +428,24 @@ class $AssetsImagesMapsGen {
   /// File path: assets/images/maps/map4.png
   AssetGenImage get map4 => const AssetGenImage('assets/images/maps/map4.png');
 
+  /// File path: assets/images/maps/map5.png
+  AssetGenImage get map5 => const AssetGenImage('assets/images/maps/map5.png');
+
+  /// File path: assets/images/maps/map6.png
+  AssetGenImage get map6 => const AssetGenImage('assets/images/maps/map6.png');
+
+  /// File path: assets/images/maps/map7.png
+  AssetGenImage get map7 => const AssetGenImage('assets/images/maps/map7.png');
+
+  /// File path: assets/images/maps/map8.png
+  AssetGenImage get map8 => const AssetGenImage('assets/images/maps/map8.png');
+
+  /// File path: assets/images/maps/map9.png
+  AssetGenImage get map9 => const AssetGenImage('assets/images/maps/map9.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [map1, map2, map3, map4];
+  List<AssetGenImage> get values =>
+      [map1, map10, map11, map2, map3, map4, map5, map6, map7, map8, map9];
 }
 
 class $AssetsImagesSpritesGen {

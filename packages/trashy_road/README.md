@@ -4,7 +4,7 @@
 
 Developed for the [Global Gamers Challenge](https://globalgamers.devpost.com/) by [Alejandro Santiago](https://github.com/alestiago), [Ollie Pugh](https://github.com/OlliePugh) and [Samantha Helm](https://www.behance.net/samanthahelmdesign).
 
-All assets were made in-house.
+**All** assets were made in-house.
 
 ---
 

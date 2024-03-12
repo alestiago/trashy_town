@@ -30,9 +30,11 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_svg: ^2.0.10+1
+  hydrated_bloc: ^9.1.4
   intl: ^0.18.1
   meta: ^1.11.0
   path: ^1.8.3
+  path_provider: ^2.1.2
   rive: ^0.12.4
   tiled: ^0.10.2
 

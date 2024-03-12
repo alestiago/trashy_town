@@ -44,7 +44,7 @@ class MapEdge extends PositionedEntity with Untraversable, ZIndex {
   }
 
   @override
-  int get zIndex => 100000;
+  int get zIndex => 1;
 
   /// Whether the given [position] is inside the [MapEdge].
   bool isPointInside(Vector2 position) {

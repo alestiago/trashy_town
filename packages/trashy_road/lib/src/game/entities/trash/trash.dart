@@ -130,7 +130,6 @@ class Trash extends PositionedEntity
     await super.onLoad();
     add(
       FlameBlocListener<GameBloc, GameState>(
-        // TODO(OlliePugh): only listen when trash has been collected
         onNewState: _toggleTraversable,
       ),
     );

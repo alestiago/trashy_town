@@ -295,10 +295,6 @@ class _Tree1SpriteGroup extends PositionComponent {
           children: [
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.sprites.tree1Shadow.path,
-            ),
-            GameSpriteComponent.fromPath(
-              anchor: Anchor.bottomLeft,
               spritePath: Assets.images.sprites.tree1.path,
             ),
           ],
@@ -314,10 +310,6 @@ class _Tree2SpriteGroup extends PositionComponent {
           position: Vector2(-0.2, 0.5)..toGameSize(),
           scale: Vector2.all(0.8),
           children: [
-            GameSpriteComponent.fromPath(
-              anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.sprites.tree2Shadow.path,
-            ),
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
               spritePath: Assets.images.sprites.tree2.path,
@@ -337,10 +329,6 @@ class _FireHydrantSpriteGroup extends PositionComponent {
           children: [
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.sprites.fireHydrantShadow.path,
-            ),
-            GameSpriteComponent.fromPath(
-              anchor: Anchor.bottomLeft,
               spritePath: Assets.images.sprites.fireHydrant.path,
             ),
           ],
@@ -358,10 +346,6 @@ class _Bush1SpriteGroup extends PositionComponent {
           children: [
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.sprites.bush1Shadow.path,
-            ),
-            GameSpriteComponent.fromPath(
-              anchor: Anchor.bottomLeft,
               spritePath: Assets.images.sprites.bush1.path,
             ),
           ],
@@ -377,10 +361,6 @@ class _Bush2SpriteGroup extends PositionComponent {
           position: Vector2(0.12, -0.1)..toGameSize(),
           scale: Vector2.all(0.5),
           children: [
-            GameSpriteComponent.fromPath(
-              anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.sprites.bush2Shadow.path,
-            ),
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
               spritePath: Assets.images.sprites.bush2.path,
@@ -609,10 +589,6 @@ class _BenchSpriteGroup extends PositionComponent {
           children: [
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.sprites.benchShadow.path,
-            ),
-            GameSpriteComponent.fromPath(
-              anchor: Anchor.bottomLeft,
               spritePath: Assets.images.sprites.bench.path,
             ),
           ],
@@ -627,10 +603,6 @@ class _LampPostSpriteGroup extends PositionComponent {
           position: Vector2(0.3, -0.1)..toGameSize(),
           scale: Vector2.all(0.6),
           children: [
-            GameSpriteComponent.fromPath(
-              anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.sprites.lampPostShadow.path,
-            ),
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
               spritePath: Assets.images.sprites.lampPost.path,
@@ -649,10 +621,6 @@ class _BusStopSpriteGroup extends PositionComponent {
           children: [
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.sprites.busStopShadow.path,
-            ),
-            GameSpriteComponent.fromPath(
-              anchor: Anchor.bottomLeft,
               spritePath: Assets.images.sprites.busStop.path,
             ),
           ],
@@ -667,10 +635,6 @@ class _PostBoxSpriteGroup extends PositionComponent {
           position: Vector2(0.15, -0.1)..toGameSize(),
           scale: Vector2.all(0.6),
           children: [
-            GameSpriteComponent.fromPath(
-              anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.sprites.postBoxShadow.path,
-            ),
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
               spritePath: Assets.images.sprites.postBox.path,

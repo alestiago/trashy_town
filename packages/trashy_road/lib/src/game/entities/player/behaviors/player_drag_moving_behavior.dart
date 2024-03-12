@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flame/events.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
 import 'package:flutter/gestures.dart';
 import 'package:trashy_road/src/game/game.dart';
@@ -28,7 +27,7 @@ class PlayerDragMovingBehavior extends Behavior<Player> {
     _playerMovingBehavior = parent.findBehavior<PlayerMovingBehavior>();
   }
 
-  void onTapUp(TapUpEvent event) {
+  void onTapUp(TapUpDetails details) {
     _playerMovingBehavior.move(Direction.up);
   }
 

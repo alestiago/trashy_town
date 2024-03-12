@@ -22,7 +22,7 @@ export 'view/view.dart';
 export 'widgets/widgets.dart';
 
 class TrashyRoadGame extends FlameGame
-    with HasKeyboardHandlerComponents, HasCollisionDetection, TapCallbacks {
+    with HasKeyboardHandlerComponents, HasCollisionDetection {
   TrashyRoadGame({
     required GameBloc gameBloc,
     required this.audioBloc,
@@ -125,10 +125,7 @@ class TrashyRoadGame extends FlameGame
     }
   }
 
-  @override
-  void onTapUp(TapUpEvent event) {
-    super.onTapUp(event);
-
+  void onTapUp(TapUpDetails event) {
     final player = _player;
     if (player == null) return;
 

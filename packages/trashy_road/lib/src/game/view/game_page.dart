@@ -55,8 +55,15 @@ class GamePage extends StatelessWidget {
   }
 }
 
-class _GameView extends StatelessWidget {
+class _GameView extends StatefulWidget {
   const _GameView();
+
+  @override
+  State<_GameView> createState() => _GameViewState();
+}
+
+class _GameViewState extends State<_GameView> {
+  TrashyRoadGame? _game;
 
   @override
   Widget build(BuildContext context) {
@@ -70,30 +77,41 @@ class _GameView extends StatelessWidget {
           _GameLostTimeIsUpListener(),
           _GameLostRunnedOverListener(),
         ],
-        child: Stack(
-          children: [
-            const Positioned.fill(child: _GameBackground()),
-            const Align(child: TrashyRoadGameWidget()),
-            const Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: EdgeInsets.all(12),
-                child: InventoryHud(),
+        child: GestureDetector(
+          onTapUp: (details) => _game?.onTapUp(details),
+          onPanStart: (details) => _game?.onPanStart(details),
+          onPanUpdate: (details) => _game?.onPanUpdate(details),
+          onPanEnd: (details) => _game?.onPanEnd(details),
+          behavior: HitTestBehavior.translucent,
+          child: Stack(
+            children: [
+              const Positioned.fill(child: _GameBackground()),
+              Align(
+                child: TrashyRoadGameWidget(
+                  onGameCreated: (game) => _game = game,
+                ),
               ),
-            ),
-            const Align(
-              alignment: Alignment.topCenter,
-              child: Padding(
-                padding: EdgeInsets.all(12),
-                child: TopHud(),
-              ),
-            ),
-            if (isTutorial)
               const Align(
-                alignment: Alignment(0, -0.6),
-                child: TutorialHud(),
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: EdgeInsets.all(12),
+                  child: InventoryHud(),
+                ),
               ),
-          ],
+              const Align(
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: EdgeInsets.all(12),
+                  child: TopHud(),
+                ),
+              ),
+              if (isTutorial)
+                const Align(
+                  alignment: Alignment(0, -0.6),
+                  child: TutorialHud(),
+                ),
+            ],
+          ),
         ),
       ),
     );

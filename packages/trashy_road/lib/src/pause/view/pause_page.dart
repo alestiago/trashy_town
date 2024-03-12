@@ -75,7 +75,7 @@ class PausePage extends StatelessWidget {
 
     final basuraTheme = BasuraTheme.of(context);
     final textStyle = basuraTheme.textTheme.cardHeading.copyWith(
-      letterSpacing: -80,
+      letterSpacing: 0,
       fontSize: 100,
     );
 

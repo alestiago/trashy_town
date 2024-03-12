@@ -428,6 +428,9 @@ class $AssetsImagesMapsGen {
   /// File path: assets/images/maps/map4.png
   AssetGenImage get map4 => const AssetGenImage('assets/images/maps/map4.png');
 
+  /// File path: assets/images/maps/map5.png
+  AssetGenImage get map5 => const AssetGenImage('assets/images/maps/map5.png');
+
   /// File path: assets/images/maps/map6.png
   AssetGenImage get map6 => const AssetGenImage('assets/images/maps/map6.png');
 
@@ -442,7 +445,7 @@ class $AssetsImagesMapsGen {
 
   /// List of all assets
   List<AssetGenImage> get values =>
-      [map1, map10, map11, map2, map3, map4, map6, map7, map8, map9];
+      [map1, map10, map11, map2, map3, map4, map5, map6, map7, map8, map9];
 }
 
 class $AssetsImagesSpritesGen {

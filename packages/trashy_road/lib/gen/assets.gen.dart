@@ -137,6 +137,15 @@ class $AssetsTilesGen {
   /// File path: assets/tiles/building_4.tx
   String get building4 => 'assets/tiles/building_4.tx';
 
+  /// File path: assets/tiles/building_5.tx
+  String get building5 => 'assets/tiles/building_5.tx';
+
+  /// File path: assets/tiles/building_6.tx
+  String get building6 => 'assets/tiles/building_6.tx';
+
+  /// File path: assets/tiles/building_7.tx
+  String get building7 => 'assets/tiles/building_7.tx';
+
   /// File path: assets/tiles/bus_stop.tx
   String get busStop => 'assets/tiles/bus_stop.tx';
 
@@ -234,6 +243,9 @@ class $AssetsTilesGen {
         building2,
         building3,
         building4,
+        building5,
+        building6,
+        building7,
         busStop,
         bush1,
         bush2,
@@ -622,6 +634,10 @@ class $AssetsImagesSpritesGen {
   AssetGenImage get crumpledPaper1 =>
       const AssetGenImage('assets/images/sprites/crumpled_paper1.png');
 
+  /// File path: assets/images/sprites/dirt--grass-south-east.png
+  AssetGenImage get dirtGrassSouthEast =>
+      const AssetGenImage('assets/images/sprites/dirt--grass-south-east.png');
+
   /// File path: assets/images/sprites/dirt.png
   AssetGenImage get dirt =>
       const AssetGenImage('assets/images/sprites/dirt.png');
@@ -734,13 +750,73 @@ class $AssetsImagesSpritesGen {
   AssetGenImage get plasticStraw =>
       const AssetGenImage('assets/images/sprites/plastic_straw.png');
 
+  /// File path: assets/images/sprites/player__down-down.png
+  AssetGenImage get playerDownDown =>
+      const AssetGenImage('assets/images/sprites/player__down-down.png');
+
+  /// File path: assets/images/sprites/player__down-left.png
+  AssetGenImage get playerDownLeft =>
+      const AssetGenImage('assets/images/sprites/player__down-left.png');
+
+  /// File path: assets/images/sprites/player__down-right.png
+  AssetGenImage get playerDownRight =>
+      const AssetGenImage('assets/images/sprites/player__down-right.png');
+
+  /// File path: assets/images/sprites/player__down-up.png
+  AssetGenImage get playerDownUp =>
+      const AssetGenImage('assets/images/sprites/player__down-up.png');
+
+  /// File path: assets/images/sprites/player__left-down.png
+  AssetGenImage get playerLeftDown =>
+      const AssetGenImage('assets/images/sprites/player__left-down.png');
+
+  /// File path: assets/images/sprites/player__left-left.png
+  AssetGenImage get playerLeftLeft =>
+      const AssetGenImage('assets/images/sprites/player__left-left.png');
+
+  /// File path: assets/images/sprites/player__left-right.png
+  AssetGenImage get playerLeftRight =>
+      const AssetGenImage('assets/images/sprites/player__left-right.png');
+
+  /// File path: assets/images/sprites/player__left-up.png
+  AssetGenImage get playerLeftUp =>
+      const AssetGenImage('assets/images/sprites/player__left-up.png');
+
+  /// File path: assets/images/sprites/player__right-down.png
+  AssetGenImage get playerRightDown =>
+      const AssetGenImage('assets/images/sprites/player__right-down.png');
+
+  /// File path: assets/images/sprites/player__right-left.png
+  AssetGenImage get playerRightLeft =>
+      const AssetGenImage('assets/images/sprites/player__right-left.png');
+
+  /// File path: assets/images/sprites/player__right-right.png
+  AssetGenImage get playerRightRight =>
+      const AssetGenImage('assets/images/sprites/player__right-right.png');
+
+  /// File path: assets/images/sprites/player__right-up.png
+  AssetGenImage get playerRightUp =>
+      const AssetGenImage('assets/images/sprites/player__right-up.png');
+
+  /// File path: assets/images/sprites/player__up-down.png
+  AssetGenImage get playerUpDown =>
+      const AssetGenImage('assets/images/sprites/player__up-down.png');
+
+  /// File path: assets/images/sprites/player__up-left.png
+  AssetGenImage get playerUpLeft =>
+      const AssetGenImage('assets/images/sprites/player__up-left.png');
+
+  /// File path: assets/images/sprites/player__up-right.png
+  AssetGenImage get playerUpRight =>
+      const AssetGenImage('assets/images/sprites/player__up-right.png');
+
+  /// File path: assets/images/sprites/player__up-up.png
+  AssetGenImage get playerUpUp =>
+      const AssetGenImage('assets/images/sprites/player__up-up.png');
+
   /// File path: assets/images/sprites/player_hop-shadow.png
   AssetGenImage get playerHopShadow =>
       const AssetGenImage('assets/images/sprites/player_hop-shadow.png');
-
-  /// File path: assets/images/sprites/player_hop.png
-  AssetGenImage get playerHop =>
-      const AssetGenImage('assets/images/sprites/player_hop.png');
 
   /// File path: assets/images/sprites/post_box-shadow.png
   AssetGenImage get postBoxShadow =>
@@ -871,6 +947,7 @@ class $AssetsImagesSpritesGen {
         crumbledPaper2,
         crumbledPaper3,
         crumpledPaper1,
+        dirtGrassSouthEast,
         dirt,
         fireHydrantShadow,
         fireHydrant,
@@ -899,8 +976,23 @@ class $AssetsImagesSpritesGen {
         plasticBottle2,
         plasticStrawShadow,
         plasticStraw,
+        playerDownDown,
+        playerDownLeft,
+        playerDownRight,
+        playerDownUp,
+        playerLeftDown,
+        playerLeftLeft,
+        playerLeftRight,
+        playerLeftUp,
+        playerRightDown,
+        playerRightLeft,
+        playerRightRight,
+        playerRightUp,
+        playerUpDown,
+        playerUpLeft,
+        playerUpRight,
+        playerUpUp,
         playerHopShadow,
-        playerHop,
         postBoxShadow,
         postBox,
         road,

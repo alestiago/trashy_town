@@ -62,5 +62,8 @@ class PlayerDragMovingBehavior extends Behavior<Player> {
         _playerMovingBehavior.move(Direction.left);
       }
     }
+
+    _startPosition = Offset.zero;
+    _lastPosition = Offset.zero;
   }
 }

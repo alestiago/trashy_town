@@ -35,7 +35,9 @@ If you wish to run the game in 🛡️ **Admin** role , you should access [trash
 
 Having admin privileges unlocks all the levels so you can freely play the game.
 
-### Controls
+### Game controls
+
+Once you're playing a level you can control Gary with:
 
 - 🖥 Desktop: move around with WASD or arrow keys.
 - 📱 Mobile: tap to move forward or swipe to move vertically or horizontally.

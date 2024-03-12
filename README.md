@@ -29,11 +29,11 @@ flutter run -d chrome --release
 
 If instead, you wish to contribute refer to the [CONTRIBUTING](CONTRIBUTING.md).
 
-### 🛡️ Admin role
+### Playing with Admin privileges
 
-If you wish to run the game in **Admin** role, you should access [trashytown.com/?admin=true](https://trashytown.com/?admin=true).
+If you wish to run the game in 🛡️ **Admin** role , you should access [trashytown.com/?admin=true](https://trashytown.com/?admin=true).
 
-This will unlock all the levels so you can freely play the game.
+Having admin privileges unlocks all the levels so you can freely play the game.
 
 ### Controls
 

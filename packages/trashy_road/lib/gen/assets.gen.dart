@@ -463,17 +463,9 @@ class $AssetsImagesMapsGen {
 class $AssetsImagesSpritesGen {
   const $AssetsImagesSpritesGen();
 
-  /// File path: assets/images/sprites/apple_core_1-shadow.png
-  AssetGenImage get appleCore1Shadow =>
-      const AssetGenImage('assets/images/sprites/apple_core_1-shadow.png');
-
   /// File path: assets/images/sprites/apple_core_1.png
   AssetGenImage get appleCore1 =>
       const AssetGenImage('assets/images/sprites/apple_core_1.png');
-
-  /// File path: assets/images/sprites/apple_core_2-shadow.png
-  AssetGenImage get appleCore2Shadow =>
-      const AssetGenImage('assets/images/sprites/apple_core_2-shadow.png');
 
   /// File path: assets/images/sprites/apple_core_2.png
   AssetGenImage get appleCore2 =>
@@ -511,17 +503,9 @@ class $AssetsImagesSpritesGen {
   AssetGenImage get arrowWest =>
       const AssetGenImage('assets/images/sprites/arrow-west.png');
 
-  /// File path: assets/images/sprites/banana-shadow.png
-  AssetGenImage get bananaShadow =>
-      const AssetGenImage('assets/images/sprites/banana-shadow.png');
-
   /// File path: assets/images/sprites/banana.png
   AssetGenImage get banana =>
       const AssetGenImage('assets/images/sprites/banana.png');
-
-  /// File path: assets/images/sprites/bench-shadow.png
-  AssetGenImage get benchShadow =>
-      const AssetGenImage('assets/images/sprites/bench-shadow.png');
 
   /// File path: assets/images/sprites/bench.png
   AssetGenImage get bench =>
@@ -567,33 +551,17 @@ class $AssetsImagesSpritesGen {
   AssetGenImage get busRightToLeftShadow =>
       const AssetGenImage('assets/images/sprites/bus_right_to_left-shadow.png');
 
-  /// File path: assets/images/sprites/bus_stop-shadow.png
-  AssetGenImage get busStopShadow =>
-      const AssetGenImage('assets/images/sprites/bus_stop-shadow.png');
-
   /// File path: assets/images/sprites/bus_stop.png
   AssetGenImage get busStop =>
       const AssetGenImage('assets/images/sprites/bus_stop.png');
-
-  /// File path: assets/images/sprites/bush_1-shadow.png
-  AssetGenImage get bush1Shadow =>
-      const AssetGenImage('assets/images/sprites/bush_1-shadow.png');
 
   /// File path: assets/images/sprites/bush_1.png
   AssetGenImage get bush1 =>
       const AssetGenImage('assets/images/sprites/bush_1.png');
 
-  /// File path: assets/images/sprites/bush_2-shadow.png
-  AssetGenImage get bush2Shadow =>
-      const AssetGenImage('assets/images/sprites/bush_2-shadow.png');
-
   /// File path: assets/images/sprites/bush_2.png
   AssetGenImage get bush2 =>
       const AssetGenImage('assets/images/sprites/bush_2.png');
-
-  /// File path: assets/images/sprites/can_holder-shadow.png
-  AssetGenImage get canHolderShadow =>
-      const AssetGenImage('assets/images/sprites/can_holder-shadow.png');
 
   /// File path: assets/images/sprites/can_holder.png
   AssetGenImage get canHolder =>
@@ -642,10 +610,6 @@ class $AssetsImagesSpritesGen {
   AssetGenImage get dirt =>
       const AssetGenImage('assets/images/sprites/dirt.png');
 
-  /// File path: assets/images/sprites/fire_hydrant-shadow.png
-  AssetGenImage get fireHydrantShadow =>
-      const AssetGenImage('assets/images/sprites/fire_hydrant-shadow.png');
-
   /// File path: assets/images/sprites/fire_hydrant.png
   AssetGenImage get fireHydrant =>
       const AssetGenImage('assets/images/sprites/fire_hydrant.png');
@@ -670,33 +634,17 @@ class $AssetsImagesSpritesGen {
   AssetGenImage get grass =>
       const AssetGenImage('assets/images/sprites/grass.png');
 
-  /// File path: assets/images/sprites/lamp_post-shadow.png
-  AssetGenImage get lampPostShadow =>
-      const AssetGenImage('assets/images/sprites/lamp_post-shadow.png');
-
   /// File path: assets/images/sprites/lamp_post.png
   AssetGenImage get lampPost =>
       const AssetGenImage('assets/images/sprites/lamp_post.png');
-
-  /// File path: assets/images/sprites/paper_1-shadow.png
-  AssetGenImage get paper1Shadow =>
-      const AssetGenImage('assets/images/sprites/paper_1-shadow.png');
 
   /// File path: assets/images/sprites/paper_1.png
   AssetGenImage get paper1 =>
       const AssetGenImage('assets/images/sprites/paper_1.png');
 
-  /// File path: assets/images/sprites/paper_2-shadow.png
-  AssetGenImage get paper2Shadow =>
-      const AssetGenImage('assets/images/sprites/paper_2-shadow.png');
-
   /// File path: assets/images/sprites/paper_2.png
   AssetGenImage get paper2 =>
       const AssetGenImage('assets/images/sprites/paper_2.png');
-
-  /// File path: assets/images/sprites/paper_ball-shadow.png
-  AssetGenImage get paperBallShadow =>
-      const AssetGenImage('assets/images/sprites/paper_ball-shadow.png');
 
   /// File path: assets/images/sprites/paper_ball.png
   AssetGenImage get paperBall =>
@@ -726,25 +674,13 @@ class $AssetsImagesSpritesGen {
   AssetGenImage get pavement =>
       const AssetGenImage('assets/images/sprites/pavement.png');
 
-  /// File path: assets/images/sprites/plastic_bottle_1-shadow.png
-  AssetGenImage get plasticBottle1Shadow =>
-      const AssetGenImage('assets/images/sprites/plastic_bottle_1-shadow.png');
-
   /// File path: assets/images/sprites/plastic_bottle_1.png
   AssetGenImage get plasticBottle1 =>
       const AssetGenImage('assets/images/sprites/plastic_bottle_1.png');
 
-  /// File path: assets/images/sprites/plastic_bottle_2-shadow.png
-  AssetGenImage get plasticBottle2Shadow =>
-      const AssetGenImage('assets/images/sprites/plastic_bottle_2-shadow.png');
-
   /// File path: assets/images/sprites/plastic_bottle_2.png
   AssetGenImage get plasticBottle2 =>
       const AssetGenImage('assets/images/sprites/plastic_bottle_2.png');
-
-  /// File path: assets/images/sprites/plastic_straw-shadow.png
-  AssetGenImage get plasticStrawShadow =>
-      const AssetGenImage('assets/images/sprites/plastic_straw-shadow.png');
 
   /// File path: assets/images/sprites/plastic_straw.png
   AssetGenImage get plasticStraw =>
@@ -818,37 +754,25 @@ class $AssetsImagesSpritesGen {
   AssetGenImage get playerHopShadow =>
       const AssetGenImage('assets/images/sprites/player_hop-shadow.png');
 
-  /// File path: assets/images/sprites/post_box-shadow.png
-  AssetGenImage get postBoxShadow =>
-      const AssetGenImage('assets/images/sprites/post_box-shadow.png');
-
   /// File path: assets/images/sprites/post_box.png
   AssetGenImage get postBox =>
       const AssetGenImage('assets/images/sprites/post_box.png');
+
+  /// File path: assets/images/sprites/road-double.png
+  AssetGenImage get roadDouble =>
+      const AssetGenImage('assets/images/sprites/road-double.png');
 
   /// File path: assets/images/sprites/road.png
   AssetGenImage get road =>
       const AssetGenImage('assets/images/sprites/road.png');
 
-  /// File path: assets/images/sprites/sandwich-shadow.png
-  AssetGenImage get sandwichShadow =>
-      const AssetGenImage('assets/images/sprites/sandwich-shadow.png');
-
   /// File path: assets/images/sprites/sandwich.png
   AssetGenImage get sandwich =>
       const AssetGenImage('assets/images/sprites/sandwich.png');
 
-  /// File path: assets/images/sprites/takeaway_cup_cold-shadow.png
-  AssetGenImage get takeawayCupColdShadow =>
-      const AssetGenImage('assets/images/sprites/takeaway_cup_cold-shadow.png');
-
   /// File path: assets/images/sprites/takeaway_cup_cold.png
   AssetGenImage get takeawayCupCold =>
       const AssetGenImage('assets/images/sprites/takeaway_cup_cold.png');
-
-  /// File path: assets/images/sprites/takeaway_cup_hot-shadow.png
-  AssetGenImage get takeawayCupHotShadow =>
-      const AssetGenImage('assets/images/sprites/takeaway_cup_hot-shadow.png');
 
   /// File path: assets/images/sprites/takeaway_cup_hot.png
   AssetGenImage get takeawayCupHot =>
@@ -886,17 +810,9 @@ class $AssetsImagesSpritesGen {
   AssetGenImage get trashParkCanPlasticOpening => const AssetGenImage(
       'assets/images/sprites/trash_park_can_plastic-opening.png');
 
-  /// File path: assets/images/sprites/tree_1-shadow.png
-  AssetGenImage get tree1Shadow =>
-      const AssetGenImage('assets/images/sprites/tree_1-shadow.png');
-
   /// File path: assets/images/sprites/tree_1.png
   AssetGenImage get tree1 =>
       const AssetGenImage('assets/images/sprites/tree_1.png');
-
-  /// File path: assets/images/sprites/tree_2-shadow.png
-  AssetGenImage get tree2Shadow =>
-      const AssetGenImage('assets/images/sprites/tree_2-shadow.png');
 
   /// File path: assets/images/sprites/tree_2.png
   AssetGenImage get tree2 =>
@@ -904,9 +820,7 @@ class $AssetsImagesSpritesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
-        appleCore1Shadow,
         appleCore1,
-        appleCore2Shadow,
         appleCore2,
         arrowEast,
         arrowNorthEast,
@@ -916,9 +830,7 @@ class $AssetsImagesSpritesGen {
         arrowSouthWest,
         arrowSouth,
         arrowWest,
-        bananaShadow,
         banana,
-        benchShadow,
         bench,
         buildingShadow,
         building2,
@@ -930,13 +842,9 @@ class $AssetsImagesSpritesGen {
         busDriving,
         busLeftToRightShadow,
         busRightToLeftShadow,
-        busStopShadow,
         busStop,
-        bush1Shadow,
         bush1,
-        bush2Shadow,
         bush2,
-        canHolderShadow,
         canHolder,
         car,
         carBlueDriving,
@@ -949,20 +857,15 @@ class $AssetsImagesSpritesGen {
         crumpledPaper1,
         dirtGrassSouthEast,
         dirt,
-        fireHydrantShadow,
         fireHydrant,
         grassDirtNorth,
         grassDirtNorthwest,
         grassDirtWest,
         grassFlowers,
         grass,
-        lampPostShadow,
         lampPost,
-        paper1Shadow,
         paper1,
-        paper2Shadow,
         paper2,
-        paperBallShadow,
         paperBall,
         pavementKirbNorthWest,
         pavementKirbNorth,
@@ -970,11 +873,8 @@ class $AssetsImagesSpritesGen {
         pavementKirbSouth,
         pavementKirbWest,
         pavement,
-        plasticBottle1Shadow,
         plasticBottle1,
-        plasticBottle2Shadow,
         plasticBottle2,
-        plasticStrawShadow,
         plasticStraw,
         playerDownDown,
         playerDownLeft,
@@ -993,14 +893,11 @@ class $AssetsImagesSpritesGen {
         playerUpRight,
         playerUpUp,
         playerHopShadow,
-        postBoxShadow,
         postBox,
+        roadDouble,
         road,
-        sandwichShadow,
         sandwich,
-        takeawayCupColdShadow,
         takeawayCupCold,
-        takeawayCupHotShadow,
         takeawayCupHot,
         trashCanOpeningShadow,
         trashCanOrganicOpening,
@@ -1010,9 +907,7 @@ class $AssetsImagesSpritesGen {
         trashParkCanOrganicOpening,
         trashParkCanPaperOpening,
         trashParkCanPlasticOpening,
-        tree1Shadow,
         tree1,
-        tree2Shadow,
         tree2
       ];
 }

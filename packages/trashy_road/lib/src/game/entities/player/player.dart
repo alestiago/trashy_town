@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui' as ui;
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
@@ -108,42 +107,39 @@ class _PlayerSpriteComponent extends SpriteAnimationComponent
 
   final Map<Direction, Map<Direction, SpriteAnimation>> _animations = {};
 
-  static final List<List<Direction>> _animationDirectionOrder =
-      List.unmodifiable([
-    [Direction.right, Direction.right],
-    [Direction.right, Direction.up],
-    [Direction.right, Direction.down],
-    [Direction.right, Direction.left],
-    [Direction.up, Direction.right],
-    [Direction.up, Direction.up],
-    [Direction.up, Direction.down],
-    [Direction.up, Direction.left],
-    [Direction.down, Direction.right],
-    [Direction.down, Direction.up],
-    [Direction.down, Direction.down],
-    [Direction.down, Direction.left],
-    [Direction.left, Direction.right],
-    [Direction.left, Direction.up],
-    [Direction.left, Direction.down],
-    [Direction.left, Direction.left],
-  ]);
+  static final Map<(Direction, Direction), AssetGenImage> _animationSpriteMap =
+      {
+    (Direction.right, Direction.right): Assets.images.sprites.playerRightRight,
+    (Direction.right, Direction.up): Assets.images.sprites.playerUpUp,
+    (Direction.right, Direction.down): Assets.images.sprites.playerRightDown,
+    (Direction.right, Direction.left): Assets.images.sprites.playerRightLeft,
+    (Direction.up, Direction.right): Assets.images.sprites.playerUpRight,
+    (Direction.up, Direction.up): Assets.images.sprites.playerUpUp,
+    (Direction.up, Direction.down): Assets.images.sprites.playerUpDown,
+    (Direction.up, Direction.left): Assets.images.sprites.playerUpLeft,
+    (Direction.down, Direction.right): Assets.images.sprites.playerDownRight,
+    (Direction.down, Direction.up): Assets.images.sprites.playerDownUp,
+    (Direction.down, Direction.down): Assets.images.sprites.playerDownDown,
+    (Direction.down, Direction.left): Assets.images.sprites.playerDownLeft,
+    (Direction.left, Direction.right): Assets.images.sprites.playerLeftRight,
+    (Direction.left, Direction.up): Assets.images.sprites.playerLeftUp,
+    (Direction.left, Direction.down): Assets.images.sprites.playerLeftDown,
+    (Direction.left, Direction.left): Assets.images.sprites.playerLeftLeft,
+  };
 
   Direction _previousDirection = Direction.up;
 
-  SpriteAnimation _createAnimation(ui.Image image, int row) {
+  Future<SpriteAnimation> _createAnimation(AssetGenImage image) async {
+    final spriteSheet = await game.images.load(image.path);
     const frameCount = 7;
+
     return SpriteAnimation.fromFrameData(
-      image,
-      SpriteAnimationData.range(
-        amount: frameCount * _animationDirectionOrder.length,
-        amountPerRow: frameCount,
+      spriteSheet,
+      SpriteAnimationData.sequenced(
+        amount: frameCount,
+        stepTime:
+            (PlayerMovingBehavior.moveDelay.inMilliseconds / 1000) / frameCount,
         textureSize: Vector2.all(512),
-        start: row * frameCount,
-        end: row * frameCount + frameCount - 1,
-        stepTimes: List.filled(
-          7,
-          (PlayerMovingBehavior.moveDelay.inMilliseconds / 1000) / frameCount,
-        ),
         loop: false,
       ),
     );
@@ -153,19 +149,14 @@ class _PlayerSpriteComponent extends SpriteAnimationComponent
   Future<void> onLoad() async {
     await super.onLoad();
 
-    final image = await game.images.fetchOrGenerate(
-      Assets.images.sprites.playerHop.path,
-      () => game.images.load(Assets.images.sprites.playerHop.path),
-    );
-
-    for (var i = 0; i < _animationDirectionOrder.length; i++) {
-      final [startingDirection, endDirection] = _animationDirectionOrder[i];
+    for (final entry in _animationSpriteMap.entries) {
+      final (startingDirection, endDirection) = entry.key;
+      final image = entry.value;
+      final spriteSheet = await _createAnimation(image);
       _animations[startingDirection] ??= {};
-      _animations[startingDirection]![endDirection] = _createAnimation(
-        image,
-        i,
-      );
+      _animations[startingDirection]![endDirection] = spriteSheet;
     }
+
     playing = false;
     animation = _animations[Direction.up]![Direction.up];
   }

@@ -28,10 +28,8 @@ class VehicleSpawningBehavior extends Behavior<RoadLane>
   FutureOr<void> onLoad() async {
     await super.onLoad();
 
-    final world = ancestors().whereType<TrashyRoadWorld>().first;
-
     for (var i = 0; i < parent.traffic; i++) {
-      var startPosition = (i / parent.traffic) * world.tiled.size.x;
+      var startPosition = (i / parent.traffic) * game.bounds!.bottomRight.x;
 
       startPosition *= _minTrafficVariation +
           (game.random.nextDouble() * (1 - _minTrafficVariation));
@@ -48,15 +46,12 @@ class VehicleSpawningBehavior extends Behavior<RoadLane>
 
   @override
   void update(double dt) {
-    final world = ancestors().whereType<TrashyRoadWorld>().first;
-    final bounds = world.bounds;
-
     final vehicles = parent.children.whereType<Vehicle>();
     for (final vehicle in vehicles) {
       _vector2Cache
         ..setFrom(parent.position)
         ..add(vehicle.position);
-      final isWithinBound = bounds.isPointInside(_vector2Cache);
+      final isWithinBound = game.bounds!.isPointInside(_vector2Cache);
       if (!isWithinBound) {
         vehicle.position.setAll(0);
       }

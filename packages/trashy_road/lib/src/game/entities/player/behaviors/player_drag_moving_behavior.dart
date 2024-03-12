@@ -1,8 +1,7 @@
 import 'dart:async';
 
-import 'package:flame/events.dart';
-import 'package:flame/game.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
+import 'package:flutter/gestures.dart';
 import 'package:trashy_road/src/game/game.dart';
 
 /// A behavior that allows the [Player] to move using mobile gestures.
@@ -15,13 +14,12 @@ import 'package:trashy_road/src/game/game.dart';
 /// This behavior is meant to be used in conjunction with
 /// [PlayerMovingBehavior].
 class PlayerDragMovingBehavior extends Behavior<Player> {
-  bool _hasMoved = false;
-
-  final Vector2 _swipeDeltaPosition = Vector2.zero();
-
-  static const _swipeThreshold = 100;
+  static const _swipeThreshold = 50;
 
   late final PlayerMovingBehavior _playerMovingBehavior;
+
+  Offset _startPosition = Offset.zero;
+  Offset _lastPosition = Offset.zero;
 
   @override
   FutureOr<void> onLoad() async {
@@ -29,35 +27,43 @@ class PlayerDragMovingBehavior extends Behavior<Player> {
     _playerMovingBehavior = parent.findBehavior<PlayerMovingBehavior>();
   }
 
-  void onTapUp(TapUpEvent event) {
+  void onTapUp(TapUpDetails details) {
     _playerMovingBehavior.move(Direction.up);
   }
 
-  void onDragStart(DragStartEvent event) {
-    _hasMoved = false;
-    _swipeDeltaPosition.setAll(0);
+  void onPanStart(DragStartDetails details) {
+    _startPosition = details.globalPosition;
   }
 
-  void onDragUpdate(DragUpdateEvent event) {
-    if (_hasMoved) {
-      return;
-    }
-
-    _swipeDeltaPosition.add(event.localDelta);
-
-    if (_swipeDeltaPosition.x > _swipeThreshold) {
-      _move(Direction.right);
-    } else if (_swipeDeltaPosition.x < -_swipeThreshold) {
-      _move(Direction.left);
-    } else if (_swipeDeltaPosition.y > _swipeThreshold) {
-      _move(Direction.down);
-    } else if (_swipeDeltaPosition.y < -_swipeThreshold) {
-      _move(Direction.up);
-    }
+  void onPanUpdate(DragUpdateDetails details) {
+    _lastPosition = details.globalPosition;
   }
 
-  void _move(Direction direction) {
-    _hasMoved = true;
-    _playerMovingBehavior.move(direction);
+  void onPanEnd(DragEndDetails details) {
+    final horizontalDelta = _lastPosition.dx - _startPosition.dx;
+    final verticalDelta = _lastPosition.dy - _startPosition.dy;
+
+    final isVertical = verticalDelta.abs() > horizontalDelta.abs();
+
+    if (isVertical) {
+      final isUpwardsSwipe = verticalDelta < -_swipeThreshold;
+
+      if (isUpwardsSwipe) {
+        _playerMovingBehavior.move(Direction.up);
+      } else {
+        _playerMovingBehavior.move(Direction.down);
+      }
+    } else {
+      final isRightSwipe = horizontalDelta > _swipeThreshold;
+
+      if (isRightSwipe) {
+        _playerMovingBehavior.move(Direction.right);
+      } else {
+        _playerMovingBehavior.move(Direction.left);
+      }
+    }
+
+    _startPosition = Offset.zero;
+    _lastPosition = Offset.zero;
   }
 }

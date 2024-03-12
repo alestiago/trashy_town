@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:flame/game.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flame_test/flame_test.dart';
-import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:tiled/tiled.dart';
 import 'package:trashy_road/src/game/game.dart';
+import 'package:trashy_road/src/maps/maps.dart';
 
 class _MockTiledMap extends Mock implements TiledMap {}
 
@@ -70,7 +71,7 @@ void main() {
       when(() => map.layerByName('TrashLayer')).thenReturn(objectGroup);
 
       gameBloc = GameBloc(
-        identifier: 'identifier',
+        identifier: GameMapIdentifier.tutorial,
         map: map,
       );
       game = _TestGame(gameBloc: gameBloc);

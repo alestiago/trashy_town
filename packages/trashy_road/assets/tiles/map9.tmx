@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="25" height="30" tilewidth="128" tileheight="64" infinite="0" nextlayerid="8" nextobjectid="105">
+ <tileset firstgid="1" source="Tiles.tsx"/>
+ <layer id="1" name="Background" width="25" height="30">
+  <data encoding="csv">
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,
+28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,
+25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,
+1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,1073741849,
+31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,
+24,24,24,24,24,24,24,24,24,3221225493,30,30,30,30,30,21,24,24,24,24,24,24,24,24,24,
+1073741846,1073741846,1073741846,1073741846,1073741846,1073741846,1073741846,1073741846,1073741846,3221225495,30,30,30,30,30,1073741847,1073741846,1073741846,1073741846,1073741846,1073741846,1073741846,1073741846,1073741846,1073741846,
+30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
+30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,
+22,22,22,22,22,22,22,22,22,2147483671,30,30,30,30,30,23,22,22,22,22,22,22,22,22,22,
+24,24,24,24,24,24,24,24,24,2147483669,30,30,30,30,30,21,24,24,24,24,24,24,24,24,24,
+8,24,24,24,24,24,24,8,24,2147483669,30,30,30,30,30,21,24,24,24,24,8,24,24,24,24,
+24,24,24,24,24,24,24,24,24,2147483669,30,30,30,30,30,21,24,8,24,24,24,24,24,24,24,
+24,24,8,24,24,24,8,24,24,2147483669,30,30,30,30,30,21,24,24,24,24,24,24,8,24,24,
+24,24,24,24,8,24,24,24,24,2147483669,30,30,30,30,30,21,24,24,24,8,24,24,24,24,24,
+24,24,24,24,24,24,24,24,24,2147483669,30,30,30,30,30,21,24,24,24,24,24,8,24,24,24,
+24,24,24,24,24,24,24,24,24,2147483669,30,30,30,30,30,21,24,8,24,24,24,24,24,24,24,
+24,8,24,24,8,24,24,24,24,2147483669,30,30,30,30,30,21,24,24,24,24,24,24,24,8,24,
+24,24,24,24,24,24,24,8,24,2147483669,30,30,30,30,30,21,24,24,24,24,8,24,24,24,24,
+24,24,24,24,24,24,24,24,24,2147483669,30,30,30,30,30,21,24,24,8,24,24,24,24,24,24
+</data>
+ </layer>
+ <objectgroup id="3" name="Border" visible="0" locked="1">
+  <object id="2" x="0" y="0" width="3200" height="256"/>
+  <object id="3" x="0" y="1664" width="3200" height="256"/>
+  <object id="4" x="2688" y="256" width="512" height="1408"/>
+  <object id="5" x="0" y="256" width="512" height="1408"/>
+ </objectgroup>
+ <objectgroup id="4" name="Obstacles" visible="0">
+  <object id="8" template="building_2.tx" class="building_2" gid="17" x="384" y="256" width="256" height="384"/>
+  <object id="9" template="building_3.tx" class="building_3" gid="15" x="0" y="384" width="384" height="649"/>
+  <object id="10" template="building_2.tx" class="building_2" gid="17" x="1024" y="320" width="256" height="384"/>
+  <object id="11" template="building_3.tx" class="building_3" gid="15" x="1280" y="448" width="384" height="649"/>
+  <object id="12" template="building_3.tx" class="building_3" gid="15" x="2048" y="384" width="384" height="649"/>
+  <object id="13" template="building_4.tx" class="building_4" gid="19" x="1664" y="384" width="256" height="384"/>
+  <object id="14" template="building_4.tx" class="building_4" gid="19" x="640" y="384" width="256" height="384"/>
+  <object id="15" template="building_2.tx" class="building_2" gid="17" x="2432" y="448" width="256" height="384"/>
+  <object id="16" template="building_2.tx" class="building_2" gid="17" x="3072" y="320" width="256" height="384"/>
+  <object id="18" template="building_4.tx" class="building_4" gid="19" x="2688" y="384" width="256" height="384"/>
+  <object id="19" template="fire_hydrant.tx" class="fire_hydrant" gid="11" x="896" y="832" width="128" height="128"/>
+  <object id="20" template="bench.tx" class="bench" gid="20" x="896" y="1344" width="128" height="64"/>
+  <object id="21" template="bench.tx" class="bench" gid="20" x="640" y="1344" width="128" height="64"/>
+  <object id="22" template="bench.tx" class="bench" gid="20" x="2432" y="1344" width="128" height="64"/>
+  <object id="23" template="bench.tx" class="bench" gid="20" x="2176" y="1344" width="128" height="64"/>
+  <object id="24" template="tree_1.tx" class="tree_1" gid="10" x="0" y="1024" width="100" height="100"/>
+  <object id="25" template="tree_1.tx" class="tree_1" gid="10" x="384" y="1024" width="100" height="100"/>
+  <object id="26" template="tree_1.tx" class="tree_1" gid="10" x="1024" y="1024" width="100" height="100"/>
+  <object id="27" template="tree_1.tx" class="tree_1" gid="10" x="2176" y="1024" width="100" height="100"/>
+  <object id="28" template="tree_1.tx" class="tree_1" gid="10" x="2560" y="1024" width="100" height="100"/>
+  <object id="29" template="tree_1.tx" class="tree_1" gid="10" x="2304" y="1600" width="100" height="100"/>
+  <object id="30" template="tree_1.tx" class="tree_1" gid="10" x="896" y="1728" width="100" height="100"/>
+  <object id="31" template="tree_1.tx" class="tree_1" gid="10" x="128" y="1728" width="100" height="100"/>
+  <object id="32" template="tree_1.tx" class="tree_1" gid="10" x="256" y="1408" width="100" height="100"/>
+  <object id="33" template="tree_1.tx" class="tree_1" gid="10" x="2048" y="1792" width="100" height="100"/>
+  <object id="34" template="tree_1.tx" class="tree_1" gid="10" x="2560" y="1536" width="100" height="100"/>
+  <object id="35" template="tree_1.tx" class="tree_1" gid="10" x="2816" y="1856" width="100" height="100"/>
+  <object id="36" template="tree_1.tx" class="tree_1" gid="10" x="2944" y="1472" width="100" height="100"/>
+  <object id="37" template="tree_1.tx" class="tree_1" gid="10" x="2688" y="1344" width="100" height="100"/>
+  <object id="38" template="tree_1.tx" class="tree_1" gid="10" x="3072" y="1024" width="100" height="100"/>
+  <object id="39" template="tree_2.tx" class="tree_2" gid="13" x="640" y="1024" width="100" height="100"/>
+  <object id="40" template="tree_2.tx" class="tree_2" gid="13" x="2048" y="1024" width="100" height="100"/>
+  <object id="41" template="tree_2.tx" class="tree_2" gid="13" x="2432" y="1024" width="100" height="100"/>
+  <object id="42" template="tree_2.tx" class="tree_2" gid="13" x="2048" y="1536" width="100" height="100"/>
+  <object id="43" template="tree_2.tx" class="tree_2" gid="13" x="2432" y="1792" width="100" height="100"/>
+  <object id="44" template="tree_2.tx" class="tree_2" gid="13" x="512" y="1600" width="100" height="100"/>
+  <object id="45" template="tree_2.tx" class="tree_2" gid="13" x="384" y="1664" width="100" height="100"/>
+  <object id="46" template="tree_2.tx" class="tree_2" gid="13" x="128" y="1408" width="100" height="100"/>
+  <object id="47" template="tree_2.tx" class="tree_2" gid="13" x="128" y="1024" width="100" height="100"/>
+  <object id="48" template="tree_2.tx" class="tree_2" gid="13" x="896" y="1024" width="100" height="100"/>
+  <object id="49" template="tree_2.tx" class="tree_2" gid="13" x="1024" y="1536" width="100" height="100"/>
+  <object id="50" template="tree_2.tx" class="tree_2" gid="13" x="1024" y="1856" width="100" height="100"/>
+  <object id="51" template="tree_2.tx" class="tree_2" gid="13" x="384" y="1856" width="100" height="100"/>
+  <object id="52" template="tree_2.tx" class="tree_2" gid="13" x="2816" y="1600" width="100" height="100"/>
+  <object id="53" template="tree_2.tx" class="tree_2" gid="13" x="2816" y="1024" width="100" height="100"/>
+  <object id="54" template="bush_2.tx" class="bush_2" gid="14" x="768" y="1344" width="128" height="128"/>
+  <object id="55" template="bush_2.tx" class="bush_2" gid="14" x="2304" y="1344" width="128" height="128"/>
+  <object id="56" template="bush_2.tx" class="bush_2" gid="14" x="2304" y="1792" width="128" height="128"/>
+  <object id="57" template="bush_2.tx" class="bush_2" gid="14" x="640" y="1792" width="128" height="128"/>
+  <object id="58" template="bush_2.tx" class="bush_2" gid="14" x="128" y="1600" width="128" height="128"/>
+  <object id="59" template="bush_2.tx" class="bush_2" gid="14" x="768" y="1024" width="128" height="128"/>
+  <object id="60" template="bush_2.tx" class="bush_2" gid="14" x="256" y="1024" width="128" height="128"/>
+  <object id="61" template="bush_2.tx" class="bush_2" gid="14" x="2304" y="1024" width="128" height="128"/>
+  <object id="62" template="bush_2.tx" class="bush_2" gid="14" x="2816" y="1472" width="128" height="128"/>
+  <object id="63" template="bush_1.tx" class="bush_1" gid="12" x="512" y="1024" width="128" height="128"/>
+  <object id="64" template="bush_1.tx" class="bush_1" gid="12" x="384" y="1344" width="128" height="128"/>
+  <object id="65" template="bush_1.tx" class="bush_1" gid="12" x="256" y="1792" width="128" height="128"/>
+  <object id="66" template="bush_1.tx" class="bush_1" gid="12" x="768" y="1856" width="128" height="128"/>
+  <object id="67" template="bush_1.tx" class="bush_1" gid="12" x="2048" y="1344" width="128" height="128"/>
+  <object id="68" template="bush_1.tx" class="bush_1" gid="12" x="1024" y="1344" width="128" height="128"/>
+  <object id="69" template="bush_1.tx" class="bush_1" gid="12" x="2048" y="1664" width="128" height="128"/>
+  <object id="70" template="lamp_post.tx" class="lamp_post" gid="41" x="256" y="640" width="128" height="128"/>
+  <object id="71" template="lamp_post.tx" class="lamp_post" gid="41" x="640" y="640" width="128" height="128"/>
+  <object id="72" template="lamp_post.tx" class="lamp_post" gid="41" x="1024" y="640" width="128" height="128"/>
+  <object id="74" template="lamp_post.tx" class="lamp_post" gid="41" x="1792" y="640" width="128" height="128"/>
+  <object id="75" template="lamp_post.tx" class="lamp_post" gid="41" x="2176" y="640" width="128" height="128"/>
+  <object id="76" template="lamp_post.tx" class="lamp_post" gid="41" x="2560" y="640" width="128" height="128"/>
+  <object id="77" template="lamp_post.tx" class="lamp_post" gid="41" x="2944" y="640" width="128" height="128"/>
+  <object id="78" template="bus_stop.tx" class="bus_stop" gid="42" x="2176" y="832" width="128" height="128"/>
+  <object id="79" template="lamp_post.tx" class="lamp_post" gid="41" x="1408" y="640" width="128" height="128"/>
+ </objectgroup>
+ <objectgroup id="5" name="RoadLayer" visible="0">
+  <object id="86" template="road_lane.tx" name="road_lane" class="road_lane" x="3200" y="704">
+   <properties>
+    <property name="leftToRight" type="bool" value="false"/>
+    <property name="speed" type="int" value="1"/>
+    <property name="traffic" type="int" value="1"/>
+    <property name="type" value="bus"/>
+   </properties>
+  </object>
+  <object id="87" template="road_lane.tx" name="road_lane" class="road_lane" x="0" y="640">
+   <properties>
+    <property name="leftToRight" type="bool" value="true"/>
+    <property name="speed" type="int" value="3"/>
+    <property name="traffic" type="int" value="4"/>
+    <property name="type" value="car_blue"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="6" name="TrashLayer" visible="0">
+  <object id="88" template="trash_plastic.tx" name="plastic" class="trash" gid="35" x="1408" y="1472" width="128" height="64">
+   <properties>
+    <property name="type" value="plastic"/>
+   </properties>
+  </object>
+  <object id="89" template="trash_plastic.tx" name="plastic" class="trash" gid="35" x="768" y="1408" width="128" height="64">
+   <properties>
+    <property name="type" value="plastic"/>
+   </properties>
+  </object>
+  <object id="90" template="trash_plastic.tx" name="plastic" class="trash" gid="35" x="768" y="512" width="128" height="64">
+   <properties>
+    <property name="type" value="plastic"/>
+   </properties>
+  </object>
+  <object id="91" template="trash_plastic.tx" name="plastic" class="trash" gid="35" x="2304" y="512" width="128" height="64">
+   <properties>
+    <property name="type" value="plastic"/>
+   </properties>
+  </object>
+  <object id="92" template="trash_plastic.tx" name="plastic" class="trash" gid="35" x="2176" y="1152" width="128" height="64">
+   <properties>
+    <property name="type" value="plastic"/>
+   </properties>
+  </object>
+  <object id="93" template="trash_paper.tx" name="paper" class="trash" gid="34" x="896" y="1600" width="128" height="64">
+   <properties>
+    <property name="type" value="paper"/>
+   </properties>
+  </object>
+  <object id="94" template="trash_paper.tx" name="paper" class="trash" gid="34" x="1664" y="1600" width="128" height="64">
+   <properties>
+    <property name="type" value="paper"/>
+   </properties>
+  </object>
+  <object id="95" template="trash_paper.tx" name="paper" class="trash" gid="34" x="1792" y="896" width="128" height="64">
+   <properties>
+    <property name="type" value="paper"/>
+   </properties>
+  </object>
+  <object id="96" template="trash_paper.tx" name="paper" class="trash" gid="34" x="640" y="832" width="128" height="64">
+   <properties>
+    <property name="type" value="paper"/>
+   </properties>
+  </object>
+  <object id="97" template="trash_paper.tx" name="paper" class="trash" gid="34" x="1792" y="448" width="128" height="64">
+   <properties>
+    <property name="type" value="paper"/>
+   </properties>
+  </object>
+  <object id="98" template="trash_paper.tx" name="paper" class="trash" gid="34" x="2304" y="1536" width="128" height="64">
+   <properties>
+    <property name="type" value="paper"/>
+   </properties>
+  </object>
+  <object id="99" template="trash_organic.tx" name="organic" class="trash" gid="3" x="1280" y="1536" width="128" height="64">
+   <properties>
+    <property name="type" value="organic"/>
+   </properties>
+  </object>
+  <object id="101" template="trash_organic.tx" name="organic" class="trash" gid="3" x="1792" y="1088" width="128" height="64">
+   <properties>
+    <property name="type" value="organic"/>
+   </properties>
+  </object>
+  <object id="102" template="trash_organic.tx" name="organic" class="trash" gid="3" x="640" y="1152" width="128" height="64">
+   <properties>
+    <property name="type" value="organic"/>
+   </properties>
+  </object>
+  <object id="103" template="trash_organic.tx" name="organic" class="trash" gid="3" x="1024" y="896" width="128" height="64">
+   <properties>
+    <property name="type" value="organic"/>
+   </properties>
+  </object>
+  <object id="104" template="trash_organic.tx" name="organic" class="trash" gid="3" x="1536" y="512" width="128" height="64">
+   <properties>
+    <property name="type" value="organic"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="7" name="CoreItemsLayer" visible="0" locked="1">
+  <object id="80" template="spawn.tx" name="player" class="player" x="1536" y="1088"/>
+  <object id="81" template="trash_can_park_paper.tx" name="trash_can_paper_park" class="trash_can" gid="39" x="1152" y="1344" width="128" height="128">
+   <properties>
+    <property name="type" value="paper"/>
+    <property name="variant" value="park"/>
+   </properties>
+  </object>
+  <object id="82" template="trash_can_park_organic.tx" name="trash_can_organic_park" class="trash_can" gid="38" x="1920" y="1344" width="128" height="128">
+   <properties>
+    <property name="type" value="organic"/>
+    <property name="variant" value="park"/>
+   </properties>
+  </object>
+  <object id="85" template="trash_can_plastic.tx" name="trash_can_plastic_city" class="trash_can" gid="4" x="1152" y="384" width="128" height="128">
+   <properties>
+    <property name="type" value="plastic"/>
+    <property name="variant" value="city"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

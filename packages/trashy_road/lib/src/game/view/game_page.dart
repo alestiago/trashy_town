@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:basura/basura.dart';
-import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tiled/tiled.dart';
 import 'package:trashy_road/gen/gen.dart';
+import 'package:trashy_road/src/audio/audio.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/loading/loading.dart';
 import 'package:trashy_road/src/maps/maps.dart';
@@ -10,7 +13,7 @@ import 'package:trashy_road/src/score/score.dart';
 
 class GamePage extends StatelessWidget {
   const GamePage({
-    required String identifier,
+    required GameMapIdentifier identifier,
     required TiledMap map,
     super.key,
   })  : _map = map,
@@ -20,11 +23,11 @@ class GamePage extends StatelessWidget {
   static String identifier = 'maps_menu';
 
   static Route<void> route({
-    required String identifier,
+    required GameMapIdentifier identifier,
     required TiledMap tiledMap,
   }) {
     return BasuraBlackEaseInOut<void>(
-      settings: RouteSettings(name: identifier),
+      settings: RouteSettings(name: identifier.name),
       builder: (_) => GamePage(
         identifier: identifier,
         map: tiledMap,
@@ -33,7 +36,7 @@ class GamePage extends StatelessWidget {
   }
 
   /// The identifier of the game.
-  final String _identifier;
+  final GameMapIdentifier _identifier;
 
   /// The map to play.
   ///
@@ -42,92 +45,155 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => GameBloc(
-            identifier: _identifier,
-            map: _map,
-          ),
-        ),
-        BlocProvider(
-          create: (context) => AudioCubit(
-            audioCache: context.read<PreloadCubit>().audio,
-          ),
-        ),
-      ],
+    return BlocProvider(
+      create: (context) => GameBloc(
+        identifier: _identifier,
+        map: _map,
+      ),
       child: const _GameView(),
     );
   }
 }
 
-class _GameView extends StatelessWidget {
+class _GameView extends StatefulWidget {
   const _GameView();
+
+  @override
+  State<_GameView> createState() => _GameViewState();
+}
+
+class _GameViewState extends State<_GameView> {
+  TrashyRoadGame? _game;
 
   @override
   Widget build(BuildContext context) {
     final gameBloc = context.read<GameBloc>();
-    final isTutorial =
-        gameBloc.state.identifier == GameMapsState.tutorialIdentifier;
+    final isTutorial = gameBloc.state.identifier == GameMapIdentifier.tutorial;
 
-    return _GameCompletionListener(
-      child: Stack(
-        children: [
-          const Positioned.fill(child: _GameBackground()),
-          const Align(child: TrashyRoadGameWidget()),
-          const Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.all(12),
-              child: InventoryHud(),
-            ),
-          ),
-          const Align(
-            alignment: Alignment.topCenter,
-            child: Padding(
-              padding: EdgeInsets.all(12),
-              child: TopHud(),
-            ),
-          ),
-          if (isTutorial)
-            const Align(
-              alignment: Alignment(0, -0.6),
-              child: GameTutorial(),
-            ),
+    return GameBackgroundMusicListener(
+      child: MultiBlocListener(
+        listeners: [
+          _GameCompletionListener(),
+          _GameLostTimeIsUpListener(),
+          _GameLostRunnedOverListener(),
         ],
+        child: GestureDetector(
+          onTapUp: (details) => _game?.onTapUp(details),
+          onPanStart: (details) => _game?.onPanStart(details),
+          onPanUpdate: (details) => _game?.onPanUpdate(details),
+          onPanEnd: (details) => _game?.onPanEnd(details),
+          behavior: HitTestBehavior.translucent,
+          child: Stack(
+            children: [
+              const Positioned.fill(child: _GameBackground()),
+              Align(
+                child: TrashyRoadGameWidget(
+                  onGameCreated: (game) => _game = game,
+                ),
+              ),
+              const Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: EdgeInsets.all(12),
+                  child: InventoryHud(),
+                ),
+              ),
+              const Align(
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: EdgeInsets.all(12),
+                  child: TopHud(),
+                ),
+              ),
+              if (isTutorial)
+                const Align(
+                  alignment: Alignment(0, -0.6),
+                  child: TutorialHud(),
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }
 }
 
-/// {@template _GameCompletionListener}
-/// Listens for when the game has completed and navigates accordingly.
-/// {@endtemplate}
-class _GameCompletionListener extends StatelessWidget {
-  /// {@macro _GameCompletionListener}
-  const _GameCompletionListener({this.child});
+class _GameCompletionListener extends BlocListener<GameBloc, GameState> {
+  _GameCompletionListener()
+      : super(
+          listenWhen: (previous, current) =>
+              current.status == GameStatus.completed,
+          listener: (context, state) {
+            assert(
+              state.score != null,
+              'The game is completed, but the score is null.',
+            );
+            context.read<AudioCubit>().playEffect(GameSoundEffects.stagePass);
 
-  final Widget? child;
+            final gameMapsBloc = context.read<GameMapsBloc>();
+            final gameMap = gameMapsBloc.state.maps[state.identifier];
+            final scoreRating = ScoreRating.fromSteps(
+              score: state.score,
+              steps: gameMap!.ratingSteps,
+            );
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocListener<GameBloc, GameState>(
-      listenWhen: (previous, current) => current.status == GameStatus.completed,
-      listener: (context, state) {
-        context.read<GameMapsBloc>().add(
-              GameMapCompletedEvent(
+            context.read<GameMapsBloc>().add(
+                  GameMapCompletedEvent(
+                    identifier: state.identifier,
+                    score: state.score!,
+                  ),
+                );
+            Navigator.push(
+              context,
+              ScorePage.route(
                 identifier: state.identifier,
-                score: state.score,
+                scoreRating: scoreRating,
               ),
             );
-        Navigator.push(
-          context,
-          ScorePage.route(identifier: state.identifier),
+          },
         );
-      },
-      child: child,
-    );
-  }
+}
+
+class _GameLostRunnedOverListener extends BlocListener<GameBloc, GameState> {
+  _GameLostRunnedOverListener()
+      : super(
+          listenWhen: (previous, current) =>
+              current.status == GameStatus.lost &&
+              current.lostReason == GameLostReason.vehicleRunningOver,
+          listener: (context, state) {
+            context.read<AudioCubit>().playEffect(GameSoundEffects.gameOver);
+            context.read<GameBloc>().add(const GameResetEvent());
+          },
+        );
+}
+
+class _GameLostTimeIsUpListener extends BlocListener<GameBloc, GameState> {
+  _GameLostTimeIsUpListener()
+      : super(
+          listenWhen: (previous, current) =>
+              current.status == GameStatus.lost &&
+              current.lostReason == GameLostReason.timeIsUp,
+          listener: (context, state) {
+            final gameBloc = context.read<GameBloc>()
+              ..add(const GamePausedEvent());
+            final navigator = Navigator.of(context)
+              ..push(GameTimeIsUpPage.route());
+
+            // TODO(alestiago): Refactor this to stop using microtasks and
+            // Future.delayed. Instead, consider other approaches to stagger
+            // the animations.
+            scheduleMicrotask(() async {
+              await Future<void>.delayed(
+                GameTimeIsUpPageRouteBuilder.animationDuration * 2,
+              );
+              gameBloc.add(const GameResetEvent());
+              await Future<void>.delayed(
+                PlayingHudTransition.animationDuration ~/ 2,
+              );
+              navigator.pop();
+            });
+          },
+        );
 }
 
 class _GameBackground extends StatelessWidget {

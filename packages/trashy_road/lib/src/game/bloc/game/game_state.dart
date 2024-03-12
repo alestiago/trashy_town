@@ -13,6 +13,9 @@ enum GameStatus {
   /// The user is currently playing the game.
   playing,
 
+  /// The game has been lost.
+  lost,
+
   /// The game is resetting.
   resetting,
 
@@ -32,10 +35,7 @@ enum GameStatus {
 /// {@template GameResetReason}
 /// The reason why the game was reset.
 /// {@endtemplate}
-enum GameResetReason {
-  /// The game was reset because the user requested it.
-  user,
-
+enum GameLostReason {
   /// The game was reset because the time ran out.
   timeIsUp,
 
@@ -61,8 +61,8 @@ class GameState extends Equatable {
     this.pausedDuration = Duration.zero,
     this.startedAt,
     this.pausedAt,
-    this.score = -1,
-    this.resetReason,
+    this.score,
+    this.lostReason,
   }) :
         // TODO(alestiago): Remove magic string.
         _initialTrash =
@@ -70,7 +70,7 @@ class GameState extends Equatable {
 
   /// The initial state of the game.
   GameState.initial({
-    required String identifier,
+    required GameMapIdentifier identifier,
     required TiledMap map,
   }) : this(
           identifier: identifier,
@@ -79,14 +79,14 @@ class GameState extends Equatable {
           inventory: Inventory.empty(),
           pausedDuration: Duration.zero,
           collectedTrash: 0,
-          score: -1,
+          score: null,
         );
 
   /// {@macro GameStatus}
   final GameStatus status;
 
   /// The identifier of the level being played.
-  final String identifier;
+  final GameMapIdentifier identifier;
 
   /// The map that the game is being played on.
   final TiledMap map;
@@ -118,20 +118,20 @@ class GameState extends Equatable {
 
   /// The final score of the game.
   ///
-  /// If the game has not been completed, the score is `-1`.
+  /// If the game has not been completed, the score is `null`.
   ///
   /// The larger the score, the worse the player did. The score is calculated
   /// based on the amount of time that the player took to complete the game.
-  final int score;
+  final int? score;
 
-  /// The reason why the game was reset.
+  /// The reason why the game was loas.
   ///
-  /// Is `null` if the game has not been reset.
+  /// Is `null` if the game has not been lost.
   ///
-  /// The reset reason is persisted until the game is reset again. For example,
-  /// if the game was reset because the time ran out, the reset reason will be
-  /// [GameResetReason.timeIsUp] until the game is reset again.
-  final GameResetReason? resetReason;
+  /// The reset reason is persisted until the game is lost again. For example,
+  /// if the game was lost because the time ran out, the reset reason will be
+  /// [GameLostReason.timeIsUp] until the game is lost again.
+  final GameLostReason? lostReason;
 
   GameState copyWith({
     GameStatus? status,
@@ -141,7 +141,7 @@ class GameState extends Equatable {
     DateTime? Function()? pausedAt,
     Duration? pausedDuration,
     int? score,
-    GameResetReason? resetReason,
+    GameLostReason? lostReason,
   }) {
     return GameState(
       identifier: identifier,
@@ -153,7 +153,7 @@ class GameState extends Equatable {
       pausedDuration: pausedDuration ?? this.pausedDuration,
       pausedAt: pausedAt != null ? pausedAt() : this.pausedAt,
       score: score ?? this.score,
-      resetReason: resetReason ?? this.resetReason,
+      lostReason: lostReason ?? this.lostReason,
     );
   }
 
@@ -167,7 +167,7 @@ class GameState extends Equatable {
         pausedDuration,
         pausedAt,
         score,
-        resetReason,
+        lostReason,
       ];
 }
 

@@ -1,11 +1,10 @@
 import 'dart:async';
-import 'dart:ui' as ui;
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
-import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/widgets.dart';
+import 'package:tiled/tiled.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/game.dart';
@@ -19,16 +18,19 @@ class Player extends PositionedEntity with ZIndex {
             PropagatingCollisionBehavior(
               RectangleHitbox(
                 isSolid: true,
-                size: Vector2(0.5, 0.8)..toGameSize(),
+                size: Vector2(0.3, 0.6)..toGameSize(),
                 anchor: Anchor.center,
               ),
             ),
             PlayerCollectingTrashBehavior(),
             PlayerDepositingTrashBehavior(),
             PlayerObstacleBehavior(),
+            PlayerHintingBehavior(),
             PausingBehavior<Player>(
-              selector: (player) =>
-                  player.findBehaviors<PlayerKeyboardMovingBehavior>(),
+              selector: (player) => {
+                ...player.findBehaviors<PlayerKeyboardMovingBehavior>(),
+                ...player.findBehaviors<PlayerHintingBehavior>(),
+              },
             ),
           ],
           children: [
@@ -100,50 +102,47 @@ class _PlayerSpriteComponent extends SpriteAnimationComponent
   _PlayerSpriteComponent()
       : super(
           position: Vector2(-0.4, -2.5)..toGameSize(),
-          scale: Vector2.all(0.45),
+          scale: Vector2.all(0.9),
         );
 
   final Map<Direction, Map<Direction, SpriteAnimation>> _animations = {};
 
-  static final List<List<Direction>> _animationDirectionOrder =
-      List.unmodifiable([
-    [Direction.right, Direction.right],
-    [Direction.right, Direction.up],
-    [Direction.right, Direction.down],
-    [Direction.right, Direction.left],
-    [Direction.up, Direction.right],
-    [Direction.up, Direction.up],
-    [Direction.up, Direction.down],
-    [Direction.up, Direction.left],
-    [Direction.down, Direction.right],
-    [Direction.down, Direction.up],
-    [Direction.down, Direction.down],
-    [Direction.down, Direction.left],
-    [Direction.left, Direction.right],
-    [Direction.left, Direction.up],
-    [Direction.left, Direction.down],
-    [Direction.left, Direction.left],
-  ]);
+  static final Map<(Direction, Direction), AssetGenImage> _animationSpriteMap =
+      {
+    (Direction.right, Direction.right): Assets.images.sprites.playerRightRight,
+    (Direction.right, Direction.up): Assets.images.sprites.playerUpUp,
+    (Direction.right, Direction.down): Assets.images.sprites.playerRightDown,
+    (Direction.right, Direction.left): Assets.images.sprites.playerRightLeft,
+    (Direction.up, Direction.right): Assets.images.sprites.playerUpRight,
+    (Direction.up, Direction.up): Assets.images.sprites.playerUpUp,
+    (Direction.up, Direction.down): Assets.images.sprites.playerUpDown,
+    (Direction.up, Direction.left): Assets.images.sprites.playerUpLeft,
+    (Direction.down, Direction.right): Assets.images.sprites.playerDownRight,
+    (Direction.down, Direction.up): Assets.images.sprites.playerDownUp,
+    (Direction.down, Direction.down): Assets.images.sprites.playerDownDown,
+    (Direction.down, Direction.left): Assets.images.sprites.playerDownLeft,
+    (Direction.left, Direction.right): Assets.images.sprites.playerLeftRight,
+    (Direction.left, Direction.up): Assets.images.sprites.playerLeftUp,
+    (Direction.left, Direction.down): Assets.images.sprites.playerLeftDown,
+    (Direction.left, Direction.left): Assets.images.sprites.playerLeftLeft,
+  };
 
   Direction _previousDirection = Direction.up;
 
-  /// The amount of frames in the player sprite sheet.
+  /// The amount of frames in the player shadow sprite sheet.
   static const _frameCount = 7;
 
-  SpriteAnimation _createAnimation(ui.Image image, int row) {
+  Future<SpriteAnimation> _createAnimation(AssetGenImage image) async {
+    final spriteSheet = await game.images.load(image.path);
+    const frameCount = 7;
+
     return SpriteAnimation.fromFrameData(
-      image,
-      SpriteAnimationData.range(
-        amount: _frameCount * _animationDirectionOrder.length,
-        amountPerRow: _frameCount,
-        textureSize: Vector2.all(512),
-        start: row * _frameCount,
-        end: row * _frameCount + _frameCount - 1,
-        stepTimes: List.filled(
-          7,
-          (PlayerMovingBehavior.baseMoveTime.inMilliseconds / 1000) /
-              _frameCount,
-        ),
+      spriteSheet,
+      SpriteAnimationData.sequenced(
+        amount: frameCount,
+        stepTime: (PlayerMovingBehavior.baseMoveTime.inMilliseconds / 1000) /
+            frameCount,
+        textureSize: Vector2.all(256),
         loop: false,
       ),
     );
@@ -153,19 +152,14 @@ class _PlayerSpriteComponent extends SpriteAnimationComponent
   Future<void> onLoad() async {
     await super.onLoad();
 
-    final image = await game.images.fetchOrGenerate(
-      Assets.images.sprites.playerHop.path,
-      () => game.images.load(Assets.images.sprites.playerHop.path),
-    );
-
-    for (var i = 0; i < _animationDirectionOrder.length; i++) {
-      final [startingDirection, endDirection] = _animationDirectionOrder[i];
+    for (final entry in _animationSpriteMap.entries) {
+      final (startingDirection, endDirection) = entry.key;
+      final image = entry.value;
+      final spriteSheet = await _createAnimation(image);
       _animations[startingDirection] ??= {};
-      _animations[startingDirection]![endDirection] = _createAnimation(
-        image,
-        i,
-      );
+      _animations[startingDirection]![endDirection] = spriteSheet;
     }
+
     playing = false;
     animation = _animations[Direction.up]![Direction.up];
   }
@@ -190,7 +184,7 @@ class _PlayerShadowSpriteComponent extends SpriteAnimationComponent
   _PlayerShadowSpriteComponent()
       : super(
           position: Vector2(-0.4, -2.5)..toGameSize(),
-          scale: Vector2.all(0.45),
+          scale: Vector2.all(1.8),
         );
 
   /// The amount of frames in the player shadow sprite sheet.
@@ -210,7 +204,7 @@ class _PlayerShadowSpriteComponent extends SpriteAnimationComponent
       SpriteAnimationData.sequenced(
         amount: _frameCount,
         amountPerRow: 3,
-        textureSize: Vector2.all(512),
+        textureSize: Vector2.all(128),
         stepTime: (PlayerMovingBehavior.baseMoveTime.inMilliseconds / 1000) /
             _frameCount,
         loop: false,

@@ -4,7 +4,7 @@ part of 'game_maps_bloc.dart';
 ///
 /// Where the key is the identifier of the map and the value is the
 /// [GameMap] itself.
-typedef GameMapsCollection = UnmodifiableMapView<String, GameMap>;
+typedef GameMapsCollection = UnmodifiableMapView<GameMapIdentifier, GameMap>;
 
 /// {@template RatingSteps}
 /// The steps that dictate the rating of the map score.
@@ -23,42 +23,125 @@ typedef GameMapsCollection = UnmodifiableMapView<String, GameMap>;
 /// {@endtemplate}
 typedef RatingSteps = (int, int, int);
 
+enum GameMapIdentifier {
+  tutorial,
+  map2,
+  map3,
+  map4,
+  map5,
+  map6,
+  map7,
+  map8,
+  map9,
+  map10,
+  map11;
+}
+
 class GameMapsState extends Equatable {
   GameMapsState({
-    required Map<String, GameMap> maps,
+    required GameMapsCollection maps,
   }) : maps = GameMapsCollection(maps);
 
   GameMapsState.initial()
       : maps = UnmodifiableMapView(
           {
-            tutorialIdentifier: GameMap._(
-              identifier: tutorialIdentifier,
+            GameMapIdentifier.tutorial: GameMap._(
+              identifier: GameMapIdentifier.tutorial,
               displayName: '1',
               path: Assets.tiles.map1,
-              score: -1,
-              ratingSteps: (25, 100, 200),
+              score: null,
+              ratingSteps: (15, 20, 30),
               locked: false,
             ),
-            'map2': GameMap._(
-              identifier: 'map2',
+            GameMapIdentifier.map2: GameMap._(
+              identifier: GameMapIdentifier.map2,
               displayName: '2',
               path: Assets.tiles.map2,
-              score: -1,
+              score: null,
+              ratingSteps: (25, 50, 100),
+              locked: true,
+            ),
+            GameMapIdentifier.map3: GameMap._(
+              identifier: GameMapIdentifier.map3,
+              displayName: '3',
+              path: Assets.tiles.map3,
+              score: null,
+              ratingSteps: (25, 50, 100),
+              locked: true,
+            ),
+            GameMapIdentifier.map4: GameMap._(
+              identifier: GameMapIdentifier.map4,
+              displayName: '4',
+              path: Assets.tiles.map4,
+              score: null,
+              ratingSteps: (25, 50, 100),
+              locked: true,
+            ),
+            GameMapIdentifier.map5: GameMap._(
+              identifier: GameMapIdentifier.map5,
+              displayName: '5',
+              path: Assets.tiles.map5,
+              score: null,
+              ratingSteps: (25, 50, 100),
+              locked: true,
+            ),
+            GameMapIdentifier.map6: GameMap._(
+              identifier: GameMapIdentifier.map6,
+              displayName: '6',
+              path: Assets.tiles.map6,
+              score: null,
+              ratingSteps: (25, 50, 100),
+              locked: true,
+            ),
+            GameMapIdentifier.map7: GameMap._(
+              identifier: GameMapIdentifier.map7,
+              displayName: '7',
+              path: Assets.tiles.map7,
+              score: null,
+              ratingSteps: (25, 50, 100),
+              locked: true,
+            ),
+            GameMapIdentifier.map8: GameMap._(
+              identifier: GameMapIdentifier.map8,
+              displayName: '8',
+              path: Assets.tiles.map8,
+              score: null,
+              ratingSteps: (25, 50, 100),
+              locked: true,
+            ),
+            GameMapIdentifier.map9: GameMap._(
+              identifier: GameMapIdentifier.map9,
+              displayName: '9',
+              path: Assets.tiles.map9,
+              score: null,
+              ratingSteps: (25, 50, 100),
+              locked: true,
+            ),
+            GameMapIdentifier.map10: GameMap._(
+              identifier: GameMapIdentifier.map10,
+              displayName: '10',
+              path: Assets.tiles.map10,
+              score: null,
+              ratingSteps: (25, 50, 100),
+              locked: true,
+            ),
+            GameMapIdentifier.map11: GameMap._(
+              identifier: GameMapIdentifier.map11,
+              displayName: '11',
+              path: Assets.tiles.map11,
+              score: null,
               ratingSteps: (25, 50, 100),
               locked: true,
             ),
           },
         );
 
-  /// The identifier of the tutorial map.
-  static String tutorialIdentifier = 'map1';
-
   final GameMapsCollection maps;
 
   /// Returns the next map in the collection.
   ///
   /// If there are no more maps, it will return `null`.
-  GameMap? next(String identifier) {
+  GameMap? next(GameMapIdentifier identifier) {
     final mapsList = maps.keys.toList();
     final currentIndex = mapsList.indexOf(identifier);
     final nextIndex = currentIndex + 1;
@@ -70,9 +153,9 @@ class GameMapsState extends Equatable {
   }
 
   GameMapsState copyWith({
-    Map<String, GameMap>? maps,
+    Map<GameMapIdentifier, GameMap>? maps,
   }) {
-    return GameMapsState(maps: maps ?? this.maps);
+    return GameMapsState(maps: UnmodifiableMapView(maps ?? this.maps));
   }
 
   @override
@@ -96,9 +179,10 @@ enum ScoreRating {
 
   /// Creates a [ScoreRating] from the given [RatingSteps] and [score].
   factory ScoreRating.fromSteps({
-    required int score,
+    required int? score,
     required RatingSteps steps,
   }) {
+    if (score == null) return none;
     if (score < 0) return none;
     if (score <= steps.$1) return gold;
     if (score <= steps.$2) return silver;
@@ -125,23 +209,24 @@ class GameMap extends Equatable {
     required this.displayName,
     required this.score,
     required this.ratingSteps,
-    required this.locked,
+    required bool locked,
     required this.path,
-  }) : scoreRating = ScoreRating.fromSteps(
+  })  : scoreRating = ScoreRating.fromSteps(
           score: score,
           steps: ratingSteps,
-        );
+        ),
+        _locked = locked;
 
   /// The identifier of the map.
-  final String identifier;
+  final GameMapIdentifier identifier;
 
   /// The display name of the map.
   final String displayName;
 
   /// The score the player has achieved on this map.
   ///
-  /// A score of -1 means the map has not been played yet.
-  final int score;
+  /// A score of `null` means the map has not been played yet.
+  final int? score;
 
   /// {@macro RatingSteps}
   final RatingSteps ratingSteps;
@@ -149,19 +234,23 @@ class GameMap extends Equatable {
   /// {@macro ScoreRating}
   final ScoreRating scoreRating;
 
+  final bool _locked;
+
   /// Whether the map is locked and cannot be played.
   ///
   /// A locked map is usually a map that is not yet available to the player.
-  final bool locked;
+  bool get locked {
+    return !(Uri.base.queryParameters['admin'] == 'true') && _locked;
+  }
 
   /// The path to the map file.
   final String path;
 
   /// The maximum amount of time the player has to complete the map.
-  int get completionSeconds => ratingSteps.$3 + 30;
+  int get completionSeconds => ratingSteps.$3 + 15;
 
   GameMap copyWith({
-    String? identifier,
+    GameMapIdentifier? identifier,
     String? displayName,
     int? score,
     RatingSteps? ratingSteps,

@@ -21,14 +21,20 @@ dependencies:
   flame_audio: ^2.10.0
   flame_behaviors: ^1.1.0
   flame_bloc: ^1.11.0
+  flame_noise: ^0.3.0
   flame_tiled: ^1.19.0
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.3
   flutter_gen: ^5.4.0
+  flutter_localizations:
+    sdk: flutter
   flutter_svg: ^2.0.10+1
+  hydrated_bloc: ^9.1.4
+  intl: ^0.18.1
   meta: ^1.11.0
   path: ^1.8.3
+  path_provider: ^2.1.2
   rive: ^0.12.4
   tiled: ^0.10.2
 
@@ -53,7 +59,6 @@ flutter:
     - assets/audio/
     - assets/rive/
     - assets/tiles/
+    - assets/images/maps/
     - assets/images/display/
     - assets/images/sprites/
-    # tiled required beacuse flame_tiled loads these (even though we don't use them directly).
-    - assets/images/tiled/

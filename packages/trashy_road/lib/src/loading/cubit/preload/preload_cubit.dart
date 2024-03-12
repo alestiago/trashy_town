@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:bloc/bloc.dart';
+import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flame/cache.dart';
 import 'package:flutter/widgets.dart';
@@ -29,40 +30,43 @@ class PreloadCubit extends Cubit<PreloadState> {
 
   /// Load items sequentially allows display of what is being loaded
   Future<void> loadSequentially() async {
+    final displayImages =
+        Assets.images.display.values.whereType<AssetGenImage>().toList();
+    final spritePaths =
+        Assets.images.sprites.values.map((image) => image.path).toList();
+
     final phases = [
-      PreloadPhase(
-        'audio',
-        () => audio.loadAll(
-          [
-            Assets.audio.plasticBottle,
-          ],
-        ),
+      ...PreloadPhase.sliced(
+        name: 'audio',
+        items: Assets.audio.values,
+        start: audio.loadAll,
       ),
-      PreloadPhase(
-        'images',
-        () => imageProviderCache.loadAll(
-          [
-            Assets.images.display.pauseIcon,
-            Assets.images.display.paperBackground,
-            Assets.images.display.replayIcon,
-            Assets.images.display.playIcon,
-            Assets.images.display.menuIcon,
-            Assets.images.display.nextIcon,
-          ],
-        ),
+      ...PreloadPhase.sliced(
+        name: 'images',
+        items: displayImages,
+        start: imageProviderCache.loadAll,
       ),
-      PreloadPhase(
-        'game images',
-        () => images.loadAll([]),
+      ...PreloadPhase.sliced(
+        name: 'sprites',
+        items: spritePaths,
+        start: images.loadAll,
       ),
-      PreloadPhase(
-        'maps',
-        () => tiled.loadAll(
-          [
-            Assets.tiles.map1,
-            Assets.tiles.map2,
-          ],
-        ),
+      ...PreloadPhase.sliced(
+        name: 'maps',
+        items: [
+          Assets.tiles.map1,
+          Assets.tiles.map2,
+          Assets.tiles.map3,
+          Assets.tiles.map4,
+          Assets.tiles.map5,
+          Assets.tiles.map6,
+          Assets.tiles.map7,
+          Assets.tiles.map8,
+          Assets.tiles.map9,
+          Assets.tiles.map10,
+          Assets.tiles.map11,
+        ],
+        start: tiled.loadAll,
       ),
     ];
 
@@ -85,4 +89,24 @@ class PreloadPhase {
 
   final String label;
   final ValueGetter<Future<void>> start;
+
+  static Iterable<PreloadPhase> sliced<T>({
+    required String name,
+    required Iterable<T> items,
+    required Future<void> Function(List<T> items) start,
+  }) {
+    const sliceSize = 15;
+    final slices = items.slices(sliceSize).toList();
+    final phases = <PreloadPhase>[];
+    for (var phaseIndex = 0; phaseIndex < slices.length; phaseIndex++) {
+      final phase = slices[phaseIndex];
+      phases.add(
+        PreloadPhase(
+          '$name ${phaseIndex + 1} of ${slices.length}',
+          () => start(phase),
+        ),
+      );
+    }
+    return phases;
+  }
 }

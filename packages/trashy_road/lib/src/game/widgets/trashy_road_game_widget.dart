@@ -5,13 +5,20 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trashy_road/game_settings.dart';
+import 'package:trashy_road/src/audio/audio.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/loading/loading.dart';
 
 final _random = Random(0);
 
 class TrashyRoadGameWidget extends StatefulWidget {
-  const TrashyRoadGameWidget({super.key});
+  const TrashyRoadGameWidget({
+    required this.onGameCreated,
+    super.key,
+  });
+
+  /// Callback for when the game is created.
+  final void Function(TrashyRoadGame game) onGameCreated;
 
   @override
   State<TrashyRoadGameWidget> createState() => _TrashyRoadGameWidgetState();
@@ -31,21 +38,23 @@ class _TrashyRoadGameWidgetState extends State<TrashyRoadGameWidget> {
     );
 
     TrashyRoadGame gameBuilder() {
-      return kDebugMode
+      final game = kDebugMode
           ? DebugTrashyRoadGame(
               gameBloc: gameBloc,
               images: loadingBloc.images,
-              effectPlayer: audioBloc.effectPlayer,
+              audioBloc: audioBloc,
               resolution: resolution,
               random: _random,
             )
           : TrashyRoadGame(
               gameBloc: gameBloc,
               images: loadingBloc.images,
-              effectPlayer: audioBloc.effectPlayer,
+              audioBloc: audioBloc,
               resolution: resolution,
               random: _random,
             );
+      widget.onGameCreated(game);
+      return game;
     }
 
     _game ??= gameBuilder();

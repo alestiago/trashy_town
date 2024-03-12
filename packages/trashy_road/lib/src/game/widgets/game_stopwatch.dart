@@ -1,9 +1,7 @@
 import 'package:basura/basura.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trashy_road/gen/assets.gen.dart';
+import 'package:trashy_road/src/audio/audio.dart';
 import 'package:trashy_road/src/game/game.dart';
 import 'package:trashy_road/src/maps/maps.dart';
 
@@ -23,6 +21,9 @@ class _GameStopwatchState extends State<GameStopwatch>
     with SingleTickerProviderStateMixin {
   final _stopwatch = Stopwatch();
 
+  bool _countingDown = false;
+  bool _timeIsUp = false;
+
   late final _animation = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 1),
@@ -31,16 +32,29 @@ class _GameStopwatchState extends State<GameStopwatch>
   void _stop() {
     _animation.stop();
     _stopwatch.stop();
+
+    if (mounted && !_timeIsUp) {
+      context.read<AudioCubit>().pauseEffect(GameSoundEffects.runningTime);
+    }
   }
 
   void _start() {
     _animation.repeat(reverse: true);
     _stopwatch.start();
+
+    if (mounted && _countingDown) {
+      context.read<AudioCubit>().resumeEffect(GameSoundEffects.runningTime);
+    }
   }
 
   void _reset() {
     _animation.reset();
     _stopwatch.reset();
+    _countingDown = false;
+
+    if (mounted) {
+      context.read<AudioCubit>().stopEffect(GameSoundEffects.runningTime);
+    }
   }
 
   void _onTick() {
@@ -51,10 +65,17 @@ class _GameStopwatchState extends State<GameStopwatch>
     final map = mapsBloc.state.maps[gameBloc.state.identifier]!;
 
     final completionSeconds = map.completionSeconds;
-    final timeIsUp = _stopwatch.elapsed.inSeconds >= completionSeconds;
 
-    if (timeIsUp) {
-      gameBloc.add(const GameResetEvent(reason: GameResetReason.timeIsUp));
+    final timeLeft = (completionSeconds * Duration.millisecondsPerSecond) -
+        _stopwatch.elapsed.inMilliseconds;
+    if (timeLeft < 10100 && !_countingDown) {
+      _countingDown = true;
+      context.read<AudioCubit>().playEffect(GameSoundEffects.runningTime);
+    }
+
+    _timeIsUp = _stopwatch.elapsed.inSeconds >= completionSeconds;
+    if (_timeIsUp && gameBloc.state.status == GameStatus.playing) {
+      gameBloc.add(const GameLostEvent(reason: GameLostReason.timeIsUp));
     }
   }
 
@@ -83,14 +104,15 @@ class _GameStopwatchState extends State<GameStopwatch>
                 current.status == GameStatus.completed;
             final hasPaused = previous.status == GameStatus.playing &&
                 current.status == GameStatus.paused;
+            final hasLost = current.status == GameStatus.lost;
 
-            return hasCompleted || hasPaused;
+            return hasCompleted || hasPaused || hasLost;
           },
           listener: (_, __) => _stop(),
         ),
         BlocListener<GameBloc, GameState>(
           listenWhen: (previous, current) {
-            return current.status == GameStatus.resetting;
+            return previous.status == GameStatus.resetting;
           },
           listener: (_, __) => _reset(),
         ),
@@ -157,7 +179,10 @@ class _ProgressBar extends StatelessWidget {
                   size: starSize,
                   child: Transform.rotate(
                     angle: stopwatchRotationTween.evaluate(_animation),
-                    child: const _StopwatchIcon(),
+                    child: const Hero(
+                      tag: GameTimeIsUpPage.heroTag,
+                      child: StopwatchIcon(),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -188,11 +213,11 @@ class _ProgressBar extends StatelessWidget {
                         ),
                       ),
                       Align(
-                        alignment: alignStar(gameMap.ratingSteps.$1),
+                        alignment: alignStar(gameMap.ratingSteps.$3),
                         child: SizedBox.fromSize(
                           size: starSize,
                           child: AnimatedStar(
-                            faded: gameMap.ratingSteps.$1 < seconds,
+                            faded: gameMap.ratingSteps.$3 < seconds,
                           ),
                         ),
                       ),
@@ -206,11 +231,11 @@ class _ProgressBar extends StatelessWidget {
                         ),
                       ),
                       Align(
-                        alignment: alignStar(gameMap.ratingSteps.$3),
+                        alignment: alignStar(gameMap.ratingSteps.$1),
                         child: SizedBox.fromSize(
                           size: starSize,
                           child: AnimatedStar(
-                            faded: gameMap.ratingSteps.$3 < seconds,
+                            faded: gameMap.ratingSteps.$1 < seconds,
                           ),
                         ),
                       ),
@@ -234,17 +259,5 @@ extension on double {
     required double newMax,
   }) {
     return ((this - min) / (max - min)) * (newMax - newMin) + newMin;
-  }
-}
-
-class _StopwatchIcon extends StatelessWidget {
-  const _StopwatchIcon();
-
-  @override
-  Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: Assets.images.display.stopwatch.image(),
-    );
   }
 }

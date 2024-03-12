@@ -1,7 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_behaviors/flame_behaviors.dart';
-import 'package:flame_tiled/flame_tiled.dart';
+import 'package:tiled/tiled.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/gen/assets.gen.dart';
 import 'package:trashy_road/src/game/game.dart';
@@ -9,7 +9,7 @@ import 'package:trashy_road/src/game/game.dart';
 class Obstacle extends PositionedEntity with Untraversable, ZIndex {
   Obstacle._({
     required Vector2 super.position,
-    required RectangleHitbox hitbox,
+    required this.hitbox,
     super.children,
   }) : super(
           anchor: Anchor.bottomLeft,
@@ -18,11 +18,6 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
             DroppingBehavior(
               drop: Vector2(0, -50),
               minDuration: 0.15,
-            ),
-            PropagatingCollisionBehavior(
-              hitbox
-                ..isSolid = true
-                ..anchor = Anchor.bottomLeft,
             ),
           ],
         ) {
@@ -36,8 +31,8 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
       : this._(
           position: position,
           hitbox: RectangleHitbox(
-            position: Vector2(0.1, 0)..toGameSize(),
-            size: Vector2(0.8, 0.8)..toGameSize(),
+            position: Vector2(0.25, -0.15)..toGameSize(),
+            size: Vector2(0.5, 0.7)..toGameSize(),
           ),
           children: [_Tree1SpriteGroup()],
         );
@@ -49,8 +44,8 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
       : this._(
           position: position,
           hitbox: RectangleHitbox(
-            position: Vector2(0.1, 0)..toGameSize(),
-            size: Vector2(0.8, 0.8)..toGameSize(),
+            position: Vector2(0.25, -0.15)..toGameSize(),
+            size: Vector2(0.5, 0.7)..toGameSize(),
           ),
           children: [_Tree2SpriteGroup()],
         );
@@ -75,8 +70,8 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
       : this._(
           position: position,
           hitbox: RectangleHitbox(
-            position: Vector2(0.1, 0)..toGameSize(),
-            size: Vector2(0.8, 0.8)..toGameSize(),
+            position: Vector2(0.25, -0.15)..toGameSize(),
+            size: Vector2(0.5, 0.7)..toGameSize(),
           ),
           children: [_Bush1SpriteGroup()],
         );
@@ -89,8 +84,8 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
       : this._(
           position: position,
           hitbox: RectangleHitbox(
-            position: Vector2(0.1, 0)..toGameSize(),
-            size: Vector2(0.8, 0.8)..toGameSize(),
+            position: Vector2(0.25, -0.15)..toGameSize(),
+            size: Vector2(0.5, 0.7)..toGameSize(),
           ),
           children: [_Bush2SpriteGroup()],
         );
@@ -134,6 +129,45 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
           children: [_Building4SpriteGroup()],
         );
 
+  // An Obstacle that is a building.
+  //
+  // The building takes up a 2x3 tile space.
+  Obstacle._building5({required Vector2 position})
+      : this._(
+          position: position,
+          hitbox: RectangleHitbox(
+            position: Vector2(0.1, -0.1)..toGameSize(),
+            size: Vector2(1.8, 2.7)..toGameSize(),
+          ),
+          children: [_Building5SpriteGroup()],
+        );
+
+  // An Obstacle that is a building.
+  //
+  // The building takes up a 3x3 tile space.
+  Obstacle._building6({required Vector2 position})
+      : this._(
+          position: position,
+          hitbox: RectangleHitbox(
+            position: Vector2(0.1, 0)..toGameSize(),
+            size: Vector2(2.8, 2.8)..toGameSize(),
+          ),
+          children: [_Building6SpriteGroup()],
+        );
+
+  // An Obstacle that is a building.
+  //
+  // The building takes up a 3x3 tile space.
+  Obstacle._building7({required Vector2 position})
+      : this._(
+          position: position,
+          hitbox: RectangleHitbox(
+            position: Vector2(0.25, -0.5)..toGameSize(),
+            size: Vector2(1.5, 1.8)..toGameSize(),
+          ),
+          children: [_Building7SpriteGroup()],
+        );
+
   // An Obstacle that is a bench.
   //
   // The bench takes up 2x1 tile space
@@ -145,6 +179,45 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
             size: Vector2(1, 0.6)..toGameSize(),
           ),
           children: [_BenchSpriteGroup()],
+        );
+
+  // An Obstacle that is a lamp post.
+  //
+  // The lamp post takes up 1x2 tile space
+  Obstacle._lampPost({required Vector2 position})
+      : this._(
+          position: position,
+          hitbox: RectangleHitbox(
+            position: Vector2(0.2, -0.1)..toGameSize(),
+            size: Vector2(0.6, 0.6)..toGameSize(),
+          ),
+          children: [_LampPostSpriteGroup()],
+        );
+
+  // An Obstacle that is a bus stop.
+  //
+  // The lamp post takes up 1x2 tile space
+  Obstacle._busStop({required Vector2 position})
+      : this._(
+          position: position,
+          hitbox: RectangleHitbox(
+            position: Vector2(0.2, -0.1)..toGameSize(),
+            size: Vector2(0.6, 0.6)..toGameSize(),
+          ),
+          children: [_BusStopSpriteGroup()],
+        );
+
+  // A Obstacle that is an post box.
+  //
+  // The postbox takes up 1x2 tile space
+  Obstacle._postBox({required Vector2 position})
+      : this._(
+          position: position,
+          hitbox: RectangleHitbox(
+            position: Vector2(0.2, -0.1)..toGameSize(),
+            size: Vector2(0.6, 0.6)..toGameSize(),
+          ),
+          children: [_PostBoxSpriteGroup()],
         );
 
   factory Obstacle.fromTiledObject(TiledObject tiledObject) {
@@ -168,10 +241,45 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
         return Obstacle._building3(position: position);
       case 'building_4':
         return Obstacle._building4(position: position);
+      case 'building_5':
+        return Obstacle._building5(position: position);
+      case 'building_6':
+        return Obstacle._building6(position: position);
+      case 'building_7':
+        return Obstacle._building7(position: position);
       case 'bench':
         return Obstacle._bench(position: position);
+      case 'lamp_post':
+        return Obstacle._lampPost(position: position);
+      case 'bus_stop':
+        return Obstacle._busStop(position: position);
+      case 'post_box':
+        return Obstacle._postBox(position: position);
       default:
         throw ArgumentError('Unknown obstacle type: $type');
+    }
+  }
+
+  final RectangleHitbox hitbox;
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+
+    final world = ancestors().whereType<TrashyRoadWorld>().first;
+    final mapEdges = world.descendants().whereType<MapEdge>().toSet();
+
+    final isInMapEdge = mapEdges
+        .any((element) => element.isPointInside(position + hitbox.position));
+
+    if (!isInMapEdge) {
+      add(
+        PropagatingCollisionBehavior(
+          hitbox
+            ..isSolid = true
+            ..anchor = Anchor.bottomLeft,
+        ),
+      );
     }
   }
 }
@@ -185,10 +293,6 @@ class _Tree1SpriteGroup extends PositionComponent {
           position: Vector2(-0.2, 0.5)..toGameSize(),
           scale: Vector2.all(0.8),
           children: [
-            GameSpriteComponent.fromPath(
-              anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.sprites.tree1Shadow.path,
-            ),
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
               spritePath: Assets.images.sprites.tree1.path,
@@ -208,10 +312,6 @@ class _Tree2SpriteGroup extends PositionComponent {
           children: [
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.sprites.tree2Shadow.path,
-            ),
-            GameSpriteComponent.fromPath(
-              anchor: Anchor.bottomLeft,
               spritePath: Assets.images.sprites.tree2.path,
             ),
           ],
@@ -227,10 +327,6 @@ class _FireHydrantSpriteGroup extends PositionComponent {
           position: Vector2(0.2, 0)..toGameSize(),
           scale: Vector2.all(1),
           children: [
-            GameSpriteComponent.fromPath(
-              anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.sprites.fireHydrantShadow.path,
-            ),
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
               spritePath: Assets.images.sprites.fireHydrant.path,
@@ -250,10 +346,6 @@ class _Bush1SpriteGroup extends PositionComponent {
           children: [
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.sprites.bush1Shadow.path,
-            ),
-            GameSpriteComponent.fromPath(
-              anchor: Anchor.bottomLeft,
               spritePath: Assets.images.sprites.bush1.path,
             ),
           ],
@@ -269,10 +361,6 @@ class _Bush2SpriteGroup extends PositionComponent {
           position: Vector2(0.12, -0.1)..toGameSize(),
           scale: Vector2.all(0.5),
           children: [
-            GameSpriteComponent.fromPath(
-              anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.sprites.bush2Shadow.path,
-            ),
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
               spritePath: Assets.images.sprites.bush2.path,
@@ -386,6 +474,111 @@ class _Building4SpriteGroup extends PositionedEntity {
         );
 }
 
+class _Building5SpriteGroup extends PositionedEntity {
+  _Building5SpriteGroup()
+      : super(
+          // The `size`, `position` and `scale` have been eye-balled to fit with
+          // the tile size.
+          position: Vector2(-0.05, -0.1)..toGameSize(),
+          behaviors: [
+            PropagatingCollisionBehavior(
+              /// This hitbox is for determining if the player is behind the
+              /// sprite.
+              RectangleHitbox(
+                isSolid: true,
+                size: Vector2(1, 5.45)..toGameSize(),
+                position: Vector2(0.5, -0.3)..toGameSize(),
+                anchor: Anchor.bottomLeft,
+              ),
+            ),
+            HidingWhenPlayerBehind(),
+          ],
+          children: [
+            GameSpriteComponent.fromPath(
+              scale: Vector2(0.5, 0.65),
+              position: Vector2(0, 0)..toGameSize(),
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.sprites.buildingShadow.path,
+            ),
+            GameSpriteComponent.fromPath(
+              scale: Vector2.all(0.5),
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.sprites.building5.path,
+            ),
+          ],
+        );
+}
+
+class _Building6SpriteGroup extends PositionedEntity {
+  _Building6SpriteGroup()
+      : super(
+          // The `size`, `position` and `scale` have been eye-balled to fit with
+          // the tile size.
+          position: Vector2(-0.05, -0.1)..toGameSize(),
+          behaviors: [
+            PropagatingCollisionBehavior(
+              /// This hitbox is for determining if the player is behind the
+              /// sprite.
+              RectangleHitbox(
+                isSolid: true,
+                size: Vector2(2.1, 8)..toGameSize(),
+                position: Vector2(0.5, -0.4)..toGameSize(),
+                anchor: Anchor.bottomLeft,
+              ),
+            ),
+            HidingWhenPlayerBehind(),
+          ],
+          children: [
+            GameSpriteComponent.fromPath(
+              scale: Vector2.all(0.8),
+              position: Vector2(-0.05, 0.12)..toGameSize(),
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.sprites.buildingShadow.path,
+            ),
+            GameSpriteComponent.fromPath(
+              scale: Vector2.all(0.65),
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.sprites.building6.path,
+            ),
+          ],
+        );
+}
+
+class _Building7SpriteGroup extends PositionedEntity {
+  _Building7SpriteGroup()
+      : super(
+          // The `size`, `position` and `scale` have been eye-balled to fit with
+          // the tile size.
+          position: Vector2(-0.05, -0.1)..toGameSize(),
+          behaviors: [
+            PropagatingCollisionBehavior(
+              /// This hitbox is for determining if the player is behind the
+              /// sprite.
+              RectangleHitbox(
+                isSolid: true,
+                size: Vector2(1.1, 5.6)..toGameSize(),
+                position: Vector2(0.5, -0.7)..toGameSize(),
+                anchor: Anchor.bottomLeft,
+              ),
+            ),
+            HidingWhenPlayerBehind(),
+          ],
+          children: [
+            GameSpriteComponent.fromPath(
+              scale: Vector2.all(0.5),
+              position: Vector2(0, 0.12)..toGameSize(),
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.sprites.buildingShadow.path,
+            ),
+            GameSpriteComponent.fromPath(
+              scale: Vector2(0.35, 0.4),
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.sprites.building7.path,
+            ),
+          ],
+        );
+}
+
 class _BenchSpriteGroup extends PositionComponent {
   _BenchSpriteGroup()
       : super(
@@ -396,11 +589,55 @@ class _BenchSpriteGroup extends PositionComponent {
           children: [
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.sprites.benchShadow.path,
+              spritePath: Assets.images.sprites.bench.path,
             ),
+          ],
+        );
+}
+
+class _LampPostSpriteGroup extends PositionComponent {
+  _LampPostSpriteGroup()
+      : super(
+          // The `size`, `position` and `scale` have been eye-balled to fit with
+          // the tile size.
+          position: Vector2(0.3, -0.1)..toGameSize(),
+          scale: Vector2.all(0.6),
+          children: [
             GameSpriteComponent.fromPath(
               anchor: Anchor.bottomLeft,
-              spritePath: Assets.images.sprites.bench.path,
+              spritePath: Assets.images.sprites.lampPost.path,
+            ),
+          ],
+        );
+}
+
+class _BusStopSpriteGroup extends PositionComponent {
+  _BusStopSpriteGroup()
+      : super(
+          // The `size`, `position` and `scale` have been eye-balled to fit with
+          // the tile size.
+          position: Vector2(0.3, -0.1)..toGameSize(),
+          scale: Vector2.all(0.6),
+          children: [
+            GameSpriteComponent.fromPath(
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.sprites.busStop.path,
+            ),
+          ],
+        );
+}
+
+class _PostBoxSpriteGroup extends PositionComponent {
+  _PostBoxSpriteGroup()
+      : super(
+          // The `size`, `position` and `scale` have been eye-balled to fit with
+          // the tile size.
+          position: Vector2(0.15, -0.1)..toGameSize(),
+          scale: Vector2.all(0.6),
+          children: [
+            GameSpriteComponent.fromPath(
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.sprites.postBox.path,
             ),
           ],
         );

@@ -6,19 +6,21 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:tiled/tiled.dart';
 import 'package:trashy_road/src/game/game.dart';
+import 'package:trashy_road/src/maps/maps.dart';
 
 part 'game_event.dart';
 part 'game_state.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
   GameBloc({
-    required String identifier,
+    required GameMapIdentifier identifier,
     required TiledMap map,
   }) : super(GameState.initial(identifier: identifier, map: map)) {
     on<GameReadyEvent>(_onGameReady);
     on<GameInteractedEvent>(_onGameInteraction);
     on<GameCollectedTrashEvent>(_onCollectedTrash);
     on<GameDepositedTrashEvent>(_onDepositedTrash);
+    on<GameLostEvent>(_onGameLost);
     on<GameResetEvent>(_onGameReset);
     on<GamePausedEvent>(_onGamePaused);
     on<GameResumedEvent>(_onGameResumed);
@@ -88,6 +90,18 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     );
   }
 
+  void _onGameLost(
+    GameLostEvent event,
+    Emitter<GameState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        status: GameStatus.lost,
+        lostReason: event.reason,
+      ),
+    );
+  }
+
   void _onGameReset(
     GameResetEvent event,
     Emitter<GameState> emit,
@@ -96,10 +110,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       GameState.initial(
         identifier: state.identifier,
         map: state.map,
-      ).copyWith(
-        status: GameStatus.resetting,
-        resetReason: event.reason,
-      ),
+      ).copyWith(status: GameStatus.resetting),
     );
   }
 

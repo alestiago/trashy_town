@@ -20,7 +20,14 @@ import 'package:trashy_road/src/game/game.dart';
 /// * [Untraversable], which marks a component as untraversable.
 /// * [PlayerObstacleBehavior], which makes the player unable to traverse
 ///  through an [Untraversable] component.
-class MapEdge extends PositionedEntity with Untraversable {
+class MapEdge extends PositionedEntity with Untraversable, ZIndex {
+  /// Derives a [MapEdge] from a [TiledObject].
+  factory MapEdge.fromTiledObject(TiledObject tiledObject) {
+    return MapEdge._(
+      position: Vector2(tiledObject.x, tiledObject.y),
+      size: Vector2(tiledObject.width, tiledObject.height),
+    );
+  }
   MapEdge._({required super.position, required super.size})
       : super(
           anchor: Anchor.topLeft,
@@ -31,16 +38,19 @@ class MapEdge extends PositionedEntity with Untraversable {
       ),
       RectangleComponent(size: size)
         ..setColor(
-          const Color.fromARGB(40, 0, 0, 0),
+          const Color.fromARGB(20, 0, 0, 0),
         ),
     ]);
   }
 
-  /// Derives a [MapEdge] from a [TiledObject].
-  factory MapEdge.fromTiledObject(TiledObject tiledObject) {
-    return MapEdge._(
-      position: Vector2(tiledObject.x, tiledObject.y),
-      size: Vector2(tiledObject.width, tiledObject.height),
-    );
+  @override
+  int get zIndex => 1;
+
+  /// Whether the given [position] is inside the [MapEdge].
+  bool isPointInside(Vector2 position) {
+    return position.x >= this.position.x &&
+        position.x <= this.position.x + size.x &&
+        position.y >= this.position.y &&
+        position.y <= this.position.y + size.y;
   }
 }

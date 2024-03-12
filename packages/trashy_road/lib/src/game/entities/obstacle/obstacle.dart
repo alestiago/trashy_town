@@ -129,6 +129,45 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
           children: [_Building4SpriteGroup()],
         );
 
+  // An Obstacle that is a building.
+  //
+  // The building takes up a 2x3 tile space.
+  Obstacle._building5({required Vector2 position})
+      : this._(
+          position: position,
+          hitbox: RectangleHitbox(
+            position: Vector2(0.1, -0.1)..toGameSize(),
+            size: Vector2(1.8, 2.7)..toGameSize(),
+          ),
+          children: [_Building5SpriteGroup()],
+        );
+
+  // An Obstacle that is a building.
+  //
+  // The building takes up a 3x3 tile space.
+  Obstacle._building6({required Vector2 position})
+      : this._(
+          position: position,
+          hitbox: RectangleHitbox(
+            position: Vector2(0.1, 0)..toGameSize(),
+            size: Vector2(2.8, 2.8)..toGameSize(),
+          ),
+          children: [_Building6SpriteGroup()],
+        );
+
+  // An Obstacle that is a building.
+  //
+  // The building takes up a 3x3 tile space.
+  Obstacle._building7({required Vector2 position})
+      : this._(
+          position: position,
+          hitbox: RectangleHitbox(
+            position: Vector2(0.25, -0.5)..toGameSize(),
+            size: Vector2(1.5, 1.8)..toGameSize(),
+          ),
+          children: [_Building7SpriteGroup()],
+        );
+
   // An Obstacle that is a bench.
   //
   // The bench takes up 2x1 tile space
@@ -202,6 +241,12 @@ class Obstacle extends PositionedEntity with Untraversable, ZIndex {
         return Obstacle._building3(position: position);
       case 'building_4':
         return Obstacle._building4(position: position);
+      case 'building_5':
+        return Obstacle._building5(position: position);
+      case 'building_6':
+        return Obstacle._building6(position: position);
+      case 'building_7':
+        return Obstacle._building7(position: position);
       case 'bench':
         return Obstacle._bench(position: position);
       case 'lamp_post':
@@ -444,6 +489,111 @@ class _Building4SpriteGroup extends PositionedEntity {
               scale: Vector2(0.35, 0.4),
               anchor: Anchor.bottomLeft,
               spritePath: Assets.images.sprites.building4.path,
+            ),
+          ],
+        );
+}
+
+class _Building5SpriteGroup extends PositionedEntity {
+  _Building5SpriteGroup()
+      : super(
+          // The `size`, `position` and `scale` have been eye-balled to fit with
+          // the tile size.
+          position: Vector2(-0.05, -0.1)..toGameSize(),
+          behaviors: [
+            PropagatingCollisionBehavior(
+              /// This hitbox is for determining if the player is behind the
+              /// sprite.
+              RectangleHitbox(
+                isSolid: true,
+                size: Vector2(1, 5.45)..toGameSize(),
+                position: Vector2(0.5, -0.3)..toGameSize(),
+                anchor: Anchor.bottomLeft,
+              ),
+            ),
+            HidingWhenPlayerBehind(),
+          ],
+          children: [
+            GameSpriteComponent.fromPath(
+              scale: Vector2(0.5, 0.65),
+              position: Vector2(0, 0)..toGameSize(),
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.sprites.buildingShadow.path,
+            ),
+            GameSpriteComponent.fromPath(
+              scale: Vector2.all(0.5),
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.sprites.building5.path,
+            ),
+          ],
+        );
+}
+
+class _Building6SpriteGroup extends PositionedEntity {
+  _Building6SpriteGroup()
+      : super(
+          // The `size`, `position` and `scale` have been eye-balled to fit with
+          // the tile size.
+          position: Vector2(-0.05, -0.1)..toGameSize(),
+          behaviors: [
+            PropagatingCollisionBehavior(
+              /// This hitbox is for determining if the player is behind the
+              /// sprite.
+              RectangleHitbox(
+                isSolid: true,
+                size: Vector2(2.1, 8)..toGameSize(),
+                position: Vector2(0.5, -0.4)..toGameSize(),
+                anchor: Anchor.bottomLeft,
+              ),
+            ),
+            HidingWhenPlayerBehind(),
+          ],
+          children: [
+            GameSpriteComponent.fromPath(
+              scale: Vector2.all(0.8),
+              position: Vector2(-0.05, 0.12)..toGameSize(),
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.sprites.buildingShadow.path,
+            ),
+            GameSpriteComponent.fromPath(
+              scale: Vector2.all(0.65),
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.sprites.building6.path,
+            ),
+          ],
+        );
+}
+
+class _Building7SpriteGroup extends PositionedEntity {
+  _Building7SpriteGroup()
+      : super(
+          // The `size`, `position` and `scale` have been eye-balled to fit with
+          // the tile size.
+          position: Vector2(-0.05, -0.1)..toGameSize(),
+          behaviors: [
+            PropagatingCollisionBehavior(
+              /// This hitbox is for determining if the player is behind the
+              /// sprite.
+              RectangleHitbox(
+                isSolid: true,
+                size: Vector2(1.1, 5.6)..toGameSize(),
+                position: Vector2(0.5, -0.7)..toGameSize(),
+                anchor: Anchor.bottomLeft,
+              ),
+            ),
+            HidingWhenPlayerBehind(),
+          ],
+          children: [
+            GameSpriteComponent.fromPath(
+              scale: Vector2.all(0.5),
+              position: Vector2(0, 0.12)..toGameSize(),
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.sprites.buildingShadow.path,
+            ),
+            GameSpriteComponent.fromPath(
+              scale: Vector2(0.35, 0.4),
+              anchor: Anchor.bottomLeft,
+              spritePath: Assets.images.sprites.building7.path,
             ),
           ],
         );

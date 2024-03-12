@@ -37,13 +37,13 @@
 8,8,24,24,24,24,24,24,24,24,24,24,24,24,8,8
 </data>
  </layer>
- <objectgroup id="8" name="Border" visible="0" locked="1">
+ <objectgroup id="8" name="Border" locked="1">
   <object id="84" x="512" y="0" width="1024" height="320"/>
   <object id="85" x="0" y="0" width="512" height="2048"/>
   <object id="86" x="1536" y="0" width="512" height="2048"/>
   <object id="168" x="512" y="1728" width="1024" height="320"/>
  </objectgroup>
- <objectgroup id="5" name="Obstacles" visible="0">
+ <objectgroup id="5" name="Obstacles">
   <object id="170" template="building_2.tx" class="building_2" gid="17" x="256" y="704" width="256" height="384"/>
   <object id="177" template="building_2.tx" class="building_2" gid="17" x="896" y="384" width="256" height="384"/>
   <object id="180" template="building_2.tx" class="building_2" gid="17" x="1536" y="448" width="256" height="384"/>
@@ -132,7 +132,7 @@
   <object id="341" template="building_6.tx" class="building_6" gid="51" x="1536" y="704" width="384" height="649"/>
   <object id="342" template="building_5.tx" class="building_5" gid="50" x="0" y="640" width="256" height="384"/>
  </objectgroup>
- <objectgroup id="6" name="RoadLayer" visible="0">
+ <objectgroup id="6" name="RoadLayer">
   <object id="190" template="road_lane.tx" name="road_lane" class="road_lane" x="64" y="752">
    <properties>
     <property name="leftToRight" type="bool" value="true"/>
@@ -150,7 +150,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="2" name="TrashLayer" visible="0">
+ <objectgroup id="2" name="TrashLayer">
   <object id="188" template="trash_organic.tx" name="organic" class="trash" gid="3" x="1408" y="640" width="128" height="64">
    <properties>
     <property name="type" value="organic"/>
@@ -162,14 +162,14 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="4" name="CoreItemsLayer" visible="0">
+ <objectgroup id="4" name="CoreItemsLayer">
   <object id="187" template="trash_can_organic.tx" name="trash_can_organic_city" class="trash_can" gid="36" x="896" y="448" width="128" height="128">
    <properties>
     <property name="type" value="organic"/>
     <property name="variant" value="city"/>
    </properties>
   </object>
-  <object id="256" template="spawn.tx" name="player" class="player" x="1344" y="1696"/>
+  <object id="256" template="spawn.tx" name="player" class="player" x="1024" y="1344"/>
   <object id="305" template="trash_can_park_plastic.tx" name="trash_can_plastic_park" class="trash_can" gid="40" x="1280" y="1088" width="128" height="128">
    <properties>
     <property name="type" value="plastic"/>

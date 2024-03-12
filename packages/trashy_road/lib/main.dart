@@ -35,7 +35,7 @@ class _MyApp extends StatelessWidget {
             images: Images(prefix: ''),
             tiled: TiledCache(),
             imageProviderCache: ImageProviderCache(
-              precacheImage: (provider) => precacheImage(provider, context),
+              precacheImage: (provider) async {},
             ),
           )..loadSequentially(),
         ),

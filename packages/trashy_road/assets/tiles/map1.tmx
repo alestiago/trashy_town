@@ -156,7 +156,7 @@
     <property name="type" value="organic"/>
    </properties>
   </object>
-  <object id="255" template="trash_plastic.tx" name="plastic" class="trash" gid="35" x="1280" y="1408" width="128" height="64">
+  <object id="255" template="trash_plastic.tx" name="plastic" class="trash" gid="35" x="1024" y="1152" width="128" height="64">
    <properties>
     <property name="type" value="plastic"/>
    </properties>
@@ -170,7 +170,7 @@
    </properties>
   </object>
   <object id="256" template="spawn.tx" name="player" class="player" x="1024" y="1344"/>
-  <object id="305" template="trash_can_park_plastic.tx" name="trash_can_plastic_park" class="trash_can" gid="40" x="1280" y="1088" width="128" height="128">
+  <object id="305" template="trash_can_park_plastic.tx" name="trash_can_plastic_park" class="trash_can" gid="40" x="640" y="1088" width="128" height="128">
    <properties>
     <property name="type" value="plastic"/>
     <property name="variant" value="park"/>

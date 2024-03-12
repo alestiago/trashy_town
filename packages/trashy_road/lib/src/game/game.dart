@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:trashy_road/game_settings.dart';
 import 'package:trashy_road/src/audio/audio.dart';
 import 'package:trashy_road/src/game/game.dart';
-import 'package:trashy_road/src/game/widgets/widgets.dart';
 
 export 'bloc/bloc.dart';
 export 'components/components.dart';

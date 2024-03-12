@@ -248,12 +248,11 @@ enum PaperStyle {
 
 /// A plastic bottle.
 ///
-/// Renders the plastic bottle and its shadow.
+/// Renders the plastic bottle.
 class _PlasticSpriteGroup extends PositionComponent
     with HasGameRef<TrashyRoadGame> {
   _PlasticSpriteGroup._({
     required String spritePath,
-    required String shadowPath,
     super.scale,
   }) : super(
           // The `position` and `scale` have been eyeballed to match with the
@@ -261,10 +260,6 @@ class _PlasticSpriteGroup extends PositionComponent
           position: Vector2(0.5, 1.4)..toGameSize(),
           anchor: Anchor.center,
           children: [
-            GameSpriteComponent.fromPath(
-              anchor: Anchor.center,
-              spritePath: shadowPath,
-            ),
             GameSpriteComponent.fromPath(
               anchor: Anchor.center,
               spritePath: spritePath,
@@ -293,47 +288,41 @@ class _PlasticSpriteGroup extends PositionComponent
   /// {@macro _PlasticStyle.plasticBottleOne}
   factory _PlasticSpriteGroup._plasticBottleOne() => _PlasticSpriteGroup._(
         spritePath: Assets.images.sprites.plasticBottle1.path,
-        shadowPath: Assets.images.sprites.plasticBottle1Shadow.path,
         scale: Vector2.all(0.5),
       );
 
   /// {@macro _PlasticBo_PlasticStylettleStyle.plasticBottleTwo}
   factory _PlasticSpriteGroup._plasticBottleTwo() => _PlasticSpriteGroup._(
         spritePath: Assets.images.sprites.plasticBottle2.path,
-        shadowPath: Assets.images.sprites.plasticBottle2Shadow.path,
         scale: Vector2.all(0.5),
       );
 
   /// {@macro _PlasticStyle.coldTakeAwayCup}
   factory _PlasticSpriteGroup._coldTakeAwayCup() => _PlasticSpriteGroup._(
         spritePath: Assets.images.sprites.takeawayCupCold.path,
-        shadowPath: Assets.images.sprites.takeawayCupColdShadow.path,
         scale: Vector2.all(0.8),
       );
 
   /// {@macro _PlasticStyle.straw}
   factory _PlasticSpriteGroup._straw() => _PlasticSpriteGroup._(
         spritePath: Assets.images.sprites.plasticStraw.path,
-        shadowPath: Assets.images.sprites.plasticStrawShadow.path,
         scale: Vector2.all(0.8),
       );
 
   /// {@macro _PlasticStyle.canHolder}
   factory _PlasticSpriteGroup._canHolder() => _PlasticSpriteGroup._(
         spritePath: Assets.images.sprites.canHolder.path,
-        shadowPath: Assets.images.sprites.canHolderShadow.path,
         scale: Vector2.all(0.8),
       );
 }
 
 /// An apple core.
 ///
-/// Renders an apple core and its shadow.
+/// Renders an apple core.
 class _OrganicSpriteGroup extends PositionComponent
     with HasGameRef<TrashyRoadGame> {
   _OrganicSpriteGroup._({
     required String spritePath,
-    required String shadowPath,
   }) : super(
           // The `position` and `scale` have been eyeballed to match with the
           // appearance of the map.
@@ -341,10 +330,6 @@ class _OrganicSpriteGroup extends PositionComponent
           scale: Vector2.all(0.5),
           anchor: Anchor.center,
           children: [
-            GameSpriteComponent.fromPath(
-              anchor: Anchor.center,
-              spritePath: shadowPath,
-            ),
             GameSpriteComponent.fromPath(
               anchor: Anchor.center,
               spritePath: spritePath,
@@ -371,36 +356,31 @@ class _OrganicSpriteGroup extends PositionComponent
   /// {@macro _OrganicStyle.one}
   factory _OrganicSpriteGroup._styleOne() => _OrganicSpriteGroup._(
         spritePath: Assets.images.sprites.appleCore1.path,
-        shadowPath: Assets.images.sprites.appleCore1Shadow.path,
       );
 
   /// {@macro _OrganicStyle.two}
   factory _OrganicSpriteGroup._styleTwo() => _OrganicSpriteGroup._(
         spritePath: Assets.images.sprites.appleCore2.path,
-        shadowPath: Assets.images.sprites.appleCore2Shadow.path,
       );
 
   /// {@macro _OrganicStyle.banana}
   factory _OrganicSpriteGroup._banana() => _OrganicSpriteGroup._(
         spritePath: Assets.images.sprites.banana.path,
-        shadowPath: Assets.images.sprites.bananaShadow.path,
       );
 
   /// {@macro _OrganicStyle.sandwich}
   factory _OrganicSpriteGroup._sandwich() => _OrganicSpriteGroup._(
         spritePath: Assets.images.sprites.sandwich.path,
-        shadowPath: Assets.images.sprites.sandwichShadow.path,
       );
 }
 
 /// A stack of paper
 ///
-/// Renders a stack of paper and its shadow.
+/// Renders a stack of paper.
 class _PaperSpriteGroup extends PositionComponent
     with HasGameRef<TrashyRoadGame> {
   _PaperSpriteGroup._({
     required String spritePath,
-    required String shadowPath,
   }) : super(
           // The `position` and `scale` have been eyeballed to match with the
           // appearance of the map.
@@ -408,10 +388,6 @@ class _PaperSpriteGroup extends PositionComponent
           scale: Vector2.all(0.5),
           anchor: Anchor.center,
           children: [
-            GameSpriteComponent.fromPath(
-              anchor: Anchor.center,
-              spritePath: shadowPath,
-            ),
             GameSpriteComponent.fromPath(
               anchor: Anchor.center,
               spritePath: spritePath,
@@ -438,24 +414,20 @@ class _PaperSpriteGroup extends PositionComponent
   /// {@macro _PaperStyle.one}
   factory _PaperSpriteGroup._styleOne() => _PaperSpriteGroup._(
         spritePath: Assets.images.sprites.paper1.path,
-        shadowPath: Assets.images.sprites.paper1Shadow.path,
       );
 
   /// {@macro _PaperStyle.two}
   factory _PaperSpriteGroup._styleTwo() => _PaperSpriteGroup._(
         spritePath: Assets.images.sprites.paper2.path,
-        shadowPath: Assets.images.sprites.paper2Shadow.path,
       );
 
   /// {@macro _PaperStyle.hotTakeAwayCup}
   factory _PaperSpriteGroup._hotTakeAwayCup() => _PaperSpriteGroup._(
         spritePath: Assets.images.sprites.takeawayCupHot.path,
-        shadowPath: Assets.images.sprites.takeawayCupHotShadow.path,
       );
 
   /// {@macro _PaperStyle.hotTakeAwayCup}
   factory _PaperSpriteGroup._paperBall() => _PaperSpriteGroup._(
         spritePath: Assets.images.sprites.paperBall.path,
-        shadowPath: Assets.images.sprites.paperBallShadow.path,
       );
 }

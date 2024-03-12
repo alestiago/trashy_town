@@ -22,11 +22,7 @@ export 'view/view.dart';
 export 'widgets/widgets.dart';
 
 class TrashyRoadGame extends FlameGame
-    with
-        HasKeyboardHandlerComponents,
-        HasCollisionDetection,
-        TapCallbacks,
-        DragCallbacks {
+    with HasKeyboardHandlerComponents, HasCollisionDetection {
   TrashyRoadGame({
     required GameBloc gameBloc,
     required this.audioBloc,
@@ -52,7 +48,7 @@ class TrashyRoadGame extends FlameGame
 
   final Random random;
 
-  late final Player _player;
+  Player? _player;
 
   MapBounds? bounds;
 
@@ -96,7 +92,7 @@ class TrashyRoadGame extends FlameGame
     unawaited(
       trashyRoadWorld.loaded.then((_) async {
         _player = trashyRoadWorld.children.whereType<Player>().first;
-        final cameraMan = _CameraMan(actor: _player);
+        final cameraMan = _CameraMan(actor: _player!);
         await world.add(cameraMan);
         camera.follow(cameraMan);
         _updateBounds();
@@ -129,25 +125,35 @@ class TrashyRoadGame extends FlameGame
     }
   }
 
-  @override
-  void onTapUp(TapUpEvent event) {
-    super.onTapUp(event);
-    _player.children.query<PlayerDragMovingBehavior>().first.onTapUp(event);
+  void onTapUp(TapUpDetails event) {
+    final player = _player;
+    if (player == null) return;
+
+    player.children.query<PlayerDragMovingBehavior>().first.onTapUp(event);
   }
 
-  @override
-  void onDragUpdate(DragUpdateEvent event) {
-    super.onDragUpdate(event);
-    _player.children
+  void onPanEnd(DragEndDetails details) {
+    final player = _player;
+    if (player == null) return;
+
+    player.children.query<PlayerDragMovingBehavior>().first.onPanEnd(details);
+  }
+
+  void onPanUpdate(DragUpdateDetails details) {
+    final player = _player;
+    if (player == null) return;
+
+    player.children
         .query<PlayerDragMovingBehavior>()
         .first
-        .onDragUpdate(event);
+        .onPanUpdate(details);
   }
 
-  @override
-  void onDragStart(DragStartEvent event) {
-    super.onDragStart(event);
-    _player.children.query<PlayerDragMovingBehavior>().first.onDragStart(event);
+  void onPanStart(DragStartDetails details) {
+    final player = _player;
+    if (player == null) return;
+
+    player.children.query<PlayerDragMovingBehavior>().first.onPanStart(details);
   }
 
   @override
@@ -157,18 +163,11 @@ class TrashyRoadGame extends FlameGame
   }
 }
 
-class _CameraMan extends PositionComponent {
+class _CameraMan extends PositionComponent
+    with HasGameReference<TrashyRoadGame> {
   _CameraMan({required this.actor});
 
   final PositionComponent actor;
-
-  static final _offset = UnmodifiableVector2View(0, -200);
-
-  void _updatePosition() {
-    position
-      ..setFrom(actor.position)
-      ..add(_offset);
-  }
 
   @override
   FutureOr<void> onLoad() async {
@@ -180,5 +179,11 @@ class _CameraMan extends PositionComponent {
   void update(double dt) {
     super.update(dt);
     _updatePosition();
+  }
+
+  void _updatePosition() {
+    position
+      ..setFrom(actor.position)
+      ..y -= game.camera.viewport.size.y / 4.25;
   }
 }

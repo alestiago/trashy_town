@@ -15,8 +15,15 @@ final class PlayerMovingBehavior extends Behavior<Player>
         FlameBlocReader<GameBloc, GameState>,
         ParentIsA<Player>,
         HasGameReference<TrashyRoadGame> {
+  /// The delay between player moves for each item in the inventory.
+  static const delayPerItem = Duration(milliseconds: 25);
+
+  /// The base time it takes for the player to move from one position to
+  /// another.
+  static const baseMoveTime = Duration(milliseconds: 150);
+
   /// The delay between player moves.
-  static const moveDelay = Duration(milliseconds: 200);
+  Duration moveDelay = baseMoveTime;
 
   /// States whether the player is currently moving.
   bool _isMoving = false;
@@ -94,6 +101,12 @@ final class PlayerMovingBehavior extends Behavior<Player>
     }
     parent.hop(direction);
     _isMoving = true;
+
+    final delayMilliseconds =
+        (bloc.state.inventory.items.length * delayPerItem.inMilliseconds) +
+            baseMoveTime.inMilliseconds;
+    moveDelay = Duration(milliseconds: delayMilliseconds);
+
     _nextMoveTime = now.add(moveDelay);
   }
 

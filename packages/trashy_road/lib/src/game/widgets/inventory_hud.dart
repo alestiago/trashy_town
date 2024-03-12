@@ -143,19 +143,19 @@ class _FilledInventorySlot extends StatefulWidget {
         asset: Assets.images.display.slotAppleCore.path,
         frames: 23,
         amountPerRow: 6,
-        size: const Size.square(458),
+        size: const Size.square(96),
       ),
       TrashType.paper: _SpriteSheetData(
         asset: Assets.images.display.slotPaperBox.path,
         frames: 21,
         amountPerRow: 6,
-        size: const Size.square(458),
+        size: const Size.square(96),
       ),
       TrashType.plastic: _SpriteSheetData(
         asset: Assets.images.display.slotPlasticBottle.path,
         frames: 21,
         amountPerRow: 6,
-        size: const Size.square(458),
+        size: const Size.square(96),
       ),
     },
   );

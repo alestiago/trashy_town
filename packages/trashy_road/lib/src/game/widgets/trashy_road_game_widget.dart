@@ -12,7 +12,13 @@ import 'package:trashy_road/src/loading/loading.dart';
 final _random = Random(0);
 
 class TrashyRoadGameWidget extends StatefulWidget {
-  const TrashyRoadGameWidget({super.key});
+  const TrashyRoadGameWidget({
+    required this.onGameCreated,
+    super.key,
+  });
+
+  /// Callback for when the game is created.
+  final void Function(TrashyRoadGame game) onGameCreated;
 
   @override
   State<TrashyRoadGameWidget> createState() => _TrashyRoadGameWidgetState();
@@ -32,7 +38,7 @@ class _TrashyRoadGameWidgetState extends State<TrashyRoadGameWidget> {
     );
 
     TrashyRoadGame gameBuilder() {
-      return kDebugMode
+      final game = kDebugMode
           ? DebugTrashyRoadGame(
               gameBloc: gameBloc,
               images: loadingBloc.images,
@@ -47,6 +53,8 @@ class _TrashyRoadGameWidgetState extends State<TrashyRoadGameWidget> {
               resolution: resolution,
               random: _random,
             );
+      widget.onGameCreated(game);
+      return game;
     }
 
     _game ??= gameBuilder();

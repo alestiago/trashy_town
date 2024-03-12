@@ -157,18 +157,11 @@ class TrashyRoadGame extends FlameGame
   }
 }
 
-class _CameraMan extends PositionComponent {
+class _CameraMan extends PositionComponent
+    with HasGameReference<TrashyRoadGame> {
   _CameraMan({required this.actor});
 
   final PositionComponent actor;
-
-  static final _offset = UnmodifiableVector2View(0, -200);
-
-  void _updatePosition() {
-    position
-      ..setFrom(actor.position)
-      ..add(_offset);
-  }
 
   @override
   FutureOr<void> onLoad() async {
@@ -180,5 +173,11 @@ class _CameraMan extends PositionComponent {
   void update(double dt) {
     super.update(dt);
     _updatePosition();
+  }
+
+  void _updatePosition() {
+    position
+      ..setFrom(actor.position)
+      ..y -= game.camera.viewport.size.y / 4.25;
   }
 }

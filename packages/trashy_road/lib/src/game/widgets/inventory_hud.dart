@@ -105,10 +105,10 @@ class _InventorySlot extends StatelessWidget {
                 child: Assets.images.display.slotEmpty.image(),
               ),
             ),
-            if (type != null)
-              Positioned.fill(
-                child: _FilledInventorySlot.fromType(type),
-              ),
+            // if (type != null)
+            //   Positioned.fill(
+            //     child: _FilledInventorySlot.fromType(type),
+            //   ),
           ],
         );
       },

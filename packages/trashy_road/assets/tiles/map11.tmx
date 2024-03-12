@@ -142,7 +142,7 @@
     <property name="type" value="plastic"/>
    </properties>
   </object>
-  <object id="213" template="trash_plastic.tx" name="plastic" class="trash" gid="35" x="1024" y="448" width="128" height="64">
+  <object id="213" template="trash_plastic.tx" name="plastic" class="trash" gid="35" x="1408" y="320" width="128" height="64">
    <properties>
     <property name="type" value="plastic"/>
    </properties>

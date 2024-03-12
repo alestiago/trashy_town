@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.9" tiledversion="1.10.2" name="Tiles" tilewidth="768" tileheight="1024" tilecount="38" columns="0">
+<tileset version="1.9" tiledversion="1.10.2" name="Tiles" tilewidth="768" tileheight="1024" tilecount="39" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="2">
   <image width="128" height="128" source="../images/sprites/apple_core_1.png"/>
@@ -114,5 +114,8 @@
  </tile>
  <tile id="52">
   <image width="128" height="64" source="../images/sprites/dirt--grass-south-east.png"/>
+ </tile>
+ <tile id="53">
+  <image width="128" height="64" source="../images/sprites/road-double.png"/>
  </tile>
 </tileset>

@@ -15,7 +15,7 @@ enum _TutorialStatus {
   trashDeposit,
 
   /// The tutorial has been completed.
-  completed,
+  completed;
 }
 
 /// {@template TutorialHud}
@@ -30,7 +30,7 @@ class TutorialHud extends StatefulWidget {
 }
 
 class _TutorialHudState extends State<TutorialHud> {
-  _TutorialStatus _tutorialStatus = _TutorialStatus.movement;
+  var _tutorialStatus = _TutorialStatus.movement;
 
   @override
   Widget build(BuildContext context) {
@@ -45,19 +45,25 @@ class _TutorialHudState extends State<TutorialHud> {
           final hasDepositedTrash =
               previous.collectedTrash < current.collectedTrash;
 
+          late final _TutorialStatus newTutorialStatus;
           if (_tutorialStatus == _TutorialStatus.movement && hasMoved) {
-            _tutorialStatus = _TutorialStatus.trashCollection;
+            newTutorialStatus = _TutorialStatus.trashCollection;
           } else if (_tutorialStatus == _TutorialStatus.trashCollection &&
               hasCollectedTrash) {
-            _tutorialStatus = _TutorialStatus.trashDeposit;
+            newTutorialStatus = _TutorialStatus.trashDeposit;
           } else if (_tutorialStatus == _TutorialStatus.trashDeposit &&
               hasDepositedTrash) {
-            _tutorialStatus = _TutorialStatus.completed;
+            newTutorialStatus = _TutorialStatus.completed;
           } else {
-            return false;
+            newTutorialStatus = _TutorialStatus.completed;
           }
 
-          return true;
+          final hasChangedStatus = newTutorialStatus != _tutorialStatus;
+          if (hasChangedStatus) {
+            _tutorialStatus = newTutorialStatus;
+          }
+
+          return hasChangedStatus;
         },
         builder: (context, state) {
           switch (_tutorialStatus) {

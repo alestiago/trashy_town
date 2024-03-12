@@ -27,8 +27,6 @@ flutter run -d chrome --release
 
 💡 **Note**: You can also run Trashy Town locally on all the other available platforms (MacOS, Windows, Android, iOS, Linux and Web).
 
-If instead, you wish to contribute refer to the [CONTRIBUTING](CONTRIBUTING.md).
-
 ### Playing with Admin privileges
 
 If you wish to run the game in 🛡️ **Admin** role , you should access [trashytown.com/?admin=true](https://trashytown.com/?admin=true).
@@ -41,6 +39,10 @@ Once you're playing a level you can control Gary with:
 
 - 🖥 Desktop: move around with WASD or arrow keys.
 - 📱 Mobile: tap to move forward or swipe to move vertically or horizontally.
+
+## Contributing
+
+For contributing information refer to the [CONTRIBUTING.md](packages/trashy_road/CONTRIBUTING.md) file.
 
 ---
 

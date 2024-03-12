@@ -818,10 +818,6 @@ class $AssetsImagesSpritesGen {
   AssetGenImage get playerHopShadow =>
       const AssetGenImage('assets/images/sprites/player_hop-shadow.png');
 
-  /// File path: assets/images/sprites/player_hop.png
-  AssetGenImage get playerHop =>
-      const AssetGenImage('assets/images/sprites/player_hop.png');
-
   /// File path: assets/images/sprites/post_box-shadow.png
   AssetGenImage get postBoxShadow =>
       const AssetGenImage('assets/images/sprites/post_box-shadow.png');
@@ -997,7 +993,6 @@ class $AssetsImagesSpritesGen {
         playerUpRight,
         playerUpUp,
         playerHopShadow,
-        playerHop,
         postBoxShadow,
         postBox,
         road,

@@ -102,7 +102,7 @@ class _PlayerSpriteComponent extends SpriteAnimationComponent
   _PlayerSpriteComponent()
       : super(
           position: Vector2(-0.4, -2.5)..toGameSize(),
-          scale: Vector2.all(0.45),
+          scale: Vector2.all(0.9),
         );
 
   final Map<Direction, Map<Direction, SpriteAnimation>> _animations = {};
@@ -139,7 +139,7 @@ class _PlayerSpriteComponent extends SpriteAnimationComponent
         amount: frameCount,
         stepTime:
             (PlayerMovingBehavior.moveDelay.inMilliseconds / 1000) / frameCount,
-        textureSize: Vector2.all(512),
+        textureSize: Vector2.all(256),
         loop: false,
       ),
     );
@@ -174,7 +174,7 @@ class _PlayerShadowSpriteComponent extends SpriteAnimationComponent
   _PlayerShadowSpriteComponent()
       : super(
           position: Vector2(-0.4, -2.5)..toGameSize(),
-          scale: Vector2.all(0.45),
+          scale: Vector2.all(1.8),
         );
 
   @override
@@ -193,7 +193,7 @@ class _PlayerShadowSpriteComponent extends SpriteAnimationComponent
       SpriteAnimationData.sequenced(
         amount: frameCount,
         amountPerRow: 3,
-        textureSize: Vector2.all(512),
+        textureSize: Vector2.all(128),
         stepTime:
             (PlayerMovingBehavior.moveDelay.inMilliseconds / 1000) / frameCount,
         loop: false,

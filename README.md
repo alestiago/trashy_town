@@ -8,7 +8,7 @@ Developed for the [Global Gamers Challenge](https://globalgamers.devpost.com/) b
 
 ---
 
-[Trashy Town](https://trashytown.com) is a sustainable, family-friendly game that promotes collectively cleaning and recycling public spaces. Have fun helping Gary collect all the trash of his Trashy Town and recyle it into the correct trash cans.
+[Trashy Town](https://trashytown.com) is a sustainable, family-friendly game that promotes collectively cleaning public spaces and recycling. Have fun helping Gary collect all the trash of his Trashy Town and recyle it into the correct trash cans.
 
 <!-- Thumbnail with a play icon on the middle that anchors to the video, goes here --->
 
@@ -33,3 +33,7 @@ If instead, you wish to contribute refer to the [CONTRIBUTING](CONTRIBUTING.md).
 
 - 🖥 Desktop: move around with WASD or arrow keys.
 - 📱 Mobile: tap to move forward or swipe to move vertically or horizontally.
+
+---
+
+🕊️ Special thanks to Dario Santiago, David Rodriguez, Adrian Santiago, Sam Inchley and Marta Quintana.

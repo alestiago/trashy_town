@@ -145,33 +145,35 @@ class _ProgressBar extends StatelessWidget {
     final gameMap = gameMapsBloc.state.maps[gameBloc.state.identifier]!;
 
     final completionsSeconds = gameMap.completionSeconds;
-
     final stopwatchRotationTween = Tween<double>(begin: -0.2, end: 0.2);
 
     return LayoutBuilder(
       builder: (context, constraints) {
+        // TODO(alestiago): Refactor this logic and rely on the Flutter
+        // framework to calculate these by sending constraints down the tree,
+        // if possible.
+        final prefferredBarWidth =
+            (((constraints.maxWidth - 40) / Inventory.size).clamp(10.0, 40.0)) *
+                Inventory.size;
+        final availableSpace = MediaQuery.of(context).size.width - 250;
+        final canFit = availableSpace > prefferredBarWidth;
+        final barWidth = canFit ? prefferredBarWidth : availableSpace;
+        final barSize = Size(barWidth > 0 ? barWidth : 0, 18);
+        final starSize = Size.square(barSize.height + 20);
+
+        Alignment alignStar(int seconds) {
+          final horizontalAlign = (1 - (seconds / completionsSeconds))
+              .normalize(max: 1, min: 0, newMax: 1, newMin: -1);
+          final horizontalShift = (starSize.width / 2) / barSize.width;
+
+          return Alignment(horizontalAlign + horizontalShift, 0);
+        }
+
         return AnimatedBuilder(
           animation: _animation,
           builder: (_, __) {
             final seconds = _stopwatch.elapsed.inSeconds;
             final percentageLeft = 1 - (seconds / completionsSeconds);
-
-            final barSize = Size(
-              (((constraints.maxWidth - 40) / Inventory.size)
-                      .clamp(10.0, 40.0)) *
-                  Inventory.size,
-              18,
-            );
-            final starSize = Size.square(barSize.height + 20);
-
-            Alignment alignStar(int seconds) {
-              final horizontalAlign = (1 - (seconds / completionsSeconds))
-                  .normalize(max: 1, min: 0, newMax: 1, newMin: -1);
-              final horizontalShift = (starSize.width / 2) / barSize.width;
-
-              return Alignment(horizontalAlign + horizontalShift, 0);
-            }
-
             return Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -196,16 +198,19 @@ class _ProgressBar extends StatelessWidget {
                         child: Transform.translate(
                           // Eye-balled offset to align the bar with the stars.
                           offset: const Offset(0, 1),
-                          child: AnimatedFractionallySizedBox(
-                            duration: const Duration(milliseconds: 500),
-                            alignment: Alignment.centerLeft,
-                            widthFactor: percentageLeft.clamp(0, 1),
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                border: Border.all(
-                                  width: 4,
-                                  strokeAlign: BorderSide.strokeAlignOutside,
+                          child: SizedBox(
+                            width: barSize.width,
+                            child: AnimatedFractionallySizedBox(
+                              duration: const Duration(milliseconds: 500),
+                              alignment: Alignment.centerLeft,
+                              widthFactor: percentageLeft.clamp(0, 1),
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  border: Border.all(
+                                    width: 4,
+                                    strokeAlign: BorderSide.strokeAlignOutside,
+                                  ),
                                 ),
                               ),
                             ),

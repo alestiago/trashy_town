@@ -1,4 +1,5 @@
 export 'behaviors/behaviors.dart';
+export 'bird/bird.dart';
 export 'bus/bus.dart';
 export 'car/car.dart';
 export 'map_edge/map_edge.dart';

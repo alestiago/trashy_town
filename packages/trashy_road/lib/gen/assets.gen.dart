@@ -511,6 +511,10 @@ class $AssetsImagesSpritesGen {
   AssetGenImage get bench =>
       const AssetGenImage('assets/images/sprites/bench.png');
 
+  /// File path: assets/images/sprites/bird_flying.png
+  AssetGenImage get birdFlying =>
+      const AssetGenImage('assets/images/sprites/bird_flying.png');
+
   /// File path: assets/images/sprites/building-shadow.png
   AssetGenImage get buildingShadow =>
       const AssetGenImage('assets/images/sprites/building-shadow.png');
@@ -832,6 +836,7 @@ class $AssetsImagesSpritesGen {
         arrowWest,
         banana,
         bench,
+        birdFlying,
         buildingShadow,
         building2,
         building3,

@@ -56,6 +56,8 @@ class TrashyRoadWorld extends PositionComponent {
     final obstaclesLayer = tileMap.getObjectGroup(_TiledLayer.obstacles.name);
     await addAll(obstaclesLayer.objects.map(Obstacle.fromTiledObject));
 
+    await addAll(Bird.randomAmount());
+
     await add(_TiledFloor());
 
     size = Vector2(tileMap.width.toDouble(), tileMap.height.toDouble());

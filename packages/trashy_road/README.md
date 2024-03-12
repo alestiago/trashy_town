@@ -18,7 +18,7 @@ To start cleaning Trashy Town we recommend playing on **Desktop** 🖥 at [trash
 
 💡 **Note**: [trashytown.com](https://trashytown.com) also works on **Mobile**.
 
-Alternatively, you can run your own local version by:
+Alternatively, you can run your own local version by using the Flutter SDK 3.19.0:
 
 ```sh
 # 🕹️ Play your local version of Trashy Town (from packages/trashy_road):

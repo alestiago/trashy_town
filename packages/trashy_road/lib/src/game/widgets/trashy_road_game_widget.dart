@@ -60,9 +60,15 @@ class _TrashyRoadGameWidgetState extends State<TrashyRoadGameWidget> {
         setState(() => _game = gameBuilder());
         gameBloc.add(const GameReadyEvent());
       },
-      child: SizedBox.fromSize(
-        size: resolution,
-        child: GameWidget(game: _game!),
+      child: GestureDetector(
+        onPanStart: (details) => _game?.onPanStart(details),
+        onPanUpdate: (details) => _game?.onPanUpdate(details),
+        onPanEnd: (details) => _game?.onPanEnd(details),
+        behavior: HitTestBehavior.opaque,
+        child: SizedBox.fromSize(
+          size: resolution,
+          child: GameWidget(game: _game!),
+        ),
       ),
     );
   }

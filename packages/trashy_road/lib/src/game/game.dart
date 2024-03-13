@@ -92,7 +92,9 @@ class TrashyRoadGame extends FlameGame
     unawaited(
       trashyRoadWorld.loaded.then((_) async {
         _player = trashyRoadWorld.children.whereType<Player>().first;
-        camera.follow(_player!);
+        final cameraMan = _CameraMan(actor: _player!);
+        await world.add(cameraMan);
+        camera.follow(cameraMan);
         _updateBounds();
       }),
     );
@@ -158,5 +160,30 @@ class TrashyRoadGame extends FlameGame
   void update(double dt) {
     super.update(dt);
     camera.update(dt);
+  }
+}
+
+class _CameraMan extends PositionComponent
+    with HasGameReference<TrashyRoadGame> {
+  _CameraMan({required this.actor});
+
+  final PositionComponent actor;
+
+  @override
+  FutureOr<void> onLoad() async {
+    await super.onLoad();
+    _updatePosition();
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    _updatePosition();
+  }
+
+  void _updatePosition() {
+    position
+      ..setFrom(actor.position)
+      ..y -= game.camera.viewport.size.y / 8;
   }
 }
